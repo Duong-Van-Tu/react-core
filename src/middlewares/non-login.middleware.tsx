@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface NonLoginProps {
   children: React.ReactElement;
@@ -7,10 +7,11 @@ interface NonLoginProps {
 }
 
 export default function NonLogin({ user, isFetchedProfile, children }: NonLoginProps) {
+  const location = useLocation();
   if (isFetchedProfile || !!user) {
-    // Logged user can't access current page, have to redirect to home
-    if (user) {
-      return <Navigate to="/" />;
+    if (user && location.pathname.includes('/login')) {
+      window.history.back();
+      return null;
     }
   }
   return children;

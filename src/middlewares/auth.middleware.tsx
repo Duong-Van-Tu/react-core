@@ -11,9 +11,8 @@ export default function Auth({ children, user, isFetchedProfile }: AuthProps) {
   if (!isFetchedProfile) {
     return <PageIndicator />;
   }
-
   if (!user) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   return children;
