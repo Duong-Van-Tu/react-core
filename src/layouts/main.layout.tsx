@@ -1,9 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { ReactNode, useState } from 'react';
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu } from 'antd';
+import { Breadcrumb, Layout } from 'antd';
 import { LogoIcon } from '../components/icons';
+import { useRootSelector } from '../hooks/selector.hook';
+import { Link } from 'react-router-dom';
+import Menu from '../components/menu';
+import { saleMenus } from '../modules/sales/menu-sale';
+import { settingMenus } from '../modules/settings/menu-settings';
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -13,65 +17,33 @@ const { Header, Sider, Content } = Layout;
 
 export default function MainLayout({ children }: MainLayoutProps) {
   const [collapsed, setCollapsed] = useState(false);
-
+  const breadCrumbItems = useRootSelector((state) => state.breadcrumb.items);
   return (
     <Layout css={layoutStyle}>
       <Sider
+        css={sidebarStyle}
         theme="light"
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
       >
         <div css={logoStyle}>
-          <LogoIcon width={50} height={50} />
+          <LogoIcon width={60} height={60} />
         </div>
-        <Menu
-          theme="light"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: 'sale',
-              icon: <UserOutlined />,
-              label: 'Sale',
-              children: [
-                {
-                  key: '1-1',
-                  icon: <UserOutlined />,
-                  label: 'KPI',
-                },
-                {
-                  key: '1-2',
-                  icon: <UserOutlined />,
-                  label: 'Quyền lợi',
-                },
-              ],
-            },
-
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'Payroll',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'Reports',
-            },
-            {
-              key: '4',
-              icon: <UploadOutlined />,
-              label: 'Settings',
-            },
-          ]}
-        />
+        <Menu items={[...saleMenus, ...settingMenus]} />
       </Sider>
       <Layout>
         <Header css={headerStyle}>
-          <Breadcrumb css={breadcrumbStyle}>
-            <Breadcrumb.Item>sales</Breadcrumb.Item>
-            <Breadcrumb.Item>hello</Breadcrumb.Item>
-          </Breadcrumb>
+          {breadCrumbItems.length > 0 && (
+            <Breadcrumb
+              css={breadcrumbStyle}
+              items={breadCrumbItems.map((item) =>
+                item.link
+                  ? { title: <Link to={item.link}>{item.title}</Link> }
+                  : { title: item.title },
+              )}
+            />
+          )}
         </Header>
         <Content css={content}>{children}</Content>
       </Layout>
@@ -86,12 +58,15 @@ const layoutStyle = css`
   }
 `;
 
+const sidebarStyle = css`
+  box-shadow: 0.03px 0.05px 3px #dbd7d7;
+`;
 const logoStyle = css`
   background: #fff;
   height: 6rem;
   display: flex;
-  align-items: center;
   justify-content: center;
+  margin-bottom: 1rem;
   svg {
     cursor: pointer;
   }
@@ -107,6 +82,11 @@ const breadcrumbStyle = css`
   height: 100%;
   display: flex;
   align-items: center;
+  li:last-child {
+    .ant-breadcrumb-link a {
+      color: #1f1e1e;
+    }
+  }
 `;
 const content = css`
   margin: 2rem;

@@ -2,29 +2,17 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Middleware from '../../../middlewares';
 import LoginPage from '../../../pages/login.page';
 import MainLayout from '../../../layouts/main.layout';
-import KPIPage from '../pages/kpi.page';
-import PrivilegesPage from '../pages/privileges.page';
+import { SettingPage } from '../pages';
 
-function SaleRouter() {
+function SettingRouter() {
   return (
     <Routes>
       <Route
-        path="/kpi"
+        index
         element={
           <Middleware mode="private">
             <MainLayout>
-              <KPIPage />
-            </MainLayout>
-          </Middleware>
-        }
-      />
-
-      <Route
-        path="/privileges"
-        element={
-          <Middleware mode="private">
-            <MainLayout>
-              <PrivilegesPage />
+              <SettingPage />
             </MainLayout>
           </Middleware>
         }
@@ -43,4 +31,4 @@ function SaleRouter() {
   );
 }
 
-export default SaleRouter;
+export default SettingRouter;
