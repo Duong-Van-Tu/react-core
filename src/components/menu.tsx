@@ -1,13 +1,33 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useEffect, useState } from 'react';
 import { Menu as MenuAntd } from 'antd';
-import type { GetProp, MenuProps as MenuPropsAntd } from 'antd';
+import type { MenuProps as MenuPropsAntd } from 'antd';
+import { useLocation, useNavigate } from 'react-router';
 
-type MenuItem = GetProp<MenuPropsAntd, 'items'>[number];
+type MenuItem = Required<MenuPropsAntd>['items'][number];
 type MenuProps = {
   items: MenuItem[];
 };
 export default function Menu({ items }: MenuProps) {
+  const [current, setCurrent] = useState('kpi');
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const handleMenuItemClick: MenuPropsAntd['onClick'] = (e) => {
+    const pathname = e.keyPath
+      .reverse()
+      .map((key) => `/${key}`)
+      .join('');
+    setCurrent(e.key);
+    navigate(pathname);
+  };
+
+  useEffect(() => {
+    const pathElements = pathname.split('/');
+    const lastPathElement = pathElements[pathElements.length - 1];
+    setCurrent(lastPathElement);
+  }, [pathname, setCurrent]);
+
   return (
     <MenuAntd
       theme="light"
@@ -16,6 +36,8 @@ export default function Menu({ items }: MenuProps) {
       defaultOpenKeys={['sales']}
       css={menuStyle}
       items={items}
+      selectedKeys={[current]}
+      onClick={handleMenuItemClick}
     />
   );
 }
@@ -24,6 +46,11 @@ const menuStyle = css`
   .ant-menu-item-selected {
     background: #9a4c1e;
     color: #fff;
+    svg {
+      path {
+        fill: #fff;
+      }
+    }
   }
   .ant-menu-submenu-selected {
     .ant-menu-submenu-title {
