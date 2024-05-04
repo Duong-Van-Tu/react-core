@@ -1,8 +1,12 @@
 /** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { ReactComponent as Logo } from '../assets/svg/logo.svg';
 import { ReactComponent as Users } from '../assets/svg/users.svg';
 import { ReactComponent as Dot } from '../assets/svg/dot.svg';
-import { css } from '@emotion/react';
+import { ReactComponent as Report } from '../assets/svg/report.svg';
+import { ReactComponent as Payroll } from '../assets/svg/payroll.svg';
+import { ReactComponent as Setting } from '../assets/svg/cog.svg';
+
 type Props = {
   width?: number;
   height?: number;
@@ -19,6 +23,18 @@ export const UsersIcon = (props: Props) => {
 
 export const DotIcon = (props: Props) => {
   return <Dot {...props} />;
+};
+
+export const ReportIcon = (props: Props) => {
+  return <Report {...props} />;
+};
+
+export const PayrollIcon = (props: Props) => {
+  return <Payroll {...props} />;
+};
+
+export const SettingIcon = (props: Props) => {
+  return <Setting {...props} />;
 };
 
 const iconStyle = (props: Props) => css`

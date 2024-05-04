@@ -7,17 +7,32 @@ export const saleMenus: MenuItem[] = [
   {
     key: 'sales',
     icon: <UsersIcon color="#333" width={20} height={20} />,
-    label: 'Sale Sale Sale Sale Sale Sale Sale',
+    label: 'Sale ',
     children: [
       {
         key: 'kpi',
-        icon: <DotIcon width={14} height={14} />,
+        icon: <DotIcon width={16} height={16} />,
         label: 'KPI',
       },
       {
         key: 'privileges',
-        icon: <DotIcon width={14} height={14} />,
+        icon: <DotIcon width={16} height={16} />,
         label: 'Quyền lợi',
+      },
+      {
+        key: 'relationship',
+        icon: <DotIcon width={16} height={16} />,
+        label: 'Mối quan hệ',
+      },
+      {
+        key: 'opportunity',
+        icon: <DotIcon width={16} height={16} />,
+        label: 'Cơ hội',
+      },
+      {
+        key: 'sale-kit',
+        icon: <DotIcon width={16} height={16} />,
+        label: 'Sale kit',
       },
     ],
   },

@@ -2,9 +2,9 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import Middleware from '../../../middleware';
 import LoginPage from '../../../pages/login.page';
 import MainLayout from '../../../layouts/main.layout';
-import { SettingPage } from '../pages';
+import PayrollPage from '../pages';
 
-export default function SettingRouter() {
+export default function PayrollRouter() {
   return (
     <Routes>
       <Route
@@ -12,7 +12,7 @@ export default function SettingRouter() {
         element={
           <Middleware mode="private">
             <MainLayout>
-              <SettingPage />
+              <PayrollPage />
             </MainLayout>
           </Middleware>
         }

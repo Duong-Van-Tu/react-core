@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useMemo, useState } from 'react';
 import { Breadcrumb, Layout } from 'antd';
 import { LogoIcon } from '../components/icons';
 import { useRootSelector } from '../hooks/selector.hook';
@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import Menu from '../components/menu';
 import { saleMenus } from '../modules/sales/menu-sale';
 import { settingMenus } from '../modules/settings/menu-settings';
+import { payrollMenus } from '../modules/payroll/menu-payroll';
+import { reportMenus } from '../modules/reports/menu-reports';
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -18,6 +20,11 @@ const { Header, Sider, Content } = Layout;
 export default function MainLayout({ children }: MainLayoutProps) {
   const [collapsed, setCollapsed] = useState(false);
   const breadCrumbItems = useRootSelector((state) => state.breadcrumb.items);
+
+  const menus = useMemo(() => {
+    return [...saleMenus, ...payrollMenus, ...reportMenus, ...settingMenus];
+  }, []);
+
   return (
     <Layout css={layoutStyle}>
       <Sider
@@ -30,7 +37,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <div css={logoStyle}>
           <LogoIcon width={60} height={60} />
         </div>
-        <Menu items={[...saleMenus, ...settingMenus]} />
+        <Menu items={menus} />
       </Sider>
       <Layout>
         <Header css={headerStyle}>
