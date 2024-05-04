@@ -14,7 +14,7 @@ function Router() {
         <Route path="settings/*" element={<SettingRouter />} />
         <Route path="payroll/*" element={<PayrollRouter />} />
         <Route path="reports/*" element={<ReportRouter />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="login" element={<LoginPage />} />
         <Route path="not-found" element={<NotfoundPage />} />
         <Route path="*" element={<Navigate to="/not-found" replace />} />
       </Routes>
