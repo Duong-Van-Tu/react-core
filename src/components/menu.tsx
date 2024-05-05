@@ -4,41 +4,21 @@ import { useEffect, useState } from 'react';
 import { Menu as MenuAntd } from 'antd';
 import type { MenuProps as MenuPropsAntd } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
+import { getFirstPathCode } from '../utils/get-pathCode';
 
 type MenuItem = Required<MenuPropsAntd>['items'][number];
 type MenuProps = {
   items: MenuItem[];
 };
-type LevelKeysProps = {
-  key?: string;
-  children?: LevelKeysProps[];
-};
-
-const getLevelKeys = (items1: LevelKeysProps[]) => {
-  const key: Record<string, number> = {};
-  const func = (items2: LevelKeysProps[], level = 1) => {
-    items2.forEach((item) => {
-      if (item.key) {
-        key[item.key] = level;
-      }
-      if (item.children) {
-        func(item.children, level + 1);
-      }
-    });
-  };
-  func(items1);
-  return key;
-};
 
 export default function Menu({ items }: MenuProps) {
-  const [selectedKeys, setSelectedKeys] = useState<string[] | undefined>(undefined);
-  const [openKeys, setOpenKeys] = useState<string[] | undefined>(undefined);
-  const levelKeys = getLevelKeys(items as LevelKeysProps[]);
+  const { pathname } = useLocation();
+  const [selectedKey, setSelectedKey] = useState<string>();
+  const [openKey, setOpenKey] = useState<string>(getFirstPathCode(pathname));
 
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
-  const handleMenuItemClick: MenuPropsAntd['onClick'] = (e) => {
+  const handleMenuClick: MenuPropsAntd['onClick'] = (e) => {
     const pathname = e.keyPath
       .reverse()
       .map((key) => `/${key}`)
@@ -47,32 +27,17 @@ export default function Menu({ items }: MenuProps) {
     navigate(pathname);
   };
 
-  const onOpenMenuItemChange: MenuPropsAntd['onOpenChange'] = (openKeys) => {
-    const currentOpenKey = openKeys.find((key) => openKeys.indexOf(key) === -1);
-    // open
-    if (currentOpenKey !== undefined) {
-      const repeatIndex = openKeys
-        .filter((key) => key !== currentOpenKey)
-        .findIndex((key) => levelKeys[key] === levelKeys[currentOpenKey]);
-
-      setOpenKeys(
-        openKeys
-          // remove repeat key
-          .filter((_, index) => index !== repeatIndex)
-          // remove current level all child
-          .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey]),
-      );
-    } else {
-      // close
-      setOpenKeys(openKeys);
-    }
+  const onOpenChange = (keys: string[]) => {
+    const key = keys.pop();
+    setOpenKey(key ?? getFirstPathCode(pathname));
   };
 
   useEffect(() => {
     const pathElements = pathname.split('/').filter(Boolean);
     const lastPathElement = pathElements[pathElements.length - 1];
-    setSelectedKeys([lastPathElement]);
-  }, [pathname, setSelectedKeys, setOpenKeys]);
+    setSelectedKey(lastPathElement);
+    setOpenKey(pathElements[0]);
+  }, [pathname, setSelectedKey, setOpenKey]);
 
   return (
     <MenuAntd
@@ -80,12 +45,10 @@ export default function Menu({ items }: MenuProps) {
       mode="inline"
       css={menuStyle}
       items={items}
-      defaultSelectedKeys={['kpi']}
-      defaultOpenKeys={['sales']}
-      selectedKeys={selectedKeys}
-      openKeys={openKeys}
-      onClick={handleMenuItemClick}
-      onOpenChange={onOpenMenuItemChange}
+      selectedKeys={selectedKey ? [selectedKey] : []}
+      openKeys={[openKey]}
+      onClick={handleMenuClick}
+      onOpenChange={onOpenChange}
     />
   );
 }
