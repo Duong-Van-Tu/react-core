@@ -11,6 +11,7 @@ import SaleKitPage from '@/modules/sales/pages/sale-kit.page';
 import { SettingPage } from '@/modules/settings/pages';
 import PayrollPage from '@/modules/payroll/pages';
 import { ReportPage } from '@/modules/reports/pages';
+import WrapperRouteComponent from './config';
 
 function Router() {
   return (
@@ -19,11 +20,13 @@ function Router() {
         <Route
           path="sales/kpi"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <KPIPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.kpi">
+              <Middleware mode="private">
+                <MainLayout>
+                  <KPIPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
         <Route

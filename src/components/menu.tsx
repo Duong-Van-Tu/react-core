@@ -29,7 +29,7 @@ export default function Menu({ items }: MenuProps) {
 
   const onOpenChange = (keys: string[]) => {
     const key = keys.pop();
-    setOpenKey(key ?? getFirstPathCode(pathname));
+    setOpenKey(key ?? '');
   };
 
   useEffect(() => {
