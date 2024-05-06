@@ -12,7 +12,7 @@ type MenuProps = {
 
 export default function Menu({ items }: MenuProps) {
   const { pathname } = useLocation();
-  const [selectedKey, setSelectedKey] = useState<string>();
+  const [selectedKey, setSelectedKey] = useState<string>('kpi');
   const [openKey, setOpenKey] = useState<string>();
 
   const navigate = useNavigate();
@@ -22,13 +22,11 @@ export default function Menu({ items }: MenuProps) {
       .reverse()
       .map((key) => `/${key}`)
       .join('');
-    setSelectedKey(e.key);
     navigate(pathname);
   };
 
   const onOpenChange = (keys: string[]) => {
     const key = keys.pop();
-
     setOpenKey(key);
   };
 
@@ -37,7 +35,7 @@ export default function Menu({ items }: MenuProps) {
     const lastPathElement = pathElements[pathElements.length - 1];
     setSelectedKey(lastPathElement);
     setOpenKey(pathElements[0]);
-  }, [pathname, setSelectedKey, setOpenKey]);
+  }, [pathname]);
 
   return (
     <MenuAntd
@@ -45,8 +43,9 @@ export default function Menu({ items }: MenuProps) {
       mode="inline"
       css={menuStyle}
       items={items}
-      selectedKeys={selectedKey ? [selectedKey] : ['kpi']}
-      openKeys={openKey ? [openKey] : ['sales']}
+      defaultOpenKeys={['sales']}
+      selectedKeys={[selectedKey]}
+      openKeys={openKey ? [openKey] : undefined}
       onClick={handleMenuClick}
       onOpenChange={onOpenChange}
     />
