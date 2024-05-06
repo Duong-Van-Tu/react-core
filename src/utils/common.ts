@@ -1,4 +1,4 @@
-import { KEYS } from '../constants/key';
+import { KEYS } from '@/constants/key';
 
 export function getToken() {
   return (

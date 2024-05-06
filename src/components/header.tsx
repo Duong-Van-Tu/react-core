@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { Avatar, Breadcrumb, Button, Layout } from 'antd';
-import { useRootSelector } from '../hooks/selector.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
 import { BellIcon, SettingIcon } from './icons';
 
 export default function Header() {

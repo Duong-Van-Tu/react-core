@@ -1,5 +1,5 @@
-import { AgentContext } from '../components/agent.provider';
-import { DeviceType } from '../constants/agent';
+import { AgentContext } from '@/components/agent.provider';
+import { DeviceType } from '@/constants/agent';
 import { useContext } from 'react';
 
 export function useScreenWidth() {

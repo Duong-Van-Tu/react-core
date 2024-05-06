@@ -1,10 +1,10 @@
 import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { setMessageAction } from '../redux/slicers/api-message.slice';
-import { setLoadingAction } from '../redux/slicers/loading.slice';
-import { tick } from '../utils/common';
-import { API } from '../utils/axios';
-import { Messages } from '../constants/message';
+import { setMessageAction } from '@/redux/slicers/api-message.slice';
+import { setLoadingAction } from '@/redux/slicers/loading.slice';
+import { tick } from '@/utils/common';
+import { API } from '@/utils/axios';
+import { Messages } from '@/constants/message';
 
 export function useApi(basePath: string) {
   const axios = API;

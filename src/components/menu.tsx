@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Menu as MenuAntd } from 'antd';
 import type { MenuProps as MenuPropsAntd } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
-import { getFirstPathCode } from '../utils/get-pathCode';
+import { getFirstPathCode } from '@/utils/get-pathCode';
 
 type MenuItem = Required<MenuPropsAntd>['items'][number];
 type MenuProps = {

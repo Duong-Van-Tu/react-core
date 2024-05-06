@@ -2,8 +2,8 @@
 import { css } from '@emotion/react';
 import { ReactNode } from 'react';
 import { Layout } from 'antd';
-import Header from '../components/header';
-import Sidebar from '../components/sidebar';
+import Header from '@/components/header';
+import Sidebar from '@/components/sidebar';
 
 type MainLayoutProps = {
   children: ReactNode;

@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { PageIndicator } from '../components/page-indicator';
+import { PageIndicator } from '@/components/page-indicator';
 
 interface AuthProps {
   children: React.ReactElement;

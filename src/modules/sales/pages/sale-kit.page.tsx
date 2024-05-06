@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setBreadcrumbItemsAction } from '../../../redux/slicers/breadcrumb.slice';
+import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 
 export default function SaleKitPage() {
   const dispatch = useDispatch();

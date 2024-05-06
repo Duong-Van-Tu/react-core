@@ -2,7 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import loading, { loadingInitialState } from './slicers/loading.slice';
 import apiMessage, { apiMessageInitialState } from './slicers/api-message.slice';
 import breadcrumb, { breadcrumbInitialState } from './slicers/breadcrumb.slice';
-import saleReducer from '../modules/sales/reducers';
+import saleReducer from '@/modules/sales/reducers';
 
 export type RawRootState = typeof rootState;
 export const allInitialStates = {

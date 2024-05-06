@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useRootSelector } from './selector.hook';
-import { clearMessageAction } from '../redux/slicers/api-message.slice';
+import { clearMessageAction } from '@/redux/slicers/api-message.slice';
 
 export function useWatchMessage(...keys: string[]) {
   const box = useRootSelector((state) => {

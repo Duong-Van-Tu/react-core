@@ -2,8 +2,8 @@ import { useFormik } from 'formik';
 import { useCallback, useEffect, useMemo } from 'react';
 import * as yup from 'yup';
 import { cloneDeep } from 'lodash';
-import { Messages } from '../constants/message';
-import { isNumberAble } from '../utils/number';
+import { Messages } from '@/constants/message';
+import { isNumberAble } from '@/utils/number';
 
 export function trueNumber(y: Yup, { label = 'Field', required = false } = {}) {
   let yup = y.mixed().test('Type', Messages.mustBeNumber(label), (value: any, e) => {

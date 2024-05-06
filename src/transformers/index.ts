@@ -1,5 +1,5 @@
-import { isEmpty } from '../utils/common';
-import { isNumberAble } from '../utils/number';
+import { isEmpty } from '@/utils/common';
+import { isNumberAble } from '@/utils/number';
 
 export const Transformers = {
   Noop: (data: any) => data,
@@ -18,8 +18,8 @@ export const Transformers = {
     return value === '' || value == null
       ? undefined
       : typeof value === 'string'
-      ? value
-      : `${value}px`;
+        ? value
+        : `${value}px`;
   },
   UrlDecode: function (value: string[] | string | undefined | null) {
     let _value;

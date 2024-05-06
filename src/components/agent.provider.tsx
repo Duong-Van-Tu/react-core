@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { DeviceType } from '../constants/agent';
+import { DeviceType } from '@/constants/agent';
 
 type AgentProviderProps = {
   children: ReactElement | ReactElement[];
@@ -19,7 +19,7 @@ export const AgentContext = createContext<{
 }>(undefined as any);
 
 export function AgentProvider({ children }: AgentProviderProps) {
-  const [screenWidth, setScreenWidth] = useState(global?.window?.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(window?.innerWidth);
 
   const deviceType = useMemo(() => {
     if (screenWidth <= 520) {
@@ -34,12 +34,12 @@ export function AgentProvider({ children }: AgentProviderProps) {
 
   useEffect(() => {
     function onResize() {
-      setScreenWidth(global?.window?.innerWidth);
+      setScreenWidth(window?.innerWidth);
     }
 
-    global?.window?.addEventListener('resize', onResize);
+    window?.addEventListener('resize', onResize);
     return () => {
-      global?.window?.removeEventListener('resize', onResize);
+      window?.removeEventListener('resize', onResize);
     };
   }, []);
 
@@ -50,21 +50,20 @@ export function AgentProvider({ children }: AgentProviderProps) {
   return <AgentContext.Provider value={data}>{children}</AgentContext.Provider>;
 }
 
-type AgentProps =
+type AgentProps = {
+  fallback?: ReactNode | ReactNode[];
+  children: ReactNode | ReactNode[];
+  device: DeviceType;
+} & (
   | {
-      fallback?: ReactNode | ReactNode[];
-      children: ReactNode | ReactNode[];
-      device: DeviceType;
-    } & (
-      | {
-          accept: true;
-          deny?: never;
-        }
-      | {
-          deny: true;
-          accept?: never;
-        }
-    );
+      accept: true;
+      deny?: never;
+    }
+  | {
+      deny: true;
+      accept?: never;
+    }
+);
 
 export function Agent({ fallback = null, children, device, accept, deny }: AgentProps) {
   const { deviceType } = useContext(AgentContext);

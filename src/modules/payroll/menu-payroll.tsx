@@ -1,5 +1,5 @@
 import type { GetProp, MenuProps } from 'antd';
-import { PayrollIcon } from '../../components/icons';
+import { PayrollIcon } from '@/components/icons';
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
 

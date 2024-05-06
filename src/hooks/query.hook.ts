@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { undefinedRefine } from '../utils/common';
+import { undefinedRefine } from '@/utils/common';
 
 type Transformers<F = any> = [string, (value: string) => any, F?][];
 

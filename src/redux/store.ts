@@ -19,9 +19,9 @@ const initStore = (preloadedState: Partial<RootState> = {}) => {
     preloadedState,
   });
 
-  if (process.env.NODE_ENV !== 'production' && (module as any).hot) {
-    (module as any).hot.accept('./root-reducers', () => store.replaceReducer(rootReducer));
-  }
+  // if (process.env.NODE_ENV !== 'production' && (module as any).hot) {
+  //   (module as any).hot.accept('./root-reducers', () => store.replaceReducer(rootReducer));
+  // }
 
   return store;
 };

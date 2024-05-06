@@ -2,10 +2,10 @@
 import { css } from '@emotion/react';
 import { Layout } from 'antd';
 import { useMemo, useState } from 'react';
-import { saleMenus } from '../modules/sales/menu-sale';
-import { settingMenus } from '../modules/settings/menu-settings';
-import { payrollMenus } from '../modules/payroll/menu-payroll';
-import { reportMenus } from '../modules/reports/menu-reports';
+import { saleMenus } from '@/modules/sales/menu-sale';
+import { settingMenus } from '@/modules/settings/menu-settings';
+import { payrollMenus } from '@/modules/payroll/menu-payroll';
+import { reportMenus } from '@/modules/reports/menu-reports';
 import { LogoIcon } from './icons';
 import Menu from './menu';
 

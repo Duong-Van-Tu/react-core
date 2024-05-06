@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactComponent as Logo } from '../assets/svg/logo.svg';
-import { ReactComponent as Users } from '../assets/svg/users.svg';
-import { ReactComponent as Dot } from '../assets/svg/dot.svg';
-import { ReactComponent as Report } from '../assets/svg/report.svg';
-import { ReactComponent as Payroll } from '../assets/svg/payroll.svg';
-import { ReactComponent as Setting } from '../assets/svg/cog.svg';
-import { ReactComponent as Bell } from '../assets/svg/bell.svg';
+import Logo from '@/assets/svg/logo.svg?react';
+import Users from '@/assets/svg/users.svg?react';
+import Dot from '@/assets/svg/dot.svg?react';
+import Report from '@/assets/svg/report.svg?react';
+import Payroll from '@/assets/svg/payroll.svg?react';
+import Setting from '@/assets/svg/cog.svg?react';
+import Bell from '@/assets/svg/bell.svg?react';
 
 type Props = {
   width?: number;

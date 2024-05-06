@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import NotfoundPage from '../pages/notfound.page';
-import SaleRouter from '../modules/sales/routers';
-import LoginPage from '../pages/login.page';
-import SettingRouter from '../modules/settings/routers';
-import PayrollRouter from '../modules/payroll/routers';
-import ReportRouter from '../modules/reports/routers';
+import NotfoundPage from '@/pages/notfound.page';
+import SaleRouter from '@/modules/sales/routers';
+import LoginPage from '@/pages/login.page';
+import SettingRouter from '@/modules/settings/routers';
+import PayrollRouter from '@/modules/payroll/routers';
+import ReportRouter from '@/modules/reports/routers';
 
 function Router() {
   return (
