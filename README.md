@@ -15,3 +15,4 @@ $ yarn dev
 ```
 
 #### URL: http://localhost:5555/sales/kpi
+### Note: Run on Node version 20 environment
