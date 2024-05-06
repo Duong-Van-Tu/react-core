@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { Menu as MenuAntd } from 'antd';
 import type { MenuProps as MenuPropsAntd } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
-import { getFirstPathCode } from '@/utils/get-pathCode';
 
 type MenuItem = Required<MenuPropsAntd>['items'][number];
 type MenuProps = {
@@ -14,7 +13,7 @@ type MenuProps = {
 export default function Menu({ items }: MenuProps) {
   const { pathname } = useLocation();
   const [selectedKey, setSelectedKey] = useState<string>();
-  const [openKey, setOpenKey] = useState<string>(getFirstPathCode(pathname));
+  const [openKey, setOpenKey] = useState<string>();
 
   const navigate = useNavigate();
 
@@ -23,13 +22,14 @@ export default function Menu({ items }: MenuProps) {
       .reverse()
       .map((key) => `/${key}`)
       .join('');
-
+    setSelectedKey(e.key);
     navigate(pathname);
   };
 
   const onOpenChange = (keys: string[]) => {
     const key = keys.pop();
-    setOpenKey(key ?? '');
+
+    setOpenKey(key);
   };
 
   useEffect(() => {
@@ -45,8 +45,8 @@ export default function Menu({ items }: MenuProps) {
       mode="inline"
       css={menuStyle}
       items={items}
-      selectedKeys={selectedKey ? [selectedKey] : []}
-      openKeys={[openKey]}
+      selectedKeys={selectedKey ? [selectedKey] : ['kpi']}
+      openKeys={openKey ? [openKey] : ['sales']}
       onClick={handleMenuClick}
       onOpenChange={onOpenChange}
     />
