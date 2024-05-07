@@ -20,7 +20,7 @@ function Router() {
         <Route
           path="sales/kpi"
           element={
-            <WrapperRouteComponent titleId="title.kpi">
+            <WrapperRouteComponent titleId="title.document.kpi">
               <Middleware mode="private">
                 <MainLayout>
                   <KPIPage />
@@ -32,7 +32,7 @@ function Router() {
         <Route
           path="sales/privileges"
           element={
-            <WrapperRouteComponent titleId="title.privileges">
+            <WrapperRouteComponent titleId="title.document.privileges">
               <Middleware mode="private">
                 <MainLayout>
                   <PrivilegesPage />
@@ -44,7 +44,7 @@ function Router() {
         <Route
           path="sales/relationship"
           element={
-            <WrapperRouteComponent titleId="title.relationship">
+            <WrapperRouteComponent titleId="title.document.relationship">
               <Middleware mode="private">
                 <MainLayout>
                   <RelationshipPage />
@@ -56,7 +56,7 @@ function Router() {
         <Route
           path="sales/opportunity"
           element={
-            <WrapperRouteComponent titleId="title.opportunity">
+            <WrapperRouteComponent titleId="title.document.opportunity">
               <Middleware mode="private">
                 <MainLayout>
                   <OpportunityPage />
@@ -68,7 +68,7 @@ function Router() {
         <Route
           path="sales/sale-kit"
           element={
-            <WrapperRouteComponent titleId="title.saleKit">
+            <WrapperRouteComponent titleId="title.document.saleKit">
               <Middleware mode="private">
                 <MainLayout>
                   <SaleKitPage />
@@ -80,7 +80,7 @@ function Router() {
         <Route
           path="settings"
           element={
-            <WrapperRouteComponent titleId="title.setting">
+            <WrapperRouteComponent titleId="title.document.setting">
               <Middleware mode="private">
                 <MainLayout>
                   <SettingPage />
@@ -93,7 +93,7 @@ function Router() {
         <Route
           path="payroll"
           element={
-            <WrapperRouteComponent titleId="title.payroll">
+            <WrapperRouteComponent titleId="title.document.payroll">
               <Middleware mode="private">
                 <MainLayout>
                   <PayrollPage />
@@ -106,7 +106,7 @@ function Router() {
         <Route
           path="reports"
           element={
-            <WrapperRouteComponent titleId="title.report">
+            <WrapperRouteComponent titleId="title.document.report">
               <Middleware mode="private">
                 <MainLayout>
                   <ReportPage />

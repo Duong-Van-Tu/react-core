@@ -1,16 +1,28 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import { Avatar, Breadcrumb, Button, Dropdown, Layout } from 'antd';
-import { useRootSelector } from '@/hooks/selector.hook';
-import { BellIcon, EnglishIcon, LanguageIcon, SettingIcon, ViVNIcon } from './icons';
-import { setLocaleAction } from '@/redux/slicers/locale.slice';
 import { useDispatch } from 'react-redux';
+import { Avatar, Breadcrumb, Button, Dropdown, Layout, Tooltip } from 'antd';
+import { useRootSelector } from '@/hooks/selector.hook';
+import {
+  BellIcon,
+  EnglishIcon,
+  LanguageIcon,
+  LogoutIcon,
+  SettingIcon,
+  UserIcon,
+  ViVNIcon,
+} from './icons';
+import { setLocaleAction } from '@/redux/slicers/locale.slice';
+import { useLocale } from '@/hooks/locale.hook';
+import Notice from './notice';
 
 export default function Header() {
   const dispatch = useDispatch();
   const breadCrumbItems = useRootSelector((state) => state.breadcrumb.items);
   const language = useRootSelector((state) => state.locale.language);
+  const { formatMessage } = useLocale();
+  const logged = true;
   const { Header: HeaderAntd } = Layout;
   const selectLocale = ({ key }: { key: any }) => {
     dispatch(setLocaleAction(key));
@@ -34,15 +46,15 @@ export default function Header() {
             items: [
               {
                 key: 'vi_VN',
-                icon: <ViVNIcon />,
+                icon: <ViVNIcon width={20} height={20} />,
                 disabled: language === 'vi_VN',
-                label: 'Tiếng Việt',
+                label: formatMessage({ id: 'language.vietnamese' }),
               },
               {
                 key: 'en_US',
-                icon: <EnglishIcon />,
+                icon: <EnglishIcon width={20} height={20} />,
                 disabled: language === 'en_US',
-                label: 'English',
+                label: formatMessage({ id: 'language.english' }),
               },
             ],
           }}
@@ -51,16 +63,45 @@ export default function Header() {
             <LanguageIcon width={20} height={20} />
           </Button>
         </Dropdown>
+
         <Link to="/settings" css={settingLinkStyle}>
-          <SettingIcon width={20} height={20} />
+          <Tooltip title={formatMessage({ id: 'title.document.setting' })}>
+            <SettingIcon width={20} height={20} />
+          </Tooltip>
         </Link>
-        <Button css={bellBtn}>
-          <BellIcon width={20} height={20} color="#020202" />
-        </Button>
-        <Avatar
-          css={avatarStyle}
-          src="https://images2.thanhnien.vn/528068263637045248/2023/4/23/edit-truc-anh-16822518118551137084698.png"
-        />
+        {/* <Tooltip title={formatMessage({ id: 'app.notice.messages' })}>
+          <Button css={bellBtn}>
+            <BellIcon width={20} height={20} color="#020202" />
+          </Button>
+        </Tooltip> */}
+        <Notice />
+        {logged && (
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: '1',
+                  icon: <UserIcon width={18} height={18} />,
+                  label: formatMessage({
+                    id: 'header.avatar.account',
+                  }),
+                },
+                {
+                  key: '2',
+                  icon: <LogoutIcon width={18} height={18} />,
+                  label: formatMessage({
+                    id: 'header.avatar.logout',
+                  }),
+                },
+              ],
+            }}
+          >
+            <Avatar
+              css={avatarStyle}
+              src="https://images2.thanhnien.vn/528068263637045248/2023/4/23/edit-truc-anh-16822518118551137084698.png"
+            />
+          </Dropdown>
+        )}
       </div>
     </HeaderAntd>
   );
@@ -99,13 +140,6 @@ const languageBtn = css`
   box-shadow: unset;
 `;
 const settingLinkStyle = css`
-  display: flex;
-  align-items: center;
-`;
-
-const bellBtn = css`
-  padding: 0;
-  border: none;
   display: flex;
   align-items: center;
 `;
