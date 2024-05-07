@@ -18,58 +18,50 @@ type Props = {
   width?: number;
   height?: number;
   color?: string;
+  type: string;
 };
-
-export const LogoIcon = (props: Props) => {
-  return <Logo {...props} />;
-};
-
-export const UserGroupIcon = (props: Props) => {
-  return <UserGroup css={iconStyle(props)} {...props} />;
-};
-
-export const DotIcon = (props: Props) => {
-  return <Dot {...props} />;
-};
-
-export const ReportIcon = (props: Props) => {
-  return <Report {...props} />;
-};
-
-export const PayrollIcon = (props: Props) => {
-  return <Payroll {...props} />;
-};
-
-export const SettingIcon = (props: Props) => {
-  return <Setting {...props} />;
-};
-
-export const BellIcon = (props: Props) => {
-  return <Bell css={iconStyle(props)} {...props} />;
-};
-
-export const LanguageIcon = (props: Props) => {
-  return <Language css={iconStyle(props)} {...props} />;
-};
-
-export const ViVNIcon = (props: Props) => {
-  return <ViVN css={iconStyle(props)} {...props} />;
-};
-
-export const EnglishIcon = (props: Props) => {
-  return <English css={iconStyle(props)} {...props} />;
-};
-
-export const LogoutIcon = (props: Props) => {
-  return <Logout css={iconStyle(props)} {...props} />;
-};
-
-export const UserIcon = (props: Props) => {
-  return <User css={iconStyle(props)} {...props} />;
-};
-
-export const LoadingIcon = (props: Props) => {
-  return <Loading css={iconStyle(props)} {...props} />;
+export const CustomIcon = (props: Props) => {
+  const { type } = props;
+  if (type === 'logo') {
+    return <Logo {...props} />;
+  }
+  if (type === 'dot') {
+    return <Dot {...props} />;
+  }
+  if (type === 'user') {
+    return <User css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'user-group') {
+    return <UserGroup css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'reports') {
+    return <Report {...props} />;
+  }
+  if (type === 'setting') {
+    return <Setting {...props} />;
+  }
+  if (type === 'bell') {
+    return <Bell css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'payroll') {
+    return <Payroll {...props} />;
+  }
+  if (type === 'languae') {
+    return <Language css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'vi') {
+    return <ViVN css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'en') {
+    return <English css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'logout') {
+    return <Logout css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'loading') {
+    return <Loading css={iconStyle(props)} {...props} />;
+  }
+  return null;
 };
 
 const iconStyle = (props: Props) => css`

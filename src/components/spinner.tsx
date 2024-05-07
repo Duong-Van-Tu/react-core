@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { LoadingIcon } from './icons';
+import { CustomIcon } from './icons';
 
 type SpinnerProps = {
   width: number;
@@ -10,7 +10,7 @@ type SpinnerProps = {
 export function Spinner({ width, height }: SpinnerProps) {
   return (
     <div css={spinnerStyle}>
-      <LoadingIcon width={width} height={height} color="#3498db" />
+      <CustomIcon type="loading" width={width} height={height} color="#3498db" />
     </div>
   );
 }

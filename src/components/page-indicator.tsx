@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { LogoIcon } from './icons';
+import { CustomIcon } from './icons';
 import { Spinner } from './spinner';
 
 export const PageIndicator = () => {
   return (
     <div css={indicatorStyle}>
-      <LogoIcon width={100} height={100} />
+      <CustomIcon type="logo" width={100} height={100} />
       <Spinner width={50} height={50} />
     </div>
   );

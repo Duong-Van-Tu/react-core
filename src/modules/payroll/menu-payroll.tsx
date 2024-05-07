@@ -1,12 +1,10 @@
-import type { GetProp, MenuProps } from 'antd';
-import { PayrollIcon } from '@/components/icons';
-
-type MenuItem = GetProp<MenuProps, 'items'>[number];
-
-export const payrollMenus: MenuItem[] = [
-  {
-    key: 'payroll',
-    icon: <PayrollIcon color="#333" width={20} height={20} />,
-    label: 'Payroll',
+import { MenuItem } from '@/types/menu';
+export const payrollMenus: MenuItem = {
+  code: 'payroll',
+  icon: 'payroll',
+  path: '/payroll',
+  label: {
+    vi_VN: 'Payroll',
+    en_US: 'Payroll',
   },
-];
+};

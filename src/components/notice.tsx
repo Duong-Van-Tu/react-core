@@ -4,7 +4,7 @@ import { Avatar, Badge, Button, List, Popover, Spin, Tabs, Tag, Tooltip } from '
 import { useLocale } from '@/hooks/locale.hook';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useState } from 'react';
-import { BellIcon } from './icons';
+import { CustomIcon } from './icons';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { TabPane } = Tabs;
@@ -79,7 +79,7 @@ export default function Notice() {
       <Tooltip title={formatMessage({ id: 'app.notice.messages' })}>
         <Badge count={noticeCount} overflowCount={999}>
           <Button css={bellBtn}>
-            <BellIcon width={20} height={20} color="#020202" />
+            <CustomIcon type="bell" width={20} height={20} color="#020202" />
           </Button>
         </Badge>
       </Tooltip>

@@ -1,39 +1,56 @@
-import type { MenuProps } from 'antd';
-import { DotIcon, UserGroupIcon } from '@/components/icons';
-
-type MenuItem = Required<MenuProps>['items'][number];
-
-export const saleMenus: MenuItem[] = [
-  {
-    key: 'sales',
-    icon: <UserGroupIcon color="#333" width={20} height={20} />,
-    label: 'Sale ',
-    children: [
-      {
-        key: 'kpi',
-        icon: <DotIcon width={16} height={16} />,
-        label: 'KPI',
-      },
-      {
-        key: 'privileges',
-        icon: <DotIcon width={16} height={16} />,
-        label: 'Quyền lợi',
-      },
-      {
-        key: 'relationship',
-        icon: <DotIcon width={16} height={16} />,
-        label: 'Mối quan hệ',
-      },
-      {
-        key: 'opportunity',
-        icon: <DotIcon width={16} height={16} />,
-        label: 'Cơ hội',
-      },
-      {
-        key: 'sale-kit',
-        icon: <DotIcon width={16} height={16} />,
-        label: 'Sale kit',
-      },
-    ],
+import { MenuItem } from '@/types/menu';
+export const saleMenus: MenuItem = {
+  code: 'sales',
+  icon: 'user-group',
+  label: {
+    vi_VN: 'Bán hàng',
+    en_US: 'Sale',
   },
-];
+  children: [
+    {
+      code: 'kpi',
+      icon: 'dot',
+      path: '/sales/kpi',
+      label: {
+        vi_VN: 'KPI',
+        en_US: 'KPI',
+      },
+    },
+    {
+      code: 'privileges',
+      icon: 'dot',
+      path: '/sales/privileges',
+      label: {
+        vi_VN: 'Quyền lợi',
+        en_US: 'Privileges',
+      },
+    },
+    {
+      code: 'relationship',
+      icon: 'dot',
+      path: '/sales/relationship',
+      label: {
+        vi_VN: 'Mối quan hệ',
+        en_US: 'Relationship',
+      },
+    },
+    {
+      code: 'opportunity',
+      icon: 'dot',
+      path: '/sales/opportunity',
+      label: {
+        vi_VN: 'Cơ hội',
+        en_US: 'Opportunity',
+      },
+    },
+    {
+      code: 'sale-kit',
+      icon: 'dot',
+      path: '/sales/sale-kit',
+      label: {
+        vi_VN: 'Sale kit',
+        en_US: 'Sale Kit',
+      },
+    },
+  ],
+};

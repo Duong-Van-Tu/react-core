@@ -2,20 +2,12 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { useLocale } from '@/hooks/locale.hook';
 import { Avatar, Breadcrumb, Button, Dropdown, Layout, Tooltip } from 'antd';
 import { useRootSelector } from '@/hooks/selector.hook';
-import {
-  BellIcon,
-  EnglishIcon,
-  LanguageIcon,
-  LogoutIcon,
-  SettingIcon,
-  UserIcon,
-  ViVNIcon,
-} from './icons';
-import { setLocaleAction } from '@/redux/slicers/locale.slice';
-import { useLocale } from '@/hooks/locale.hook';
+import { CustomIcon } from './icons';
 import Notice from './notice';
+import { setLocaleAction } from '@/redux/slicers/locale.slice';
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -46,13 +38,13 @@ export default function Header() {
             items: [
               {
                 key: 'vi_VN',
-                icon: <ViVNIcon width={20} height={20} />,
+                icon: <CustomIcon type="vi" width={20} height={20} />,
                 disabled: language === 'vi_VN',
                 label: formatMessage({ id: 'language.vietnamese' }),
               },
               {
                 key: 'en_US',
-                icon: <EnglishIcon width={20} height={20} />,
+                icon: <CustomIcon type="en" width={20} height={20} />,
                 disabled: language === 'en_US',
                 label: formatMessage({ id: 'language.english' }),
               },
@@ -60,18 +52,16 @@ export default function Header() {
           }}
         >
           <Button css={languageBtn}>
-            <LanguageIcon width={20} height={20} />
+            <CustomIcon type="languae" width={20} height={20} />
           </Button>
         </Dropdown>
+        <Tooltip title={formatMessage({ id: 'title.document.setting' })}>
+          <CustomIcon type="setting" width={20} height={20} />
+        </Tooltip>
 
-        <Link to="/settings" css={settingLinkStyle}>
-          <Tooltip title={formatMessage({ id: 'title.document.setting' })}>
-            <SettingIcon width={20} height={20} />
-          </Tooltip>
-        </Link>
         {/* <Tooltip title={formatMessage({ id: 'app.notice.messages' })}>
           <Button css={bellBtn}>
-            <BellIcon width={20} height={20} color="#020202" />
+            <CustomIcon type="bell" width={20} height={20} color="#020202" />
           </Button>
         </Tooltip> */}
         <Notice />
@@ -81,14 +71,14 @@ export default function Header() {
               items: [
                 {
                   key: '1',
-                  icon: <UserIcon width={18} height={18} />,
+                  icon: <CustomIcon type="user" width={18} height={18} />,
                   label: formatMessage({
                     id: 'header.avatar.account',
                   }),
                 },
                 {
                   key: '2',
-                  icon: <LogoutIcon width={18} height={18} />,
+                  icon: <CustomIcon type="logout" width={18} height={18} />,
                   label: formatMessage({
                     id: 'header.avatar.logout',
                   }),
