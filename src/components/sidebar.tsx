@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import { useMemo, useState } from 'react';
 import { saleMenus } from '@/modules/sales/menu-sale';
@@ -23,9 +24,11 @@ export default function Sidebar() {
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
     >
-      <div css={logoStyle}>
-        <CustomIcon type="logo" width={60} height={60} />
-      </div>
+      <Link to={'/sales/kpi'}>
+        <div css={logoStyle}>
+          <CustomIcon type="logo" width={60} height={60} />
+        </div>
+      </Link>
       <Menu items={menus} />
     </Sider>
   );

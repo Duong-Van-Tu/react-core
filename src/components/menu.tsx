@@ -19,7 +19,6 @@ export default function Menu({ items }: MenuProps) {
   const language = useRootSelector((state) => state.locale.language);
   const navigate = useNavigate();
   const onMenuClick = (path: string) => {
-    console.log('path: ', path);
     setSelectedKey(path);
     navigate(path);
   };
@@ -46,19 +45,18 @@ export default function Menu({ items }: MenuProps) {
           item.children
             ? {
                 key: item.code,
-                icon: <CustomIcon type={item.icon || ''} width={20} height={20} />,
+                icon: <CustomIcon type={item.icon!} width={20} height={20} />,
                 label: item.label[language],
                 children: item.children.map((child) => ({
                   key: child.path,
-                  icon: <CustomIcon type={child.icon || ''} width={16} height={16} />,
+                  icon: <CustomIcon type={child.icon!} width={16} height={16} />,
                   label: child.label[language],
                 })),
               }
             : {
                 key: item.path,
-                icon: <CustomIcon type={item.icon || ''} width={20} height={20} />,
+                icon: <CustomIcon type={item.icon!} width={20} height={20} />,
                 label: item.label[language],
-                children: [],
               },
         ) as any
       }
