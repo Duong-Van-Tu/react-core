@@ -1,4 +1,4 @@
-export const enUS_documentTitle = {
+export const enUS_title = {
   'title.document.kpi': 'KPI',
   'title.document.privileges': 'Privileges',
   'title.document.relationship': 'Relationship',
@@ -7,4 +7,6 @@ export const enUS_documentTitle = {
   'title.document.setting': 'Setting',
   'title.document.payroll': 'Payroll',
   'title.document.report': 'Report',
+  'title.form.login': 'Sign In',
+  'title.form.register': 'Sign Up',
 };

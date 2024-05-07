@@ -1,7 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import type { FormProps } from 'antd';
 import { Button, Checkbox, Form, Input } from 'antd';
+import type { FormProps } from 'antd';
+import { useLocale } from '@/hooks/locale.hook';
 
 type FieldType = {
   username?: string;
@@ -18,9 +19,10 @@ const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
 };
 
 export default function LoginPage() {
+  const { formatMessage } = useLocale();
   return (
     <div css={formContainerStyle}>
-      <h3 css={loginTitleStyle}>Đăng Nhập</h3>
+      <h3 css={loginTitleStyle}>{formatMessage({ id: 'title.form.login' })}</h3>
       <Form
         name="basic"
         layout="vertical"
@@ -31,7 +33,7 @@ export default function LoginPage() {
         css={formStyle}
       >
         <Form.Item<FieldType>
-          label="Username"
+          label={formatMessage({ id: 'form.auth.username' })}
           name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
@@ -39,7 +41,7 @@ export default function LoginPage() {
         </Form.Item>
 
         <Form.Item<FieldType>
-          label="Password"
+          label={formatMessage({ id: 'form.auth.password' })}
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
@@ -47,12 +49,12 @@ export default function LoginPage() {
         </Form.Item>
 
         <Form.Item<FieldType> name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
+          <Checkbox>{formatMessage({ id: 'form.auth.rememberMe' })}</Checkbox>
         </Form.Item>
 
         <Form.Item>
           <Button css={submitBtnStyle} type="primary" htmlType="submit">
-            Submit
+            {formatMessage({ id: 'title.form.login' })}
           </Button>
         </Form.Item>
       </Form>

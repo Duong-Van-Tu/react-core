@@ -124,7 +124,14 @@ function Router() {
             </WrapperRouteComponent>
           }
         />
-        <Route path="login" element={<LoginPage />} />
+        <Route
+          path="login"
+          element={
+            <WrapperRouteComponent titleId="title.form.login">
+              <LoginPage />
+            </WrapperRouteComponent>
+          }
+        />
         <Route path="not-found" element={<NotfoundPage />} />
         <Route path="*" element={<Navigate to="/not-found" replace />} />
       </Routes>

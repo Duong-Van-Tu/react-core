@@ -10,7 +10,7 @@ type MiddlewareProps = {
 };
 
 export default function Middleware({ mode = 'public', children }: MiddlewareProps) {
-  const isFetchedProfile = false;
+  const isFetchedProfile = true;
   const user = null;
 
   //   useEffect(() => {

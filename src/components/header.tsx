@@ -2,12 +2,12 @@
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { useLocale } from '@/hooks/locale.hook';
 import { Avatar, Breadcrumb, Button, Dropdown, Layout, Tooltip } from 'antd';
+import { setLocaleAction } from '@/redux/slicers/locale.slice';
+import { useLocale } from '@/hooks/locale.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { CustomIcon } from './icons';
 import Notice from './notice';
-import { setLocaleAction } from '@/redux/slicers/locale.slice';
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -58,12 +58,6 @@ export default function Header() {
         <Tooltip title={formatMessage({ id: 'title.document.setting' })}>
           <CustomIcon type="setting" width={20} height={20} />
         </Tooltip>
-
-        {/* <Tooltip title={formatMessage({ id: 'app.notice.messages' })}>
-          <Button css={bellBtn}>
-            <CustomIcon type="bell" width={20} height={20} color="#020202" />
-          </Button>
-        </Tooltip> */}
         <Notice />
         {logged && (
           <Dropdown

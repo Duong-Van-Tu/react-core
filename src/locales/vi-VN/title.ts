@@ -1,4 +1,4 @@
-export const viVN_documentTitle = {
+export const viVN_title = {
   'title.document.kpi': 'KPI',
   'title.document.privileges': 'Quyền lợi',
   'title.document.relationship': 'Mối quan hệ',
@@ -7,4 +7,6 @@ export const viVN_documentTitle = {
   'title.document.setting': 'Cài đặt',
   'title.document.payroll': 'Payroll',
   'title.document.report': 'Report',
+  'title.form.login': 'Đăng Nhập',
+  'title.form.register': 'Đăng Ký',
 };
