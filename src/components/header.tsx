@@ -1,13 +1,22 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import { Avatar, Breadcrumb, Button, Layout } from 'antd';
+import { Avatar, Breadcrumb, Button, Dropdown, Layout } from 'antd';
 import { useRootSelector } from '@/hooks/selector.hook';
-import { BellIcon, SettingIcon } from './icons';
+import { BellIcon, EnglishIcon, LanguageIcon, SettingIcon, ViVNIcon } from './icons';
+import { setLocaleAction } from '@/redux/slicers/locale.slice';
+import { useDispatch } from 'react-redux';
 
 export default function Header() {
+  const dispatch = useDispatch();
   const breadCrumbItems = useRootSelector((state) => state.breadcrumb.items);
+  const language = useRootSelector((state) => state.locale.language);
   const { Header: HeaderAntd } = Layout;
+  const selectLocale = ({ key }: { key: any }) => {
+    dispatch(setLocaleAction(key));
+    localStorage.setItem('locale', key);
+  };
+
   return (
     <HeaderAntd css={headerStyle}>
       {breadCrumbItems.length > 0 && (
@@ -19,6 +28,29 @@ export default function Header() {
         />
       )}
       <div css={headerRightStyle}>
+        <Dropdown
+          menu={{
+            onClick: (info) => selectLocale(info),
+            items: [
+              {
+                key: 'vi_VN',
+                icon: <ViVNIcon />,
+                disabled: language === 'vi_VN',
+                label: 'Tiếng Việt',
+              },
+              {
+                key: 'en_US',
+                icon: <EnglishIcon />,
+                disabled: language === 'en_US',
+                label: 'English',
+              },
+            ],
+          }}
+        >
+          <Button css={languageBtn}>
+            <LanguageIcon width={20} height={20} />
+          </Button>
+        </Dropdown>
         <Link to="/settings" css={settingLinkStyle}>
           <SettingIcon width={20} height={20} />
         </Link>
@@ -59,6 +91,13 @@ const breadcrumbStyle = css`
   }
 `;
 
+const languageBtn = css`
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  box-shadow: unset;
+`;
 const settingLinkStyle = css`
   display: flex;
   align-items: center;

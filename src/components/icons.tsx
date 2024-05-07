@@ -7,6 +7,9 @@ import Report from '@/assets/svg/report.svg?react';
 import Payroll from '@/assets/svg/payroll.svg?react';
 import Setting from '@/assets/svg/cog.svg?react';
 import Bell from '@/assets/svg/bell.svg?react';
+import Language from '@/assets/svg/icon_Google_Translate_logo.svg?react';
+import ViVN from '@/assets/svg/vi_VN.svg?react';
+import English from '@/assets/svg/english.svg?react';
 
 type Props = {
   width?: number;
@@ -42,6 +45,17 @@ export const BellIcon = (props: Props) => {
   return <Bell css={iconStyle(props)} {...props} />;
 };
 
+export const LanguageIcon = (props: Props) => {
+  return <Language css={iconStyle(props)} {...props} />;
+};
+
+export const ViVNIcon = (props: Props) => {
+  return <ViVN css={iconStyle(props)} {...props} />;
+};
+
+export const EnglishIcon = (props: Props) => {
+  return <English css={iconStyle(props)} {...props} />;
+};
 const iconStyle = (props: Props) => css`
   path {
     fill: ${props.color};
