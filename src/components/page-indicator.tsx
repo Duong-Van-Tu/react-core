@@ -8,7 +8,7 @@ export const PageIndicator = () => {
   return (
     <div css={indicatorStyle}>
       <CustomIcon type="logo" width={100} height={100} />
-      <Spinner width={60} height={60} />
+      <Spinner width={50} height={50} />
     </div>
   );
 };
@@ -16,8 +16,8 @@ export const PageIndicator = () => {
 const indicatorStyle = css`
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1rem;
+  margin-top: calc(100vh / 2 - 15rem);
 `;

@@ -12,6 +12,7 @@ import Language from '@/assets/svg/icon_Google_Translate_logo.svg?react';
 import ViVN from '@/assets/svg/vi_VN.svg?react';
 import English from '@/assets/svg/english.svg?react';
 import Logout from '@/assets/svg/logout.svg?react';
+import Loading from '@/assets/svg/loading.svg?react';
 
 type Props = {
   width?: number;
@@ -57,8 +58,12 @@ export const CustomIcon = (props: Props) => {
   if (type === 'logout') {
     return <Logout css={iconStyle(props)} {...props} />;
   }
+  if (type === 'loading') {
+    return <Loading css={iconStyle(props)} {...props} />;
+  }
   return null;
 };
+
 const iconStyle = (props: Props) => css`
   path {
     fill: ${props.color};

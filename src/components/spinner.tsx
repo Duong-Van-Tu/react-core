@@ -1,21 +1,21 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
+import { CustomIcon } from './icons';
 
 type SpinnerProps = {
   width: number;
   height: number;
 };
 export function Spinner({ width, height }: SpinnerProps) {
-  return <div css={spinnerStyle(width, height)}></div>;
+  return (
+    <div css={spinnerStyle}>
+      <CustomIcon type="loading" width={width} height={height} color="#3498db" />
+    </div>
+  );
 }
 
-const spinnerStyle = (width: number, height: number) => css`
-  border: 0.4rem solid #f3f3f3;
-  border-top: 0.4rem solid #3498db;
-  border-radius: 50%;
-  width: ${width / 10}rem;
-  height: ${height / 10}rem;
+const spinnerStyle = css`
   animation: spin 1s linear infinite;
   @keyframes spin {
     0% {
