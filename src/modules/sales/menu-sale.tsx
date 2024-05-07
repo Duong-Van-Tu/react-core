@@ -3,7 +3,7 @@ export const saleMenus: MenuItem = {
   code: 'sales',
   icon: 'user-group',
   label: {
-    vi_VN: 'Bán hàng',
+    vi_VN: 'Sale',
     en_US: 'Sale',
   },
   children: [

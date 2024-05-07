@@ -51,12 +51,14 @@ export default function Header() {
             ],
           }}
         >
-          <Button css={languageBtn}>
+          <Button css={iconBtn}>
             <CustomIcon type="languae" width={20} height={20} />
           </Button>
         </Dropdown>
         <Tooltip title={formatMessage({ id: 'title.document.setting' })}>
-          <CustomIcon type="setting" width={20} height={20} />
+          <Button css={iconBtn}>
+            <CustomIcon type="setting" width={20} height={20} />
+          </Button>
         </Tooltip>
         <Notice />
         {logged && (
@@ -116,16 +118,12 @@ const breadcrumbStyle = css`
   }
 `;
 
-const languageBtn = css`
+const iconBtn = css`
   display: flex;
   align-items: center;
   padding: 0;
   border: none;
   box-shadow: unset;
-`;
-const settingLinkStyle = css`
-  display: flex;
-  align-items: center;
 `;
 
 const avatarStyle = css`
