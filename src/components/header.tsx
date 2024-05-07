@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { Avatar, Breadcrumb, Button, Layout } from 'antd';
 import { useRootSelector } from '@/hooks/selector.hook';
-import { BellIcon, SettingIcon } from './icons';
+import { CustomIcon } from './icons';
 
 export default function Header() {
   const breadCrumbItems = useRootSelector((state) => state.breadcrumb.items);
@@ -20,10 +20,10 @@ export default function Header() {
       )}
       <div css={headerRightStyle}>
         <Link to="/settings" css={settingLinkStyle}>
-          <SettingIcon width={20} height={20} />
+          <CustomIcon type="setting" width={20} height={20} />
         </Link>
         <Button css={bellBtn}>
-          <BellIcon width={20} height={20} color="#020202" />
+          <CustomIcon type="bell" width={20} height={20} color="#020202" />
         </Button>
         <Avatar
           css={avatarStyle}

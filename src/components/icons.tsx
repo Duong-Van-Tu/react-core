@@ -12,34 +12,32 @@ type Props = {
   width?: number;
   height?: number;
   color?: string;
+  type: string;
 };
-
-export const LogoIcon = (props: Props) => {
-  return <Logo {...props} />;
-};
-
-export const UsersIcon = (props: Props) => {
-  return <Users css={iconStyle(props)} {...props} />;
-};
-
-export const DotIcon = (props: Props) => {
-  return <Dot {...props} />;
-};
-
-export const ReportIcon = (props: Props) => {
-  return <Report {...props} />;
-};
-
-export const PayrollIcon = (props: Props) => {
-  return <Payroll {...props} />;
-};
-
-export const SettingIcon = (props: Props) => {
-  return <Setting {...props} />;
-};
-
-export const BellIcon = (props: Props) => {
-  return <Bell css={iconStyle(props)} {...props} />;
+export const CustomIcon = (props: Props) => {
+  const { type } = props;
+  if (type === 'logo') {
+    return <Logo {...props} />;
+  }
+  if (type === 'dot') {
+    return <Dot {...props} />;
+  }
+  if (type === 'user') {
+    return <Users css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'reports') {
+    return <Report {...props} />;
+  }
+  if (type === 'setting') {
+    return <Setting {...props} />;
+  }
+  if (type === 'bell') {
+    return <Bell css={iconStyle(props)} {...props} />;
+  }
+  if (type === 'payroll') {
+    return <Payroll {...props} />;
+  }
+  return null;
 };
 
 const iconStyle = (props: Props) => css`

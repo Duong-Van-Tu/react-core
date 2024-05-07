@@ -1,12 +1,13 @@
-import type { GetProp, MenuProps } from 'antd';
-import { ReportIcon } from '@/components/icons';
 
-type MenuItem = GetProp<MenuProps, 'items'>[number];
 
-export const reportMenus: MenuItem[] = [
+import { MenuItem } from '@/types/menu';
+export const reportMenus: MenuItem = 
   {
-    key: 'reports',
-    icon: <ReportIcon color="#333" width={20} height={20} />,
-    label: 'Reports',
-  },
-];
+    code: 'reports',
+    icon: "reports",
+    path: '/reports',
+    label: {
+      vi_VN: "Báo cáo",
+      en_US: "Reports",
+    }
+  }

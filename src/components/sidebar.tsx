@@ -6,14 +6,14 @@ import { saleMenus } from '@/modules/sales/menu-sale';
 import { settingMenus } from '@/modules/settings/menu-settings';
 import { payrollMenus } from '@/modules/payroll/menu-payroll';
 import { reportMenus } from '@/modules/reports/menu-reports';
-import { LogoIcon } from './icons';
+import { CustomIcon } from './icons';
 import Menu from './menu';
 
 export default function Sidebar() {
   const { Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const menus = useMemo(() => {
-    return [...saleMenus, ...payrollMenus, ...reportMenus, ...settingMenus];
+    return [saleMenus, payrollMenus, reportMenus, settingMenus];
   }, []);
   return (
     <Sider
@@ -24,7 +24,7 @@ export default function Sidebar() {
       onCollapse={(value) => setCollapsed(value)}
     >
       <div css={logoStyle}>
-        <LogoIcon width={60} height={60} />
+        <CustomIcon type="logo" width={60} height={60} />
       </div>
       <Menu items={menus} />
     </Sider>

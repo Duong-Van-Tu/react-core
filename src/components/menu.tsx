@@ -2,27 +2,25 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { Menu as MenuAntd } from 'antd';
-import type { MenuProps as MenuPropsAntd } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
-import { getFirstPathCode, getLastPathCode } from '@/utils/get-pathCode';
+import { getFirstPathCode } from '@/utils/get-pathCode';
+import { MenuItem } from '@/types/menu';
+import { CustomIcon } from './icons';
+import { useRootSelector } from '@/hooks/selector.hook';
 
-type MenuItem = Required<MenuPropsAntd>['items'][number];
 type MenuProps = {
   items: MenuItem[];
 };
 
 export default function Menu({ items }: MenuProps) {
   const { pathname } = useLocation();
-  const [selectedKey, setSelectedKey] = useState<string>(getLastPathCode(pathname));
+  const [selectedKey, setSelectedKey] = useState<string>(pathname);
   const [openKey, setOpenKey] = useState<string>();
-
+  const language = useRootSelector((state) => state.locale.language);
   const navigate = useNavigate();
-
-  const handleMenuClick: MenuPropsAntd['onClick'] = (e) => {
-    const path = e.keyPath
-      .reverse()
-      .map((key) => `/${key}`)
-      .join('');
+  const onMenuClick = (path: string) => {
+    console.log('path: ', path);
+    setSelectedKey(path);
     navigate(path);
   };
 
@@ -33,8 +31,8 @@ export default function Menu({ items }: MenuProps) {
 
   useEffect(() => {
     const firstPathCode = getFirstPathCode(pathname);
-    const lastPathCode = getLastPathCode(pathname);
-    setSelectedKey(lastPathCode);
+    // const lastPathCode = getLastPathCode(pathname);
+    setSelectedKey(pathname);
     setOpenKey(firstPathCode);
   }, [pathname, setSelectedKey, setOpenKey]);
 
@@ -43,11 +41,31 @@ export default function Menu({ items }: MenuProps) {
       theme="light"
       mode="inline"
       css={menuStyle}
-      items={items}
+      items={
+        items.map((item) =>
+          item.children
+            ? {
+                key: item.code,
+                icon: <CustomIcon type={item.icon || ''} width={20} height={20} />,
+                label: item.label[language],
+                children: item.children.map((child) => ({
+                  key: child.path,
+                  icon: <CustomIcon type={child.icon || ''} width={16} height={16} />,
+                  label: child.label[language],
+                })),
+              }
+            : {
+                key: item.path,
+                icon: <CustomIcon type={item.icon || ''} width={20} height={20} />,
+                label: item.label[language],
+                children: [],
+              },
+        ) as any
+      }
       defaultOpenKeys={[getFirstPathCode(pathname)]}
       selectedKeys={[selectedKey]}
       openKeys={openKey ? [openKey] : undefined}
-      onClick={handleMenuClick}
+      onSelect={(k) => onMenuClick(k.key)}
       onOpenChange={onOpenChange}
     />
   );
@@ -62,7 +80,15 @@ const menuStyle = css`
       fill: #fff;
     }
   }
-
+  .ant-menu-submenu .ant-menu-submenu-title {
+    svg path {
+      fill: black;
+    }
+  }
+  .ant-menu-submenu,
+  .ant-menu-item span {
+    font-weight: 600;
+  }
   .ant-menu-submenu-selected .ant-menu-submenu-title {
     background: #9a4c1e;
     font-size: 1.6rem;
