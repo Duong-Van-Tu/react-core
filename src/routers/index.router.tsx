@@ -12,11 +12,20 @@ import { SettingPage } from '@/modules/settings/pages';
 import PayrollPage from '@/modules/payroll/pages';
 import { ReportPage } from '@/modules/reports/pages';
 import WrapperRouteComponent from './config';
+import { PageIndicator } from '@/components/page-indicator';
 
 function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route
+          index
+          element={
+            <Middleware mode="non-login">
+              <PageIndicator />
+            </Middleware>
+          }
+        />
         <Route
           path="sales/kpi"
           element={

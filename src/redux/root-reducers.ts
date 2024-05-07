@@ -3,6 +3,7 @@ import loading, { loadingInitialState } from './slicers/loading.slice';
 import apiMessage, { apiMessageInitialState } from './slicers/api-message.slice';
 import breadcrumb, { breadcrumbInitialState } from './slicers/breadcrumb.slice';
 import locale, { localeInitialState } from './slicers/locale.slice';
+import auth, { authInitialState } from './slicers/auth.slice';
 import saleReducer from '@/modules/sales/reducers';
 
 export type RawRootState = typeof rootState;
@@ -11,12 +12,14 @@ export const allInitialStates = {
   apiMessageInitialState,
   breadcrumbInitialState,
   localeInitialState,
+  authInitialState,
 };
 const rootState = {
   loading,
   apiMessage,
   breadcrumb,
   locale,
+  auth,
   sale: saleReducer,
 };
 const rootReducer = combineReducers(rootState);
