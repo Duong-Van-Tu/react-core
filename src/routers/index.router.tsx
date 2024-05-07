@@ -32,71 +32,87 @@ function Router() {
         <Route
           path="sales/privileges"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <PrivilegesPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.privileges">
+              <Middleware mode="private">
+                <MainLayout>
+                  <PrivilegesPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
         <Route
           path="sales/relationship"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <RelationshipPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.relationship">
+              <Middleware mode="private">
+                <MainLayout>
+                  <RelationshipPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
         <Route
           path="sales/opportunity"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <OpportunityPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.opportunity">
+              <Middleware mode="private">
+                <MainLayout>
+                  <OpportunityPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
         <Route
           path="sales/sale-kit"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <SaleKitPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.saleKit">
+              <Middleware mode="private">
+                <MainLayout>
+                  <SaleKitPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
         <Route
           path="settings"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <SettingPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.setting">
+              <Middleware mode="private">
+                <MainLayout>
+                  <SettingPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
+
         <Route
           path="payroll"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <PayrollPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.payroll">
+              <Middleware mode="private">
+                <MainLayout>
+                  <PayrollPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
+
         <Route
           path="reports"
           element={
-            <Middleware mode="private">
-              <MainLayout>
-                <ReportPage />
-              </MainLayout>
-            </Middleware>
+            <WrapperRouteComponent titleId="title.report">
+              <Middleware mode="private">
+                <MainLayout>
+                  <ReportPage />
+                </MainLayout>
+              </Middleware>
+            </WrapperRouteComponent>
           }
         />
         <Route path="login" element={<LoginPage />} />
