@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Menu as MenuAntd } from 'antd';
 import type { MenuProps as MenuPropsAntd } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
+import { getFirstPathCode, getLastPathCode } from '@/utils/get-pathCode';
 
 type MenuItem = Required<MenuPropsAntd>['items'][number];
 type MenuProps = {
@@ -12,17 +13,17 @@ type MenuProps = {
 
 export default function Menu({ items }: MenuProps) {
   const { pathname } = useLocation();
-  const [selectedKey, setSelectedKey] = useState<string>('kpi');
+  const [selectedKey, setSelectedKey] = useState<string>(getLastPathCode(pathname));
   const [openKey, setOpenKey] = useState<string>();
 
   const navigate = useNavigate();
 
   const handleMenuClick: MenuPropsAntd['onClick'] = (e) => {
-    const pathname = e.keyPath
+    const path = e.keyPath
       .reverse()
       .map((key) => `/${key}`)
       .join('');
-    navigate(pathname);
+    navigate(path);
   };
 
   const onOpenChange = (keys: string[]) => {
@@ -31,11 +32,11 @@ export default function Menu({ items }: MenuProps) {
   };
 
   useEffect(() => {
-    const pathElements = pathname.split('/').filter(Boolean);
-    const lastPathElement = pathElements[pathElements.length - 1];
-    setSelectedKey(lastPathElement);
-    setOpenKey(pathElements[0]);
-  }, [pathname]);
+    const firstPathCode = getFirstPathCode(pathname);
+    const lastPathCode = getLastPathCode(pathname);
+    setSelectedKey(lastPathCode);
+    setOpenKey(firstPathCode);
+  }, [pathname, setSelectedKey, setOpenKey]);
 
   return (
     <MenuAntd
@@ -43,7 +44,7 @@ export default function Menu({ items }: MenuProps) {
       mode="inline"
       css={menuStyle}
       items={items}
-      defaultOpenKeys={['sales']}
+      defaultOpenKeys={[getFirstPathCode(pathname)]}
       selectedKeys={[selectedKey]}
       openKeys={openKey ? [openKey] : undefined}
       onClick={handleMenuClick}

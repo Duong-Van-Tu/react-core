@@ -16,3 +16,14 @@ export function getFirstPathCode(path: string) {
 
   return activeKey;
 }
+
+export function getLastPathCode(path: string) {
+  const index = path.lastIndexOf('/');
+
+  if (index === -1) {
+    return '';
+  }
+
+  const lastPathCode = path.slice(index + 1);
+  return lastPathCode;
+}
