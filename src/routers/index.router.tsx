@@ -13,6 +13,7 @@ import PayrollPage from '@/modules/payroll/pages';
 import { ReportPage } from '@/modules/reports/pages';
 import WrapperRouteComponent from './config';
 import { PageIndicator } from '@/components/page-indicator';
+import AuthLayout from '@/layouts/auth.layout';
 
 function Router() {
   return (
@@ -128,7 +129,11 @@ function Router() {
           path="login"
           element={
             <WrapperRouteComponent titleId="title.form.login">
-              <LoginPage />
+              <Middleware mode="non-login">
+                <AuthLayout>
+                  <LoginPage />
+                </AuthLayout>
+              </Middleware>
             </WrapperRouteComponent>
           }
         />

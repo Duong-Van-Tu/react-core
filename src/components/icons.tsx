@@ -20,8 +20,9 @@ type Props = {
   color?: string;
   type: string;
 };
+
 export const CustomIcon = (props: Props) => {
-  const { type } = props;
+  const { type, color } = props;
   if (type === 'logo') {
     return <Logo {...props} />;
   }
@@ -29,44 +30,43 @@ export const CustomIcon = (props: Props) => {
     return <Dot {...props} />;
   }
   if (type === 'user') {
-    return <User css={iconStyle(props)} {...props} />;
+    return <User css={iconStyle(color!)} {...props} />;
   }
   if (type === 'user-group') {
-    return <UserGroup css={iconStyle(props)} {...props} />;
+    return <UserGroup css={iconStyle(color!)} {...props} />;
   }
   if (type === 'reports') {
     return <Report {...props} />;
   }
   if (type === 'setting') {
-    return <Setting {...props} />;
+    return <Setting css={iconStyle(color!)} {...props} />;
   }
   if (type === 'bell') {
-    return <Bell css={iconStyle(props)} {...props} />;
+    return <Bell css={iconStyle(color!)} {...props} />;
   }
   if (type === 'payroll') {
-    return <Payroll {...props} />;
+    return <Payroll css={iconStyle(color!)} {...props} />;
   }
   if (type === 'languae') {
-    return <Language css={iconStyle(props)} {...props} />;
+    return <Language css={iconStyle(color!)} {...props} />;
   }
   if (type === 'vi') {
-    return <ViVN css={iconStyle(props)} {...props} />;
+    return <ViVN css={iconStyle(color!)} {...props} />;
   }
   if (type === 'en') {
-    return <English css={iconStyle(props)} {...props} />;
+    return <English css={iconStyle(color!)} {...props} />;
   }
   if (type === 'logout') {
-    return <Logout css={iconStyle(props)} {...props} />;
+    return <Logout css={iconStyle(color!)} {...props} />;
   }
   if (type === 'loading') {
-    return <Loading css={iconStyle(props)} {...props} />;
+    return <Loading css={iconStyle(color!)} {...props} />;
   }
   return null;
 };
 
-const iconStyle = (props: Props) => css`
+const iconStyle = (color: string) => css`
   path {
-    fill: ${props.color};
-    border: 1px solid ${props.color};
+    fill: ${color};
   }
 `;

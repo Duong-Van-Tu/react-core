@@ -1,4 +1,4 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 interface NonLoginProps {
   children: React.ReactElement;
@@ -8,8 +8,9 @@ interface NonLoginProps {
 
 export default function NonLogin({ user, isFetchedProfile, children }: NonLoginProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   if (!user) {
-    return <Navigate to="/login" />;
+    navigate('/login');
   }
   if (isFetchedProfile || !!user) {
     if (!!user && location.pathname.includes('/login')) {

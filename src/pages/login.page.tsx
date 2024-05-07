@@ -67,7 +67,7 @@ const formContainerStyle = css`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-height: 100vh;
+  margin-top: 12rem;
 `;
 
 const submitBtnStyle = css`
