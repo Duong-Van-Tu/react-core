@@ -1,5 +1,5 @@
 export const enUS_title = {
-  'title.breadcrumb.sale': 'Sale',
+  'title.document.sale': 'Sale',
   'title.document.kpi': 'KPI',
   'title.document.privileges': 'Privileges',
   'title.document.relationship': 'Relationship',
