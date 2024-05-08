@@ -29,7 +29,7 @@ export default function AuthLayout({ children }: MainLayoutProps) {
   }, [dispatch]);
 
   return (
-    <Layout>
+    <Layout css={layoutStyle}>
       <Header css={headerAuthStyle}>
         <div css={headerContainerStyle}>
           <Dropdown
@@ -63,6 +63,10 @@ export default function AuthLayout({ children }: MainLayoutProps) {
   );
 }
 
+const layoutStyle = css`
+  min-height: 100vh;
+`;
+
 const headerAuthStyle = css`
   background: #fff;
   justify-content: center;
@@ -80,6 +84,7 @@ const headerContainerStyle = css`
 
 const content = css`
   background: #fff;
+  padding-top: 12rem;
 `;
 
 const iconBtn = css`

@@ -35,17 +35,21 @@ export default function LoginPage() {
         <Form.Item<FieldType>
           label={formatMessage({ id: 'form.auth.username' })}
           name="username"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[
+            { required: true, message: formatMessage({ id: 'form.input.require.username' }) },
+          ]}
         >
-          <Input />
+          <Input size="large" autoComplete="username" />
         </Form.Item>
 
         <Form.Item<FieldType>
           label={formatMessage({ id: 'form.auth.password' })}
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[
+            { required: true, message: formatMessage({ id: 'form.input.require.password' }) },
+          ]}
         >
-          <Input.Password />
+          <Input.Password size="large" autoComplete="current-password" />
         </Form.Item>
 
         <Form.Item<FieldType> name="remember" valuePropName="checked">
@@ -53,7 +57,7 @@ export default function LoginPage() {
         </Form.Item>
 
         <Form.Item>
-          <Button css={submitBtnStyle} type="primary" htmlType="submit">
+          <Button size="large" css={submitBtnStyle} type="primary" htmlType="submit">
             {formatMessage({ id: 'title.form.login' })}
           </Button>
         </Form.Item>
@@ -67,7 +71,6 @@ const formContainerStyle = css`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 12rem;
 `;
 
 const submitBtnStyle = css`
@@ -76,10 +79,11 @@ const submitBtnStyle = css`
 
 const formStyle = css`
   min-width: 30rem;
-  margin-top: 2rem;
+  margin-top: 3rem;
 `;
 
 const loginTitleStyle = css`
   font-weight: 500;
-  font-size: 2.4rem;
+  font-size: 2.6rem;
+  line-height: 2.6rem;
 `;

@@ -1,23 +1,27 @@
 /** @jsxImportSource @emotion/react */
 
 import { css } from '@emotion/react';
-import { CustomIcon } from './icons';
 import { Spinner } from './spinner';
+import logo from '@/assets/images/logo.png';
 
 export const PageIndicator = () => {
   return (
     <div css={indicatorStyle}>
-      <CustomIcon type="logo" width={100} height={100} />
+      <img src={logo} alt="logo" />
       <Spinner width={50} height={50} />
     </div>
   );
 };
 
 const indicatorStyle = css`
-  min-height: 100vh;
+  min-height: calc(100vh - 8rem);
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   gap: 1rem;
-  margin-top: calc(100vh / 2 - 15rem);
+  img {
+    width: 15rem;
+    height: 12rem;
+  }
 `;
