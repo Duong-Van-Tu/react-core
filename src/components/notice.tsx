@@ -5,6 +5,7 @@ import { useLocale } from '@/hooks/locale.hook';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { CustomIcon } from './icons';
+import { EventStatus } from '@/enum/event.enum';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { TabPane } = Tabs;
@@ -92,4 +93,5 @@ const bellBtn = css`
   border: none;
   display: flex;
   align-items: center;
+  box-shadow: unset;
 `;

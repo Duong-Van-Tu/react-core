@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import logo from '@/assets/images/logo.png';
-import { saleMenus } from '@/modules/sales/menu-sale';
+import { saleMenus } from '@/modules/sales/menu.sale';
 import { settingMenus } from '@/modules/settings/menu-settings';
 import { payrollMenus } from '@/modules/payroll/menu-payroll';
 import { reportMenus } from '@/modules/reports/menu-reports';

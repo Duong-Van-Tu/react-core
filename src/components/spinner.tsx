@@ -4,8 +4,8 @@ import { css } from '@emotion/react';
 import { CustomIcon } from './icons';
 
 type SpinnerProps = {
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 };
 export function Spinner({ width, height }: SpinnerProps) {
   return (

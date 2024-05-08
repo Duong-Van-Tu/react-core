@@ -13,6 +13,7 @@ import ViVN from '@/assets/svg/vi_VN.svg?react';
 import English from '@/assets/svg/english.svg?react';
 import Logout from '@/assets/svg/logout.svg?react';
 import Loading from '@/assets/svg/loading.svg?react';
+import ThreeDot from '@/assets/svg/three-dot.svg?react';
 
 type Props = {
   width?: number;
@@ -61,6 +62,9 @@ export const CustomIcon = (props: Props) => {
   }
   if (type === 'loading') {
     return <Loading css={iconStyle(color!)} {...props} />;
+  }
+  if (type === 'three-dot') {
+    return <ThreeDot css={iconStyle(color!)} {...props} />;
   }
   return null;
 };

@@ -12,7 +12,7 @@ export const saleMenus: MenuItem = {
       icon: 'dot',
       path: '/sales/kpi',
       label: {
-        vi_VN: 'KPI',
+        vi_VN: 'Mục tiêu',
         en_US: 'KPI',
       },
     },

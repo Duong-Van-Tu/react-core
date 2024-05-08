@@ -31,5 +31,5 @@ const layoutStyle = css`
 `;
 
 const content = css`
-  margin: 2rem;
+  margin: 3rem;
 `;
