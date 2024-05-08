@@ -6,4 +6,6 @@ export const viVN_table = {
   'table.column.kpi.targetPoint': 'Điểm mục tiêu',
   'table.column.kpi.implementationTime': 'Thời gian thực hiện',
   'table.column.kpi.calculationMethod': 'Cách tính',
+  'table.pagination.button.prev': 'Trang trước',
+  'table.pagination.button.next': 'Trang kế',
 };

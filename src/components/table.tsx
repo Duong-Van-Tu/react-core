@@ -1,9 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Table, PaginationProps } from 'antd';
 import type { GetProp, TableProps } from 'antd';
 import { css } from '@emotion/react';
 import { CustomIcon } from './icons';
+import { useLocale } from '@/hooks/locale.hook';
 
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 
@@ -25,12 +26,13 @@ type TableParams = {
 const antIcon = <CustomIcon type="loading" color="#3498db" />;
 export function TableCustom(props: TableCustomProps) {
   const { columns, data, loading } = props;
+  const { formatMessage } = useLocale();
   const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
     if (type === 'prev') {
-      return <a>Previous</a>;
+      return <a>{formatMessage({ id: 'table.pagination.button.prev' })}</a>;
     }
     if (type === 'next') {
-      return <a>Next</a>;
+      return <a>{formatMessage({ id: 'table.pagination.button.next' })}</a>;
     }
     return originalElement;
   };
@@ -45,11 +47,14 @@ export function TableCustom(props: TableCustomProps) {
   });
 
   const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
-    setTableParams({
-      pagination,
+    setTableParams((prevParams) => ({
+      pagination: {
+        ...prevParams.pagination,
+        ...pagination,
+      },
       filters,
       ...sorter,
-    });
+    }));
 
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
     }
