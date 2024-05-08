@@ -1,16 +1,17 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
-import { useLocale } from '@/hooks/locale.hook';
 
 export function ReportPage() {
   const dispatch = useDispatch();
-  const { formatMessage } = useLocale();
 
   useEffect(() => {
     const breadCrumbItems = [
       {
-        title: formatMessage({ id: 'title.document.report' }),
+        title: {
+          vi_VN: 'Report',
+          en_US: 'Report',
+        },
       },
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));

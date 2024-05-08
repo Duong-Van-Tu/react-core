@@ -1,19 +1,25 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
-import { useLocale } from '@/hooks/locale.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 export default function OpportunityPage() {
   const dispatch = useDispatch();
-  const { formatMessage } = useLocale();
-
+  const language = useRootSelector((state) => state.locale.language);
+  console.log({ language });
   useEffect(() => {
     const breadCrumbItems = [
       {
-        title: formatMessage({ id: 'title.breadcrumb.sale' }),
+        title: {
+          vi_VN: 'Sale',
+          en_US: 'Sale',
+        },
       },
       {
-        title: formatMessage({ id: 'title.document.opportunity' }),
+        title: {
+          vi_VN: 'Quyền lợi',
+          en_US: 'Opportunity',
+        },
       },
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));

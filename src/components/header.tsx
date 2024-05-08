@@ -26,7 +26,9 @@ export default function Header() {
         <Breadcrumb
           css={breadcrumbStyle}
           items={breadCrumbItems.map((item) =>
-            item.link ? { title: <Link to={item.link}>{item.title}</Link> } : { title: item.title },
+            item.link
+              ? { title: <Link to={item.link}>{item.title[language]}</Link> }
+              : { title: item.title[language] },
           )}
         />
       )}

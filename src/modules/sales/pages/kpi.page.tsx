@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
-import { useLocale } from '@/hooks/locale.hook';
 
 export default function KPIPage() {
   const dispatch = useDispatch();
-  const { formatMessage } = useLocale();
 
   useEffect(() => {
     const breadCrumbItems = [
       {
-        title: formatMessage({ id: 'title.breadcrumb.sale' }),
+        title: {
+          vi_VN: 'Sale',
+          en_US: 'Sale',
+        },
       },
       {
-        title: formatMessage({ id: 'title.document.kpi' }),
+        title: {
+          vi_VN: 'KPI',
+          en_US: 'KPI',
+        },
       },
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));

@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type BreadcrumbItem = {
-  title: string;
+  title: {
+    vi_VN: string;
+    en_US: string;
+  };
   link?: string;
 };
 export type BreadcrumbState = {

@@ -1,21 +1,26 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
-import { useLocale } from '@/hooks/locale.hook';
 
 export default function RelationshipPage() {
   const dispatch = useDispatch();
-  const { formatMessage } = useLocale();
 
   useEffect(() => {
     const breadCrumbItems = [
       {
-        title: formatMessage({ id: 'title.breadcrumb.sale' }),
+        title: {
+          vi_VN: 'Sale',
+          en_US: 'Sale',
+        },
       },
       {
-        title: formatMessage({ id: 'title.document.relationship' }),
+        title: {
+          vi_VN: 'Mối quan hệ',
+          en_US: 'relationship',
+        },
       },
     ];
+
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
   }, [dispatch]);
 

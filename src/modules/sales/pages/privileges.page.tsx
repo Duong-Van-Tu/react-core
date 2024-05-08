@@ -1,19 +1,23 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
-import { useLocale } from '@/hooks/locale.hook';
 
 export default function PrivilegesPage() {
   const dispatch = useDispatch();
-  const { formatMessage } = useLocale();
 
   useEffect(() => {
     const breadCrumbItems = [
       {
-        title: formatMessage({ id: 'title.breadcrumb.sale' }),
+        title: {
+          vi_VN: 'Sale',
+          en_US: 'Sale',
+        },
       },
       {
-        title: formatMessage({ id: 'title.document.privileges' }),
+        title: {
+          vi_VN: 'Cơ hội',
+          en_US: 'Privileges',
+        },
       },
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
