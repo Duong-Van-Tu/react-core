@@ -18,7 +18,6 @@ export default function Header() {
   const { Header: HeaderAntd } = Layout;
   const selectLocale = ({ key }: { key: any }) => {
     dispatch(setLocaleAction(key));
-    localStorage.setItem('locale', key);
   };
 
   return (

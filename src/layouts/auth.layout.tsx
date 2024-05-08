@@ -21,7 +21,6 @@ export default function AuthLayout({ children }: MainLayoutProps) {
 
   const selectLocale = ({ key }: { key: any }) => {
     dispatch(setLocaleAction(key));
-    localStorage.setItem('locale', key);
   };
   const { formatMessage } = useLocale();
 
@@ -68,10 +67,11 @@ const headerAuthStyle = css`
   background: #fff;
   justify-content: center;
   border-bottom: 0.5px solid #edebeb;
+  padding-right: 2rem;
 `;
 
 const headerContainerStyle = css`
-  max-width: 120rem;
+  max-width: 130rem;
   height: 100%;
   display: flex;
   justify-content: flex-end;

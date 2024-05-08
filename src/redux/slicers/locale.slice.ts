@@ -14,6 +14,7 @@ const slice = createSlice({
   reducers: {
     setLocaleAction(state, { payload }: PayloadAction<Locale>) {
       state.language = payload;
+      localStorage.setItem('locale', payload);
     },
   },
 });
