@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
-import { Table } from 'antd';
+import { useCallback, useState } from 'react';
+import { Table, PaginationProps } from 'antd';
 import type { GetProp, TableProps } from 'antd';
 import { css } from '@emotion/react';
 import { CustomIcon } from './icons';
@@ -25,11 +25,22 @@ type TableParams = {
 const antIcon = <CustomIcon type="loading" color="#3498db" />;
 export function TableCustom(props: TableCustomProps) {
   const { columns, data, loading } = props;
+  const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
+    if (type === 'prev') {
+      return <a>Previous</a>;
+    }
+    if (type === 'next') {
+      return <a>Next</a>;
+    }
+    return originalElement;
+  };
 
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
-      pageSize: 14,
+      pageSize: 3,
+      position: ['bottomCenter'],
+      itemRender: itemRender,
     },
   });
 
