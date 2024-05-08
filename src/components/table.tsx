@@ -40,7 +40,7 @@ export function TableCustom(props: TableCustomProps) {
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
-      pageSize: 3,
+      pageSize: 10,
       position: ['bottomCenter'],
       itemRender: itemRender,
     },
