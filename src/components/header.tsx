@@ -34,6 +34,7 @@ export default function Header() {
       )}
       <div css={headerRightStyle}>
         <Dropdown
+          placement="bottomRight"
           menu={{
             onClick: (info) => selectLocale(info),
             items: [
@@ -53,7 +54,7 @@ export default function Header() {
           }}
         >
           <Button css={iconBtn}>
-            <CustomIcon type="languae" width={20} height={20} />
+            <CustomIcon type="languae" width={18} height={18} />
           </Button>
         </Dropdown>
         <Tooltip title={formatMessage({ id: 'title.document.setting' })}>

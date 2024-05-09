@@ -2,13 +2,11 @@
 import { css } from '@emotion/react';
 import { Button, Form, Input } from 'antd';
 import type { FormProps } from 'antd';
-import { Link } from 'react-router-dom';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 
 type FieldType = {
   email?: string;
-  password?: string;
 };
 
 const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
@@ -19,13 +17,13 @@ const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
   console.log('Failed:', errorInfo);
 };
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   const { formatMessage } = useLocale();
   return (
     <div css={formContainerStyle}>
       <div css={formContentStyle}>
         <CustomIcon type="logo" width={90} height={90} />
-        <h3 css={loginTitleStyle}>{formatMessage({ id: 'title.form.login' })}</h3>
+        <h3 css={loginTitleStyle}>{formatMessage({ id: 'title.form.forgotPassword' })}</h3>
         <Form
           name="basic"
           layout="vertical"
@@ -43,24 +41,11 @@ export default function LoginPage() {
             <Input size="large" autoComplete="email" />
           </Form.Item>
 
-          <Form.Item<FieldType>
-            label={<span css={labelFormItem}>{formatMessage({ id: 'form.auth.password' })}</span>}
-            name="password"
-            rules={[
-              { required: true, message: formatMessage({ id: 'form.input.require.password' }) },
-            ]}
-          >
-            <Input.Password size="large" autoComplete="current-password" />
-          </Form.Item>
-
           <Form.Item>
             <Button size="large" css={submitBtnStyle} type="primary" htmlType="submit">
-              {formatMessage({ id: 'title.form.login' })}
+              {formatMessage({ id: 'title.form.forgotPassword' })}
             </Button>
           </Form.Item>
-          <Link to="/forgot-password" css={forgotPasswordLink}>
-            Quên mật khẩu?
-          </Link>
         </Form>
       </div>
     </div>
@@ -110,15 +95,4 @@ const loginTitleStyle = css`
   font-size: 2.6rem;
   line-height: 2.6rem;
   margin-top: 2rem;
-`;
-
-const forgotPasswordLink = css`
-  width: 100%;
-  display: block;
-  text-align: center;
-  color: #0070b8;
-  &:hover {
-    color: #0070b8;
-    opacity: 0.85;
-  }
 `;

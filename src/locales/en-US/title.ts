@@ -9,5 +9,5 @@ export const enUS_title = {
   'title.document.payroll': 'Payroll',
   'title.document.report': 'Report',
   'title.form.login': 'Sign In',
-  'title.form.register': 'Sign Up',
+  'title.form.forgotPassword': 'Forgot Password',
 };

@@ -14,6 +14,7 @@ import { ReportPage } from '@/modules/reports/pages';
 import WrapperRouteComponent from './config';
 import { PageIndicator } from '@/components/page-indicator';
 import AuthLayout from '@/layouts/auth.layout';
+import ForgotPasswordPage from '@/pages/forgot-password.page';
 
 function Router() {
   return (
@@ -132,6 +133,18 @@ function Router() {
               <Middleware mode="non-login">
                 <AuthLayout>
                   <LoginPage />
+                </AuthLayout>
+              </Middleware>
+            </WrapperRouteComponent>
+          }
+        />
+        <Route
+          path="forgot-password"
+          element={
+            <WrapperRouteComponent titleId="title.form.forgotPassword">
+              <Middleware mode="public">
+                <AuthLayout>
+                  <ForgotPasswordPage />
                 </AuthLayout>
               </Middleware>
             </WrapperRouteComponent>

@@ -9,5 +9,5 @@ export const viVN_title = {
   'title.document.payroll': 'Payroll',
   'title.document.report': 'Report',
   'title.form.login': 'Đăng Nhập',
-  'title.form.register': 'Đăng Ký',
+  'title.form.forgotPassword': 'Quên mật khẩu',
 };

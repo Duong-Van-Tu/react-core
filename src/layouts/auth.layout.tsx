@@ -103,4 +103,8 @@ const iconBtn = css`
     font-size: 1.6rem;
     font-weight: 500;
   }
+  &:hover {
+    color: unset !important;
+    opacity: 0.8;
+  }
 `;

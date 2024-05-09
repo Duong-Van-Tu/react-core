@@ -8,7 +8,7 @@ import Report from '@/assets/svg/report.svg?react';
 import Payroll from '@/assets/svg/payroll.svg?react';
 import Setting from '@/assets/svg/cog.svg?react';
 import Bell from '@/assets/svg/bell.svg?react';
-import Language from '@/assets/svg/icon_Google_Translate_logo.svg?react';
+import Language from '@/assets/svg/language.svg?react';
 import ViVN from '@/assets/svg/vi_VN.svg?react';
 import English from '@/assets/svg/english.svg?react';
 import Logout from '@/assets/svg/logout.svg?react';
