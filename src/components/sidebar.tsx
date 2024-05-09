@@ -25,7 +25,7 @@ export default function Sidebar() {
       onCollapse={(value) => setCollapsed(value)}
     >
       <Link to={'/sales/kpi'}>
-        <div css={logoStyle(collapsed ? 60 : 130, collapsed ? 50 : 85)}>
+        <div css={logoStyle(collapsed ? 60 : 90, collapsed ? 60 : 90)}>
           <img src={logo} />
         </div>
       </Link>

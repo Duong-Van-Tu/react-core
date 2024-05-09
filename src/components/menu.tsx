@@ -72,8 +72,9 @@ export default function Menu({ items }: MenuProps) {
 const menuStyle = css`
   .ant-menu-item-selected,
   .ant-menu-submenu-selected .ant-menu-item-selected {
-    background: #9a4c1e;
+    background: #f1933c;
     color: #fff;
+
     svg path {
       fill: #fff;
     }
@@ -88,16 +89,15 @@ const menuStyle = css`
     font-weight: 600;
   }
   .ant-menu-submenu-selected .ant-menu-submenu-title {
-    background: #9a4c1e;
+    background: #f1933c;
     font-size: 1.6rem;
     color: #fff;
-
     .ant-menu-title-content a {
       color: #fff;
     }
 
     &:hover {
-      background: #9a4c1e;
+      background: #f1933c;
       opacity: 0.9;
     }
   }
@@ -115,9 +115,9 @@ const menuStyle = css`
 
   .ant-menu-sub .ant-menu-item-selected {
     background: unset;
-    color: #9a4c1e;
+    color: #f1933c;
     svg path {
-      fill: #9a4c1e;
+      fill: #f1933c;
     }
   }
 
