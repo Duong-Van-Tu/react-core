@@ -14,6 +14,8 @@ import English from '@/assets/svg/english.svg?react';
 import Logout from '@/assets/svg/logout.svg?react';
 import Loading from '@/assets/svg/loading.svg?react';
 import ThreeDot from '@/assets/svg/three-dot.svg?react';
+import Previous from '@/assets/svg/previous.svg?react';
+import Next from '@/assets/svg/next.svg?react';
 
 type Props = {
   width?: number;
@@ -65,6 +67,12 @@ export const CustomIcon = (props: Props) => {
   }
   if (type === 'three-dot') {
     return <ThreeDot css={iconStyle(color!)} {...props} />;
+  }
+  if (type === 'previous') {
+    return <Previous css={iconStyle(color!)} {...props} />;
+  }
+  if (type === 'next') {
+    return <Next css={iconStyle(color!)} {...props} />;
   }
   return null;
 };

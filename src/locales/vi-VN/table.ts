@@ -6,6 +6,13 @@ export const viVN_table = {
   'table.column.kpi.targetPoint': 'Điểm mục tiêu',
   'table.column.kpi.implementationTime': 'Thời gian thực hiện',
   'table.column.kpi.calculationMethod': 'Cách tính',
+  'table.column.opportunity.customers': 'Khách hàng',
+  'table.column.opportunity.decisionMakers': 'Người quyết định',
+  'table.column.opportunity.technicalLeads': 'Người phụ trách kỹ thuật',
+  'table.column.opportunity.beneficiaries': 'Người hưởng thụ',
+  'table.column.opportunity.customerNeeds': 'Nhu cầu khách hàng',
+  'table.column.opportunity.expectedTime': 'Thời điểm dự kiến cơ hội diễn ra',
+  'table.column.opportunity.budget': 'Budget',
   'table.pagination.button.prev': 'Trang trước',
   'table.pagination.button.next': 'Trang kế',
 };

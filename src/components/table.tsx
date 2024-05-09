@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from 'react';
-import { Table, PaginationProps } from 'antd';
+import { Table, PaginationProps, Button } from 'antd';
 import type { GetProp, TableProps } from 'antd';
 import { css } from '@emotion/react';
 import { CustomIcon } from './icons';
@@ -8,12 +8,8 @@ import { useLocale } from '@/hooks/locale.hook';
 
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 
-type ColumnsType<T> = TableProps<T>['columns'];
-
-type TableCustomProps = {
-  columns: ColumnsType<any>;
-  data: any[];
-  loading: boolean;
+type TableCustom = TableProps & {
+  onTableChange?: () => void;
 };
 
 type TableParams = {
@@ -24,29 +20,39 @@ type TableParams = {
 };
 
 const antIcon = <CustomIcon type="loading" color="#3498db" />;
-export function TableCustom(props: TableCustomProps) {
-  const { columns, data, loading } = props;
+export function TableCustom(props: TableCustom) {
+  const { onTableChange, loading, pagination } = props;
   const { formatMessage } = useLocale();
   const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
     if (type === 'prev') {
-      return <a>{formatMessage({ id: 'table.pagination.button.prev' })}</a>;
+      return (
+        <Button css={btnSwitchBtn}>
+          <CustomIcon type="previous" width={14} height={12} />
+          <span> {formatMessage({ id: 'table.pagination.button.prev' })}</span>
+        </Button>
+      );
     }
     if (type === 'next') {
-      return <a>{formatMessage({ id: 'table.pagination.button.next' })}</a>;
+      return (
+        <Button css={btnSwitchBtn}>
+          <span>{formatMessage({ id: 'table.pagination.button.next' })}</span>
+          <CustomIcon type="next" width={14} height={12} />
+        </Button>
+      );
     }
     return originalElement;
   };
 
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
-      current: 1,
-      pageSize: 10,
+      ...pagination,
       position: ['bottomCenter'],
       itemRender: itemRender,
     },
   });
 
   const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
+    onTableChange?.();
     setTableParams((prevParams) => ({
       pagination: {
         ...prevParams.pagination,
@@ -62,20 +68,34 @@ export function TableCustom(props: TableCustomProps) {
 
   return (
     <Table
+      {...props}
       css={tableStyle}
-      columns={columns}
-      rowKey={(record) => record.key}
-      dataSource={data}
       pagination={tableParams.pagination}
-      loading={{ indicator: antIcon, spinning: loading }}
+      loading={{ indicator: antIcon, spinning: !!loading }}
       onChange={handleTableChange}
-      scroll={{ x: 1400, y: 600 }}
     />
   );
 }
 
+const btnSwitchBtn = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
+  &:hover {
+    svg {
+      path {
+        fill: #4096ff;
+      }
+    }
+  }
+`;
+
 const tableStyle = css`
   background: #fff;
+  border-radius: 0.4rem;
+  box-shadow: 0.03px 0.1px 2px #cecccc;
+  margin-top: 3rem;
   .ant-spin-spinning {
     svg {
       width: 4rem;
@@ -88,6 +108,31 @@ const tableStyle = css`
       }
       100% {
         transform: rotate(360deg);
+      }
+    }
+  }
+
+  .ant-pagination {
+    padding: 0 3rem;
+    .ant-pagination-prev {
+      margin-right: auto;
+    }
+    .ant-pagination-next {
+      margin-left: auto;
+    }
+  }
+
+  .ant-pagination-disabled {
+    button {
+      cursor: default;
+      user-select: none;
+      opacity: 0.8;
+    }
+    button:hover {
+      svg {
+        path {
+          fill: unset;
+        }
       }
     }
   }

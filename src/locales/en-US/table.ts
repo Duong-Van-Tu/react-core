@@ -6,6 +6,13 @@ export const enUS_table = {
   'table.column.kpi.targetPoint': 'Target point',
   'table.column.kpi.implementationTime': 'Implementation time',
   'table.column.kpi.calculationMethod': 'Calculation method',
+  'table.column.opportunity.customers': 'Customers',
+  'table.column.opportunity.decisionMakers': 'Decision-makers',
+  'table.column.opportunity.technicalLeads': 'Technical leads',
+  'table.column.opportunity.beneficiaries': 'Beneficiaries',
+  'table.column.opportunity.customerNeeds': 'Customer needs',
+  'table.column.opportunity.expectedTime': 'Expected opportunity occurrence time',
+  'table.column.opportunity.budget': 'Budget',
   'table.pagination.button.prev': 'Previous',
   'table.pagination.button.next': 'Next',
 };

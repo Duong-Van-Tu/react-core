@@ -1,6 +1,6 @@
 export const viVN_title = {
   'title.breadcrumb.sale': 'Sale',
-  'title.document.kpi': 'KPI',
+  'title.document.kpi': 'Mục tiêu',
   'title.document.privileges': 'Quyền lợi',
   'title.document.relationship': 'Mối quan hệ',
   'title.document.opportunity': 'Cơ hội',
