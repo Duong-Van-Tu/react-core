@@ -1,14 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { Fragment, useEffect } from 'react';
-import { Button, Dropdown, TableProps } from 'antd';
-import type { MenuProps } from 'antd';
 import { css } from '@emotion/react';
+import { Fragment, useEffect } from 'react';
+import { TableProps } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
 import { DataKPIType } from '../type.sale';
+import { KPIDropdown } from '../components/dropdown/kpi.dropdown';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 const data: DataKPIType[] = [
@@ -27,24 +27,6 @@ const data: DataKPIType[] = [
 export default function KPIPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      label: <span>Gửi yêu cầu chỉnh sửa</span>,
-    },
-    {
-      key: '2',
-      label: <span>Chốt KPI</span>,
-    },
-    {
-      key: '3',
-      label: <span>Đánh giá</span>,
-    },
-    {
-      key: '4',
-      label: <span>Xem báo cáo</span>,
-    },
-  ];
 
   const columns: ColumnsType<DataKPIType> = [
     {
@@ -68,7 +50,7 @@ export default function KPIPage() {
       render: (reality) => reality,
     },
     {
-      title: formatMessage({ id: 'table.column.kpi.targetPoint' }),
+      title: formatMessage({ id: 'table.column.targetPoint' }),
       dataIndex: 'targetPoint',
       render: (targetPoint) => targetPoint,
     },
@@ -87,13 +69,7 @@ export default function KPIPage() {
       dataIndex: 'calculationMethod',
       fixed: 'right',
       width: '6%',
-      render: () => (
-        <Dropdown menu={{ items }} placement="bottomRight">
-          <Button css={actionIconBtn}>
-            <CustomIcon type="three-dot" width={16} height={18} />
-          </Button>
-        </Dropdown>
-      ),
+      render: () => <KPIDropdown />,
     },
   ];
 
@@ -121,7 +97,7 @@ export default function KPIPage() {
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.kpi' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
-        <span>10 KPI</span>
+        <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
       </div>
       <TableCustom
         columns={columns}
@@ -146,11 +122,4 @@ const titleStyle = css`
   font-size: 1.8rem;
   line-height: 2.3rem;
   font-weight: 600;
-`;
-
-const actionIconBtn = css`
-  background: none;
-  border: none;
-  box-shadow: unset;
-  padding: 0;
 `;

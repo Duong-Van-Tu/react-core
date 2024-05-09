@@ -19,3 +19,22 @@ export type DataOpportunityType = {
   expectedTime: string;
   budget: string;
 };
+
+export type DataPrivilegesType = {
+  key: number;
+  beneficiaryName: string;
+  fixedMonthlySalary: string;
+  totalTargetVariableSalary: string;
+  actualVariableSalary: string;
+  status: string;
+};
+
+export type DataRelationshipType = {
+  key: number;
+  jobPosition: string;
+  targetLevel: string;
+  upgrade: string;
+  responsiblePerson: string;
+  status: string;
+  targetPoint: string;
+};

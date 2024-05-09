@@ -1,3 +1,4 @@
+import { viVN_dropdown } from './dropdown';
 import { viVN_form } from './form';
 import { viVN_language } from './language';
 import { viVN_notice } from './notice';
@@ -12,6 +13,7 @@ const vi_VN = {
   ...viVN_notice,
   ...viVN_form,
   ...viVN_table,
+  ...viVN_dropdown,
 };
 
 export default vi_VN;

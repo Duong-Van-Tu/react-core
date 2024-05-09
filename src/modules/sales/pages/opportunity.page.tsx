@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { Fragment, useEffect } from 'react';
-import { Button, Dropdown, TableProps } from 'antd';
-import type { MenuProps } from 'antd';
 import { css } from '@emotion/react';
+import { Fragment, useEffect } from 'react';
+import { TableProps } from 'antd';
+
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
 import { DataOpportunityType } from '../type.sale';
+import { OpportunityDropdown } from '../components/dropdown/opportunity.dropdown';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 const data: DataOpportunityType[] = [
@@ -27,36 +28,10 @@ const data: DataOpportunityType[] = [
 export default function OpportunityPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const items: MenuProps['items'] = [
-    {
-      key: '1',
-      label: <span>Gửi yêu cầu chỉnh sửa</span>,
-    },
-    {
-      key: '2',
-      label: <span>Gán cơ hội cho Sale/NPP</span>,
-    },
-    {
-      key: '3',
-      label: <span>Cập nhật cơ hội</span>,
-    },
-    {
-      key: '4',
-      label: <span>Đóng cơ hội</span>,
-    },
-    {
-      key: '5',
-      label: <span>Xem báo cáo kết quả</span>,
-    },
-    {
-      key: '6',
-      label: <span>Xoá</span>,
-    },
-  ];
 
   const columns: ColumnsType<DataOpportunityType> = [
     {
-      title: formatMessage({ id: 'table.column.opportunity.customers' }),
+      title: formatMessage({ id: 'table.column.customers' }),
       dataIndex: 'customers',
       render: (customers) => customers,
     },
@@ -96,13 +71,7 @@ export default function OpportunityPage() {
       dataIndex: 'calculationMethod',
       fixed: 'right',
       width: '6%',
-      render: () => (
-        <Dropdown menu={{ items }} placement="bottomRight">
-          <Button css={actionIconBtn}>
-            <CustomIcon type="three-dot" width={16} height={18} />
-          </Button>
-        </Dropdown>
-      ),
+      render: () => <OpportunityDropdown />,
     },
   ];
 
@@ -130,7 +99,7 @@ export default function OpportunityPage() {
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
-        <span>10 KPI</span>
+        <span>10 {formatMessage({ id: 'title.document.opportunity' })}</span>
       </div>
       <TableCustom
         columns={columns}
@@ -155,11 +124,4 @@ const titleStyle = css`
   font-size: 1.8rem;
   line-height: 2.3rem;
   font-weight: 600;
-`;
-
-const actionIconBtn = css`
-  background: none;
-  border: none;
-  box-shadow: unset;
-  padding: 0;
 `;
