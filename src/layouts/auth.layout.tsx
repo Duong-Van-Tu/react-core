@@ -8,6 +8,7 @@ import { setLocaleAction } from '@/redux/slicers/locale.slice';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
+import bgFooter from '@/assets/images/bg-footer.png';
 
 type MainLayoutProps = {
   children: ReactNode;
@@ -84,7 +85,11 @@ const headerContainerStyle = css`
 
 const content = css`
   background: #fff;
-  padding-top: 12rem;
+  padding-top: 10rem;
+  background-image: url(${bgFooter});
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 100% 50%;
 `;
 
 const iconBtn = css`
