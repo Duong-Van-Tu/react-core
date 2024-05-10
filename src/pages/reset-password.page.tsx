@@ -4,22 +4,22 @@ import { Button, Form, Input } from 'antd';
 import type { FormProps } from 'antd';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 type FieldType = {
-  passwordNew?: string;
-  passwordConfirmNew?: string;
+  password: string;
+  confirmPassword: string;
 };
 
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-  console.log('Success:', values);
-};
-
-const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
 export default function ResetPasswordPage() {
   const { formatMessage } = useLocale();
+  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
+    console.log('Success:', values);
+  };
+
+  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
   return (
     <div css={formContainerStyle}>
       <div css={formContentStyle}>
@@ -29,7 +29,7 @@ export default function ResetPasswordPage() {
             {formatMessage({ id: 'title.back' })}
           </Link>
         </div>
-        <h3 css={loginTitleStyle}>{formatMessage({ id: 'title.form.resetPassword' })}</h3>
+        <h3 css={resetPasswordTitleStyle}>{formatMessage({ id: 'title.form.resetPassword' })}</h3>
         <Form
           name="basic"
           layout="vertical"
@@ -41,44 +41,42 @@ export default function ResetPasswordPage() {
         >
           <Form.Item<FieldType>
             label={
-              <span css={labelFormItem}>{formatMessage({ id: 'form.auth.passwordNew' })}</span>
+              <span css={labelFormItem}>{formatMessage({ id: 'form.auth.newPassword' })}</span>
             }
-            name="passwordNew"
+            name="password"
             rules={[
-              { required: true, message: formatMessage({ id: 'form.input.require.passwordNew' }) },
+              { required: true, message: formatMessage({ id: 'form.input.require.newPassword' }) },
             ]}
           >
             <Input.Password
               size="large"
-              autoComplete="password"
-              placeholder={formatMessage({ id: 'form.auth.placeholder.passwordNew' })}
+              placeholder={formatMessage({ id: 'form.auth.newPasswordConfirm' })}
             />
           </Form.Item>
 
           <Form.Item<FieldType>
             label={
               <span css={labelFormItem}>
-                {formatMessage({ id: 'form.auth.passwordConfirmNew' })}
+                {formatMessage({ id: 'form.auth.newPasswordConfirm' })}
               </span>
             }
-            name="passwordConfirmNew"
+            name="confirmPassword"
             rules={[
               {
                 required: true,
-                message: formatMessage({ id: 'form.input.require.passwordConfirmNew' }),
+                message: formatMessage({ id: 'form.input.require.newPasswordConfirm' }),
               },
             ]}
           >
             <Input.Password
               size="large"
-              autoComplete="email"
-              placeholder={formatMessage({ id: 'form.auth.passwordConfirmNew' })}
+              placeholder={formatMessage({ id: 'form.auth.newPasswordConfirm' })}
             />
           </Form.Item>
 
           <Form.Item>
             <Button size="large" css={submitBtnStyle} type="primary" htmlType="submit">
-              {formatMessage({ id: 'title.form.login' })}
+              {formatMessage({ id: 'form.action.update' })}
             </Button>
           </Form.Item>
         </Form>
@@ -126,7 +124,7 @@ const formStyle = css`
   width: 100%;
 `;
 
-const loginTitleStyle = css`
+const resetPasswordTitleStyle = css`
   font-weight: 500;
   font-size: 2.6rem;
   line-height: 2.6rem;
