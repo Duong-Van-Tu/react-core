@@ -10,4 +10,10 @@ export const enUS_title = {
   'title.document.report': 'Report',
   'title.form.login': 'Sign In',
   'title.form.forgotPassword': 'Forgot Password',
+  'title.tab.kpi.my': 'My KPI',
+  'title.tab.kpi.employee': `Employee's KPI`,
+  'title.tab.privileges.my': 'My privileges',
+  'title.tab.privileges.employee': `Employee's privileges`,
+  'title.tab.relationship.my': 'My relationships',
+  'title.tab.relationship.employee': `Employee's relationships`,
 };

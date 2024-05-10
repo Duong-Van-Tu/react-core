@@ -1,17 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Fragment, useEffect } from 'react';
-import { TableProps } from 'antd';
-
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
-import { DataOpportunityType } from '../type.sale';
-import { OpportunityDropdown } from '../components/dropdown/opportunity.dropdown';
+import { DataOpportunityType } from './type.opportunity';
+import { opportunityColumns } from './columns/opportunity.column';
 
-type ColumnsType<T> = TableProps<T>['columns'];
 const data: DataOpportunityType[] = [
   {
     key: 1,
@@ -28,52 +25,6 @@ const data: DataOpportunityType[] = [
 export default function OpportunityPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-
-  const columns: ColumnsType<DataOpportunityType> = [
-    {
-      title: formatMessage({ id: 'table.column.customers' }),
-      dataIndex: 'customers',
-      render: (customers) => customers,
-    },
-    {
-      title: formatMessage({ id: 'table.column.opportunity.decisionMakers' }),
-      dataIndex: 'decisionMakers',
-      render: (decisionMakers) => decisionMakers,
-    },
-    {
-      title: formatMessage({ id: 'table.column.opportunity.technicalLeads' }),
-      dataIndex: 'technicalLeads',
-      render: (technicalLeads) => technicalLeads,
-    },
-    {
-      title: formatMessage({ id: 'table.column.opportunity.beneficiaries' }),
-      dataIndex: 'beneficiaries',
-      render: (beneficiaries) => beneficiaries,
-    },
-    {
-      title: formatMessage({ id: 'table.column.opportunity.customerNeeds' }),
-      dataIndex: 'customerNeeds',
-      render: (customerNeeds) => customerNeeds,
-    },
-    {
-      title: formatMessage({ id: 'table.column.opportunity.expectedTime' }),
-      dataIndex: 'expectedTime',
-      render: (expectedTime) => expectedTime,
-    },
-    {
-      title: formatMessage({ id: 'table.column.opportunity.budget' }),
-      dataIndex: 'budget',
-      render: (budget) => budget,
-      width: '8%',
-    },
-    {
-      title: '',
-      dataIndex: 'calculationMethod',
-      fixed: 'right',
-      width: '6%',
-      render: () => <OpportunityDropdown />,
-    },
-  ];
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -102,7 +53,7 @@ export default function OpportunityPage() {
         <span>10 {formatMessage({ id: 'title.document.opportunity' })}</span>
       </div>
       <TableCustom
-        columns={columns}
+        columns={opportunityColumns}
         dataSource={data}
         loading={false}
         rowKey={(record) => record.key}

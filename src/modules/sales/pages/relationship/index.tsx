@@ -1,18 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import { Fragment, useEffect } from 'react';
-import { TableProps } from 'antd';
 import { css } from '@emotion/react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
-import { DataRelationshipType } from '../type.sale';
-import { KPIDropdown } from '../components/dropdown/kpi.dropdown';
-import { RelationshipDropdown } from '../components/dropdown/relationship.dropdown';
+import { DataRelationshipType } from './type.relationship';
+import { myRelationshipColumns } from './columns/my-relationship.column';
+import { Tabs, TabsProps } from 'antd';
+import { employeeRelationshipColumns } from './columns/employee-relationship';
 
-type ColumnsType<T> = TableProps<T>['columns'];
-const data: DataRelationshipType[] = [
+const myData: DataRelationshipType[] = [
   {
     key: 1,
     jobPosition: 'jobPosition',
@@ -24,51 +23,56 @@ const data: DataRelationshipType[] = [
   },
 ];
 
+const employeeData: DataRelationshipType[] = [
+  {
+    key: 1,
+    jobPosition: 'jobPosition employee',
+    upgrade: 'upgrade employee',
+    responsiblePerson: 'responsiblePerson employee',
+    targetLevel: 'targetLevel employee',
+    status: 'status employee',
+    targetPoint: 'targetPoint employee',
+  },
+];
+
 export default function RelationshipPage() {
   const dispatch = useDispatch();
-
   const { formatMessage } = useLocale();
 
-  const columns: ColumnsType<DataRelationshipType> = [
+  const items: TabsProps['items'] = [
     {
-      title: formatMessage({ id: 'table.column.relationship.jobPosition' }),
-      dataIndex: 'jobPosition',
-      render: (jobPosition) => jobPosition,
+      key: '1',
+      label: formatMessage({ id: 'title.tab.relationship.my' }),
+      children: (
+        <TableCustom
+          columns={myRelationshipColumns}
+          dataSource={myData}
+          loading={false}
+          rowKey={(record) => record.key}
+          pagination={{ current: 1, pageSize: 7 }}
+          scroll={{ x: 1450 }}
+        />
+      ),
     },
     {
-      title: formatMessage({ id: 'table.column.relationship.targetLevel' }),
-      dataIndex: 'targetLevel',
-      render: (targetLevel) => targetLevel,
-    },
-    {
-      title: formatMessage({ id: 'table.column.relationship.upgrade' }),
-      dataIndex: 'upgrade',
-      render: (upgrade) => upgrade,
-    },
-    {
-      title: formatMessage({ id: 'table.column.relationship.responsiblePerson' }),
-      dataIndex: 'responsiblePerson',
-      render: (responsiblePerson) => responsiblePerson,
-    },
-
-    {
-      title: formatMessage({ id: 'table.column.targetPoint' }),
-      dataIndex: 'targetPoint',
-      render: (targetPoint) => targetPoint,
-    },
-    {
-      title: formatMessage({ id: 'table.column.status' }),
-      dataIndex: 'status',
-      render: (status) => status,
-    },
-    {
-      title: '',
-      dataIndex: 'calculationMethod',
-      fixed: 'right',
-      width: '6%',
-      render: () => <RelationshipDropdown />,
+      key: '2',
+      label: formatMessage({ id: 'title.tab.relationship.employee' }),
+      children: (
+        <TableCustom
+          columns={employeeRelationshipColumns}
+          dataSource={employeeData}
+          loading={false}
+          rowKey={(record) => record.key}
+          pagination={{ current: 1, pageSize: 7 }}
+          scroll={{ x: 1450 }}
+        />
+      ),
     },
   ];
+
+  const onChange = (key: string) => {
+    console.log(key);
+  };
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -97,14 +101,7 @@ export default function RelationshipPage() {
         <CustomIcon width={8} height={8} type="dot" />
         <span>10 {formatMessage({ id: 'title.document.relationship' })}</span>
       </div>
-      <TableCustom
-        columns={columns}
-        dataSource={data}
-        loading={false}
-        rowKey={(record) => record.key}
-        pagination={{ current: 1, pageSize: 7 }}
-        scroll={{ x: 1450 }}
-      />
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </Fragment>
   );
 }

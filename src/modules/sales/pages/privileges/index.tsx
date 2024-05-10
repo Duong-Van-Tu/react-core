@@ -1,18 +1,16 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Fragment, useEffect } from 'react';
-import { TableProps } from 'antd';
-
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
-import { DataPrivilegesType } from '../type.sale';
-import { PrivilegesDropdown } from '../components/dropdown/privileges.dropdown';
+import { DataPrivilegesType } from './type.privileges';
+import { myPrivilegesColumns } from './columns/my-privileges.column';
+import { Tabs, TabsProps } from 'antd';
 
-type ColumnsType<T> = TableProps<T>['columns'];
-const data: DataPrivilegesType[] = [
+const myData: DataPrivilegesType[] = [
   {
     key: 1,
     beneficiaryName: 'beneficiaryName',
@@ -22,44 +20,56 @@ const data: DataPrivilegesType[] = [
     status: 'status',
   },
 ];
+
+const employeeData: DataPrivilegesType[] = [
+  {
+    key: 1,
+    beneficiaryName: 'beneficiaryName employee',
+    fixedMonthlySalary: 'fixedMonthlySalary employee',
+    totalTargetVariableSalary: 'totalTargetVariableSalary employee',
+    actualVariableSalary: 'actualVariableSalary employee',
+    status: 'status employee',
+  },
+];
+
 export default function PrivilegesPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
 
-  const columns: ColumnsType<DataPrivilegesType> = [
+  const items: TabsProps['items'] = [
     {
-      title: formatMessage({ id: 'table.column.privileges.beneficiaryName' }),
-      dataIndex: 'beneficiaryName',
-      render: (beneficiaryName) => beneficiaryName,
+      key: '1',
+      label: formatMessage({ id: 'title.tab.privileges.my' }),
+      children: (
+        <TableCustom
+          columns={myPrivilegesColumns}
+          dataSource={myData}
+          loading={false}
+          rowKey={(record) => record.key}
+          pagination={{ current: 1, pageSize: 7 }}
+          scroll={{ x: 1450 }}
+        />
+      ),
     },
     {
-      title: formatMessage({ id: 'table.column.privileges.fixedMonthlySalary' }),
-      dataIndex: 'fixedMonthlySalary',
-      render: (fixedMonthlySalary) => fixedMonthlySalary,
-    },
-    {
-      title: formatMessage({ id: 'table.column.privileges.totalTargetVariableSalary' }),
-      dataIndex: 'totalTargetVariableSalary',
-      render: (totalTargetVariableSalary) => totalTargetVariableSalary,
-    },
-    {
-      title: formatMessage({ id: 'table.column.privileges.actualVariableSalary' }),
-      dataIndex: 'actualVariableSalary',
-      render: (actualVariableSalary) => actualVariableSalary,
-    },
-    {
-      title: formatMessage({ id: 'table.column.status' }),
-      dataIndex: 'status',
-      render: (status) => status,
-    },
-    {
-      title: '',
-      dataIndex: 'calculationMethod',
-      fixed: 'right',
-      width: '6%',
-      render: () => <PrivilegesDropdown />,
+      key: '2',
+      label: formatMessage({ id: 'title.tab.privileges.employee' }),
+      children: (
+        <TableCustom
+          columns={myPrivilegesColumns}
+          dataSource={employeeData}
+          loading={false}
+          rowKey={(record) => record.key}
+          pagination={{ current: 1, pageSize: 7 }}
+          scroll={{ x: 1450 }}
+        />
+      ),
     },
   ];
+
+  const onChange = (key: string) => {
+    console.log(key);
+  };
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -87,14 +97,7 @@ export default function PrivilegesPage() {
         <CustomIcon width={8} height={8} type="dot" />
         <span>10 {formatMessage({ id: 'title.document.privileges' })}</span>
       </div>
-      <TableCustom
-        columns={columns}
-        dataSource={data}
-        loading={false}
-        rowKey={(record) => record.key}
-        pagination={{ current: 1, pageSize: 7 }}
-        scroll={{ x: 1450 }}
-      />
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </Fragment>
   );
 }

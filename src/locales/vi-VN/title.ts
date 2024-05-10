@@ -10,4 +10,10 @@ export const viVN_title = {
   'title.document.report': 'Report',
   'title.form.login': 'Đăng Nhập',
   'title.form.forgotPassword': 'Quên mật khẩu',
+  'title.tab.kpi.my': 'Mục tiêu của tôi',
+  'title.tab.kpi.employee': 'Mục tiêu của nhân viên',
+  'title.tab.privileges.my': 'Quyền lợi của tôi',
+  'title.tab.privileges.employee': 'Quyền lợi của nhân viên',
+  'title.tab.relationship.my': 'Mối quan hệ của tôi',
+  'title.tab.relationship.employee': 'Mối quan hệ của nhân viên',
 };
