@@ -1,4 +1,5 @@
 export const viVN_title = {
+  'form.action.update': 'Cập nhật',
   'title.back': 'Quay lại',
   'title.continue': 'Tiếp tục',
   'title.breadcrumb.sale': 'Sale',
