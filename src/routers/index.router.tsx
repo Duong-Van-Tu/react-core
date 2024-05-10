@@ -16,6 +16,7 @@ import { PageIndicator } from '@/components/page-indicator';
 import AuthLayout from '@/layouts/auth.layout';
 import ForgotPasswordPage from '@/pages/forgot-password.page';
 import EmailVerificationPage from '@/pages/email-verification.page';
+import ResetPasswordPage from '@/pages/reset-password.page';
 
 function Router() {
   return (
@@ -158,6 +159,18 @@ function Router() {
               <Middleware mode="public">
                 <AuthLayout>
                   <EmailVerificationPage />
+                </AuthLayout>
+              </Middleware>
+            </WrapperRouteComponent>
+          }
+        />
+        <Route
+          path="reset-password"
+          element={
+            <WrapperRouteComponent titleId="title.form.resetPassword">
+              <Middleware mode="public">
+                <AuthLayout>
+                  <ResetPasswordPage />
                 </AuthLayout>
               </Middleware>
             </WrapperRouteComponent>

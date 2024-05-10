@@ -12,6 +12,7 @@ export const viVN_title = {
   'title.document.report': 'Report',
   'title.form.login': 'Đăng Nhập',
   'title.form.forgotPassword': 'Quên mật khẩu',
+  'title.form.resetPassword': 'Đặt lại mật khẩu',
   'title.form.emailVerification': 'Xác thực email',
   'title.tab.kpi.my': 'Mục tiêu của tôi',
   'title.tab.kpi.employee': 'Mục tiêu của nhân viên',

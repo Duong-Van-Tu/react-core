@@ -5,7 +5,7 @@ import type { FormProps, GetProp } from 'antd';
 import type { OTPProps } from 'antd/es/input/OTP';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LocaleFormatter } from '@/components/locale-formatter';
 
 type FieldType = {
@@ -14,6 +14,7 @@ type FieldType = {
 
 export default function EmailVerificationPage() {
   const { formatMessage } = useLocale();
+  const navigate = useNavigate();
 
   const onChange: GetProp<typeof Input.OTP, 'onChange'> = (text) => {
     console.log('onChange:', text);
@@ -25,6 +26,7 @@ export default function EmailVerificationPage() {
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
+    navigate('/reset-password');
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
