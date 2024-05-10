@@ -102,7 +102,7 @@ const submitBtnStyle = css`
 
 const formStyle = css`
   margin-top: 2rem;
-  min-width: 40rem;
+  min-width: 34rem;
 `;
 
 const loginTitleStyle = css`

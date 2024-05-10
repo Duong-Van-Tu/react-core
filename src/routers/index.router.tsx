@@ -15,6 +15,7 @@ import WrapperRouteComponent from './config';
 import { PageIndicator } from '@/components/page-indicator';
 import AuthLayout from '@/layouts/auth.layout';
 import ForgotPasswordPage from '@/pages/forgot-password.page';
+import EmailVerificationPage from '@/pages/email-verification.page';
 
 function Router() {
   return (
@@ -145,6 +146,18 @@ function Router() {
               <Middleware mode="public">
                 <AuthLayout>
                   <ForgotPasswordPage />
+                </AuthLayout>
+              </Middleware>
+            </WrapperRouteComponent>
+          }
+        />
+        <Route
+          path="email-verification"
+          element={
+            <WrapperRouteComponent titleId="title.form.emailVerification">
+              <Middleware mode="public">
+                <AuthLayout>
+                  <EmailVerificationPage />
                 </AuthLayout>
               </Middleware>
             </WrapperRouteComponent>

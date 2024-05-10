@@ -1,3 +1,4 @@
+import { enUS_description } from './description';
 import { enUS_dropdown } from './dropdown';
 import { enUS_form } from './form';
 import { enUS_language } from './language';
@@ -14,6 +15,7 @@ const en_US = {
   ...enUS_form,
   ...enUS_table,
   ...enUS_dropdown,
+  ...enUS_description,
 };
 
 export default en_US;

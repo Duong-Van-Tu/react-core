@@ -1,4 +1,6 @@
 export const viVN_title = {
+  'title.back': 'Quay lại',
+  'title.continue': 'Tiếp tục',
   'title.breadcrumb.sale': 'Sale',
   'title.document.kpi': 'Mục tiêu',
   'title.document.privileges': 'Quyền lợi',
@@ -10,6 +12,7 @@ export const viVN_title = {
   'title.document.report': 'Report',
   'title.form.login': 'Đăng Nhập',
   'title.form.forgotPassword': 'Quên mật khẩu',
+  'title.form.emailVerification': 'Xác thực email',
   'title.tab.kpi.my': 'Mục tiêu của tôi',
   'title.tab.kpi.employee': 'Mục tiêu của nhân viên',
   'title.tab.privileges.my': 'Quyền lợi của tôi',

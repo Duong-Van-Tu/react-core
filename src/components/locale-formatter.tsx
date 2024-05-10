@@ -2,9 +2,15 @@ import { useIntl } from 'react-intl';
 
 type LocaleFormatterProps = {
   id: string;
+  email?: any;
 };
-export const LocaleFormatter = ({ id }: LocaleFormatterProps) => {
+export const LocaleFormatter = ({ id, email }: LocaleFormatterProps) => {
   const { formatMessage } = useIntl();
-
-  return <span>{formatMessage({ id })}</span>;
+  const descriptionMessage = formatMessage(
+    {
+      id,
+    },
+    { email },
+  );
+  return <span>{descriptionMessage}</span>;
 };

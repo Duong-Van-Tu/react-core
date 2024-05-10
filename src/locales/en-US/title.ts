@@ -1,4 +1,6 @@
 export const enUS_title = {
+  'title.back': 'Go back',
+  'title.continue': 'Continue',
   'title.document.sale': 'Sale',
   'title.document.kpi': 'KPI',
   'title.document.privileges': 'Privileges',
@@ -10,6 +12,7 @@ export const enUS_title = {
   'title.document.report': 'Report',
   'title.form.login': 'Sign In',
   'title.form.forgotPassword': 'Forgot Password',
+  'title.form.emailVerification': 'Email verification',
   'title.tab.kpi.my': 'My KPI',
   'title.tab.kpi.employee': `Employee's KPI`,
   'title.tab.privileges.my': 'My privileges',

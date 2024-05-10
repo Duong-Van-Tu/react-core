@@ -1,36 +1,47 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Button, Form, Input } from 'antd';
-import type { FormProps } from 'antd';
+import type { FormProps, GetProp } from 'antd';
+import type { OTPProps } from 'antd/es/input/OTP';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { LocaleFormatter } from '@/components/locale-formatter';
 
 type FieldType = {
-  email?: string;
+  otp?: string;
 };
 
-export default function ForgotPasswordPage() {
+export default function EmailVerificationPage() {
   const { formatMessage } = useLocale();
-  const navigate = useNavigate();
+
+  const onChange: GetProp<typeof Input.OTP, 'onChange'> = (text) => {
+    console.log('onChange:', text);
+  };
+
+  const sharedProps: OTPProps = {
+    onChange,
+  };
+
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
-    navigate('/email-verification');
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
+
   return (
     <div css={formContainerStyle}>
       <div css={formContentStyle}>
         <div css={goBackStyle}>
           <CustomIcon width={12} height={14} type="prev" />
-          <Link css={goBackLinkStyle} to="/login">
+          <Link css={goBackLinkStyle} to="/forgot-password">
             {formatMessage({ id: 'title.back' })}
           </Link>
         </div>
-        <h3 css={loginTitleStyle}>{formatMessage({ id: 'title.form.forgotPassword' })}</h3>
+        <h3 css={loginTitleStyle}>{formatMessage({ id: 'title.form.emailVerification' })}</h3>
+        <LocaleFormatter id="description.auth.emailVerification" email="tu@gmail.com" />
         <Form
           name="basic"
           layout="vertical"
@@ -41,17 +52,12 @@ export default function ForgotPasswordPage() {
           css={formStyle}
         >
           <Form.Item<FieldType>
-            label={<span css={labelFormItem}>{formatMessage({ id: 'form.auth.email' })}</span>}
-            name="email"
-            rules={[{ required: true, message: formatMessage({ id: 'form.input.require.email' }) }]}
+            name="otp"
+            rules={[{ required: true, message: formatMessage({ id: 'form.input.require.otp' }) }]}
           >
-            <Input
-              size="large"
-              autoComplete="email"
-              placeholder={formatMessage({ id: 'form.auth.email' })}
-            />
+            <Input.OTP formatter={(str) => str.toUpperCase()} {...sharedProps} />
           </Form.Item>
-
+          <Button css={resendCodeBtn}>{formatMessage({ id: 'form.input.auth.resendCode' })}</Button>
           <Form.Item>
             <Button size="large" css={submitBtnStyle} type="primary" htmlType="submit">
               {formatMessage({ id: 'title.continue' })}
@@ -78,12 +84,7 @@ const formContentStyle = css`
   box-shadow: 0.04px 0.1px 6px #d9dadb;
   background: #fff;
   min-width: 34rem;
-`;
-
-const labelFormItem = css`
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  font-weight: 500;
+  max-width: 34rem;
 `;
 
 const submitBtnStyle = css`
@@ -98,15 +99,22 @@ const submitBtnStyle = css`
 `;
 
 const formStyle = css`
-  margin-top: 2rem;
+  margin-top: 4rem;
   width: 100%;
+  .ant-otp {
+    width: 100%;
+    gap: 1.2rem;
+    input {
+      padding: 1rem;
+    }
+  }
 `;
 
 const loginTitleStyle = css`
   font-weight: 500;
   font-size: 2.6rem;
   line-height: 2.6rem;
-  margin-top: 2rem;
+  margin: 2rem 0;
 `;
 
 const goBackStyle = css`
@@ -114,7 +122,6 @@ const goBackStyle = css`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  margin-bottom: 2rem;
   gap: 0.3rem;
   &:hover {
     svg {
@@ -128,4 +135,12 @@ const goBackStyle = css`
 const goBackLinkStyle = css`
   font-size: 1.4rem;
   color: #000;
+`;
+
+const resendCodeBtn = css`
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  color: #0070b8;
 `;

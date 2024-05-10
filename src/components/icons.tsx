@@ -16,6 +16,7 @@ import Loading from '@/assets/svg/loading.svg?react';
 import ThreeDot from '@/assets/svg/three-dot.svg?react';
 import Previous from '@/assets/svg/previous.svg?react';
 import Next from '@/assets/svg/next.svg?react';
+import Prev from '@/assets/svg/prev.svg?react';
 
 type Props = {
   width?: number;
@@ -73,6 +74,9 @@ export const CustomIcon = (props: Props) => {
   }
   if (type === 'next') {
     return <Next css={iconStyle(color!)} {...props} />;
+  }
+  if (type === 'prev') {
+    return <Prev css={iconStyle(color!)} {...props} />;
   }
   return null;
 };
