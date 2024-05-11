@@ -40,35 +40,23 @@ export function KPIDropdown() {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: (
-        <button css={menuItemBtn} onClick={() => handleItemClick(MenuItem.RequestEdit)}>
-          {formatMessage({ id: 'title.dropdown.requestEdit' })}
-        </button>
-      ),
+      label: formatMessage({ id: 'title.dropdown.requestEdit' }),
+      onClick: () => handleItemClick(MenuItem.RequestEdit),
     },
     {
       key: '2',
-      label: (
-        <button css={menuItemBtn} onClick={() => handleItemClick(MenuItem.SetKPI)}>
-          {formatMessage({ id: 'title.dropdown.kpi.setKPI' })}
-        </button>
-      ),
+      label: formatMessage({ id: 'title.dropdown.kpi.setKPI' }),
+      onClick: () => handleItemClick(MenuItem.SetKPI),
     },
     {
       key: '3',
-      label: (
-        <button css={menuItemBtn} onClick={() => handleItemClick(MenuItem.Evaluation)}>
-          {formatMessage({ id: 'title.dropdown.kpi.evaluation' })}
-        </button>
-      ),
+      label: formatMessage({ id: 'title.dropdown.kpi.evaluation' }),
+      onClick: () => handleItemClick(MenuItem.Evaluation),
     },
     {
       key: '4',
-      label: (
-        <button css={menuItemBtn} onClick={() => handleItemClick(MenuItem.Report)}>
-          {formatMessage({ id: 'title.dropdown.kpi.report' })}
-        </button>
-      ),
+      label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+      onClick: () => handleItemClick(MenuItem.Report),
     },
   ];
 
@@ -86,13 +74,4 @@ const dropdownIcon = css`
   &:hover {
     opacity: 0.8;
   }
-`;
-
-const menuItemBtn = css`
-  background: none;
-  border: none;
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  width: 100%;
-  text-align: left;
 `;
