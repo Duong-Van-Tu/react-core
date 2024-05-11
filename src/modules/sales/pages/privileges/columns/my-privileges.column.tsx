@@ -1,10 +1,10 @@
 import { TableProps } from 'antd';
-import { DataMyPrivilegesType } from '../type.privileges';
+import { DataPrivilegesType } from '../type.privileges';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { PrivilegesDropdown } from '@/modules/sales/components/dropdown/privileges.dropdown';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const myPrivilegesColumns: ColumnsType<DataMyPrivilegesType> = [
+export const myPrivilegesColumns: ColumnsType<DataPrivilegesType> = [
   {
     title: <LocaleFormatter id="table.column.privileges.beneficiaryName" />,
     dataIndex: 'beneficiaryName',

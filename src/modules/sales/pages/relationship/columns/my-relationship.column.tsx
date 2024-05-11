@@ -1,10 +1,10 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { RelationshipDropdown } from '@/modules/sales/components/dropdown/relationship.dropdown';
-import { DataMyRelationshipType } from '../type.relationship';
+import { DataRelationshipType } from '../type.relationship';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const myRelationshipColumns: ColumnsType<DataMyRelationshipType> = [
+export const myRelationshipColumns: ColumnsType<DataRelationshipType> = [
   {
     title: <LocaleFormatter id="table.column.relationship.jobPosition" />,
     dataIndex: 'jobPosition',

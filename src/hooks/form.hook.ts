@@ -6,7 +6,7 @@ import { Messages } from '@/constants/message';
 import { isNumberAble } from '@/utils/number';
 
 export function trueNumber(y: Yup, { label = 'Field', required = false } = {}) {
-  let yup = y.mixed().test('Type', Messages.mustBeNumber(label), (value: any, e) => {
+  let yup = y.mixed().test('Type', Messages.mustBeNumber(label), (value: any) => {
     if (value === '' || value == null) {
       return true;
     }

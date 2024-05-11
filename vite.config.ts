@@ -47,4 +47,9 @@ export default defineConfig({
       include: '**/*.svg?react',
     }),
   ],
+  build: {
+    rollupOptions: {
+      external: [/^antd.*/],
+    },
+  },
 });
