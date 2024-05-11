@@ -4,6 +4,7 @@ import { ModalKPIType } from '../../../enum/kpi.enum';
 
 type ModalContexttype = {
   openModal: (modalName: string) => void;
+  closeModal: () => void;
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
 
@@ -33,7 +34,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   };
 
   return (
-    <ModalContext.Provider value={{ openModal }}>
+    <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal open={open} onCancel={closeModal} footer={null}>
         {currentModal === ModalKPIType.RequestEdit && <div>Request Edit Modal</div>}
