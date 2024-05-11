@@ -19,27 +19,28 @@ type ModalProviderProps = {
   children?: ReactNode;
 };
 export const ModalProvider = ({ children }: ModalProviderProps) => {
-  const [currentModal, setCurrentModal] = useState<string | null>(null);
+  const [currentModal, setCurrentModal] = useState<string>();
+  const [open, setOpen] = useState<boolean>(false);
 
   const openModal = (modalName: string) => {
     setCurrentModal(modalName);
+    setOpen(true);
   };
 
   const closeModal = () => {
-    setCurrentModal(null);
+    setCurrentModal(undefined);
+    setOpen(false);
   };
 
   return (
     <ModalContext.Provider value={{ openModal }}>
       {children}
-      {currentModal && (
-        <Modal open={true} onCancel={closeModal} title={currentModal} footer={null}>
-          {currentModal === ModalKPIType.RequestEdit && <div>Request Edit Modal</div>}
-          {currentModal === ModalKPIType.SetKPI && <div>Set KPI Modal</div>}
-          {currentModal === ModalKPIType.Evaluation && <div>Evaluation Modal</div>}
-          {currentModal === ModalKPIType.Report && <div>Report Modal</div>}
-        </Modal>
-      )}
+      <Modal open={open} onCancel={closeModal} footer={null}>
+        {currentModal === ModalKPIType.RequestEdit && <div>Request Edit Modal</div>}
+        {currentModal === ModalKPIType.SetKPI && <div>Set KPI Modal</div>}
+        {currentModal === ModalKPIType.Evaluation && <div>Evaluation Modal</div>}
+        {currentModal === ModalKPIType.Report && <div>Report Modal</div>}
+      </Modal>
     </ModalContext.Provider>
   );
 };
