@@ -1,40 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
-import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
-import { DataKPIType } from './type.kpi';
-import { myKPIColumns } from './columns/my-kpi.column';
 import { Tabs, TabsProps } from 'antd';
-import { employeeKPIColumns } from './columns/employee-kpi.column';
-
-const myData: DataKPIType[] = [
-  {
-    key: 1,
-    proposer: 'proposer1',
-    criteria: 'criteria1',
-    objective: 'objective1',
-    reality: 'reality1',
-    targetPoint: 'targetPoint1',
-    implementationTime: 'implementationTime1',
-    calculationMethod: 'calculationMethod1',
-  },
-];
-const employeeData: DataKPIType[] = [
-  {
-    key: 1,
-    proposer: 'proposer1 Employee',
-    criteria: 'criteria1 Employee',
-    objective: 'objective1 Employee',
-    reality: 'reality1 Employee',
-    targetPoint: 'targetPoint1 Employee',
-    implementationTime: 'implementationTime1 Employee',
-    calculationMethod: 'calculationMethod1 Employee',
-  },
-];
+import MyKPITable from './my-table.kpi';
+import EmployeeKPITable from './employee-table.kpi';
+import { ModalProvider } from '../../components/modals/kpi';
 
 export default function KPIPage() {
   const dispatch = useDispatch();
@@ -44,30 +18,12 @@ export default function KPIPage() {
     {
       key: '1',
       label: formatMessage({ id: 'title.tab.kpi.my' }),
-      children: (
-        <TableCustom
-          columns={myKPIColumns}
-          dataSource={myData}
-          loading={false}
-          rowKey={(record) => record.key}
-          pagination={{ current: 1, pageSize: 7 }}
-          scroll={{ x: 1450 }}
-        />
-      ),
+      children: <MyKPITable />,
     },
     {
       key: '2',
       label: formatMessage({ id: 'title.tab.kpi.employee' }),
-      children: (
-        <TableCustom
-          columns={employeeKPIColumns}
-          dataSource={employeeData}
-          loading={false}
-          rowKey={(record) => record.key}
-          pagination={{ current: 1, pageSize: 7 }}
-          scroll={{ x: 1450 }}
-        />
-      ),
+      children: <EmployeeKPITable />,
     },
   ];
 
@@ -94,7 +50,7 @@ export default function KPIPage() {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <ModalProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.kpi' })}</h3>
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.kpi' })}</span>
@@ -102,7 +58,7 @@ export default function KPIPage() {
         <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
       </div>
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-    </Fragment>
+    </ModalProvider>
   );
 }
 

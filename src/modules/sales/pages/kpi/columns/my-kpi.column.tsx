@@ -4,6 +4,7 @@ import { KPIDropdown } from '@/modules/sales/components/dropdown/kpi.dropdown';
 import { DataKPIType } from '../type.kpi';
 
 type ColumnsType<T> = TableProps<T>['columns'];
+
 export const myKPIColumns: ColumnsType<DataKPIType> = [
   {
     title: <LocaleFormatter id="table.column.kpi.proposer" />,
