@@ -31,6 +31,10 @@ export default defineConfig({
     vitePluginImp({
       libList: [
         {
+          libName: 'antd',
+          style: (name) => `antd/es/${name}/style`,
+        },
+        {
           libName: 'lodash',
           libDirectory: '',
           camel2DashComponentName: false,
@@ -47,9 +51,4 @@ export default defineConfig({
       include: '**/*.svg?react',
     }),
   ],
-  build: {
-    rollupOptions: {
-      external: [/^antd.*/],
-    },
-  },
 });
