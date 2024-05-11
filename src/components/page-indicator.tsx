@@ -2,12 +2,12 @@
 
 import { css } from '@emotion/react';
 import { Spinner } from './spinner';
-import logo from '@/assets/images/logo.png';
+import { CustomIcon } from './icons';
 
 export const PageIndicator = () => {
   return (
     <div css={indicatorStyle}>
-      <img src={logo} alt="logo" />
+      <CustomIcon type="logo" height={90} width={90} />
       <Spinner width={50} height={50} />
     </div>
   );
