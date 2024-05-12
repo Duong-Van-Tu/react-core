@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
   const navigate = useNavigate();
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
-    navigate('/email-verification');
+    navigate('/auth/email-verification');
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
       <div css={formContentStyle}>
         <div css={goBackStyle}>
           <CustomIcon width={12} height={14} type="prev" />
-          <Link css={goBackLinkStyle} to="/login">
+          <Link css={goBackLinkStyle} to="/auth/login">
             {formatMessage({ id: 'title.back' })}
           </Link>
         </div>

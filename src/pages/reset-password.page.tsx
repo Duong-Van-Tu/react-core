@@ -25,7 +25,7 @@ export default function ResetPasswordPage() {
       <div css={formContentStyle}>
         <div css={goBackStyle}>
           <CustomIcon width={12} height={14} type="prev" />
-          <Link css={goBackLinkStyle} to="/email-verification">
+          <Link css={goBackLinkStyle} to="/auth/email-verification">
             {formatMessage({ id: 'title.back' })}
           </Link>
         </div>

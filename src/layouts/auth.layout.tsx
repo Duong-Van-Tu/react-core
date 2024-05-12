@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode, useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Button, Dropdown, Layout } from 'antd';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useDispatch } from 'react-redux';
@@ -9,14 +9,11 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 import bgFooter from '@/assets/images/bg-footer.png';
-
-type MainLayoutProps = {
-  children: ReactNode;
-};
+import { Outlet } from 'react-router-dom';
 
 const { Content, Header } = Layout;
 
-export default function AuthLayout({ children }: MainLayoutProps) {
+export default function AuthLayout() {
   const dispatch = useDispatch();
   const language = useRootSelector((state) => state.locale.language);
 
@@ -59,7 +56,11 @@ export default function AuthLayout({ children }: MainLayoutProps) {
           </Dropdown>
         </div>
       </Header>
-      <Content css={content}>{children}</Content>
+      <Content css={content}>
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
+      </Content>
     </Layout>
   );
 }

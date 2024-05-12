@@ -1,23 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { ReactNode } from 'react';
+import { Suspense } from 'react';
 import { Layout } from 'antd';
 import Header from '@/components/header';
 import Sidebar from '@/components/sidebar';
-
-type MainLayoutProps = {
-  children: ReactNode;
-};
+import { Outlet } from 'react-router-dom';
 
 const { Content } = Layout;
 
-export default function MainLayout({ children }: MainLayoutProps) {
+export default function MainLayout() {
   return (
     <Layout css={layoutStyle}>
       <Sidebar />
       <Layout>
         <Header />
-        <Content css={content}>{children}</Content>
+        <Content css={content}>
+          <Suspense fallback={null}>
+            <Outlet />
+          </Suspense>
+        </Content>
       </Layout>
     </Layout>
   );

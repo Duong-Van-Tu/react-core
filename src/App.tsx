@@ -4,9 +4,10 @@ import { ConfigProvider } from 'antd';
 import enUS from 'antd/es/locale/en_US';
 import viVN from 'antd/es/locale/vi_VN';
 import { reduxStore } from '@/redux/store';
-import Router from '@/routers/index.router';
+import { router } from '@/routers/index.router';
 import { useRootSelector } from './hooks/selector.hook';
 import { localeConfig } from './locales';
+import { RouterProvider } from 'react-router-dom';
 
 function App() {
   const language = useRootSelector((state) => state.locale.language);
@@ -21,7 +22,7 @@ function App() {
     <ConfigProvider locale={getAntdLocale()}>
       <IntlProvider locale={language.split('_')[0]} messages={localeConfig[language]}>
         <Provider store={reduxStore}>
-          <Router />
+          <RouterProvider router={router} />
         </Provider>
       </IntlProvider>
     </ConfigProvider>

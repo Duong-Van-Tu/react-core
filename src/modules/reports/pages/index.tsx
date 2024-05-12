@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 
-export function ReportPage() {
+export default function ReportPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {

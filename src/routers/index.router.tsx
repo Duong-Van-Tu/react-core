@@ -1,186 +1,175 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import NotfoundPage from '@/pages/notfound.page';
-import LoginPage from '@/pages/login.page';
+import { lazy } from 'react';
+import { Navigate, RouteObject, createBrowserRouter } from 'react-router-dom';
 import Middleware from '@/middleware';
 import MainLayout from '@/layouts/main.layout';
-import KPIPage from '@/modules/sales/pages/kpi';
-import PrivilegesPage from '@/modules/sales/pages/privileges';
-import RelationshipPage from '@/modules/sales/pages/relationship';
-import OpportunityPage from '@/modules/sales/pages/opportunity';
-import SaleKitPage from '@/modules/sales/pages/sale-kit.page';
-import { SettingPage } from '@/modules/settings/pages';
-import PayrollPage from '@/modules/payroll/pages';
-import { ReportPage } from '@/modules/reports/pages';
+
 import WrapperRouteComponent from './config';
-import { PageIndicator } from '@/components/page-indicator';
 import AuthLayout from '@/layouts/auth.layout';
-import ForgotPasswordPage from '@/pages/forgot-password.page';
-import EmailVerificationPage from '@/pages/email-verification.page';
-import ResetPasswordPage from '@/pages/reset-password.page';
 
-function Router() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          index
-          element={
-            <Middleware mode="non-login">
-              <PageIndicator />
-            </Middleware>
-          }
-        />
-        <Route
-          path="sales/kpi"
-          element={
-            <WrapperRouteComponent titleId="title.document.kpi">
-              <Middleware mode="private">
-                <MainLayout>
-                  <KPIPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="sales/privileges"
-          element={
-            <WrapperRouteComponent titleId="title.document.privileges">
-              <Middleware mode="private">
-                <MainLayout>
-                  <PrivilegesPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="sales/relationship"
-          element={
-            <WrapperRouteComponent titleId="title.document.relationship">
-              <Middleware mode="private">
-                <MainLayout>
-                  <RelationshipPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="sales/opportunity"
-          element={
-            <WrapperRouteComponent titleId="title.document.opportunity">
-              <Middleware mode="private">
-                <MainLayout>
-                  <OpportunityPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="sales/sale-kit"
-          element={
-            <WrapperRouteComponent titleId="title.document.saleKit">
-              <Middleware mode="private">
-                <MainLayout>
-                  <SaleKitPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="settings"
-          element={
-            <WrapperRouteComponent titleId="title.document.setting">
-              <Middleware mode="private">
-                <MainLayout>
-                  <SettingPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
+const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
+const PrivilegesPage = lazy(
+  () => import(/* webpackChunkName: "privileges"*/ '@/modules/sales/pages/privileges'),
+);
+const RelationshipPage = lazy(
+  () => import(/* webpackChunkName: "relationship"*/ '@/modules/sales/pages/relationship'),
+);
+const OpportunityPage = lazy(
+  () => import(/* webpackChunkName: "opportunity"*/ '@/modules/sales/pages/opportunity'),
+);
+const SaleKitPage = lazy(
+  () => import(/* webpackChunkName: "sale-kit"*/ '@/modules/sales/pages/sale-kit.page'),
+);
+const SettingPage = lazy(
+  () => import(/* webpackChunkName: "settings"*/ '@/modules/settings/pages'),
+);
+const ReportPage = lazy(() => import(/* webpackChunkName: "settings"*/ '@/modules/reports/pages'));
+const PayrollPage = lazy(() => import(/* webpackChunkName: "payroll"*/ '@/modules/payroll/pages'));
+const NotfoundPage = lazy(() => import(/* webpackChunkName: "notfound"*/ '@/pages/notfound.page'));
+const LoginPage = lazy(() => import(/* webpackChunkName: "login"*/ '@/pages/login.page'));
+const ForgotPasswordPage = lazy(
+  () => import(/* webpackChunkName: "forgot-password"*/ '@/pages/forgot-password.page'),
+);
+const EmailVerificationPage = lazy(
+  () => import(/* webpackChunkName: "email-verification"*/ '@/pages/email-verification.page'),
+);
+const ResetPasswordPage = lazy(
+  () => import(/* webpackChunkName: "reset-password"*/ '@/pages/reset-password.page'),
+);
 
-        <Route
-          path="payroll"
-          element={
-            <WrapperRouteComponent titleId="title.document.payroll">
-              <Middleware mode="private">
-                <MainLayout>
-                  <PayrollPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
+const routes: RouteObject[] = [
+  {
+    path: '/auth',
+    element: (
+      <WrapperRouteComponent titleId="">
+        <Middleware mode="non-login">
+          <AuthLayout />
+        </Middleware>
+      </WrapperRouteComponent>
+    ),
+    children: [
+      {
+        path: 'login',
+        element: (
+          <WrapperRouteComponent titleId="title.form.login">
+            <LoginPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: 'reset-password',
+        element: (
+          <WrapperRouteComponent titleId="title.form.resetPassword">
+            <ResetPasswordPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: 'email-verification',
+        element: (
+          <WrapperRouteComponent titleId="title.form.emailVerification">
+            <EmailVerificationPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: 'forgot-password',
+        element: (
+          <WrapperRouteComponent titleId="title.form.forgotPassword">
+            <ForgotPasswordPage />
+          </WrapperRouteComponent>
+        ),
+      },
+    ],
+  },
+  {
+    path: '/',
+    element: (
+      <Middleware mode="private">
+        <WrapperRouteComponent titleId="">
+          <MainLayout />
+        </WrapperRouteComponent>
+      </Middleware>
+    ),
+    children: [
+      {
+        path: '/sales',
+        children: [
+          {
+            path: 'kpi',
+            element: (
+              <WrapperRouteComponent titleId="title.document.kpi">
+                <KPIPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'privileges',
+            element: (
+              <WrapperRouteComponent titleId="title.document.privileges">
+                <PrivilegesPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'relationship',
+            element: (
+              <WrapperRouteComponent titleId="title.document.relationship">
+                <RelationshipPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'opportunity',
+            element: (
+              <WrapperRouteComponent titleId="title.document.opportunity">
+                <OpportunityPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'sale-kit',
+            element: (
+              <WrapperRouteComponent titleId="title.document.saleKit">
+                <SaleKitPage />
+              </WrapperRouteComponent>
+            ),
+          },
+        ],
+      },
 
-        <Route
-          path="reports"
-          element={
-            <WrapperRouteComponent titleId="title.document.report">
-              <Middleware mode="private">
-                <MainLayout>
-                  <ReportPage />
-                </MainLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="login"
-          element={
-            <WrapperRouteComponent titleId="title.form.login">
-              <Middleware mode="non-login">
-                <AuthLayout>
-                  <LoginPage />
-                </AuthLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="forgot-password"
-          element={
-            <WrapperRouteComponent titleId="title.form.forgotPassword">
-              <Middleware mode="public">
-                <AuthLayout>
-                  <ForgotPasswordPage />
-                </AuthLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="email-verification"
-          element={
-            <WrapperRouteComponent titleId="title.form.emailVerification">
-              <Middleware mode="public">
-                <AuthLayout>
-                  <EmailVerificationPage />
-                </AuthLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route
-          path="reset-password"
-          element={
-            <WrapperRouteComponent titleId="title.form.resetPassword">
-              <Middleware mode="public">
-                <AuthLayout>
-                  <ResetPasswordPage />
-                </AuthLayout>
-              </Middleware>
-            </WrapperRouteComponent>
-          }
-        />
-        <Route path="not-found" element={<NotfoundPage />} />
-        <Route path="*" element={<Navigate to="/not-found" replace />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default Router;
+      {
+        path: 'settings',
+        element: (
+          <WrapperRouteComponent titleId="title.document.setting">
+            <SettingPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: 'payroll',
+        element: (
+          <WrapperRouteComponent titleId="title.document.payroll">
+            <PayrollPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: 'reports',
+        element: (
+          <WrapperRouteComponent titleId="title.document.report">
+            <ReportPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: 'not-found',
+        element: <NotfoundPage />,
+      },
+      {
+        path: '*',
+        element: <Navigate to="/not-found" replace />,
+      },
+    ],
+  },
+];
+export const router = createBrowserRouter(routes);

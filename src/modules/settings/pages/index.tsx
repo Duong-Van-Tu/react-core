@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 
-export function SettingPage() {
+export default function SettingPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {

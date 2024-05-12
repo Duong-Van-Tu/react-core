@@ -26,7 +26,7 @@ export default function EmailVerificationPage() {
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
-    navigate('/reset-password');
+    navigate('/auth/reset-password');
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -38,7 +38,7 @@ export default function EmailVerificationPage() {
       <div css={formContentStyle}>
         <div css={goBackStyle}>
           <CustomIcon width={12} height={14} type="prev" />
-          <Link css={goBackLinkStyle} to="/forgot-password">
+          <Link css={goBackLinkStyle} to="/auth/forgot-password">
             {formatMessage({ id: 'title.back' })}
           </Link>
         </div>

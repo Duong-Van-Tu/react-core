@@ -59,7 +59,7 @@ export default function LoginPage() {
               {formatMessage({ id: 'title.form.login' })}
             </Button>
           </Form.Item>
-          <Link to="/forgot-password" css={forgotPasswordLink}>
+          <Link to="/auth/forgot-password" css={forgotPasswordLink}>
             Quên mật khẩu?
           </Link>
         </Form>
