@@ -4,14 +4,14 @@ import { css } from '@emotion/react';
 import { Spinner } from './spinner';
 import { CustomIcon } from './icons';
 
-export const PageIndicator = () => {
+export default function PageIndicator() {
   return (
     <div css={indicatorStyle}>
       <CustomIcon type="logo" height={90} width={90} />
       <Spinner width={50} height={50} />
     </div>
   );
-};
+}
 
 const indicatorStyle = css`
   min-height: calc(100vh - 8rem);
