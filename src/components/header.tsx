@@ -22,16 +22,18 @@ export default function Header() {
 
   return (
     <HeaderAntd css={headerStyle}>
-      {breadCrumbItems.length > 0 && (
-        <Breadcrumb
-          css={breadcrumbStyle}
-          items={breadCrumbItems.map((item) =>
-            item.link
-              ? { title: <Link to={item.link}>{item.title[language]}</Link> }
-              : { title: item.title[language] },
-          )}
-        />
-      )}
+      <div>
+        {breadCrumbItems.length > 0 && (
+          <Breadcrumb
+            css={breadcrumbStyle}
+            items={breadCrumbItems.map((item) =>
+              item.link
+                ? { title: <Link to={item.link}>{item.title[language]}</Link> }
+                : { title: item.title[language] },
+            )}
+          />
+        )}
+      </div>
       <div css={headerRightStyle}>
         <Dropdown
           placement="bottomRight"
