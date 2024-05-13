@@ -1,36 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
-import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
-import { DataPrivilegesType } from './type.privileges';
-import { myPrivilegesColumns } from './columns/my-privileges.column';
 import { Tabs, TabsProps } from 'antd';
-
-const myData: DataPrivilegesType[] = [
-  {
-    key: 1,
-    beneficiaryName: 'beneficiaryName',
-    fixedMonthlySalary: 'fixedMonthlySalary',
-    totalTargetVariableSalary: 'totalTargetVariableSalary',
-    actualVariableSalary: 'actualVariableSalary',
-    status: 'status',
-  },
-];
-
-const employeeData: DataPrivilegesType[] = [
-  {
-    key: 1,
-    beneficiaryName: 'beneficiaryName employee',
-    fixedMonthlySalary: 'fixedMonthlySalary employee',
-    totalTargetVariableSalary: 'totalTargetVariableSalary employee',
-    actualVariableSalary: 'actualVariableSalary employee',
-    status: 'status employee',
-  },
-];
+import MyPrivilegesTable from './my-table.privileges';
+import EmployeePrivilegesTable from './employee-table.privileges';
+import { ModalPrivilegesProvider } from '../../components/modals/privileges';
 
 export default function PrivilegesPage() {
   const dispatch = useDispatch();
@@ -39,31 +17,13 @@ export default function PrivilegesPage() {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: formatMessage({ id: 'title.tab.privileges.my' }),
-      children: (
-        <TableCustom
-          columns={myPrivilegesColumns}
-          dataSource={myData}
-          loading={false}
-          rowKey={(record) => record.key}
-          pagination={{ current: 1, pageSize: 7 }}
-          scroll={{ x: 1450 }}
-        />
-      ),
+      label: formatMessage({ id: 'title.tab.kpi.my' }),
+      children: <MyPrivilegesTable />,
     },
     {
       key: '2',
-      label: formatMessage({ id: 'title.tab.privileges.employee' }),
-      children: (
-        <TableCustom
-          columns={myPrivilegesColumns}
-          dataSource={employeeData}
-          loading={false}
-          rowKey={(record) => record.key}
-          pagination={{ current: 1, pageSize: 7 }}
-          scroll={{ x: 1450 }}
-        />
-      ),
+      label: formatMessage({ id: 'title.tab.kpi.employee' }),
+      children: <EmployeePrivilegesTable />,
     },
   ];
 
@@ -90,7 +50,7 @@ export default function PrivilegesPage() {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <ModalPrivilegesProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.privileges' })}</h3>
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.privileges' })}</span>
@@ -98,7 +58,7 @@ export default function PrivilegesPage() {
         <span>10 {formatMessage({ id: 'title.document.privileges' })}</span>
       </div>
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-    </Fragment>
+    </ModalPrivilegesProvider>
   );
 }
 

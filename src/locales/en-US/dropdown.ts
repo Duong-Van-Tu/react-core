@@ -11,4 +11,8 @@ export const enUS_dropdown = {
   'title.dropdown.opportunity.resultReport': 'View result report',
   'title.dropdown.relationship.evaluate': 'Evaluate the relationship',
   'title.dropdown.relationship.proposedReports': 'View proposed reports',
+  'title.dropdown.privileges.suggestedEdit': 'View suggested edits',
+  'title.dropdown.privileges.refuseEdit': 'Refuse to edit',
+  'title.dropdown.privileges.report': 'View report',
+  'title.dropdown.privileges.updateResults': 'Update results',
 };
