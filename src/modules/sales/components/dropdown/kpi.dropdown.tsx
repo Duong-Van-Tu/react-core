@@ -8,9 +8,11 @@ import { useModalKPI } from '../modals/kpi';
 import { ModalKPIType } from '../../enum/kpi.enum';
 
 enum MenuItem {
-  RequestEdit = 1,
-  SetKPI,
-  Evaluation,
+  EditKPI = 1,
+  ModifyKPI,
+  RequestEdit,
+  FinalizeKPI,
+  ReviewEdit,
   Report,
 }
 
@@ -20,17 +22,20 @@ export function KPIDropdown() {
 
   const handleItemClick = (key: number) => {
     switch (key) {
+      case MenuItem.EditKPI:
+        openModal(ModalKPIType.EditKPI);
+        break;
+      case MenuItem.FinalizeKPI:
+        openModal(ModalKPIType.FinalizeKPI);
+        break;
       case MenuItem.RequestEdit:
         openModal(ModalKPIType.RequestEdit);
         break;
-      case MenuItem.SetKPI:
-        openModal(ModalKPIType.SetKPI);
-        break;
-      case MenuItem.Evaluation:
-        openModal(ModalKPIType.Evaluation);
-        break;
       case MenuItem.Report:
         openModal(ModalKPIType.Report);
+        break;
+      case MenuItem.ModifyKPI:
+        openModal(ModalKPIType.ModifyKPI);
         break;
       default:
         break;
@@ -40,21 +45,26 @@ export function KPIDropdown() {
   const items: MenuProps['items'] = [
     {
       key: '1',
+      label: formatMessage({ id: 'title.dropdown.finalize' }),
+      onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+    },
+    {
+      key: '2',
+      label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
+      onClick: () => handleItemClick(MenuItem.EditKPI),
+    },
+    {
+      key: '3',
       label: formatMessage({ id: 'title.dropdown.requestEdit' }),
       onClick: () => handleItemClick(MenuItem.RequestEdit),
     },
     {
-      key: '2',
-      label: formatMessage({ id: 'title.dropdown.kpi.setKPI' }),
-      onClick: () => handleItemClick(MenuItem.SetKPI),
-    },
-    {
-      key: '3',
-      label: formatMessage({ id: 'title.dropdown.kpi.evaluation' }),
-      onClick: () => handleItemClick(MenuItem.Evaluation),
-    },
-    {
       key: '4',
+      label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
+      onClick: () => handleItemClick(MenuItem.ModifyKPI),
+    },
+    {
+      key: '5',
       label: formatMessage({ id: 'title.dropdown.kpi.report' }),
       onClick: () => handleItemClick(MenuItem.Report),
     },

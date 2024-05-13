@@ -1,6 +1,11 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalKPIType } from '../../../enum/kpi.enum';
+import { EditKPI } from './edit.modal';
+import { FinalizeKPI } from './finalize.modal';
+import { RequestEdit } from './request-edit.modal';
+import { Report } from './report.modal';
+import { ModifyKPI } from './modify.modal';
 
 type ModalContexttype = {
   openModal: (modalName: string) => void;
@@ -19,6 +24,7 @@ export const useModalKPI = () => {
 type ModalProviderProps = {
   children?: ReactNode;
 };
+
 export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [currentModal, setCurrentModal] = useState<string>();
   const [open, setOpen] = useState<boolean>(false);
@@ -36,11 +42,17 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
-      <Modal open={open} onCancel={closeModal} footer={null}>
-        {currentModal === ModalKPIType.RequestEdit && <div>Request Edit Modal</div>}
-        {currentModal === ModalKPIType.SetKPI && <div>Set KPI Modal</div>}
-        {currentModal === ModalKPIType.Evaluation && <div>Evaluation Modal</div>}
-        {currentModal === ModalKPIType.Report && <div>Report Modal</div>}
+      <Modal
+        width={currentModal === ModalKPIType.FinalizeKPI ? '34rem' : '52rem'}
+        open={open}
+        onCancel={closeModal}
+        footer={null}
+      >
+        {currentModal === ModalKPIType.EditKPI && <EditKPI closeModal={closeModal} />}
+        {currentModal === ModalKPIType.FinalizeKPI && <FinalizeKPI closeModal={closeModal} />}
+        {currentModal === ModalKPIType.RequestEdit && <RequestEdit closeModal={closeModal} />}
+        {currentModal === ModalKPIType.Report && <Report closeModal={closeModal} />}
+        {currentModal === ModalKPIType.ModifyKPI && <ModifyKPI closeModal={closeModal} />}
       </Modal>
     </ModalContext.Provider>
   );

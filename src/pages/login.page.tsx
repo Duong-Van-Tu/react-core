@@ -7,8 +7,8 @@ import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 
 type FieldType = {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 };
 
 export default function LoginPage() {
@@ -28,7 +28,7 @@ export default function LoginPage() {
         <CustomIcon type="logo" width={90} height={90} />
         <h3 css={loginTitleStyle}>{formatMessage({ id: 'title.form.login' })}</h3>
         <Form
-          name="basic"
+          name="login"
           layout="vertical"
           initialValues={{ remember: true }}
           onFinish={onFinish}
@@ -60,7 +60,7 @@ export default function LoginPage() {
             </Button>
           </Form.Item>
           <Link to="/auth/forgot-password" css={forgotPasswordLink}>
-            Quên mật khẩu?
+            {formatMessage({ id: 'title.form.forgotPassword' })}
           </Link>
         </Form>
       </div>
@@ -109,7 +109,7 @@ const formStyle = css`
 const loginTitleStyle = css`
   font-weight: 500;
   font-size: 2.6rem;
-  line-height: 2.6rem;
+  line-height: 2.8rem;
   margin-top: 2rem;
 `;
 
