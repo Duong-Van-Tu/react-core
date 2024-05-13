@@ -161,15 +161,15 @@ const routes: RouteObject[] = [
           </WrapperRouteComponent>
         ),
       },
-      {
-        path: 'not-found',
-        element: <NotfoundPage />,
-      },
-      {
-        path: '*',
-        element: <Navigate to="/not-found" replace />,
-      },
     ],
+  },
+  {
+    path: 'not-found',
+    element: <NotfoundPage />,
+  },
+  {
+    path: '*',
+    element: <Navigate to="/not-found" replace />,
   },
 ];
 export const router = createBrowserRouter(routes);
