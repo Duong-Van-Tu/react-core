@@ -1,5 +1,4 @@
 /** @jsxImportSource @emotion/react */
-
 import { css } from '@emotion/react';
 import { Spinner } from './spinner';
 import { CustomIcon } from './icons';

@@ -6,6 +6,7 @@ import { FinalizeKPI } from './finalize.modal';
 import { RequestEdit } from './request-edit.modal';
 import { Report } from './report.modal';
 import { ModifyKPI } from './modify.modal';
+import { AddKPI } from './add.modal';
 
 type ModalContexttype = {
   openModal: (modalName: string) => void;
@@ -49,6 +50,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
         footer={null}
       >
         {currentModal === ModalKPIType.EditKPI && <EditKPI closeModal={closeModal} />}
+        {currentModal === ModalKPIType.AddKPI && <AddKPI closeModal={closeModal} />}
         {currentModal === ModalKPIType.FinalizeKPI && <FinalizeKPI closeModal={closeModal} />}
         {currentModal === ModalKPIType.RequestEdit && <RequestEdit closeModal={closeModal} />}
         {currentModal === ModalKPIType.Report && <Report closeModal={closeModal} />}

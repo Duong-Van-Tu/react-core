@@ -1,6 +1,12 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+
 import { TableCustom } from '@/components/table';
 import { myKPIColumns } from './columns/my-kpi.column';
 import { DataKPIType } from './type.kpi';
+import { Search } from '@/components/search';
+import { Button } from 'antd';
+import { useModalKPI } from '../../components/modals/kpi';
 
 const myData: DataKPIType[] = [
   {
@@ -205,15 +211,32 @@ const myData: DataKPIType[] = [
   },
 ];
 
-export default function MyKPITable() {
+export default function MyKPI() {
+  const { openModal } = useModalKPI();
   return (
-    <TableCustom
-      columns={myKPIColumns}
-      dataSource={myData}
-      loading={false}
-      rowKey={(record) => record.key}
-      pagination={{ current: 1, pageSize: 7 }}
-      scroll={{ x: 1450 }}
-    />
+    <div css={rootStyle}>
+      <Button onClick={() => openModal('Add KPI')} type="primary" css={addKPIBtnStyle}>
+        Thêm mục tiêu
+      </Button>
+      <Search />
+      <TableCustom
+        columns={myKPIColumns}
+        dataSource={myData}
+        loading={false}
+        rowKey={(record) => record.key}
+        pagination={{ current: 1, pageSize: 7 }}
+        scroll={{ x: 1450 }}
+      />
+    </div>
   );
 }
+
+const rootStyle = css`
+  position: relative;
+`;
+
+const addKPIBtnStyle = css`
+  position: absolute;
+  right: 0;
+  top: -6rem;
+`;

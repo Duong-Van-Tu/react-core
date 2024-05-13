@@ -6,7 +6,7 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 import { Tabs, TabsProps } from 'antd';
-import MyKPITable from './my-table.kpi';
+import MyKPI from './my-kpi';
 import EmployeeKPITable from './employee-table.kpi';
 import { ModalProvider } from '../../components/modals/kpi';
 
@@ -18,7 +18,7 @@ export default function KPIPage() {
     {
       key: '1',
       label: formatMessage({ id: 'title.tab.kpi.my' }),
-      children: <MyKPITable />,
+      children: <MyKPI />,
     },
     {
       key: '2',
