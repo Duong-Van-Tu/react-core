@@ -6,15 +6,16 @@ import {
   setDataAndTokenAction,
   setFetchProfileStatusAction,
 } from '@/redux/slicers/auth.slice';
-import { isEmail, isPhoneNumber } from '@/utils/validation';
 import { useApi, useCaller } from './api.hook';
 import { useRootSelector } from './selector.hook';
+import { useQuery } from './query.hook';
 
 export const useAuth = () => {
-  const api = useApi('/auth');
+  const api = useApi('');
   const caller = useCaller();
   const dispatch = useDispatch();
   const token = useRootSelector((state) => state.auth.token);
+  const { tenant } = useQuery();
 
   const clearData = useCallback(() => {
     localStorage.removeItem(KEYS.LOGIN_TOKEN_STORE_KEY);
@@ -42,22 +43,16 @@ export const useAuth = () => {
   }, [token, api, dispatch, caller, clearData]);
 
   const login = useCallback(
-    async (credential: string, password: string) => {
+    async (username: string, password: string) => {
       let data;
 
-      let loginField: string;
-      if (isEmail(credential)) {
-        loginField = 'email';
-      } else if (isPhoneNumber(credential)) {
-        loginField = 'telephone';
-      } else {
-        throw new Error('Invalid credential format');
-      }
-
-      data = await caller(() => api.post('/login', { [loginField]: credential, password }), {
-        loadingKey: 'login-loading',
-        messageKey: 'login-message',
-      });
+      data = await caller(
+        () => api.post(`/Authentications/login?tenant=${tenant}`, { username, password }),
+        {
+          loadingKey: 'login-loading',
+          messageKey: 'login-message',
+        },
+      );
 
       if (data) {
         const token = data.accessToken;

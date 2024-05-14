@@ -5,17 +5,20 @@ import type { FormProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
+import { useAuth } from '@/hooks/auth.hook';
 
 type FieldType = {
-  email: string;
+  username: string;
   password: string;
 };
 
 export default function LoginPage() {
   const { formatMessage } = useLocale();
+  const { login } = useAuth();
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
+    const { username, password } = values;
+    login(username, password);
   };
 
   const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
@@ -37,9 +40,11 @@ export default function LoginPage() {
           css={formStyle}
         >
           <Form.Item<FieldType>
-            label={<span css={labelFormItem}>{formatMessage({ id: 'form.auth.email' })}</span>}
-            name="email"
-            rules={[{ required: true, message: formatMessage({ id: 'form.input.require.email' }) }]}
+            label={<span css={labelFormItem}>{formatMessage({ id: 'form.auth.username' })}</span>}
+            name="username"
+            rules={[
+              { required: true, message: formatMessage({ id: 'form.input.require.username' }) },
+            ]}
           >
             <Input size="large" autoComplete="email" />
           </Form.Item>
