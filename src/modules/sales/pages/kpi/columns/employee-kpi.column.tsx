@@ -1,7 +1,6 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { KPIDropdown } from '@/modules/sales/components/dropdown/kpi.dropdown';
-import { DataKPIType } from '../type.kpi';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 export const employeeKPIColumns: ColumnsType<DataKPIType> = [
@@ -19,11 +18,6 @@ export const employeeKPIColumns: ColumnsType<DataKPIType> = [
     title: <LocaleFormatter id="table.column.kpi.objective" />,
     dataIndex: 'objective',
     render: (objective) => objective,
-  },
-  {
-    title: <LocaleFormatter id="table.column.kpi.reality" />,
-    dataIndex: 'reality',
-    render: (reality) => reality,
   },
   {
     title: <LocaleFormatter id="table.column.targetPoint" />,
