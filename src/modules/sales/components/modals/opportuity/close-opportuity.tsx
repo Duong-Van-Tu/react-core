@@ -1,17 +1,19 @@
 /** @jsxImportSource @emotion/react */
 import { useLocale } from '@/hooks/locale.hook';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space, Select } from 'antd';
+import { Button, Form, FormProps, Input, Row, Space, Select } from 'antd';
 import { Fragment, useState } from 'react';
-import { useOpportunityModal } from '.';
 
+type CloseOpportuityProps = {
+  closeModal: () => void;
+};
 type FieldType = {
   customer: string;
   reason?: string;
 };
 
-export const CloseOpportuity = () => {
-  const { closeModal } = useOpportunityModal();
+export const CloseOpportuity = ({ ...props }: CloseOpportuityProps) => {
+  const { closeModal } = props;
   const { Option } = Select;
   const { formatMessage } = useLocale();
   const [showReasonInput, setShowReasonInput] = useState(false);

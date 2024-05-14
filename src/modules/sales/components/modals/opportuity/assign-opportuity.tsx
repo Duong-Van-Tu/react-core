@@ -3,14 +3,16 @@ import { useLocale } from '@/hooks/locale.hook';
 import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space, Select } from 'antd';
 import { Fragment } from 'react';
-import { useOpportunityModal } from '.';
 
+type AssignOpportuityProps = {
+  closeModal: () => void;
+};
 type FieldType = {
   customer: string;
 };
 
-export const AssignOpportuity = () => {
-  const { closeModal } = useOpportunityModal();
+export const AssignOpportuity = ({ ...props }: AssignOpportuityProps) => {
+  const { closeModal } = props;
   const { Option } = Select;
   const { formatMessage } = useLocale();
 

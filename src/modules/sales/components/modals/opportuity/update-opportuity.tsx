@@ -3,8 +3,10 @@ import { useLocale } from '@/hooks/locale.hook';
 import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
 import { Fragment } from 'react';
-import { useOpportunityModal } from '.';
 
+type UpdateOpportuityProps = {
+  closeModal: () => void;
+};
 type FieldType = {
   target: string;
   activity: string;
@@ -12,8 +14,8 @@ type FieldType = {
   result: string;
 };
 
-export const UpdateOpportuity = () => {
-  const { closeModal } = useOpportunityModal();
+export const UpdateOpportuity = ({ ...props }: UpdateOpportuityProps) => {
+  const { closeModal } = props;
   const { formatMessage } = useLocale();
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
