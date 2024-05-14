@@ -33,47 +33,47 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
           name="criteria"
-          rules={[{ required: true, message: 'Please input your criteria!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập tiêu chí!' }]}
         >
-          <Input.TextArea placeholder="Criteria" />
+          <Input.TextArea placeholder="Nhập tiêu chí" />
         </Form.Item>
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu</span>}
               name="objective"
-              rules={[{ required: true, message: 'Please input your objective!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
-              <Input size="middle" placeholder="objective" />
+              <Input size="middle" placeholder="Nhập mục tiêu" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điểm mục tiêu</span>}
               name="targetPoint"
-              rules={[{ required: true, message: 'Please input your targetPoint!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu!' }]}
             >
-              <Input size="middle" placeholder="targetPoint" />
+              <Input size="middle" placeholder="Nhập điểm mục tiêu" />
             </Form.Item>
           </Col>
         </Row>
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
-              label={<span css={labelFormItem}>Ngầy bắt đầu mục tiêu</span>}
+              label={<span css={labelFormItem}>Ngày bắt đầu mục tiêu</span>}
               name="startDate"
-              rules={[{ required: true, message: 'Please input your startDate!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập ngày bắt đầu mục tiêu!' }]}
             >
-              <Input size="middle" placeholder="startDate" />
+              <Input size="middle" placeholder="Nhập ngày bắt đầu mục tiêu" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Thời gian kết thúc</span>}
               name="endDate"
-              rules={[{ required: true, message: 'Please input your endDate!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc!' }]}
             >
-              <Input size="middle" placeholder="endDate" />
+              <Input size="middle" placeholder="Nhập thời gian kết thúc" />
             </Form.Item>
           </Col>
         </Row>
@@ -81,9 +81,9 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Cách tính</span>}
           name="calculationMethod"
-          rules={[{ required: true, message: 'Please input your calculationMethod!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập cách tính!' }]}
         >
-          <Input size="middle" placeholder="calculationMethod" />
+          <Input size="middle" placeholder="Nhập cách tính" />
         </Form.Item>
 
         <Row justify="end">

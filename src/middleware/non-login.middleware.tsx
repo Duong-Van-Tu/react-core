@@ -1,17 +1,15 @@
+import { useQuery } from '@/hooks/query.hook';
 import { Navigate } from 'react-router-dom';
 
 interface NonLoginProps {
   children: React.ReactElement;
-  user: UserProfile;
-  isFetchedProfile: boolean;
+  logged: boolean;
 }
 
-export default function NonLogin({ user, isFetchedProfile, children }: NonLoginProps) {
-  if (isFetchedProfile || !!user) {
-    if (user) {
-      return <Navigate to="/sales/kpi" />;
-    }
+export default function NonLogin({ logged, children }: NonLoginProps) {
+  const { tenant } = useQuery();
+  if (logged) {
+    return <Navigate to={`/sales/kpi?tenant=${tenant}`} />;
   }
-
   return children;
 }

@@ -55,9 +55,9 @@ export const RequestEdit = ({ closeModal }: RequestEditProps) => {
           </Col>
         </Row>
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Thơi gian kết thúc mục tiêu muốn chỉnh sửa</span>}
+          label={<span css={labelFormItem}>Thời gian kết thúc mục tiêu muốn chỉnh sửa</span>}
           name="editTargetEndTime"
-          rules={[{ required: true, message: 'Please input your editTargetEndTime!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc mục tiêu!' }]}
         >
           <Input size="large" placeholder="01/10/2024" />
         </Form.Item>
@@ -67,7 +67,7 @@ export const RequestEdit = ({ closeModal }: RequestEditProps) => {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu muốn chỉnh sửa</span>}
               name="targetEditing"
-              rules={[{ required: true, message: 'Please input your targetEditing!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập mục tiêu muốn chỉnh sửa!' }]}
             >
               <Input size="large" placeholder="targetEditing" />
             </Form.Item>
@@ -76,14 +76,14 @@ export const RequestEdit = ({ closeModal }: RequestEditProps) => {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điểm mục tiêu muốn chỉnh sửa</span>}
               name="targetPointEditing"
-              rules={[{ required: true, message: 'Please input your targetPointEditing!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập mục điểm tiêu muốn chỉnh sửa!' }]}
             >
               <Input size="large" placeholder="targetPointEditing" />
             </Form.Item>
           </Col>
         </Row>
 
-        <Row justify="end">
+        <Row justify="end" css={formFooterStyle}>
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
             <Button ghost type="primary" onClick={oncancel}>
@@ -118,4 +118,8 @@ const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
   font-weight: 500;
+`;
+
+const formFooterStyle = css`
+  margin-top: 1rem;
 `;

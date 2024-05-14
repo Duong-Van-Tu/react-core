@@ -8,13 +8,14 @@ import { useLocale } from '@/hooks/locale.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { CustomIcon } from './icons';
 import Notice from './notice';
+import { useAuth } from '@/hooks/auth.hook';
 
 export default function Header() {
   const dispatch = useDispatch();
   const breadCrumbItems = useRootSelector((state) => state.breadcrumb.items);
   const language = useRootSelector((state) => state.locale.language);
   const { formatMessage } = useLocale();
-  const logged = true;
+  const { logged, clearData } = useAuth();
   const { Header: HeaderAntd } = Layout;
   const selectLocale = ({ key }: { key: any }) => {
     dispatch(setLocaleAction(key));
@@ -82,6 +83,7 @@ export default function Header() {
                   label: formatMessage({
                     id: 'header.avatar.logout',
                   }),
+                  onClick: () => clearData(),
                 },
               ],
             }}

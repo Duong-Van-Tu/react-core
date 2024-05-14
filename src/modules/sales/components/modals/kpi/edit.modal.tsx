@@ -33,27 +33,27 @@ export const EditKPI = ({ closeModal }: EditKPIProps) => {
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
           name="criteria"
-          rules={[{ required: true, message: 'Please input your criteria!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập tiêu chí!' }]}
         >
-          <Input.TextArea placeholder="Criteria" />
+          <Input.TextArea placeholder="Nhập tiêu chí" />
         </Form.Item>
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu</span>}
               name="objective"
-              rules={[{ required: true, message: 'Please input your objective!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
-              <Input size="large" placeholder="objective" />
+              <Input size="large" placeholder="Nhập mục tiêu" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điểm mục tiêu</span>}
               name="targetPoint"
-              rules={[{ required: true, message: 'Please input your targetPoint!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu!' }]}
             >
-              <Input size="large" placeholder="targetPoint" />
+              <Input size="large" placeholder="Nhập điểm mục tiêu" />
             </Form.Item>
           </Col>
         </Row>
@@ -61,7 +61,7 @@ export const EditKPI = ({ closeModal }: EditKPIProps) => {
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Cách tính</span>}
           name="calculationMethod"
-          rules={[{ required: true, message: 'Please input your calculationMethod!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập cách tính!' }]}
         >
           <Input.TextArea
             size="large"

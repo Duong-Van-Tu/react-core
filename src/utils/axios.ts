@@ -27,4 +27,4 @@ if (!import.meta.env.VITE_API_URL) {
 }
 
 // Create an axios instance with the base URL
-export const API = getAxios(import.meta.env.VITE_API_URL);
+export const API = getAxios(`${import.meta.env.VITE_API_URL}/api`);

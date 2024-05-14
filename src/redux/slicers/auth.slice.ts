@@ -2,15 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getToken } from '@/utils/common';
 
 export type AuthState = {
-  data: UserProfile | null;
+  user: UserProfile | null;
   token?: string | null;
-  isFetchedProfile: boolean;
 };
 
 export const authInitialState: AuthState = {
-  data: null,
+  user: null,
   token: getToken(),
-  isFetchedProfile: false,
 };
 
 const slice = createSlice({
@@ -18,24 +16,19 @@ const slice = createSlice({
   initialState: authInitialState,
   reducers: {
     clearAuthDataAction(state) {
-      state.data = null;
+      state.user = null;
       state.token = null;
-      state.isFetchedProfile = false;
     },
     setDataAndTokenAction(
       state,
-      { payload }: PayloadAction<{ data?: UserProfile | null; token?: string | null }>,
+      { payload }: PayloadAction<{ user?: UserProfile | null; token?: string | null }>,
     ) {
-      for (const field of Object.keys(payload) as ('data' | 'token')[]) {
+      for (const field of Object.keys(payload) as ('user' | 'token')[]) {
         state[field] = payload[field] as any;
       }
-    },
-    setFetchProfileStatusAction(state, { payload }: PayloadAction<boolean>) {
-      state.isFetchedProfile = payload;
     },
   },
 });
 
-export const { clearAuthDataAction, setDataAndTokenAction, setFetchProfileStatusAction } =
-  slice.actions;
+export const { clearAuthDataAction, setDataAndTokenAction } = slice.actions;
 export default slice.reducer;
