@@ -3,21 +3,22 @@ import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
 import { Fragment } from 'react';
 import Dot from '@/assets/svg/dot.svg?react';
+import { useLocale } from '@/hooks/locale.hook';
 
 type EmployeeReportPrivilegesProps = {
   closeModal: () => void;
 };
 type FieldType = {
-  criteria: string;
-  objective: string;
-  targetPoint: number;
-  startDate: string;
-  endDate: string;
-  calculationMethod: string;
+  nameBenifitsProposer: string;
+  baseSalary: number;
+  totalChangesTarget: number;
+  actualSalaryFluctuates: number;
+  status: string;
 };
 
 export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesProps) => {
   const { closeModal } = props;
+  const { formatMessage } = useLocale();
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
@@ -33,7 +34,9 @@ export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesP
       <div css={contentEmployeeReportPrivileges}>
         <Row justify="space-between" css={rowStyle}>
           <Col span={12}>
-            <p css={titleSemiBoldStyle}>Tên người đề xuất quyền lợi</p>
+            <p css={titleSemiBoldStyle}>
+              {formatMessage({ id: 'title.employee.reportPrivileges.nameBenifitsProposer' })}
+            </p>
           </Col>
           <Col span={12}>
             <p css={titleValuetyle}>Tanner Finsha</p>
@@ -42,7 +45,9 @@ export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesP
 
         <Row justify="space-between" css={rowStyle}>
           <Col>
-            <p css={titleBoldStyle}>Mức lương cố định hàng tháng</p>
+            <p css={titleBoldStyle}>
+              {formatMessage({ id: 'title.employee.reportPrivileges.baseSalary' })}
+            </p>
           </Col>
           <Col>
             <p css={titleValuetyle}>1.000.000 VND</p>
@@ -51,7 +56,9 @@ export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesP
 
         <Row justify="space-between" css={rowStyle}>
           <Col>
-            <p css={titleBoldStyle}>Tổng mức lương biến động mục tiêu</p>
+            <p css={titleBoldStyle}>
+              {formatMessage({ id: 'title.employee.reportPrivileges.totalChangesTarget' })}
+            </p>
           </Col>
           <Col>
             <p css={titleValuetyle}>1.000.000.000 VND</p>
@@ -60,7 +67,9 @@ export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesP
 
         <Row justify="space-between" css={rowStyle}>
           <Col>
-            <p css={titleBoldStyle}>Mức lương biến động mục tiêu thực tế</p>
+            <p css={titleBoldStyle}>
+              {formatMessage({ id: 'title.employee.reportPrivileges.actualSalaryFluctuates' })}
+            </p>
           </Col>
           <Col>
             <p css={titleValuetyle}>1.000.000.000 VND</p>
@@ -69,7 +78,7 @@ export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesP
 
         <Row justify="space-between">
           <Col>
-            <p css={titleSemiBoldStyle}>Trạng thái</p>
+            <p css={titleSemiBoldStyle}>{formatMessage({ id: 'title.status' })}</p>
           </Col>
           <Col>
             <div css={statusStyle}>

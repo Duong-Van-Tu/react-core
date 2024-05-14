@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useLocale } from '@/hooks/locale.hook';
 import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
 import { Fragment } from 'react';
@@ -7,18 +8,19 @@ type EmployeeSuggestedEditPrivilegesProps = {
   closeModal: () => void;
 };
 type FieldType = {
-  criteria: string;
-  objective: string;
-  targetPoint: number;
-  startDate: string;
-  endDate: string;
-  calculationMethod: string;
+  baseSalary: number;
+  totalChangesTarget: number;
+  actualSalaryFluctuates: number;
+  baseSalaryEdit: number;
+  totalChangesTargetEdit: number;
+  actualSalaryFluctuatesEdit: number;
 };
 
 export const EmployeeSuggestedEditPrivileges = ({
   ...props
 }: EmployeeSuggestedEditPrivilegesProps) => {
   const { closeModal } = props;
+  const { formatMessage } = useLocale();
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
@@ -30,83 +32,118 @@ export const EmployeeSuggestedEditPrivileges = ({
   };
   return (
     <Fragment>
-      <h3 css={formTitleStyle}>Thêm đề xuất mục tiêu</h3>
-      <Form css={formEditKPIStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
+      <h3 css={formTitleStyle}>Đề xuất chỉnh sửa quyền lợi</h3>
+      <Form
+        css={formEmployeeSuggestedEditPrivilegesStyle}
+        name="edit-kpi"
+        onFinish={onFinish}
+        layout="vertical"
+      >
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Tiêu chí</span>}
-          name="criteria"
-          rules={[{ required: true, message: 'Please input your criteria!' }]}
+          label={
+            <span css={labelFormTopItem}>
+              {formatMessage({ id: 'form.input.employeePrivileges.baseSalary' })}
+            </span>
+          }
+          name="baseSalary"
+          rules={[{ required: true, message: '' }]}
         >
-          <Input.TextArea placeholder="Criteria" />
+          <Input css={inputFormTopItem} />
         </Form.Item>
+
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
-              label={<span css={labelFormItem}>Mục tiêu</span>}
-              name="objective"
-              rules={[{ required: true, message: 'Please input your objective!' }]}
+              label={
+                <span css={labelFormTopItem}>
+                  {formatMessage({ id: 'form.input.employeePrivileges.totalChangesTarget' })}
+                </span>
+              }
+              name="totalChangesTarget"
+              rules={[{ required: true, message: '' }]}
             >
-              <Input size="middle" placeholder="objective" />
+              <Input size="middle" css={inputFormTopItem} />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
-              label={<span css={labelFormItem}>Điểm mục tiêu</span>}
-              name="targetPoint"
-              rules={[{ required: true, message: 'Please input your targetPoint!' }]}
+              label={
+                <span css={labelFormTopLeftItem}>
+                  {formatMessage({ id: 'form.input.employeePrivileges.actualSalaryFluctuates' })}
+                </span>
+              }
+              name="actualSalaryFluctuates"
+              rules={[{ required: true, message: '' }]}
             >
-              <Input size="middle" placeholder="targetPoint" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row gutter={[20, 0]}>
-          <Col span={12}>
-            <Form.Item<FieldType>
-              label={<span css={labelFormItem}>Ngầy bắt đầu mục tiêu</span>}
-              name="startDate"
-              rules={[{ required: true, message: 'Please input your startDate!' }]}
-            >
-              <Input size="middle" placeholder="startDate" />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item<FieldType>
-              label={<span css={labelFormItem}>Thời gian kết thúc</span>}
-              name="endDate"
-              rules={[{ required: true, message: 'Please input your endDate!' }]}
-            >
-              <Input size="middle" placeholder="endDate" />
+              <Input size="middle" css={inputFormTopItem} />
             </Form.Item>
           </Col>
         </Row>
 
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Cách tính</span>}
-          name="calculationMethod"
-          rules={[{ required: true, message: 'Please input your calculationMethod!' }]}
+          label={
+            <span css={labelFormBottomItem}>
+              {formatMessage({ id: 'form.input.employeePrivileges.baseSalaryEdit' })}
+            </span>
+          }
+          name="baseSalaryEdit"
+          rules={[{ required: true, message: '' }]}
         >
-          <Input size="middle" placeholder="calculationMethod" />
+          <Input size="middle" css={inputFormBottomItem} />
         </Form.Item>
 
-        <Row justify="end">
-          <Space>
-            <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
-              Xác nhận
-            </Button>
-          </Space>
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormBottomItem}>
+                  {formatMessage({ id: 'form.input.employeePrivileges.totalChangesTargetEdit' })}
+                </span>
+              }
+              name="totalChangesTargetEdit"
+              rules={[{ required: true, message: '' }]}
+            >
+              <Input size="middle" css={inputFormBottomItem} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormBottomItem}>
+                  {' '}
+                  {formatMessage({
+                    id: 'form.input.employeePrivileges.actualSalaryFluctuatesEdit',
+                  })}
+                </span>
+              }
+              name="actualSalaryFluctuatesEdit"
+              rules={[{ required: true, message: '' }]}
+            >
+              <Input size="middle" css={inputFormBottomItem} />
+            </Form.Item>
+          </Col>
         </Row>
       </Form>
+      <Row justify="end">
+        <Space>
+          <Button onClick={oncancel}>Huỷ</Button>
+          <Button onClick={oncancel} css={btnAutoEditStyle}>
+            Tự động chỉnh sửa
+          </Button>
+          <Button type="primary" htmlType="submit">
+            Xác nhận
+          </Button>
+        </Space>
+      </Row>
     </Fragment>
   );
 };
 
-const formEditKPIStyle = css`
+const formEmployeeSuggestedEditPrivilegesStyle = css`
   .ant-form-item-required::before {
     display: none !important;
   }
-  margin-top: 2rem;
-  padding: 1rem;
+  margin: 2.4rem 0;
 `;
 
 const formTitleStyle = css`
@@ -116,8 +153,52 @@ const formTitleStyle = css`
   margin-top: 2rem;
 `;
 
-const labelFormItem = css`
+const labelFormTopItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: rgba(66, 82, 109, 1);
+`;
+const labelFormTopLeftItem = css`
+  font-size: 1.4rem;
+  line-height: 3.5rem;
+  font-weight: 600;
+  color: rgba(66, 82, 109, 1);
+`;
+const labelFormBottomItem = css`
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  font-weight: 600;
+  color: rgba(16, 24, 40, 1);
+`;
+
+const inputFormTopItem = css`
+  background: rgba(239, 241, 244, 1);
+  border: 1px solid rgba(239, 241, 244, 1);
+  border-radius: 0.8rem;
+  color: rgba(66, 82, 109, 1);
+  font-weight: 600;
+  &:hover {
+    background: rgba(239, 241, 244, 1);
+  }
+  &:focus {
+    background: rgba(239, 241, 244, 1);
+  }
+`;
+const inputFormBottomItem = css`
+  border-radius: 0.8rem;
+  color: rgba(66, 82, 109, 1);
+  font-weight: 600;
+`;
+
+const btnAutoEditStyle = css`
+  border: 1px solid rgba(0, 112, 184, 1);
+  border-radius: 0.8rem;
+  color: rgba(0, 112, 184, 1);
+  background-color: #fff;
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

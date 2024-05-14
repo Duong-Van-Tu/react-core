@@ -1,10 +1,7 @@
 export enum ModalPrivilegesType {
-    RequestEdit = 'Request Edit',
-    Evaluation = 'Evaluation',
-    Report = 'Report',
-    SuggestedEdit = 'Suggested Edit',
-    RefuseEdit = 'Refuse Edit',
-    UpdateResults = 'Update Results',
-    ProposedReports = 'Proposed Reports',
-    Delete = 'Delete',
+    RequestEdit = 'Request Edit', 
+    Delete = 'Delete', 
+    SuggestedEdit = 'Suggested Edit', 
+    RefuseEdit = 'Refuse Edit', 
+    Report = 'Report', 
   }

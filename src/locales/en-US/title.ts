@@ -20,4 +20,16 @@ export const enUS_title = {
   'title.tab.privileges.employee': `Employee's privileges`,
   'title.tab.relationship.my': 'My relationships',
   'title.tab.relationship.employee': `Employee's relationships`,
+  'title.employee.reportPrivileges.nameBenifitsProposer': 'Name of benifits proposer',
+  'title.employee.reportPrivileges.baseSalary': 'Base salary',
+  'title.employee.reportPrivileges.totalChangesTarget': 'Total target variable salary',
+  'title.employee.reportPrivileges.actualSalaryFluctuates': 'Actual target variable salary',
+  'title.status': 'Status',
+  'title.myRelationships.proposedReport.fullName': 'Full name',
+  'title.myRelationships.proposedReport.jobPosition': 'Job position',
+  'title.myRelationships.proposedReport.CurrentRelationshipLevel': 'Current relationship level',
+  'title.myRelationships.proposedReport.TargetlationshipLevel': 'Current relationship level',
+  'title.myRelationships.proposedReport.ReasonUpgrade': 'Reason for relationship upgrade',
+  'title.myRelationships.proposedReport.targetScore': 'Target score',
+  
 };

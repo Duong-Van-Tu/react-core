@@ -9,12 +9,9 @@ import { ModalPrivilegesType } from '../../enum/privileges.enum';
 
 enum MenuItem {
   RequestEdit = 1,
-  Evaluation,
   Report,
   SuggestedEdit,
   RefuseEdit,
-  UpdateResults,
-  ProposedReports,
   Delete,
 }
 
@@ -30,20 +27,11 @@ export function PrivilegesDropdown() {
       case MenuItem.SuggestedEdit:
         openModal(ModalPrivilegesType.SuggestedEdit);
         break;
-      case MenuItem.Evaluation:
-        openModal(ModalPrivilegesType.Evaluation);
-        break;
       case MenuItem.Report:
         openModal(ModalPrivilegesType.Report);
         break;
       case MenuItem.RefuseEdit:
         openModal(ModalPrivilegesType.RefuseEdit);
-        break;
-      case MenuItem.UpdateResults:
-        openModal(ModalPrivilegesType.UpdateResults);
-        break;
-      case MenuItem.ProposedReports:
-        openModal(ModalPrivilegesType.ProposedReports);
         break;
       case MenuItem.Delete:
         openModal(ModalPrivilegesType.Delete);
@@ -78,21 +66,6 @@ export function PrivilegesDropdown() {
       key: '5',
       label: <span>{formatMessage({ id: 'title.dropdown.privileges.report' })}</span>,
       onClick: () => handleItemClick(MenuItem.Report),
-    },
-    {
-      key: '6',
-      label: <span>{formatMessage({ id: 'title.dropdown.privileges.updateResults' })}</span>,
-      onClick: () => handleItemClick(MenuItem.UpdateResults),
-    },
-    {
-      key: '7',
-      label: <span>{formatMessage({ id: 'title.dropdown.relationship.evaluate' })}</span>,
-      onClick: () => handleItemClick(MenuItem.Evaluation),
-    },
-    {
-      key: '8',
-      label: <span>{formatMessage({ id: 'title.dropdown.relationship.proposedReports' })}</span>,
-      onClick: () => handleItemClick(MenuItem.ProposedReports),
     },
   ];
 

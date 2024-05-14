@@ -21,4 +21,16 @@ export const viVN_title = {
   'title.tab.privileges.employee': 'Quyền lợi của nhân viên',
   'title.tab.relationship.my': 'Mối quan hệ của tôi',
   'title.tab.relationship.employee': 'Mối quan hệ của nhân viên',
-};
+  'title.employee.reportPrivileges.nameBenifitsProposer': 'Tên người đề xuất quyền lợi',
+  'title.employee.reportPrivileges.baseSalary': 'Mức lương cố định hàng tháng',
+  'title.employee.reportPrivileges.totalChangesTarget': 'Tổng mức lương biến động mục tiêu',
+  'title.employee.reportPrivileges.actualSalaryFluctuates': 'Mức lương biến động mục tiêu thực tế',
+  'title.status': 'Trạng thái',
+  'title.myRelationships.proposedReport.fullName': 'Họ và tên',
+  'title.myRelationships.proposedReport.jobPosition': 'Vị trí làm việc',
+  'title.myRelationships.proposedReport.CurrentRelationshipLevel': 'Mức độ QH hiện tại',
+  'title.myRelationships.proposedReport.TargetlationshipLevel': 'Mức độ QH mục tiêu',
+  'title.myRelationships.proposedReport.ReasonUpgrade': 'Lý do cần phải nâng cấp quan hệ',
+  'title.myRelationships.proposedReport.targetScore': 'Điểm mục tiêu',
+  
+}
