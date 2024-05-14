@@ -43,7 +43,6 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
   },
   {
     title: '',
-    dataIndex: 'calculationMethod',
     fixed: 'right',
     width: '6%',
     render: () => <KPIDropdown />,

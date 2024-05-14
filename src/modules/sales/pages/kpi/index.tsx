@@ -7,7 +7,7 @@ import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 import { Tabs, TabsProps } from 'antd';
 import MyKPI from './my-kpi';
-import EmployeeKPITable from './employee-table.kpi';
+import EmployeeKPI from './employee-kpi';
 import { ModalProvider } from '../../components/modals/kpi';
 
 export default function KPIPage() {
@@ -23,7 +23,7 @@ export default function KPIPage() {
     {
       key: '2',
       label: formatMessage({ id: 'title.tab.kpi.employee' }),
-      children: <EmployeeKPITable />,
+      children: <EmployeeKPI />,
     },
   ];
 

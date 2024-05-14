@@ -5,8 +5,11 @@ import { TableCustom } from '@/components/table';
 import { myKPIColumns } from './columns/my-kpi.column';
 import { DataKPIType } from './type.kpi';
 import { Search } from '@/components/search';
-import { Button } from 'antd';
+import { Button, Checkbox, Col, Row } from 'antd';
 import { useModalKPI } from '../../components/modals/kpi';
+import { useState } from 'react';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { CustomIcon } from '@/components/icons';
 
 const myData: DataKPIType[] = [
   {
@@ -213,13 +216,46 @@ const myData: DataKPIType[] = [
 
 export default function MyKPI() {
   const { openModal } = useModalKPI();
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const handleSelectAllChange = (e: CheckboxChangeEvent) => {
+    if (e.target.checked) {
+      onSelectChange(myData.map((item) => item.key));
+    } else {
+      onSelectChange([]);
+    }
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
+
   return (
     <div css={rootStyle}>
-      <Button onClick={() => openModal('Add KPI')} type="primary" css={addKPIBtnStyle}>
-        Thêm mục tiêu
+      <Button
+        onClick={() => openModal('Add KPI')}
+        type="primary"
+        css={addKPIBtnStyle}
+        iconPosition="start"
+      >
+        <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
+        <span>Thêm mục tiêu</span>
       </Button>
       <Search />
+      <Row css={rowHeaderStyle} justify="space-between">
+        <Col>
+          <Checkbox onChange={handleSelectAllChange}>Chọn tất cả</Checkbox>
+        </Col>
+        <Col>Tổng điểm đạt được: 200</Col>
+      </Row>
       <TableCustom
+        rowSelection={rowSelection}
         columns={myKPIColumns}
         dataSource={myData}
         loading={false}
@@ -239,4 +275,16 @@ const addKPIBtnStyle = css`
   position: absolute;
   right: 0;
   top: -6rem;
+  background: #0070b8;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  &:hover {
+    background: #0070b8 !important;
+    opacity: 0.9;
+  }
+`;
+
+const rowHeaderStyle = css`
+  margin: 2.4rem 0 1.4rem 0;
 `;

@@ -95,7 +95,6 @@ const tableStyle = css`
   background: #fff;
   border-radius: 0.4rem;
   box-shadow: 0.03px 0.1px 2px #cecccc;
-  margin-top: 3rem;
   .ant-spin-spinning {
     svg {
       width: 4rem;
