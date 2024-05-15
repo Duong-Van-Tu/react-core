@@ -1,9 +1,8 @@
 type DataKPIType = {
-  key: number;
-  proposer: string;
-  criteria: string;
-  objective: string;
-  targetPoint: string;
-  implementationTime: string;
-  calculationMethod: string;
+  Criteria: string;
+  TargetKPI: number;
+  TargetPoint: number;
+  StartTime: string;
+  EndTime: string;
+  Calculate: string;
 };

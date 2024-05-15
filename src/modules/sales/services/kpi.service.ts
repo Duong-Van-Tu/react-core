@@ -18,9 +18,12 @@ export const useKPI = () => {
   }, [caller, api]);
 
   const addKPI = useCallback(
-    async (data: any) => {
-      await caller(() => api.post(`/Goal/add-or-update?tenant=${tenant}`, data));
+    async (values: DataKPIType) => {
+      const { data } = await caller(() => api.post(`/Goal/add-or-update?tenant=${tenant}`, values));
+
+      return !!data.succeeded;
     },
+
     [api, caller],
   );
 

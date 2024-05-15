@@ -44,7 +44,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal
-        width={currentModal === ModalKPIType.FinalizeKPI ? '34rem' : '52rem'}
+        width={currentModal === ModalKPIType.FinalizeKPI ? '34rem' : '54rem'}
         open={open}
         onCancel={closeModal}
         footer={null}

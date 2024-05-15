@@ -48,6 +48,7 @@ export default function MyKPI() {
         type="primary"
         css={addKPIBtnStyle}
         iconPosition="start"
+        size="middle"
       >
         <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
         <span>Thêm mục tiêu</span>
