@@ -6,12 +6,12 @@ import dayjs from 'dayjs';
 import { Fragment } from 'react';
 
 type FieldType = {
-  Criteria: string;
-  TargetKPI: number;
-  TargetPoint: number;
-  StartTime: string;
-  EndTime: string;
-  Calculate: string;
+  criteria: string;
+  targetKPI: number;
+  targetPoint: number;
+  startTime: string;
+  endTime: string;
+  calculate: string;
 };
 
 type AddKPIProps = {
@@ -24,8 +24,10 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddKPI = {
       ...values,
-      StartTime: dayjs(values.StartTime).format('DD-MM-YYYY'),
-      EndTime: dayjs(values.EndTime).format('DD-MM-YYYY'),
+      targetKPI: values.targetKPI.toString(),
+      targetPoint: values.targetPoint.toString(),
+      startTime: dayjs(values.startTime).format('DD/MM/YYYY'),
+      endTime: dayjs(values.endTime).format('DD/MM/YYYY'),
     };
     const add = await addKPI(dataAddKPI);
     if (add) {
@@ -44,7 +46,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
       <Form css={formEditKPIStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
-          name="Criteria"
+          name="criteria"
           rules={[{ required: true, message: 'Vui lòng nhập tiêu chí!' }]}
         >
           <Input.TextArea placeholder="Nhập tiêu chí" allowClear />
@@ -53,7 +55,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu</span>}
-              name="TargetKPI"
+              name="targetKPI"
               rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
               <InputNumber css={inputStyle} size="middle" placeholder="Nhập mục tiêu" />
@@ -62,7 +64,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điểm mục tiêu</span>}
-              name="TargetPoint"
+              name="targetPoint"
               rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu!' }]}
             >
               <InputNumber css={inputStyle} size="middle" placeholder="Nhập điểm mục tiêu" />
@@ -73,7 +75,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Ngày bắt đầu mục tiêu</span>}
-              name="StartTime"
+              name="startTime"
               rules={[{ required: true, message: 'Vui lòng nhập ngày bắt đầu mục tiêu!' }]}
             >
               <DatePicker css={inputStyle} placeholder="Nhập ngày bắt đầu mục tiêu" />
@@ -82,7 +84,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Thời gian kết thúc</span>}
-              name="EndTime"
+              name="endTime"
               rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc!' }]}
             >
               <DatePicker css={inputStyle} placeholder="Nhập thời gian kết thúc" />
@@ -92,7 +94,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
 
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Cách tính</span>}
-          name="Calculate"
+          name="calculate"
           rules={[{ required: true, message: 'Vui lòng nhập cách tính!' }]}
         >
           <Input.TextArea placeholder="Nhập cách tính" allowClear />

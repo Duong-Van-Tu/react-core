@@ -1,8 +1,9 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 
 import Auth from './auth.middleware';
 import NonLogin from './non-login.middleware';
 import { useAuth } from '@/hooks/auth.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 type MiddlewareProps = {
   children: ReactElement;
@@ -11,7 +12,13 @@ type MiddlewareProps = {
 };
 
 export default function Middleware({ mode = 'public', children }: MiddlewareProps) {
-  const { logged } = useAuth();
+  const { fetchProfile } = useAuth();
+  const token = useRootSelector((state) => state.auth.token);
+  useEffect(() => {
+    if (token) {
+      fetchProfile();
+    }
+  }, [fetchProfile, token]);
 
   const Gateway: any = useMemo(() => {
     if (mode === 'private') return Auth;
@@ -19,5 +26,5 @@ export default function Middleware({ mode = 'public', children }: MiddlewareProp
     return ({ children }: any) => children;
   }, [mode]);
 
-  return <Gateway logged={logged}>{children}</Gateway>;
+  return <Gateway logged={!!token}>{children}</Gateway>;
 }

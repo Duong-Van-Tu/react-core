@@ -1,14 +1,27 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { KPIDropdown } from '@/modules/sales/components/dropdown/kpi.dropdown';
+import dayjs from 'dayjs';
+import { Message } from '@/components/message';
 
 type ColumnsType<T> = TableProps<T>['columns'];
+
+enum Status {
+  Pending = 'PENDING',
+  Completed = 'COMPLETED',
+  Request = 'REQUEST',
+  Updated = 'UPDATED',
+  Processing = 'PROCESSING',
+  Failed = 'FAILED',
+}
 
 export const myKPIColumns: ColumnsType<DataKPIType> = [
   {
     title: <LocaleFormatter id="table.column.kpi.proposer" />,
-    dataIndex: 'proposer',
-    render: (proposer) => proposer,
+    dataIndex: ['userSuggest'],
+    render: (user: UserSuggest) => {
+      return `${user.firstName} ${user.lastName}`;
+    },
   },
   {
     title: <LocaleFormatter id="table.column.kpi.criteria" />,
@@ -17,28 +30,58 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
   },
   {
     title: <LocaleFormatter id="table.column.kpi.objective" />,
-    dataIndex: 'objective',
-    render: (objective) => objective,
+    dataIndex: 'targetKPI',
   },
   {
     title: <LocaleFormatter id="table.column.kpi.reality" />,
-    dataIndex: 'reality',
-    render: (reality) => reality,
+    dataIndex: 'actualKPI',
   },
   {
     title: <LocaleFormatter id="table.column.targetPoint" />,
     dataIndex: 'targetPoint',
-    render: (targetPoint) => targetPoint,
   },
   {
     title: <LocaleFormatter id="table.column.kpi.implementationTime" />,
     dataIndex: 'implementationTime',
-    render: (implementationTime) => implementationTime,
+    render: (__, record) => {
+      return `${dayjs(record.startTime).format('DD/MM/YYYY')} đến ${dayjs(record.endTime).format('DD/MM/YYYY')} `;
+    },
   },
   {
     title: <LocaleFormatter id="table.column.kpi.calculationMethod" />,
-    dataIndex: 'calculationMethod',
-    render: (calculationMethod) => calculationMethod,
+    dataIndex: 'calculate',
+  },
+  {
+    title: <LocaleFormatter id="table.column.kpi.actualPoint" />,
+    dataIndex: 'actualPoint',
+  },
+  {
+    title: 'Trạng thái',
+    align: 'center',
+    dataIndex: ['goalStatus', 'name'],
+    render: (__, record) => {
+      let messageType: MessageType;
+      switch (record.goalStatus?.code) {
+        case Status.Completed:
+        case Status.Updated:
+          messageType = 'success';
+          break;
+        case Status.Request:
+        case Status.Processing:
+          messageType = 'info';
+          break;
+        case Status.Failed:
+          messageType = 'error';
+          break;
+        default:
+          messageType = 'warning';
+      }
+      return (
+        <Message hasBackground type={messageType}>
+          {record.goalStatus?.name ?? ''}
+        </Message>
+      );
+    },
   },
   {
     title: '',

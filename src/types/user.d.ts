@@ -1,5 +1,14 @@
 type UserProfile = {
-  id: number;
+  id: string;
+  fullName: string;
   email: string;
-  role: 'super-admin' | 'admin' | 'user';
+  applicationRoles: Role[];
+};
+
+type Role = {
+  id: string;
+  name: string;
+  applicationUserId: string;
+  description: string;
+  displayName: string;
 };

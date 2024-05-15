@@ -1,12 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-
+import { Key, useEffect, useState } from 'react';
 import { TableCustom } from '@/components/table';
 import { myKPIColumns } from './columns/my-kpi.column';
 import { Search } from '@/components/search';
 import { Button, Checkbox, Col, Row } from 'antd';
 import { useModalKPI } from '../../components/modals/kpi';
-import { useEffect, useState } from 'react';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { CustomIcon } from '@/components/icons';
 import { useKPI } from '../../services/kpi.service';
@@ -18,16 +17,16 @@ export default function MyKPI() {
   const { getAllKPI } = useKPI();
   const [loading] = useWatchLoading(['get-kpi', true]);
   const data = useRootSelector((state) => state.sale.kpi.data);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
 
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+  const onSelectChange = (newSelectedRowKeys: Key[]) => {
     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
 
   const handleSelectAllChange = (e: CheckboxChangeEvent) => {
     if (e.target.checked) {
-      onSelectChange(data.map((item) => item.key));
+      onSelectChange(data.map((item) => item.key!));
     } else {
       onSelectChange([]);
     }
@@ -65,7 +64,7 @@ export default function MyKPI() {
         columns={myKPIColumns}
         dataSource={data}
         loading={loading}
-        rowKey={(record) => record.key}
+        rowKey={(record) => record.id}
         pagination={{ current: 1, pageSize: 7 }}
         scroll={{ x: 1450 }}
       />

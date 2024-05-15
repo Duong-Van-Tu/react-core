@@ -1,8 +1,27 @@
+type UserSuggest = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+};
+
+type KPIStatus = {
+  id: string;
+  name: string;
+  code: string;
+};
+
 type DataKPIType = {
-  Criteria: string;
-  TargetKPI: number;
-  TargetPoint: number;
-  StartTime: string;
-  EndTime: string;
-  Calculate: string;
+  id?: number;
+  key?: number;
+  criteria?: string;
+  targetKPI: string;
+  targetPoint: string;
+  actualPoint?: string;
+  startTime: string;
+  endTime: string;
+  calculate: string;
+  userSuggest?: UserSuggest;
+  goalStatus?: KPIStatus;
 };

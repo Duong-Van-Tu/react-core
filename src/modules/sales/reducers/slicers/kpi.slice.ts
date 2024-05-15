@@ -12,14 +12,25 @@ const slice = createSlice({
   name: 'kpi',
   initialState: kpiInitialState,
   reducers: {
-    setListKPI(state, { payload }: PayloadAction<DataKPIType[]>) {
+    setListKPIAction(state, { payload }: PayloadAction<DataKPIType[]>) {
       state.data = payload;
     },
     addKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.data = [payload, ...state.data];
     },
+    updateKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
+      state.data = state.data.map((item) => {
+        if (item.id === payload.id) {
+          return payload;
+        }
+        return item;
+      });
+    },
+    deleteKPIAction(state, { payload }: PayloadAction<number>) {
+      state.data = state.data.filter((item) => item.id !== payload);
+    },
   },
 });
 
-export const { setListKPI, addKPIAction } = slice.actions;
+export const { setListKPIAction, addKPIAction, updateKPIAction, deleteKPIAction } = slice.actions;
 export default slice.reducer;
