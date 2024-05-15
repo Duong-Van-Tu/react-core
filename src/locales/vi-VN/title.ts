@@ -21,4 +21,13 @@ export const viVN_title = {
   'title.tab.privileges.employee': 'Quyền lợi của nhân viên',
   'title.tab.relationship.my': 'Mối quan hệ của tôi',
   'title.tab.relationship.employee': 'Mối quan hệ của nhân viên',
+  'title.form.activity': 'Hoạt động',
+  'title.form.target':'Mục tiêu',
+  'title.form.time':'Thời điểm',
+  'title.form.result':'Kết quả',
+  'title.form.select':'Chọn Sale/NPP',
+  'title.form.selectCustomer':'Chọn khách hàng',
+  'title.form.selectStatus':'Chọn trạng thái',
+  'title.form.reason':'Lý do',
+
 };

@@ -20,4 +20,12 @@ export const enUS_title = {
   'title.tab.privileges.employee': `Employee's privileges`,
   'title.tab.relationship.my': 'My relationships',
   'title.tab.relationship.employee': `Employee's relationships`,
+  'title.form.activity': 'Activity',
+  'title.form.target':'Target',
+  'title.form.time':'Time',
+  'title.form.result':'Result',
+  'title.form.select':'Choose Sale/NPP',
+  'title.form.selectCustomer':'Select customer',
+  'title.form.selectStatus':'Select status',
+  'title.form.reason':'reason',
 };
