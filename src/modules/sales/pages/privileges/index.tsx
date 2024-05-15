@@ -6,8 +6,8 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 import { Tabs, TabsProps } from 'antd';
-import MyPrivilegesTable from './my-table.privileges';
-import EmployeePrivilegesTable from './employee-table.privileges';
+import MyPrivilegesTable from './my-privileges';
+import EmployeePrivilegesTable from './employee-privileges';
 import { ModalPrivilegesProvider } from '../../components/modals/privileges';
 
 export default function PrivilegesPage() {

@@ -44,27 +44,27 @@ export function PrivilegesDropdown() {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <span>{formatMessage({ id: 'title.dropdown.edit' })}</span>,
+      label: <span>{formatMessage({ id: 'dropdown.edit' })}</span>,
       onClick: () => handleItemClick(MenuItem.RequestEdit),
     },
     {
       key: '2',
-      label: <span>{formatMessage({ id: 'title.dropdown.delete' })}</span>,
+      label: <span>{formatMessage({ id: 'dropdown.delete' })}</span>,
       onClick: () => handleItemClick(MenuItem.Delete),
     },
     {
       key: '3',
-      label: <span>{formatMessage({ id: 'title.dropdown.privileges.suggestedEdit' })}</span>,
+      label: <span>{formatMessage({ id: 'dropdown.privileges.suggestedEdit' })}</span>,
       onClick: () => handleItemClick(MenuItem.SuggestedEdit),
     },
     {
       key: '4',
-      label: <span>{formatMessage({ id: 'title.dropdown.privileges.refuseEdit' })}</span>,
+      label: <span>{formatMessage({ id: 'dropdown.privileges.refuseEdit' })}</span>,
       onClick: () => handleItemClick(MenuItem.RefuseEdit),
     },
     {
       key: '5',
-      label: <span>{formatMessage({ id: 'title.dropdown.privileges.report' })}</span>,
+      label: <span>{formatMessage({ id: 'dropdown.report' })}</span>,
       onClick: () => handleItemClick(MenuItem.Report),
     },
   ];

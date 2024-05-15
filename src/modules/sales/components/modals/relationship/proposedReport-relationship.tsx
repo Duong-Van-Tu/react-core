@@ -151,7 +151,7 @@ const TitleStyle = css`
   line-height: 2.6rem;
   margin-top: 4rem;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+
   color: rgba(21, 41, 75, 1);
 `;
 
@@ -160,7 +160,6 @@ const titleValuetyle = css`
   color: rgba(16, 24, 40, 1);
   font-weight: 600;
   font-size: 1.4rem;
-  font-family: 'Roboto', sans-serif;
 `;
 
 const titleContentStyle = css`
@@ -168,7 +167,6 @@ const titleContentStyle = css`
   color: rgba(66, 82, 109, 1);
   font-weight: 600;
   font-size: 1.2rem;
-  font-family: 'Roboto', sans-serif;
 `;
 
 const rowStyle = css`
@@ -190,7 +188,6 @@ const statusStyle = css`
     color: rgba(2, 122, 72, 1);
     font-weight: 700;
     font-size: 1.2rem;
-    font-family: 'Inter', sans-serif;
   }
 `;
 

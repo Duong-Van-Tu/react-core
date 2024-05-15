@@ -1,6 +1,7 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalPrivilegesType } from '../../../enum/privileges.enum';
+import { AddPrivileges } from './add.modal';
 import { EmployeeReportPrivileges } from './employee-report-privileges';
 import { EmployeeSuggestedEditPrivileges } from './employee-suggestedEdit-privileges';
 
@@ -48,6 +49,9 @@ export const ModalPrivilegesProvider = ({ children }: ModalProviderProps) => {
           <EmployeeReportPrivileges closeModal={closeModal} />
         )}
         {currentModal === ModalPrivilegesType.RefuseEdit && <div>RefuseEdit Modal</div>}
+        {currentModal === ModalPrivilegesType.AddPrivileges && (
+          <AddPrivileges closeModal={closeModal} />
+        )}
       </Modal>
     </ModalContext.Provider>
   );

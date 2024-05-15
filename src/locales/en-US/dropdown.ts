@@ -1,7 +1,8 @@
 export const enUS_dropdown = {
-  'title.dropdown.edit': 'Edit',
+  'dropdown.edit': 'Edit',
+  'dropdown.report': 'View report',
+  'dropdown.delete': 'Delete',
   'title.dropdown.requestEdit': 'Request edit',
-  'title.dropdown.delete': 'Delete',
   'title.dropdown.finalize': 'Finalize',
   'title.dropdown.reviewEdit': 'Review edit proposal',
   'title.dropdown.kpi.report': 'View report',
@@ -13,8 +14,7 @@ export const enUS_dropdown = {
   'title.dropdown.opportunity.resultReport': 'View result report',
   'title.dropdown.relationship.evaluate': 'Evaluate the relationship',
   'title.dropdown.relationship.proposedReports': 'View proposed reports',
-  'title.dropdown.privileges.suggestedEdit': 'View suggested edits',
-  'title.dropdown.privileges.refuseEdit': 'Refuse to edit',
-  'title.dropdown.privileges.report': 'View report',
-  'title.dropdown.privileges.updateResults': 'Update results',
+  'dropdown.privileges.suggestedEdit': 'View suggested edits',
+  'dropdown.privileges.refuseEdit': 'Refuse to edit',
+  'dropdown.privileges.updateResults': 'Update results',
 };

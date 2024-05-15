@@ -30,7 +30,7 @@ export function OpportunityDropdown() {
     },
     {
       key: '6',
-      label: <span>{formatMessage({ id: 'title.dropdown.delete' })}</span>,
+      label: <span>{formatMessage({ id: 'dropdown.delete' })}</span>,
     },
   ];
 
