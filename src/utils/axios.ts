@@ -6,7 +6,7 @@ function getAxios(baseURL: string) {
     baseURL,
   });
 
-  ins.interceptors.request.use(function (config: any) {
+  ins.interceptors.request.use(function (config) {
     if (!config.headers) {
       config.headers = {};
     }
@@ -17,7 +17,14 @@ function getAxios(baseURL: string) {
     // Do something before request is sent
     return config;
   });
+
   return ins;
 }
 
-export const API = getAxios(`${process.env.REACT_APP_API_URL}/api`);
+// Ensure VITE_API_URL is defined
+if (!import.meta.env.VITE_API_URL) {
+  throw new Error('VITE_API_URL environment variable is not defined');
+}
+
+// Create an axios instance with the base URL
+export const API = getAxios(`${import.meta.env.VITE_API_URL}/api`);

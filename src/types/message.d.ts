@@ -1,4 +1,6 @@
 type MessageOptions = {
-  type: "error" | "success";
+  type: MessageType;
   messages: string[];
 };
+
+type MessageType = 'success' | 'info' | 'warning' | 'error';

@@ -2,6 +2,7 @@ import { ReactElement, useMemo } from 'react';
 
 import Auth from './auth.middleware';
 import NonLogin from './non-login.middleware';
+import { useAuth } from '@/hooks/auth.hook';
 
 type MiddlewareProps = {
   children: ReactElement;
@@ -10,12 +11,7 @@ type MiddlewareProps = {
 };
 
 export default function Middleware({ mode = 'public', children }: MiddlewareProps) {
-  const isFetchedProfile = true;
-  const user = true;
-
-  //   useEffect(() => {
-  //     fetchProfile();
-  //   }, [fetchProfile]);
+  const { logged } = useAuth();
 
   const Gateway: any = useMemo(() => {
     if (mode === 'private') return Auth;
@@ -23,9 +19,5 @@ export default function Middleware({ mode = 'public', children }: MiddlewareProp
     return ({ children }: any) => children;
   }, [mode]);
 
-  return (
-    <Gateway user={user} isFetchedProfile={isFetchedProfile}>
-      {children}
-    </Gateway>
-  );
+  return <Gateway logged={logged}>{children}</Gateway>;
 }

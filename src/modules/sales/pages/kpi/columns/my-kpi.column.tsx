@@ -1,7 +1,6 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { KPIDropdown } from '@/modules/sales/components/dropdown/kpi.dropdown';
-import { DataKPIType } from '../type.kpi';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
@@ -43,7 +42,6 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
   },
   {
     title: '',
-    dataIndex: 'calculationMethod',
     fixed: 'right',
     width: '6%',
     render: () => <KPIDropdown />,

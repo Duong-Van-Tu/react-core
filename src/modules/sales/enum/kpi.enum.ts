@@ -1,6 +1,9 @@
 export enum ModalKPIType {
-  RequestEdit = 'Request Edit',
-  SetKPI = 'Set KPI',
-  Evaluation = 'Evaluation',
+  EditKPI = 'Edit KPI',
+  AddKPI = 'Add KPI',
+  ModifyKPI = 'Modify KPI',
+  FinalizeKPI = 'Finalize KPI',
+  ReviewEdit = 'Review edit',
+  RequestEdit = 'Request edit',
   Report = 'Report',
 }

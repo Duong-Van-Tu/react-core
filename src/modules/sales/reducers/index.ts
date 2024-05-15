@@ -1,12 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import example, { exampleInitialState } from './slicers/example.slice';
+import kpi, { kpiInitialState } from './slicers/kpi.slice';
 
 export type RawRootState = typeof saleState;
 export const salesInitialStates = {
-  exampleInitialState,
+  kpiInitialState,
 };
 export const saleState = {
-  example,
+  kpi,
 };
 
 const saleReducer = combineReducers(saleState);

@@ -1,24 +1,17 @@
-import PageIndicator from '@/components/page-indicator';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@/hooks/query.hook';
+import { Navigate } from 'react-router-dom';
 
 interface AuthProps {
   children: React.ReactElement;
   user: UserProfile;
-  isFetchedProfile: boolean;
+  logged: boolean;
 }
 
-export default function Auth({ children, user, isFetchedProfile }: AuthProps) {
-  const navigate = useNavigate();
-  if (!isFetchedProfile) {
-    return <PageIndicator />;
+export default function Auth({ children, logged }: AuthProps) {
+  const { tenant } = useQuery();
+  if (!logged) {
+    return <Navigate to={`/auth/login?tenant=${tenant}`} />;
   }
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/auth/login');
-    }
-  }, [user]);
 
   return children;
 }

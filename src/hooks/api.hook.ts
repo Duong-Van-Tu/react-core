@@ -76,7 +76,7 @@ export function useCaller() {
         if (
           res === undefined ||
           (res &&
-            (!!res.data?.error ||
+            (!res.data?.succeeded ||
               res.exception === 'Error' ||
               res.status >= 400 ||
               res.statusCode >= 400))
@@ -84,7 +84,7 @@ export function useCaller() {
           if (messageKey) {
             const messages: string[] = errorMessage
               ? [errorMessage]
-              : [res.data?.error || Messages.API_ERROR];
+              : [res.data?.errorMessage || Messages.API_ERROR];
 
             setMessage(messageKey, {
               type: 'error',
