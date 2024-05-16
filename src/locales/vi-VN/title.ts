@@ -7,6 +7,7 @@ export const viVN_title = {
   'title.document.privileges': 'Quyền lợi',
   'title.document.relationship': 'Mối quan hệ',
   'title.document.opportunity': 'Cơ hội',
+  'title.document.addOpportunity': 'Thêm cơ hội',
   'title.document.saleKit': 'Sale kit',
   'title.document.setting': 'Cài đặt',
   'title.document.payroll': 'Payroll',

@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
@@ -9,6 +10,9 @@ import { CustomIcon } from '@/components/icons';
 import { DataOpportunityType } from './type.opportunity';
 import { opportunityColumns } from './columns/opportunity.column';
 import { ModalOpportunityProvider } from '../../components/modals/opportuity';
+import { Search } from '@/components/search';
+import { Button, Checkbox, Col, Row } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const data: DataOpportunityType[] = [
   {
@@ -26,7 +30,19 @@ const data: DataOpportunityType[] = [
 export default function OpportunityPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
+  const navigate = useNavigate();
+  // const onSelectChange = (newSelectedRowKeys: Key[]) => {
+  //   // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+  //   // setSelectedRowKeys(newSelectedRowKeys);
+  // };
 
+  const handleSelectAllChange = (e: CheckboxChangeEvent) => {
+    // if (e.target.checked) {
+    //   onSelectChange(data.map((item) => item.key!));
+    // } else {
+    //   onSelectChange([]);
+    // }
+  };
   useEffect(() => {
     const breadCrumbItems = [
       {
@@ -47,12 +63,32 @@ export default function OpportunityPage() {
 
   return (
     <ModalOpportunityProvider>
-      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.opportunity' })}</h3>
       <div css={subTitleStyle}>
-        <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
-        <CustomIcon width={8} height={8} type="dot" />
-        <span>10 {formatMessage({ id: 'title.document.opportunity' })}</span>
+        <div>
+          <h3 css={titleStyle}>{formatMessage({ id: 'title.document.opportunity' })}</h3>
+          <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
+          <CustomIcon width={8} height={8} type="dot" />
+          <span>10 {formatMessage({ id: 'title.document.opportunity' })}</span>
+        </div>
+        <div>
+          <Button
+            onClick={() => navigate('/sales/opportunity/add-opportunity')}
+            type="primary"
+            css={addKOpportunitytnStyle}
+            iconPosition="start"
+            size="middle"
+          >
+            <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
+            <span>Thêm cơ hội</span>
+          </Button>
+        </div>
       </div>
+      <Search />
+      <Row css={rowHeaderStyle} justify="start">
+        <Col>
+          <Checkbox onChange={handleSelectAllChange}>Chọn tất cả</Checkbox>
+        </Col>
+      </Row>
       <TableCustom
         columns={opportunityColumns}
         dataSource={data}
@@ -68,12 +104,27 @@ export default function OpportunityPage() {
 const subTitleStyle = css`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-top: 0.4rem;
   gap: 4px;
   font-size: 1.4rem;
+  margin-bottom: 2rem;
 `;
 const titleStyle = css`
   font-size: 1.8rem;
   line-height: 2.3rem;
   font-weight: 600;
+`;
+const rowHeaderStyle = css`
+  margin: 2.4rem 0 1.4rem 0;
+`;
+const addKOpportunitytnStyle = css`
+  background: #0070b8;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  &:hover {
+    background: #0070b8 !important;
+    opacity: 0.9;
+  }
 `;
