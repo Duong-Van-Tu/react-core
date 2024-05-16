@@ -7,6 +7,12 @@ export function getToken() {
   );
 }
 
+export function getTenant() {
+  return (
+    (typeof localStorage !== 'undefined' && localStorage.getItem(KEYS.TENANT_KEY)) || undefined
+  );
+}
+
 export async function tick(delay: number = 0) {
   return new Promise<void>((res) => {
     setTimeout(res, delay);

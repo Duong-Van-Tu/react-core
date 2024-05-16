@@ -14,11 +14,25 @@ type MiddlewareProps = {
 export default function Middleware({ mode = 'public', children }: MiddlewareProps) {
   const { fetchProfile } = useAuth();
   const token = useRootSelector((state) => state.auth.token);
+  const tenant = useRootSelector((state) => state.auth.tenant);
+
   useEffect(() => {
     if (token) {
       fetchProfile();
     }
   }, [fetchProfile, token]);
+
+  useEffect(() => {
+    if (tenant) {
+      const searchParams = new URLSearchParams(window.location.search);
+      const currentTenant = searchParams.get('tenant');
+
+      if (currentTenant !== tenant) {
+        searchParams.set('tenant', tenant);
+        window.location.href = `${window.location.pathname}?${searchParams.toString()}`;
+      }
+    }
+  }, [tenant]);
 
   const Gateway: any = useMemo(() => {
     if (mode === 'private') return Auth;

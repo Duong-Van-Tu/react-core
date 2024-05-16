@@ -29,6 +29,7 @@ export const useAuth = () => {
       if (succeeded) {
         const token = data.token;
         localStorage.setItem(KEYS.LOGIN_TOKEN_STORE_KEY, token);
+        localStorage.setItem(KEYS.TENANT_KEY, tenant);
         dispatch(
           setDataAndTokenAction({
             token,
