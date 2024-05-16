@@ -5,7 +5,7 @@ import { Button, Col, Input, Row, Select } from 'antd';
 
 export const Search = () => {
   return (
-    <Row justify="space-between" gutter={[20, 0]} css={searchStyle}>
+    <Row justify="space-between" align="middle" gutter={[20, 0]} css={searchStyle}>
       <Col span={16}>
         <Input
           css={searchInputStyle}
