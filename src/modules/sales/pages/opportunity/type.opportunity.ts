@@ -15,3 +15,9 @@ export type DataUpdateOpportunityType = {
   time:string;
   result:string
 };
+export type DataUpdateHistoryOpportunityType = {
+  key: number;
+  updateTime:string;
+  updatePerson:string;
+  target:string;
+};

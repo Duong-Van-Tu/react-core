@@ -1,7 +1,5 @@
 import { TableProps } from 'antd';
 import { DataUpdateOpportunityType } from '../type.opportunity';
-import { LocaleFormatter } from '@/components/locale-formatter';
-import { OpportunityDropdown } from '@/modules/sales/components/dropdown/opportunity.dropdown';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 export const updateOpportunityColumns: ColumnsType<DataUpdateOpportunityType> = [
@@ -28,7 +26,7 @@ export const updateOpportunityColumns: ColumnsType<DataUpdateOpportunityType> = 
   {
     title: '',
     fixed: 'right',
-    width: '3%',
+    width: '1%',
     render: () => '',
   },
 ];

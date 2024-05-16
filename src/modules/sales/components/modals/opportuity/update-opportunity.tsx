@@ -3,11 +3,10 @@ import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import { Button, Modal } from 'antd';
 import { CustomIcon } from '@/components/icons';
-import { useModalOpportunity } from '../../modals/opportuity';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { DataUpdateOpportunityType } from '@/modules/sales/pages/opportunity/type.opportunity';
-import { updateOpportunityColumns } from '@/modules/sales/pages/opportunity/columns/updateopportunity.column';
+import { updateOpportunityColumns } from '@/modules/sales/pages/opportunity/columns/update-opportunity.column';
 import { AddUpdateOpportuity } from './add-update-opportuity';
 import { useState } from 'react';
 
@@ -73,6 +72,7 @@ export const UpdateOpportunity = () => {
   const { formatMessage } = useLocale();
   const [open, setOpen] = useState<boolean>(false);
   const openModal = () => {
+    console.log('open: ', open);
     setOpen(true);
   };
 
@@ -95,7 +95,10 @@ export const UpdateOpportunity = () => {
             <span>Lần cập nhật gần nhất:</span>
             <span> 11:00 - 20/04/2024:</span>
             <CustomIcon color="rgba(84, 104, 129, 1)" width={10} height={10} type="dot" />{' '}
-            <Link to="" css={titleViewHistoryStyle}>
+            <Link
+              to="/sales/opportunity/update-opportunity/update-history"
+              css={titleViewHistoryStyle}
+            >
               Xem lịch sử
             </Link>
           </div>
@@ -111,7 +114,7 @@ export const UpdateOpportunity = () => {
             <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
             <span>Thêm cập nhật</span>
           </Button>
-          <Modal>
+          <Modal open={open} onCancel={closeModal} footer={null}>
             <AddUpdateOpportuity closeModal={closeModal} />
           </Modal>
         </div>
@@ -121,7 +124,7 @@ export const UpdateOpportunity = () => {
         dataSource={data}
         loading={false}
         rowKey={(record) => record.key}
-        pagination={{ current: 1, pageSize: 8 }}
+        pagination={{ current: 1, pageSize: 5 }}
         scroll={{ x: 1000 }}
       />
     </div>
@@ -130,7 +133,7 @@ export const UpdateOpportunity = () => {
 
 const containerStyle = css`
   width: 100%;
-  max-width: 144rem;
+  max-width: 105rem;
   height: 100%;
   margin: 0 auto;
   padding: 0 15px;

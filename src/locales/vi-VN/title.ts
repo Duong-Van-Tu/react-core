@@ -8,7 +8,10 @@ export const viVN_title = {
   'title.document.relationship': 'Mối quan hệ',
   'title.document.opportunity': 'Cơ hội',
   'title.document.addOpportunity': 'Thêm cơ hội',
+  'title.document.editOpportunity': 'Chỉnh sửa cơ hội',
   'title.document.updateOpportunity': 'Cập nhật cơ hội',
+  'title.document.reportOpportunity': 'Xem báo cáo kết quả',
+  'title.document.updateHistory': 'Lịch sử cập nhật',
   'title.document.saleKit': 'Sale kit',
   'title.document.setting': 'Cài đặt',
   'title.document.payroll': 'Payroll',
@@ -33,5 +36,6 @@ export const viVN_title = {
   'title.form.reason':'Lý do',
   'title.exit': 'Thoát ra',
   'title.addOpportuity': 'Thêm cơ hội',
+  'title.editOpportuity': 'Chỉnh sửa cơ hội',
 
 };

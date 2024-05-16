@@ -6,6 +6,10 @@ export const enUS_title = {
   'title.document.privileges': 'Privileges',
   'title.document.relationship': 'Relationship',
   'title.document.opportunity': 'Opportunity',
+  'title.document.reportOpportunity': 'View Results Report',
+  'title.document.updateHistory': 'Update history',
+  'title.document.addOpportunity': 'Add Opportunity',
+  'title.document.editOpportunity': 'Edit Opportunity',
   'title.document.saleKit': 'Sale kit',
   'title.document.setting': 'Setting',
   'title.document.payroll': 'Payroll',
@@ -30,4 +34,5 @@ export const enUS_title = {
   'title.form.reason':'reason',
   'title.exit': 'Exit',
   'title.addOpportuity': 'Add Opportuity',
+  'title.editOpportuity': 'Edit Opportuity',
 };

@@ -40,14 +40,12 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal open={open} onCancel={closeModal} footer={null}>
-        {currentModal === ModalOpportunityType.RequestEdit && <div>Request Edit Modal</div>}
         {currentModal === ModalOpportunityType.AssignOpportunity && (
           <AssignOpportuity closeModal={closeModal} />
         )}
         {currentModal === ModalOpportunityType.CloseOpportunity && (
           <CloseOpportuity closeModal={closeModal} />
         )}
-        {currentModal === ModalOpportunityType.Report && <div>Report Modal</div>}
         {currentModal === ModalOpportunityType.Delete && <div>Delete Modal</div>}
       </Modal>
     </ModalContext.Provider>
