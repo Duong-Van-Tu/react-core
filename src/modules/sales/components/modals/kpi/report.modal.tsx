@@ -1,15 +1,24 @@
 /** @jsxImportSource @emotion/react */
+import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Col, Row, Space } from 'antd';
+import { useEffect } from 'react';
 
 type ReportProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
+  data: DataKPIType;
 };
 
-export const Report = ({ closeModal }: ReportProps) => {
+export const Report = ({ closeModal, data }: ReportProps) => {
+  const { showReport } = useKPI();
+
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
+
+  useEffect(() => {
+    showReport(data);
+  }, []);
 
   return (
     <div css={rootStyle}>

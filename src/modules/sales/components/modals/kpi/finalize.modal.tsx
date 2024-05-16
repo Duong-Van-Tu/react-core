@@ -1,18 +1,36 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { Status } from '@/modules/sales/enum/status.enum';
+import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
 
 type FinalizeKPIProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
+  data: DataKPIType;
 };
-export const FinalizeKPI = ({ closeModal }: FinalizeKPIProps) => {
+export const FinalizeKPI = ({ closeModal, data }: FinalizeKPIProps) => {
+  const { updateStatusKPI } = useKPI();
+  const [loading] = useWatchLoading(['edit-status', false]);
+
+  const handleFinalizeKPI = async () => {
+    const editStatus = await updateStatusKPI({
+      id: data.id,
+      applicationUserId: data.userSuggest?.id,
+      status: Status.Processing,
+    } as DataKPIType);
+
+    if (editStatus) {
+      closeModal();
+    }
+  };
   return (
     <div css={rootStyle}>
       <h3 css={titleStyle}>Đồng ý chốt mục tiêu này</h3>
       <Row justify="center">
         <Space>
-          <Button onClick={() => closeModal?.()}>Huỷ</Button>
-          <Button type="primary" htmlType="submit">
+          <Button onClick={() => closeModal()}>Huỷ</Button>
+          <Button loading={loading} type="primary" onClick={handleFinalizeKPI}>
             Xác nhận
           </Button>
         </Space>

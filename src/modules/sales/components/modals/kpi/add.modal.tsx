@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
@@ -21,6 +22,8 @@ type AddKPIProps = {
 export const AddKPI = ({ closeModal }: AddKPIProps) => {
   const { addKPI } = useKPI();
   const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['add-kpi', false]);
+
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddKPI = {
       ...values,
@@ -43,7 +46,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Thêm đề xuất mục tiêu</h3>
-      <Form css={formEditKPIStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
+      <Form form={form} css={formEditKPIStyle} name="add-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
           name="criteria"
@@ -103,7 +106,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>

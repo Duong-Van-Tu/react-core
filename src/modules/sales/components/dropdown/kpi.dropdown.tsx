@@ -15,27 +15,30 @@ enum MenuItem {
   ReviewEdit,
   Report,
 }
+type KPIDropdownProps = {
+  data?: DataKPIType;
+};
 
-export function KPIDropdown() {
+export function KPIDropdown({ data }: KPIDropdownProps) {
   const { openModal } = useModalKPI();
   const { formatMessage } = useLocale();
 
   const handleItemClick = (key: number) => {
     switch (key) {
       case MenuItem.EditKPI:
-        openModal(ModalKPIType.EditKPI);
+        openModal(ModalKPIType.EditKPI, data);
         break;
       case MenuItem.FinalizeKPI:
-        openModal(ModalKPIType.FinalizeKPI);
+        openModal(ModalKPIType.FinalizeKPI, data);
         break;
       case MenuItem.RequestEdit:
-        openModal(ModalKPIType.RequestEdit);
+        openModal(ModalKPIType.RequestEdit, data);
         break;
       case MenuItem.Report:
-        openModal(ModalKPIType.Report);
+        openModal(ModalKPIType.Report, data);
         break;
       case MenuItem.ModifyKPI:
-        openModal(ModalKPIType.ModifyKPI);
+        openModal(ModalKPIType.ModifyKPI, data);
         break;
       default:
         break;

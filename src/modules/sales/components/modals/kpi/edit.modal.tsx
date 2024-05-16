@@ -1,35 +1,53 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 type FieldType = {
+  id?: string;
   criteria: string;
-  objective: string;
+  targetKPI: string;
   targetPoint: number;
-  startDate: string;
-  endDate: string;
-  calculationMethod: string;
+  calculate: string;
 };
 
 type EditKPIProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
+  data: DataKPIType;
 };
 
-export const EditKPI = ({ closeModal }: EditKPIProps) => {
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal?.();
+export const EditKPI = ({ closeModal, data }: EditKPIProps) => {
+  const { updateKPI } = useKPI();
+  const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['edit-kpi', false]);
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const dataUpdateKPI = {
+      ...values,
+      id: data.id,
+      targetKPI: values.targetKPI.toString(),
+      targetPoint: values.targetPoint.toString(),
+    };
+
+    const edit = await updateKPI(dataUpdateKPI);
+    if (edit) {
+      form.resetFields();
+      closeModal();
+    }
   };
 
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
+  useEffect(() => {
+    form.setFieldsValue(data);
+  }, [data]);
 
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Chỉnh sửa mục tiêu</h3>
-      <Form css={formStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
+      <Form form={form} css={formStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
           name="criteria"
@@ -41,7 +59,7 @@ export const EditKPI = ({ closeModal }: EditKPIProps) => {
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu</span>}
-              name="objective"
+              name="targetKPI"
               rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
               <Input size="large" placeholder="Nhập mục tiêu" />
@@ -60,7 +78,7 @@ export const EditKPI = ({ closeModal }: EditKPIProps) => {
 
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Cách tính</span>}
-          name="calculationMethod"
+          name="calculate"
           rules={[{ required: true, message: 'Vui lòng nhập cách tính!' }]}
         >
           <Input.TextArea
@@ -72,7 +90,7 @@ export const EditKPI = ({ closeModal }: EditKPIProps) => {
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>

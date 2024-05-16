@@ -1,3 +1,5 @@
+type Status = 'PENDING' | 'COMPLETED' | 'REQUEST' | 'UPDATED' | 'PROCESSING' | 'FAILED';
+
 type UserSuggest = {
   id: string;
   email: string;
@@ -13,15 +15,19 @@ type KPIStatus = {
 };
 
 type DataKPIType = {
-  id?: number;
+  id?: string;
   key?: number;
   criteria?: string;
-  targetKPI: string;
-  targetPoint: string;
+  targetKPI?: string;
+  targetPoint?: string;
   actualPoint?: string;
-  startTime: string;
-  endTime: string;
-  calculate: string;
+  startTime?: string;
+  endTime?: string;
+  calculate?: string;
   userSuggest?: UserSuggest;
   goalStatus?: KPIStatus;
+  status?: Status;
+  suggestEndTime?: string;
+  suggestTargetKPI?: string;
+  suggestTargetPoint?: string;
 };

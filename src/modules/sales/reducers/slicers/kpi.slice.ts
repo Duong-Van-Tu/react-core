@@ -36,7 +36,7 @@ const slice = createSlice({
         return item;
       });
     },
-    deleteKPIAction(state, { payload }: PayloadAction<number>) {
+    deleteKPIAction(state, { payload }: PayloadAction<string>) {
       state.data = state.data.filter((item) => item.id !== payload);
     },
   },

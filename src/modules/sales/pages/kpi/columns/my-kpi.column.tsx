@@ -61,15 +61,18 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
           messageType = 'info';
           break;
         case Status.Failed:
+        case Status.AcceptRequest:
           messageType = 'error';
           break;
         default:
           messageType = 'warning';
       }
-      return (
+      return record.goalStatus ? (
         <Message hasBackground type={messageType}>
-          {record.goalStatus?.name ?? ''}
+          {record.goalStatus.name}
         </Message>
+      ) : (
+        ''
       );
     },
   },
@@ -77,6 +80,6 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
     title: '',
     fixed: 'right',
     width: '6%',
-    render: () => <KPIDropdown />,
+    render: (__, record) => <KPIDropdown data={record} />,
   },
 ];
