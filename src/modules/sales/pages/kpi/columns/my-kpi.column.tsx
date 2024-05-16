@@ -3,17 +3,9 @@ import { LocaleFormatter } from '@/components/locale-formatter';
 import { KPIDropdown } from '@/modules/sales/components/dropdown/kpi.dropdown';
 import dayjs from 'dayjs';
 import { Message } from '@/components/message';
+import { Status } from '@/modules/sales/enum/status.enum';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-
-enum Status {
-  Pending = 'PENDING',
-  Completed = 'COMPLETED',
-  Request = 'REQUEST',
-  Updated = 'UPDATED',
-  Processing = 'PROCESSING',
-  Failed = 'FAILED',
-}
 
 export const myKPIColumns: ColumnsType<DataKPIType> = [
   {
