@@ -18,6 +18,7 @@ import Previous from '@/assets/svg/previous.svg?react';
 import Next from '@/assets/svg/next.svg?react';
 import Prev from '@/assets/svg/prev.svg?react';
 import CirclePlus from '@/assets/svg/circle-plus.svg?react';
+import Close from '@/assets/svg/close.svg?react';
 
 type Props = {
   width?: number;
@@ -81,6 +82,9 @@ export const CustomIcon = (props: Props) => {
   }
   if (type === 'circle-plus') {
     return <CirclePlus css={iconStyle(color!)} {...props} />;
+  }
+  if (type === 'close') {
+    return <Close css={iconStyle(color!)} {...props} />;
   }
   return null;
 };

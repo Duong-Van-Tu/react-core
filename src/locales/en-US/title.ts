@@ -28,4 +28,6 @@ export const enUS_title = {
   'title.form.selectCustomer':'Select customer',
   'title.form.selectStatus':'Select status',
   'title.form.reason':'reason',
+  'title.exit': 'Exit',
+  'title.addOpportuity': 'Add Opportuity',
 };

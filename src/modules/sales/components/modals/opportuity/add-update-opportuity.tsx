@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
 import { Fragment } from 'react';
 
-type UpdateOpportuityProps = {
+type AddUpdateOpportuityProps = {
   closeModal: () => void;
 };
 type FieldType = {
@@ -14,7 +14,7 @@ type FieldType = {
   result: string;
 };
 
-export const UpdateOpportuity = ({ ...props }: UpdateOpportuityProps) => {
+export const AddUpdateOpportuity = ({ ...props }: AddUpdateOpportuityProps) => {
   const { closeModal } = props;
   const { formatMessage } = useLocale();
 

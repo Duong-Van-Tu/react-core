@@ -6,6 +6,7 @@ import MainLayout from '@/layouts/main.layout';
 import WrapperRouteComponent from './config';
 import AuthLayout from '@/layouts/auth.layout';
 import { AddOpportuity } from '@/modules/sales/components/modals/opportuity/add.modal';
+import { UpdateOpportunity } from '@/modules/sales/components/modals/opportuity/update-opportunity';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -173,6 +174,14 @@ const routes: RouteObject[] = [
     element: (
       <WrapperRouteComponent titleId="title.document.addOpportunity">
         <AddOpportuity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/sales/opportunity/update-opportunity',
+    element: (
+      <WrapperRouteComponent titleId="title.document.updateOpportunity">
+        <UpdateOpportunity />
       </WrapperRouteComponent>
     ),
   },

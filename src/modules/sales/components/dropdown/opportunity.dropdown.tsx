@@ -5,20 +5,21 @@ import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { ModalOpportunityType } from '../../enum/opportunity.enum';
-import { useOpportunityModal } from '../modals/opportuity';
+import { useModalOpportunity } from '../modals/opportuity';
+import { useNavigate } from 'react-router-dom';
 
 enum MenuItem {
   RequestEdit = 1,
   AssignOpportunity,
-  UpdateOpportunity,
   CloseOpportunity,
   Report,
   Delete,
 }
 
 export function OpportunityDropdown() {
-  const { openModal } = useOpportunityModal();
+  const { openModal } = useModalOpportunity();
   const { formatMessage } = useLocale();
+  const navigate = useNavigate();
 
   const handleItemClick = (key: number) => {
     switch (key) {
@@ -27,9 +28,6 @@ export function OpportunityDropdown() {
         break;
       case MenuItem.AssignOpportunity:
         openModal(ModalOpportunityType.AssignOpportunity);
-        break;
-      case MenuItem.UpdateOpportunity:
-        openModal(ModalOpportunityType.UpdateOpportunity);
         break;
       case MenuItem.CloseOpportunity:
         openModal(ModalOpportunityType.CloseOpportunity);
@@ -58,7 +56,7 @@ export function OpportunityDropdown() {
     {
       key: '3',
       label: <span>{formatMessage({ id: 'title.dropdown.opportunity.updateOpportunity' })}</span>,
-      onClick: () => handleItemClick(MenuItem.UpdateOpportunity),
+      onClick: () => navigate('/sales/opportunity/update-opportunity'),
     },
     {
       key: '4',

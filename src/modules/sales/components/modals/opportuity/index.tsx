@@ -3,7 +3,7 @@ import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalOpportunityType } from '../../../enum/opportunity.enum';
 import { AssignOpportuity } from './assign-opportuity';
 import { CloseOpportuity } from './close-opportuity';
-import { UpdateOpportuity } from './update-opportuity';
+import { AddUpdateOpportuity } from './add-update-opportuity';
 
 type ModalContexttype = {
   openModal: (modalName: string) => void;
@@ -11,7 +11,7 @@ type ModalContexttype = {
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
 
-export const useOpportunityModal = () => {
+export const useModalOpportunity = () => {
   const context = useContext(ModalContext);
   if (!context) {
     throw new Error('useOpportunityModal must be used within a ModalOpportunityProvider');
@@ -43,9 +43,6 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
         {currentModal === ModalOpportunityType.RequestEdit && <div>Request Edit Modal</div>}
         {currentModal === ModalOpportunityType.AssignOpportunity && (
           <AssignOpportuity closeModal={closeModal} />
-        )}
-        {currentModal === ModalOpportunityType.UpdateOpportunity && (
-          <UpdateOpportuity closeModal={closeModal} />
         )}
         {currentModal === ModalOpportunityType.CloseOpportunity && (
           <CloseOpportuity closeModal={closeModal} />
