@@ -11,9 +11,7 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
   {
     title: <LocaleFormatter id="table.column.kpi.proposer" />,
     dataIndex: ['userSuggest'],
-    render: (user: UserSuggest) => {
-      return `${user.firstName} ${user.lastName}`;
-    },
+    render: (user: UserSuggest) => `${user.firstName} ${user.lastName}`,
   },
   {
     title: <LocaleFormatter id="table.column.kpi.criteria" />,

@@ -15,7 +15,7 @@ type FieldType = {
 };
 
 type AddKPIProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
 };
 
 export const AddKPI = ({ closeModal }: AddKPIProps) => {
@@ -31,13 +31,13 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
     };
     const add = await addKPI(dataAddKPI);
     if (add) {
-      closeModal?.();
       form.resetFields();
+      closeModal();
     }
   };
 
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
 
   return (

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type KPIState = {
   data: DataKPIType[];
+  totalRecords?: number;
 };
 
 export const kpiInitialState: KPIState = {
@@ -12,8 +13,17 @@ const slice = createSlice({
   name: 'kpi',
   initialState: kpiInitialState,
   reducers: {
-    setListKPIAction(state, { payload }: PayloadAction<DataKPIType[]>) {
-      state.data = payload;
+    setListKPIAction(
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        data: DataKPIType[];
+        totalRecords: number;
+      }>,
+    ) {
+      state.data = payload.data;
+      state.totalRecords = payload.totalRecords;
     },
     addKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.data = [payload, ...state.data];

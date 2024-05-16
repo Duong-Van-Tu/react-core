@@ -16,7 +16,7 @@ export const useKPI = () => {
 
   const getAllKPI = useCallback(
     async (pageIndex: number = Pagination.PAGEINDEX, pageSize: number = Pagination.PAGESIZE) => {
-      const { data } = await caller(
+      const { data, succeeded } = await caller(
         () =>
           api.post(
             `/Goal/get-list-with-pagination?PageIndex=${pageIndex}&PageSize=${pageSize}&UserId=${user?.id}&RoleId=${user?.applicationRoles[0].id}&tenant=${tenant}`,
@@ -25,7 +25,10 @@ export const useKPI = () => {
           loadingKey: 'get-kpi',
         },
       );
-      dispatch(setListKPIAction(data.items));
+      if (succeeded) {
+        const { items, totalRecords } = data;
+        dispatch(setListKPIAction({ data: items, totalRecords }));
+      }
     },
     [caller, api],
   );
@@ -39,7 +42,7 @@ export const useKPI = () => {
       );
 
       if (succeeded) {
-        dispatch(addKPIAction(data));
+        dispatch(addKPIAction(data[0]));
         return succeeded;
       }
       return false;

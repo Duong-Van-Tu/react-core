@@ -7,11 +7,11 @@ import './index.css';
 import { AgentProvider } from './components/agent.provider.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Provider store={reduxStore}>
-      <AgentProvider>
-        <App />
-      </AgentProvider>
-    </Provider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <Provider store={reduxStore}>
+    <AgentProvider>
+      <App />
+    </AgentProvider>
+  </Provider>,
+  // </React.StrictMode>,
 );

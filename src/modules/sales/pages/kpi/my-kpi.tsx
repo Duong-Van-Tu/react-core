@@ -11,12 +11,13 @@ import { CustomIcon } from '@/components/icons';
 import { useKPI } from '../../services/kpi.service';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
+import { Pagination } from '@/constants/pagination';
 
 export default function MyKPI() {
   const { openModal } = useModalKPI();
   const { getAllKPI } = useKPI();
   const [loading] = useWatchLoading(['get-kpi', true]);
-  const data = useRootSelector((state) => state.sale.kpi.data);
+  const { data, totalRecords } = useRootSelector((state) => state.sale.kpi);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
 
   const onSelectChange = (newSelectedRowKeys: Key[]) => {
@@ -40,6 +41,7 @@ export default function MyKPI() {
   useEffect(() => {
     getAllKPI();
   }, [getAllKPI]);
+
   return (
     <div css={rootStyle}>
       <Button
@@ -59,15 +61,22 @@ export default function MyKPI() {
         </Col>
         <Col>Tổng điểm đạt được: 200</Col>
       </Row>
-      <TableCustom
-        rowSelection={rowSelection}
-        columns={myKPIColumns}
-        dataSource={data}
-        loading={loading}
-        rowKey={(record) => record.id}
-        pagination={{ current: 1, pageSize: 7 }}
-        scroll={{ x: 1450 }}
-      />
+      {totalRecords && (
+        <TableCustom
+          rowSelection={rowSelection}
+          columns={myKPIColumns}
+          dataSource={data}
+          loading={loading}
+          rowKey={(record) => record.id}
+          pagination={{
+            current: Pagination.PAGEINDEX,
+            pageSize: Pagination.PAGESIZE,
+            total: totalRecords,
+            onChange: (page) => getAllKPI(page, 7),
+          }}
+          scroll={{ x: 1450 }}
+        />
+      )}
     </div>
   );
 }
