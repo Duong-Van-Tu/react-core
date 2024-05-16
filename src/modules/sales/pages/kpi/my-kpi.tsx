@@ -33,6 +33,10 @@ export default function MyKPI() {
     }
   };
 
+  const handleSearch = (searchText: string) => {
+    getAllKPI(Pagination.PAGEINDEX, Pagination.PAGESIZE, searchText);
+  };
+
   const rowSelection = {
     selectedRowKeys,
     onChange: onSelectChange,
@@ -54,14 +58,14 @@ export default function MyKPI() {
         <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
         <span>Thêm mục tiêu</span>
       </Button>
-      <Search />
+      <Search onSearch={handleSearch} />
       <Row css={rowHeaderStyle} justify="space-between">
         <Col>
           <Checkbox onChange={handleSelectAllChange}>Chọn tất cả</Checkbox>
         </Col>
         <Col>Tổng điểm đạt được: 200</Col>
       </Row>
-      {totalRecords && (
+      {!!totalRecords && (
         <TableCustom
           rowSelection={rowSelection}
           columns={myKPIColumns}

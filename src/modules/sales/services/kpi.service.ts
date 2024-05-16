@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import {
   addKPIAction,
   deleteKPIAction,
+  setDataReportAction,
   setListKPIAction,
   updateKPIAction,
 } from '../reducers/slicers/kpi.slice';
@@ -21,11 +22,15 @@ export const useKPI = () => {
   const user = useRootSelector((state) => state.auth.user);
 
   const getAllKPI = useCallback(
-    async (pageIndex: number = Pagination.PAGEINDEX, pageSize: number = Pagination.PAGESIZE) => {
+    async (
+      pageIndex: number = Pagination.PAGEINDEX,
+      pageSize: number = Pagination.PAGESIZE,
+      searchText?: string,
+    ) => {
       const { data, succeeded } = await caller(
         () =>
           api.post(
-            `/Goal/get-list-with-pagination?PageIndex=${pageIndex}&PageSize=${pageSize}&UserId=${user?.id}&RoleId=${user?.applicationRoles[0].id}&tenant=${tenant}`,
+            `/Goal/get-list-with-pagination?PageIndex=${pageIndex}&PageSize=${pageSize}&UserId=${user?.id}&RoleId=${user?.applicationRoles[0].id}&TextSearch=${searchText ?? ''}&tenant=${tenant}`,
           ),
         {
           loadingKey: 'get-kpi',
@@ -149,7 +154,7 @@ export const useKPI = () => {
       );
 
       if (succeeded) {
-        dispatch(updateKPIAction(data));
+        dispatch(setDataReportAction(data));
         return succeeded;
       }
       return false;

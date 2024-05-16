@@ -2,15 +2,25 @@
 import { css } from '@emotion/react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Select } from 'antd';
+import { useState } from 'react';
 
-export const Search = () => {
+type SearchProps = {
+  onSearch: (textSearch: string) => void;
+};
+
+export const Search = ({ onSearch }: SearchProps) => {
+  const [searchText, setSearchtext] = useState<string>('');
+  const handleSearch = () => {
+    onSearch(searchText);
+  };
   return (
     <Row justify="space-between" align="middle" gutter={[20, 0]} css={searchStyle}>
       <Col span={16}>
         <Input
           css={searchInputStyle}
           size="large"
-          prefix={<Button css={searchBtnStyle} icon={<SearchOutlined />} />}
+          prefix={<Button css={searchBtnStyle} icon={<SearchOutlined onClick={handleSearch} />} />}
+          onChange={(e) => setSearchtext(e.target.value)}
         />
       </Col>
       <Col span={4}>

@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type KPIState = {
   data: DataKPIType[];
   totalRecords?: number;
+  report?: DataKPIType;
 };
 
 export const kpiInitialState: KPIState = {
@@ -39,8 +40,17 @@ const slice = createSlice({
     deleteKPIAction(state, { payload }: PayloadAction<string>) {
       state.data = state.data.filter((item) => item.id !== payload);
     },
+    setDataReportAction(state, { payload }: PayloadAction<DataKPIType>) {
+      state.report = payload;
+    },
   },
 });
 
-export const { setListKPIAction, addKPIAction, updateKPIAction, deleteKPIAction } = slice.actions;
+export const {
+  setListKPIAction,
+  addKPIAction,
+  updateKPIAction,
+  deleteKPIAction,
+  setDataReportAction,
+} = slice.actions;
 export default slice.reducer;

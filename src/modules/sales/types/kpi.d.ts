@@ -20,6 +20,7 @@ type DataKPIType = {
   criteria?: string;
   targetKPI?: string;
   targetPoint?: string;
+  actualKPI?: string;
   actualPoint?: string;
   startTime?: string;
   endTime?: string;
