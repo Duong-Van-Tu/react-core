@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type KPIState = {
   data: DataKPIType[];
-  totalRecords?: number;
+  pagination?: PaginationAPI;
   report?: DataKPIType;
 };
 
@@ -20,11 +20,11 @@ const slice = createSlice({
         payload,
       }: PayloadAction<{
         data: DataKPIType[];
-        totalRecords: number;
+        pagination: PaginationAPI;
       }>,
     ) {
       state.data = payload.data;
-      state.totalRecords = payload.totalRecords;
+      state.pagination = payload.pagination;
     },
     addKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.data = [payload, ...state.data];

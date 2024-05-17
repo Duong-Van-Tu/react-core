@@ -37,8 +37,17 @@ export const useKPI = () => {
         },
       );
       if (succeeded) {
-        const { items, totalRecords } = data;
-        dispatch(setListKPIAction({ data: items, totalRecords }));
+        const { items, totalRecords, pageIndex, totalPages } = data;
+        dispatch(
+          setListKPIAction({
+            data: items,
+            pagination: {
+              pageIndex,
+              totalRecords,
+              totalPages,
+            },
+          }),
+        );
       }
     },
     [caller, api],

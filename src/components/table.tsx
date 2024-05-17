@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Table, PaginationProps, Button } from 'antd';
 import type { GetProp, TableProps } from 'antd';
 import { css } from '@emotion/react';
@@ -65,6 +65,15 @@ export function TableCustom(props: TableCustom) {
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
     }
   };
+  useEffect(() => {
+    setTableParams((prevParams) => ({
+      ...prevParams,
+      pagination: {
+        ...prevParams.pagination,
+        ...pagination,
+      },
+    }));
+  }, [pagination]);
 
   return (
     <Table

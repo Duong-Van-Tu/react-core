@@ -17,12 +17,17 @@ export default function MyKPI() {
   const { openModal } = useModalKPI();
   const { getAllKPI } = useKPI();
   const [loading] = useWatchLoading(['get-kpi', true]);
-  const { data, totalRecords } = useRootSelector((state) => state.sale.kpi);
+  const { data, pagination } = useRootSelector((state) => state.sale.kpi);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
 
   const onSelectChange = (newSelectedRowKeys: Key[]) => {
     console.log('selectedRowKeys changed: ', newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
   };
 
   const handleSelectAllChange = (e: CheckboxChangeEvent) => {
@@ -37,10 +42,7 @@ export default function MyKPI() {
     getAllKPI(Pagination.PAGEINDEX, Pagination.PAGESIZE, searchText);
   };
 
-  const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
+  const handleTableChange = () => {};
 
   useEffect(() => {
     getAllKPI();
@@ -65,22 +67,24 @@ export default function MyKPI() {
         </Col>
         <Col>Tổng điểm đạt được: 200</Col>
       </Row>
-      {!!totalRecords && (
-        <TableCustom
-          rowSelection={rowSelection}
-          columns={myKPIColumns}
-          dataSource={data}
-          loading={loading}
-          rowKey={(record) => record.id}
-          pagination={{
-            current: Pagination.PAGEINDEX,
-            pageSize: Pagination.PAGESIZE,
-            total: totalRecords,
-            onChange: (page) => getAllKPI(page, 7),
-          }}
-          scroll={{ x: 1450 }}
-        />
-      )}
+      <TableCustom
+        rowSelection={rowSelection}
+        columns={myKPIColumns}
+        dataSource={data}
+        loading={loading}
+        rowKey={(record) => record.id}
+        pagination={{
+          current: pagination?.pageIndex,
+          pageSize: Pagination.PAGESIZE,
+          total: pagination?.totalRecords,
+          position: ['bottomCenter'],
+          onChange: (page) => {
+            getAllKPI(page);
+          },
+        }}
+        onTableChange={handleTableChange}
+        scroll={{ x: 1450 }}
+      />
     </div>
   );
 }
