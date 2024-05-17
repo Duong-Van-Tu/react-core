@@ -70,10 +70,10 @@ export function TableCustom(props: TableCustom) {
       ...prevParams,
       pagination: {
         ...prevParams.pagination,
-        ...pagination,
+        total: (pagination as TablePaginationConfig).total,
       },
     }));
-  }, [pagination]);
+  }, [(pagination as TablePaginationConfig).total]);
 
   return (
     <Table
