@@ -1,50 +1,67 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
+import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
+import dayjs from 'dayjs';
 import { Fragment } from 'react';
 
 type FieldType = {
   criteria: string;
-  objective: string;
+  targetKPI: number;
   targetPoint: number;
-  startDate: string;
-  endDate: string;
-  calculationMethod: string;
+  startTime: string;
+  endTime: string;
+  calculate: string;
 };
 
 type AddKPIProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
 };
 
 export const AddKPI = ({ closeModal }: AddKPIProps) => {
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal?.();
+  const { addKPI } = useKPI();
+  const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['add-kpi', false]);
+
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const dataAddKPI = {
+      ...values,
+      targetKPI: values.targetKPI.toString(),
+      targetPoint: values.targetPoint.toString(),
+      startTime: dayjs(values.startTime).format('DD/MM/YYYY'),
+      endTime: dayjs(values.endTime).format('DD/MM/YYYY'),
+    };
+    const add = await addKPI(dataAddKPI);
+    if (add) {
+      form.resetFields();
+      closeModal();
+    }
   };
 
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
 
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Thêm đề xuất mục tiêu</h3>
-      <Form css={formEditKPIStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
+      <Form form={form} css={formEditKPIStyle} name="add-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
           name="criteria"
           rules={[{ required: true, message: 'Vui lòng nhập tiêu chí!' }]}
         >
-          <Input.TextArea placeholder="Nhập tiêu chí" />
+          <Input.TextArea placeholder="Nhập tiêu chí" allowClear />
         </Form.Item>
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu</span>}
-              name="objective"
+              name="targetKPI"
               rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
-              <Input size="middle" placeholder="Nhập mục tiêu" />
+              <InputNumber css={inputStyle} size="middle" placeholder="Nhập mục tiêu" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -53,7 +70,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
               name="targetPoint"
               rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu!' }]}
             >
-              <Input size="middle" placeholder="Nhập điểm mục tiêu" />
+              <InputNumber css={inputStyle} size="middle" placeholder="Nhập điểm mục tiêu" />
             </Form.Item>
           </Col>
         </Row>
@@ -61,35 +78,35 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Ngày bắt đầu mục tiêu</span>}
-              name="startDate"
+              name="startTime"
               rules={[{ required: true, message: 'Vui lòng nhập ngày bắt đầu mục tiêu!' }]}
             >
-              <Input size="middle" placeholder="Nhập ngày bắt đầu mục tiêu" />
+              <DatePicker css={inputStyle} placeholder="Nhập ngày bắt đầu mục tiêu" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Thời gian kết thúc</span>}
-              name="endDate"
+              name="endTime"
               rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc!' }]}
             >
-              <Input size="middle" placeholder="Nhập thời gian kết thúc" />
+              <DatePicker css={inputStyle} placeholder="Nhập thời gian kết thúc" />
             </Form.Item>
           </Col>
         </Row>
 
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Cách tính</span>}
-          name="calculationMethod"
+          name="calculate"
           rules={[{ required: true, message: 'Vui lòng nhập cách tính!' }]}
         >
-          <Input size="middle" placeholder="Nhập cách tính" />
+          <Input.TextArea placeholder="Nhập cách tính" allowClear />
         </Form.Item>
 
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>
@@ -118,4 +135,8 @@ const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
   font-weight: 500;
+`;
+
+const inputStyle = css`
+  width: 100%;
 `;

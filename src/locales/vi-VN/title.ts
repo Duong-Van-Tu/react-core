@@ -32,5 +32,15 @@ export const viVN_title = {
   'title.myRelationships.proposedReport.TargetlationshipLevel': 'Mức độ QH mục tiêu',
   'title.myRelationships.proposedReport.ReasonUpgrade': 'Lý do cần phải nâng cấp quan hệ',
   'title.myRelationships.proposedReport.targetScore': 'Điểm mục tiêu',
-  
+  'title.form.activity': 'Hoạt động',
+  'title.form.target':'Mục tiêu',
+  'title.form.time':'Thời điểm',
+  'title.form.result':'Kết quả',
+  'title.form.select':'Chọn Sale/NPP',
+  'title.form.selectCustomer':'Chọn khách hàng',
+  'title.form.selectStatus':'Chọn trạng thái',
+  'title.form.reason':'Lý do',
 }
+  
+
+

@@ -8,6 +8,7 @@ import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
 import { DataOpportunityType } from './type.opportunity';
 import { opportunityColumns } from './columns/opportunity.column';
+import { ModalOpportunityProvider } from '../../components/modals/opportuity';
 
 const data: DataOpportunityType[] = [
   {
@@ -45,7 +46,7 @@ export default function OpportunityPage() {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <ModalOpportunityProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.opportunity' })}</h3>
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
@@ -60,7 +61,7 @@ export default function OpportunityPage() {
         pagination={{ current: 1, pageSize: 7 }}
         scroll={{ x: 1450 }}
       />
-    </Fragment>
+    </ModalOpportunityProvider>
   );
 }
 

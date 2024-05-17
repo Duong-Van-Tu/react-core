@@ -31,5 +31,12 @@ export const enUS_title = {
   'title.myRelationships.proposedReport.TargetlationshipLevel': 'Current relationship level',
   'title.myRelationships.proposedReport.ReasonUpgrade': 'Reason for relationship upgrade',
   'title.myRelationships.proposedReport.targetScore': 'Target score',
-  
+  'title.form.activity': 'Activity',
+  'title.form.target':'Target',
+  'title.form.time':'Time',
+  'title.form.result':'Result',
+  'title.form.select':'Choose Sale/NPP',
+  'title.form.selectCustomer':'Select customer',
+  'title.form.selectStatus':'Select status',
+  'title.form.reason':'reason',
 };

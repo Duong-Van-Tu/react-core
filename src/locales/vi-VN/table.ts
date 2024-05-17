@@ -6,6 +6,7 @@ export const viVN_table = {
   'table.column.kpi.criteria': 'Tiêu chí',
   'table.column.kpi.objective': 'Mục tiêu',
   'table.column.kpi.reality': 'Thực tế',
+  'table.column.kpi.actualPoint': 'Điểm thực tế',
   'table.column.kpi.implementationTime': 'Thời gian thực hiện',
   'table.column.kpi.calculationMethod': 'Cách tính',
   'table.column.opportunity.decisionMakers': 'Người quyết định',

@@ -27,3 +27,18 @@ export function getLastPathCode(path: string) {
   const lastPathCode = path.slice(index + 1);
   return lastPathCode;
 }
+export function convertToUppercaseFirstLetter<T extends Record<string, any>>(data: T): T {
+  if (typeof data === 'object' && data !== null) {
+    if (Array.isArray(data)) {
+      return data.map((item) => convertToUppercaseFirstLetter(item)) as unknown as T;
+    } else {
+      return Object.keys(data).reduce((acc: any, key: string) => {
+        const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+        acc[capitalizedKey] = convertToUppercaseFirstLetter(data[key]);
+        return acc;
+      }, {}) as unknown as T;
+    }
+  } else {
+    return data;
+  }
+}

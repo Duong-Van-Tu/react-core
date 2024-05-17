@@ -1,84 +1,131 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { Status } from '@/modules/sales/enum/status.enum';
+import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
-import { Fragment } from 'react';
+import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
+import dayjs from 'dayjs';
+import { Fragment, useEffect } from 'react';
 
 type FieldType = {
-  currentObjectiveEndTime: string;
-  currentObjective: string;
-  currentObjectivePoint: string;
-  editTargetEndTime: string;
-  targetEditing: string;
-  targetPointEditing: string;
+  endTime: string;
+  targetKPI: number;
+  targetPoint: number;
+  suggestEndTime: string;
+  suggestTargetKPI: number;
+  suggestTargetPoint: number;
 };
 
 type RequestEditProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
+  data: DataKPIType;
 };
 
-export const RequestEdit = ({ closeModal }: RequestEditProps) => {
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal?.();
+export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
+  const { refuseEditKPI, updateStatusKPI } = useKPI();
+  const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['edit-status', false]);
+
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const { suggestEndTime, suggestTargetKPI, suggestTargetPoint } = values;
+    const dataUpdateKPI = {
+      id: data.id,
+      suggestEndTime: dayjs(suggestEndTime).format('DD/MM/YYYY'),
+      suggestTargetKPI: suggestTargetKPI.toString(),
+      suggestTargetPoint: suggestTargetPoint.toString(),
+      applicationUserId: data.userSuggest?.id,
+      status: Status.Updated,
+    } as DataKPIType;
+
+    const editStatus = await updateStatusKPI(dataUpdateKPI);
+    if (editStatus) {
+      form.resetFields();
+      closeModal();
+    }
+  };
+
+  const handleRefuseEditKPI = async () => {
+    const refuseEdit = await refuseEditKPI(data);
+    if (refuseEdit) {
+      closeModal();
+    }
   };
 
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      ...data,
+      endTime: dayjs(data.endTime).format('DD/MM/YYYY'),
+      suggestEndTime: null,
+      suggestTargetKPI: null,
+      suggestTargetPoint: null,
+    });
+  }, [data]);
 
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Đề xuất chỉnh sửa mục tiêu</h3>
-      <Form css={formStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
+      <Form form={form} css={formStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Thời gian kết thúc mục tiêu hiện tại</span>}
-          name="currentObjectiveEndTime"
+          name="endTime"
         >
-          <Input size="large" placeholder="01/06/2024" disabled />
+          <Input css={inputStyle} size="large" disabled />
         </Form.Item>
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu hiện tại</span>}
-              name="currentObjective"
+              name="targetKPI"
             >
-              <Input size="large" placeholder="100" disabled />
+              <InputNumber css={inputStyle} size="large" disabled />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điểm Mục tiêu hiên tại</span>}
-              name="currentObjectivePoint"
+              name="targetPoint"
             >
-              <Input size="large" placeholder="200" disabled />
+              <InputNumber css={inputStyle} size="large" disabled />
             </Form.Item>
           </Col>
         </Row>
+
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Thời gian kết thúc mục tiêu muốn chỉnh sửa</span>}
-          name="editTargetEndTime"
-          rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc mục tiêu!' }]}
+          label={<span css={labelFormItem}>Thơi gian kết thúc mục tiêu muốn chỉnh sửa</span>}
+          name="suggestEndTime"
         >
-          <Input size="large" placeholder="01/10/2024" />
+          <DatePicker size="large" format={['DD/MM/YYYY']} css={inputStyle} />
         </Form.Item>
 
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu muốn chỉnh sửa</span>}
-              name="targetEditing"
+              name="suggestTargetKPI"
               rules={[{ required: true, message: 'Vui lòng nhập mục tiêu muốn chỉnh sửa!' }]}
             >
-              <Input size="large" placeholder="targetEditing" />
+              <InputNumber
+                size="large"
+                css={inputStyle}
+                placeholder="Nhập mục tiêu muốn chỉnh sửa"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điểm mục tiêu muốn chỉnh sửa</span>}
-              name="targetPointEditing"
-              rules={[{ required: true, message: 'Vui lòng nhập mục điểm tiêu muốn chỉnh sửa!' }]}
+              name="suggestTargetPoint"
+              rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu muốn chỉnh sửa!' }]}
             >
-              <Input size="large" placeholder="targetPointEditing" />
+              <InputNumber
+                size="large"
+                css={inputStyle}
+                placeholder="Nhập điểm mục tiêu muốn chỉnh sửa"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -86,10 +133,10 @@ export const RequestEdit = ({ closeModal }: RequestEditProps) => {
         <Row justify="end" css={formFooterStyle}>
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button ghost type="primary" onClick={oncancel}>
+            <Button ghost type="primary" onClick={handleRefuseEditKPI}>
               Từ chối chỉnh sửa
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>
@@ -122,4 +169,8 @@ const labelFormItem = css`
 
 const formFooterStyle = css`
   margin-top: 1rem;
+`;
+
+const inputStyle = css`
+  width: 100%;
 `;

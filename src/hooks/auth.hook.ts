@@ -3,17 +3,13 @@ import { KEYS } from '@/constants/key';
 import { useDispatch } from 'react-redux';
 import { clearAuthDataAction, setDataAndTokenAction } from '@/redux/slicers/auth.slice';
 import { useApi, useCaller } from './api.hook';
-import { useRootSelector } from './selector.hook';
 import { useQuery } from './query.hook';
 
 export const useAuth = () => {
   const api = useApi('');
   const caller = useCaller();
   const dispatch = useDispatch();
-  const token = useRootSelector((state) => state.auth.token);
   const { tenant } = useQuery();
-
-  const logged = !!token;
 
   const clearData = useCallback(() => {
     localStorage.removeItem(KEYS.LOGIN_TOKEN_STORE_KEY);
@@ -33,6 +29,7 @@ export const useAuth = () => {
       if (succeeded) {
         const token = data.token;
         localStorage.setItem(KEYS.LOGIN_TOKEN_STORE_KEY, token);
+        localStorage.setItem(KEYS.TENANT_KEY, tenant);
         dispatch(
           setDataAndTokenAction({
             token,
@@ -43,5 +40,18 @@ export const useAuth = () => {
     [api, caller],
   );
 
-  return { login, clearData, logged };
+  const fetchProfile = useCallback(async () => {
+    const res = await caller(() => api.post(`/ApplicationUsers/get-profile?tenant=${tenant}`), {
+      loadingKey: 'profile-loading',
+    });
+    if (res?.succeeded) {
+      dispatch(
+        setDataAndTokenAction({
+          user: res.data,
+        }),
+      );
+    }
+  }, [api, caller]);
+
+  return { login, clearData, fetchProfile };
 };

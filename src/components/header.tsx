@@ -14,8 +14,9 @@ export default function Header() {
   const dispatch = useDispatch();
   const breadCrumbItems = useRootSelector((state) => state.breadcrumb.items);
   const language = useRootSelector((state) => state.locale.language);
+  const user = useRootSelector((state) => state.auth.user);
   const { formatMessage } = useLocale();
-  const { logged, clearData } = useAuth();
+  const { clearData } = useAuth();
   const { Header: HeaderAntd } = Layout;
   const selectLocale = ({ key }: { key: any }) => {
     dispatch(setLocaleAction(key));
@@ -66,7 +67,7 @@ export default function Header() {
           </Button>
         </Tooltip>
         <Notice />
-        {logged && (
+        {user && (
           <Dropdown
             menu={{
               items: [

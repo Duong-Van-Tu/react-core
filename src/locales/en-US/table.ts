@@ -6,6 +6,7 @@ export const enUS_table = {
   'table.column.kpi.criteria': 'Criteria',
   'table.column.kpi.objective': 'Objective',
   'table.column.kpi.reality': 'Reality',
+  'table.column.kpi.actualPoint': 'Reality point',
   'table.column.kpi.implementationTime': 'Implementation time',
   'table.column.kpi.calculationMethod': 'Calculation method',
   'table.column.opportunity.decisionMakers': 'Decision-makers',

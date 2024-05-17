@@ -1,36 +1,55 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { SearchOutlined } from '@ant-design/icons';
-import { Col, Input, Row, Select, Space } from 'antd';
+import { Button, Col, Input, Row, Select } from 'antd';
+import { useState } from 'react';
 
-export const Search = () => {
+type SearchProps = {
+  onSearch: (textSearch: string) => void;
+};
+
+export const Search = ({ onSearch }: SearchProps) => {
+  const [searchText, setSearchtext] = useState<string>('');
+  const handleSearch = () => {
+    onSearch(searchText);
+  };
   return (
-    <Row justify="space-between" gutter={[20, 0]} css={searchStyle}>
+    <Row justify="space-between" align="middle" gutter={[20, 0]} css={searchStyle}>
       <Col span={16}>
-        <Input css={searchInput} size="large" prefix={<SearchOutlined />} />
+        <Input
+          css={searchInputStyle}
+          size="large"
+          prefix={<Button css={searchBtnStyle} icon={<SearchOutlined onClick={handleSearch} />} />}
+          onChange={(e) => setSearchtext(e.target.value)}
+        />
       </Col>
-      <Col span={8} css={columnStyle}>
-        <Space size={'large'}>
-          <Select size="large" defaultValue="0">
-            <Select.Option value="0">Tất cả trạng thái</Select.Option>
-            <Select.Option value="1">1</Select.Option>
-            <Select.Option value="2">2</Select.Option>
-            <Select.Option value="3">3</Select.Option>
-            <Select.Option value="4">4</Select.Option>
-          </Select>
-
-          <Select size="large" defaultValue="0">
-            <Select.Option value="0">Năm 2024</Select.Option>
-            <Select.Option value="1">Năm 2025</Select.Option>
-            <Select.Option value="2">Năm 2026</Select.Option>
-            <Select.Option value="3">Năm 2027</Select.Option>
-            <Select.Option value="4">Năm 2028</Select.Option>
-          </Select>
-        </Space>
+      <Col span={4}>
+        <Select css={selectStyle} size="large" defaultValue="0">
+          <Select.Option value="0">Tất cả trạng thái</Select.Option>
+          <Select.Option value="1">1</Select.Option>
+          <Select.Option value="2">2</Select.Option>
+          <Select.Option value="3">3</Select.Option>
+          <Select.Option value="4">4</Select.Option>
+        </Select>
+      </Col>
+      <Col span={4}>
+        <Select css={selectStyle} size="large" defaultValue="0">
+          <Select.Option value="0">Năm 2024</Select.Option>
+          <Select.Option value="1">Năm 2025</Select.Option>
+          <Select.Option value="2">Năm 2026</Select.Option>
+          <Select.Option value="3">Năm 2027</Select.Option>
+          <Select.Option value="4">Năm 2028</Select.Option>
+        </Select>
       </Col>
     </Row>
   );
 };
+
+const searchBtnStyle = css`
+  border: none;
+  padding: none;
+  background: none;
+`;
 
 const searchStyle = css`
   padding: 1rem 1.4rem;
@@ -38,12 +57,11 @@ const searchStyle = css`
   border-radius: 0.8rem;
 `;
 
-const columnStyle = css`
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const searchInput = css`
+const searchInputStyle = css`
   border: none;
   outline: none;
+`;
+
+const selectStyle = css`
+  width: 100%;
 `;

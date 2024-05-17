@@ -14,6 +14,7 @@ function getAxios(baseURL: string) {
     if (accessToken) {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
+    config.headers['Content-Type'] = 'application/json';
     // Do something before request is sent
     return config;
   });
