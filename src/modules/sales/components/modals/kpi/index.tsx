@@ -49,7 +49,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
         width={
           currentModal?.modalName === ModalKPIType.FinalizeKPI
             ? '34rem'
-            : ModalKPIType.RequestEdit
+            : currentModal?.modalName === ModalKPIType.RequestEdit
               ? '70rem'
               : '54rem'
         }
