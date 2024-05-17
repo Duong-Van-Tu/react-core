@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { TableCustom } from '@/components/table';
-import columns from './columns';
+import columns from './columns/sale-director';
 import { Search, SearchParams } from '@/components/search';
 import { Button, Col, Row } from 'antd';
 import { useModalKPI } from '../../components/modals/kpi';

@@ -16,6 +16,8 @@ import { Pagination } from '@/constants/pagination';
 import { Status } from '../enum/status.enum';
 import { generateUrlParams } from '@/utils/common';
 import dayjs from 'dayjs';
+import { RoleType } from '../enum/kpi.enum';
+import { usePermission } from '@/hooks/permission.hook';
 
 type FilterKPIType = {
   pageIndex: number;
@@ -23,6 +25,7 @@ type FilterKPIType = {
   textSearch?: string;
   statusId?: string;
   time?: string;
+  roleType?: RoleType;
 };
 export const useKPI = () => {
   const api = useApi('');
@@ -30,6 +33,7 @@ export const useKPI = () => {
   const dispatch = useDispatch();
   const { tenant } = useQuery();
   const user = useRootSelector((state) => state.auth.user);
+  const { isSale } = usePermission();
 
   const getAllKPI = useCallback(
     async ({
@@ -38,6 +42,7 @@ export const useKPI = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
+      roleType = isSale ? RoleType.MySelf : RoleType.Manager,
     }: FilterKPIType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
@@ -48,6 +53,7 @@ export const useKPI = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
+        roleType,
       };
       const urlParams = generateUrlParams(queryParams);
 

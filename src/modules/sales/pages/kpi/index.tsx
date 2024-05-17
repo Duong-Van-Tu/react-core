@@ -9,10 +9,13 @@ import { Tabs, TabsProps } from 'antd';
 import MyKPI from './my-kpi';
 import EmployeeKPI from './employee-kpi';
 import { ModalProvider } from '../../components/modals/kpi';
+import { usePermission } from '@/hooks/permission.hook';
+import SaleKPI from './sale-kpi';
 
 export default function KPIPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
+  const { isSale } = usePermission();
 
   const items: TabsProps['items'] = [
     {
@@ -57,7 +60,8 @@ export default function KPIPage() {
         <CustomIcon width={8} height={8} type="dot" />
         <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
       </div>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      {!isSale && <Tabs defaultActiveKey="1" items={items} onChange={onChange} />}
+      {isSale && <SaleKPI />}
     </ModalProvider>
   );
 }

@@ -58,7 +58,7 @@ export const Report = ({ closeModal, data }: ReportProps) => {
         <Row justify="end">
           <Space css={reportFooter}>
             <Button onClick={oncancel}>Chia sẻ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" onClick={oncancel}>
               Xác nhận
             </Button>
           </Space>

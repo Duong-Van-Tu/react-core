@@ -81,7 +81,11 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
               name="startTime"
               rules={[{ required: true, message: 'Vui lòng nhập ngày bắt đầu mục tiêu!' }]}
             >
-              <DatePicker css={inputStyle} placeholder="Nhập ngày bắt đầu mục tiêu" />
+              <DatePicker
+                css={inputStyle}
+                format={['DD/MM/YYYY']}
+                placeholder="Nhập ngày bắt đầu mục tiêu"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -90,7 +94,11 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
               name="endTime"
               rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc!' }]}
             >
-              <DatePicker css={inputStyle} placeholder="Nhập thời gian kết thúc" />
+              <DatePicker
+                css={inputStyle}
+                format={['DD/MM/YYYY']}
+                placeholder="Nhập thời gian kết thúc"
+              />
             </Form.Item>
           </Col>
         </Row>

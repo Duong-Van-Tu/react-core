@@ -52,7 +52,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
           currentModal?.modalName === ModalKPIType.DeleteKPI
             ? '38rem'
             : currentModal?.modalName === ModalKPIType.RequestEdit
-              ? '70rem'
+              ? '68rem'
               : '54rem'
         }
         open={open}
