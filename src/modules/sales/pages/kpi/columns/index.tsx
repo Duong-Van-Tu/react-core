@@ -7,7 +7,7 @@ import { Status } from '@/modules/sales/enum/status.enum';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
-export const myKPIColumns: ColumnsType<DataKPIType> = [
+const columns: ColumnsType<DataKPIType> = [
   {
     title: <LocaleFormatter id="table.column.kpi.proposer" />,
     dataIndex: ['userSuggest'],
@@ -83,3 +83,5 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
     render: (__, record) => <KPIDropdown data={record} />,
   },
 ];
+
+export default columns;

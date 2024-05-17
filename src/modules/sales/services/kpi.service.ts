@@ -114,13 +114,16 @@ export const useKPI = () => {
   );
 
   const deleteKPI = useCallback(
-    async (goalId: string) => {
-      const { succeeded } = await caller(() =>
-        api.post(`/Goal/delete-by-ids/${goalId}/${user?.id}?tenant=${tenant}`),
+    async (goalIds: string[]) => {
+      const deleteIds = goalIds.join(',');
+      const { succeeded } = await caller(
+        () => api.del(`/Goal/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
+        { loadingKey: 'delete-kpi' },
       );
 
       if (succeeded) {
-        dispatch(deleteKPIAction(goalId));
+        dispatch(deleteKPIAction(goalIds));
+
         return succeeded;
       }
       return false;

@@ -38,8 +38,8 @@ const slice = createSlice({
         return item;
       });
     },
-    deleteKPIAction(state, { payload }: PayloadAction<string>) {
-      state.data = state.data.filter((item) => item.id !== payload);
+    deleteKPIAction(state, { payload }: PayloadAction<string[]>) {
+      state.data = state.data.filter((item) => !payload.includes(item.id!));
     },
     setDataReportAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.report = payload;

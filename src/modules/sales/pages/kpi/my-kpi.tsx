@@ -1,41 +1,29 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Key, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TableCustom } from '@/components/table';
-import { myKPIColumns } from './columns/my-kpi.column';
+import columns from './columns';
 import { Search, SearchParams } from '@/components/search';
-import { Button, Checkbox, Col, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { useModalKPI } from '../../components/modals/kpi';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { CustomIcon } from '@/components/icons';
 import { useKPI } from '../../services/kpi.service';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
+import { Key } from 'antd/es/table/interface';
 
 export default function MyKPI() {
   const { openModal } = useModalKPI();
   const { getAllKPI, getAllStatusKPI } = useKPI();
   const [loading] = useWatchLoading(['get-kpi', true]);
   const { data, pagination, status } = useRootSelector((state) => state.sale.kpi);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
-
-  const onSelectChange = (newSelectedRowKeys: Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
+  const [goalIds, setGoalIds] = useState<string[]>();
 
   const rowSelection = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
-  const handleSelectAllChange = (e: CheckboxChangeEvent) => {
-    if (e.target.checked) {
-      onSelectChange(data.map((item) => item.key!));
-    } else {
-      onSelectChange([]);
-    }
+    onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
+      setGoalIds(selectedRows.map((row) => row.id!));
+    },
   };
 
   const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
@@ -47,8 +35,6 @@ export default function MyKPI() {
       time,
     });
   };
-
-  const handleTableChange = () => {};
 
   useEffect(() => {
     getAllKPI({ pageIndex: Pagination.PAGEINDEX, pageSize: Pagination.PAGESIZE });
@@ -62,21 +48,28 @@ export default function MyKPI() {
         type="primary"
         css={addKPIBtnStyle}
         iconPosition="start"
-        size="middle"
+        size="large"
       >
-        <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
+        <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
         <span>Thêm mục tiêu</span>
       </Button>
       <Search onSearch={handleSearch} status={status} />
       <Row css={rowHeaderStyle} justify="space-between">
         <Col>
-          <Checkbox onChange={handleSelectAllChange}>Chọn tất cả</Checkbox>
+          <Button
+            disabled={!goalIds}
+            onClick={() => openModal('Delete KPI', undefined, goalIds)}
+            size="large"
+            danger
+          >
+            Xoá mục tiêu đã chọn
+          </Button>
         </Col>
         <Col>Tổng điểm đạt được: 200</Col>
       </Row>
       <TableCustom
         rowSelection={rowSelection}
-        columns={myKPIColumns}
+        columns={columns}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
@@ -89,7 +82,6 @@ export default function MyKPI() {
             getAllKPI({ pageIndex: page, pageSize: Pagination.PAGESIZE });
           },
         }}
-        onTableChange={handleTableChange}
         scroll={{ x: 1450 }}
       />
     </div>
@@ -103,7 +95,7 @@ const rootStyle = css`
 const addKPIBtnStyle = css`
   position: absolute;
   right: 0;
-  top: -6rem;
+  top: -6.5rem;
   background: #0070b8;
   display: flex;
   align-items: center;

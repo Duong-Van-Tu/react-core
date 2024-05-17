@@ -7,9 +7,10 @@ import { RequestEdit } from './request-edit.modal';
 import { Report } from './report.modal';
 import { ModifyKPI } from './modify.modal';
 import { AddKPI } from './add.modal';
+import { DeleteKPI } from './delete.kpi';
 
 type ModalContexttype = {
-  openModal: (modalName: string, data?: DataKPIType) => void;
+  openModal: (modalName: string, data?: DataKPIType, goalIds?: string[]) => void;
   closeModal: () => void;
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
@@ -28,12 +29,12 @@ type ModalProviderProps = {
 
 export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [currentModal, setCurrentModal] = useState<
-    { modalName: string; data?: DataKPIType } | undefined
+    { modalName: string; data?: DataKPIType; goalIds?: string[] } | undefined
   >();
   const [open, setOpen] = useState<boolean>(false);
 
-  const openModal = (modalName: string, data: any) => {
-    setCurrentModal({ modalName, data });
+  const openModal = (modalName: string, data?: DataKPIType, goalIds?: string[]) => {
+    setCurrentModal({ modalName, data, goalIds });
     setOpen(true);
   };
 
@@ -47,8 +48,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       {children}
       <Modal
         width={
-          currentModal?.modalName === ModalKPIType.FinalizeKPI
-            ? '34rem'
+          currentModal?.modalName === ModalKPIType.FinalizeKPI ||
+          currentModal?.modalName === ModalKPIType.DeleteKPI
+            ? '38rem'
             : currentModal?.modalName === ModalKPIType.RequestEdit
               ? '70rem'
               : '54rem'
@@ -72,6 +74,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
         )}
         {currentModal?.modalName === ModalKPIType.ModifyKPI && (
           <ModifyKPI closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalKPIType.DeleteKPI && (
+          <DeleteKPI closeModal={closeModal} goalIds={currentModal.goalIds!} />
         )}
       </Modal>
     </ModalContext.Provider>
