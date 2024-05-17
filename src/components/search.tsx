@@ -2,43 +2,89 @@
 import { css } from '@emotion/react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Select } from 'antd';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import dayjs from 'dayjs';
+import { useWatchLoading } from '@/hooks/loading.hook';
 
+export type SearchParams = {
+  textSearch?: string;
+  statusId?: string;
+  time?: string;
+};
 type SearchProps = {
-  onSearch: (textSearch: string) => void;
+  onSearch: (values: SearchParams) => void;
+  status?: KPIStatus[];
 };
 
-export const Search = ({ onSearch }: SearchProps) => {
-  const [searchText, setSearchtext] = useState<string>('');
-  const handleSearch = () => {
-    onSearch(searchText);
+export const Search = ({ onSearch, status }: SearchProps) => {
+  const [textSearch, setSearchers] = useState<string>();
+  const [statusId, SetStatusId] = useState<string>();
+  const [time, setTime] = useState<string>();
+  const [loading] = useWatchLoading(['status-kpi', true]);
+  const handleSearch = (values?: SearchParams) => {
+    onSearch({ textSearch, statusId, time, ...values });
   };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const statusOptions =
+    useMemo(
+      () =>
+        status?.map((status) => ({
+          value: status.id,
+          label: status.name,
+        })),
+      [status],
+    ) ?? [];
+
+  const startYear = 2015;
+  const currentYear = dayjs().year();
+  const years = Array.from({ length: currentYear - startYear + 1 }, (_, i) => startYear + i);
+
   return (
     <Row justify="space-between" align="middle" gutter={[20, 0]} css={searchStyle}>
       <Col span={16}>
         <Input
           css={searchInputStyle}
           size="large"
-          prefix={<Button css={searchBtnStyle} icon={<SearchOutlined onClick={handleSearch} />} />}
-          onChange={(e) => setSearchtext(e.target.value)}
+          prefix={
+            <Button css={searchBtnStyle} icon={<SearchOutlined onClick={() => handleSearch()} />} />
+          }
+          onChange={(e) => setSearchers(e.target.value)}
+          onKeyPress={handleKeyPress}
+          allowClear
         />
       </Col>
       <Col span={4}>
-        <Select css={selectStyle} size="large" defaultValue="0">
-          <Select.Option value="0">Tất cả trạng thái</Select.Option>
-          <Select.Option value="1">1</Select.Option>
-          <Select.Option value="2">2</Select.Option>
-          <Select.Option value="3">3</Select.Option>
-          <Select.Option value="4">4</Select.Option>
-        </Select>
+        <Select
+          loading={loading}
+          css={selectStyle}
+          size="large"
+          defaultValue={''}
+          options={[{ value: '', label: 'Tất cả trạng thái' }, ...statusOptions]}
+          onChange={(value) => SetStatusId(value)}
+          onSelect={(value) => {
+            handleSearch({ statusId: value });
+          }}
+        />
       </Col>
       <Col span={4}>
-        <Select css={selectStyle} size="large" defaultValue="0">
-          <Select.Option value="0">Năm 2024</Select.Option>
-          <Select.Option value="1">Năm 2025</Select.Option>
-          <Select.Option value="2">Năm 2026</Select.Option>
-          <Select.Option value="3">Năm 2027</Select.Option>
-          <Select.Option value="4">Năm 2028</Select.Option>
+        <Select
+          css={selectStyle}
+          size="large"
+          defaultValue={currentYear.toString()}
+          onChange={(value) => setTime(value)}
+          onSelect={(value) => handleSearch({ time: value })}
+        >
+          {years.map((year) => (
+            <Select.Option key={year} value={year.toString()}>
+              Năm {year}
+            </Select.Option>
+          ))}
         </Select>
       </Col>
     </Row>

@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Key, useEffect, useState } from 'react';
 import { TableCustom } from '@/components/table';
 import { myKPIColumns } from './columns/my-kpi.column';
-import { Search } from '@/components/search';
+import { Search, SearchParams } from '@/components/search';
 import { Button, Checkbox, Col, Row } from 'antd';
 import { useModalKPI } from '../../components/modals/kpi';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
@@ -15,9 +15,9 @@ import { Pagination } from '@/constants/pagination';
 
 export default function MyKPI() {
   const { openModal } = useModalKPI();
-  const { getAllKPI } = useKPI();
+  const { getAllKPI, getAllStatusKPI } = useKPI();
   const [loading] = useWatchLoading(['get-kpi', true]);
-  const { data, pagination } = useRootSelector((state) => state.sale.kpi);
+  const { data, pagination, status } = useRootSelector((state) => state.sale.kpi);
   const [selectedRowKeys, setSelectedRowKeys] = useState<Key[]>([]);
 
   const onSelectChange = (newSelectedRowKeys: Key[]) => {
@@ -38,15 +38,22 @@ export default function MyKPI() {
     }
   };
 
-  const handleSearch = (searchText: string) => {
-    getAllKPI(Pagination.PAGEINDEX, Pagination.PAGESIZE, searchText);
+  const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
+    getAllKPI({
+      pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+      textSearch,
+      statusId,
+      time,
+    });
   };
 
   const handleTableChange = () => {};
 
   useEffect(() => {
-    getAllKPI();
-  }, [getAllKPI]);
+    getAllKPI({ pageIndex: Pagination.PAGEINDEX, pageSize: Pagination.PAGESIZE });
+    getAllStatusKPI();
+  }, [getAllKPI, getAllStatusKPI]);
 
   return (
     <div css={rootStyle}>
@@ -60,7 +67,7 @@ export default function MyKPI() {
         <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
         <span>Thêm mục tiêu</span>
       </Button>
-      <Search onSearch={handleSearch} />
+      <Search onSearch={handleSearch} status={status} />
       <Row css={rowHeaderStyle} justify="space-between">
         <Col>
           <Checkbox onChange={handleSelectAllChange}>Chọn tất cả</Checkbox>
@@ -79,7 +86,7 @@ export default function MyKPI() {
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
           onChange: (page) => {
-            getAllKPI(page);
+            getAllKPI({ pageIndex: page, pageSize: Pagination.PAGESIZE });
           },
         }}
         onTableChange={handleTableChange}
