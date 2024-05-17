@@ -17,12 +17,12 @@ export default function PrivilegesPage() {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: formatMessage({ id: 'title.tab.kpi.my' }),
+      label: formatMessage({ id: 'title.tab.privileges.my' }),
       children: <MyPrivilegesTable />,
     },
     {
       key: '2',
-      label: formatMessage({ id: 'title.tab.kpi.employee' }),
+      label: formatMessage({ id: 'title.tab.privileges.employee' }),
       children: <EmployeePrivilegesTable />,
     },
   ];
