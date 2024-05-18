@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useLocale } from '@/hooks/locale.hook';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
+import { Button, Form, FormProps, Input, Row, Space } from 'antd';
 import { Fragment } from 'react';
 
 type FieldType = {

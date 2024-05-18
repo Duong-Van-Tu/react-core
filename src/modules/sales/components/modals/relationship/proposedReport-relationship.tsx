@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button, Col, FormProps, Row, Space } from 'antd';
+import { Button, Col, Row, Space } from 'antd';
 import { Fragment } from 'react';
 import Dot from '@/assets/svg/dot.svg?react';
 import { useLocale } from '@/hooks/locale.hook';
@@ -8,25 +8,10 @@ import { useLocale } from '@/hooks/locale.hook';
 type ProposedReportMyRelationshipsProps = {
   closeModal: () => void;
 };
-type FieldType = {
-  fullName: string;
-  jobPosition: string;
-  CurrentRelationshipLevel: string;
-  TargetlationshipLevel: string;
-  ReasonUpgrade: string;
-  targetScore: number;
-  status: string;
-  supervisorEvaluation: string;
-};
 
 export const ProposedReportMyRelationships = ({ ...props }: ProposedReportMyRelationshipsProps) => {
   const { closeModal } = props;
   const { formatMessage } = useLocale();
-
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal();
-  };
 
   const oncancel = () => {
     closeModal();
@@ -146,9 +131,9 @@ const contentMyRelationshipsReportStyle = css`
 `;
 
 const TitleStyle = css`
-  font-weight: 700;
-  font-size: 2.1rem;
-  line-height: 2.6rem;
+  font-weight: 500;
+  font-size: 2.2rem;
+  line-height: 2.4rem;
   margin-top: 4rem;
   text-align: center;
 
@@ -158,15 +143,15 @@ const TitleStyle = css`
 const titleValuetyle = css`
   text-align: right;
   color: rgba(16, 24, 40, 1);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.4rem;
 `;
 
 const titleContentStyle = css`
   text-align: left;
   color: rgba(66, 82, 109, 1);
-  font-weight: 600;
-  font-size: 1.2rem;
+  font-weight: 500;
+  font-size: 1.4rem;
 `;
 
 const rowStyle = css`
@@ -186,7 +171,7 @@ const statusStyle = css`
   }
   p {
     color: rgba(2, 122, 72, 1);
-    font-weight: 700;
+    font-weight: 500;
     font-size: 1.2rem;
   }
 `;

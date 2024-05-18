@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { Fragment } from 'react';
 import Dot from '@/assets/svg/dot.svg?react';
 import { useLocale } from '@/hooks/locale.hook';
@@ -8,26 +8,10 @@ import { useLocale } from '@/hooks/locale.hook';
 type EmployeeReportPrivilegesProps = {
   closeModal: () => void;
 };
-type FieldType = {
-  nameBenifitsProposer: string;
-  baseSalary: number;
-  totalChangesTarget: number;
-  actualSalaryFluctuates: number;
-  status: string;
-};
 
-export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesProps) => {
-  const { closeModal } = props;
+export const EmployeeReportPrivileges = ({ closeModal }: EmployeeReportPrivilegesProps) => {
   const { formatMessage } = useLocale();
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal();
-  };
-
-  const oncancel = () => {
-    closeModal();
-  };
   return (
     <Fragment>
       <h3 css={TitleStyle}>Báo cáo</h3>
@@ -89,7 +73,7 @@ export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesP
         </Row>
       </div>
 
-      <Button type="primary" onClick={onFinish} css={btnConfirmStyle}>
+      <Button type="primary" onClick={() => closeModal()} css={btnConfirmStyle}>
         Xác nhận
       </Button>
     </Fragment>
@@ -97,31 +81,30 @@ export const EmployeeReportPrivileges = ({ ...props }: EmployeeReportPrivilegesP
 };
 
 const TitleStyle = css`
-  font-weight: 700;
-  font-size: 2.1rem;
-  line-height: 2.6rem;
+  font-weight: 500;
+  font-size: 2.2rem;
+  line-height: 2.4rem;
   margin-top: 4rem;
   text-align: center;
-
   color: rgba(21, 41, 75, 1);
 `;
 
 const titleBoldStyle = css`
   color: rgba(16, 24, 40, 1);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.4rem;
 `;
 const titleValuetyle = css`
   text-align: right;
   color: rgba(16, 24, 40, 1);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.4rem;
 `;
 
 const titleSemiBoldStyle = css`
   text-align: left;
   color: rgba(66, 82, 109, 1);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.2rem;
 `;
 
