@@ -9,16 +9,22 @@ import { Tabs, TabsProps } from 'antd';
 import TableKPI from './table-kpi';
 import { ModalProvider } from '../../components/modals/kpi';
 import { usePermission } from '@/hooks/permission.hook';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@/hooks/query.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 export default function KPIPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const { isSale } = usePermission();
+  const { isSale, isSaleDirector } = usePermission();
+  const tenant = useRootSelector((state) => state.auth.tenant);
+  const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: formatMessage({ id: 'title.tab.kpi.my' }),
+      label: isSaleDirector ? 'Mục tiêu của giám đốc' : formatMessage({ id: 'title.tab.kpi.my' }),
       children: <TableKPI />,
     },
     {
@@ -29,8 +35,14 @@ export default function KPIPage() {
   ];
 
   const onChange = (key: string) => {
-    console.log(key);
+    navigate(`?tab=${key}&tenant=${tenant}`);
   };
+
+  useEffect(() => {
+    if (activeKey) {
+      navigate(`?tab=${activeKey}&tenant=${tenant}`);
+    }
+  }, [activeKey]);
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -58,7 +70,7 @@ export default function KPIPage() {
         <CustomIcon width={8} height={8} type="dot" />
         <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
       </div>
-      {!isSale && <Tabs defaultActiveKey="1" items={items} onChange={onChange} />}
+      {!isSale && <Tabs activeKey={activeKey} items={items} onChange={onChange} />}
       {isSale && <TableKPI />}
     </ModalProvider>
   );
