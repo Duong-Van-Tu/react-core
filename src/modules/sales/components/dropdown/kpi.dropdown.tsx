@@ -6,6 +6,7 @@ import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { useModalKPI } from '../modals/kpi';
 import { ModalKPIType } from '../../enum/kpi.enum';
+import { usePermission } from '@/hooks/permission.hook';
 
 enum MenuItem {
   EditKPI = 1,
@@ -22,6 +23,7 @@ type KPIDropdownProps = {
 export function KPIDropdown({ data }: KPIDropdownProps) {
   const { openModal } = useModalKPI();
   const { formatMessage } = useLocale();
+  const { isSale } = usePermission();
 
   const handleItemClick = (key: number) => {
     switch (key) {
@@ -47,34 +49,47 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
 
   const items: MenuProps['items'] = [
     {
-      key: '1',
-      label: formatMessage({ id: 'title.dropdown.finalize' }),
-      onClick: () => handleItemClick(MenuItem.FinalizeKPI),
-    },
-    {
-      key: '2',
+      key: MenuItem.EditKPI,
       label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
       onClick: () => handleItemClick(MenuItem.EditKPI),
     },
     {
-      key: '3',
+      key: MenuItem.RequestEdit,
       label: formatMessage({ id: 'title.dropdown.requestEdit' }),
       onClick: () => handleItemClick(MenuItem.RequestEdit),
     },
     {
-      key: '4',
+      key: MenuItem.ModifyKPI,
       label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
       onClick: () => handleItemClick(MenuItem.ModifyKPI),
     },
     {
-      key: '5',
+      key: MenuItem.Report,
+      label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+      onClick: () => handleItemClick(MenuItem.Report),
+    },
+  ];
+
+  const saleItems: MenuProps['items'] = [
+    {
+      key: MenuItem.FinalizeKPI,
+      label: formatMessage({ id: 'title.dropdown.finalize' }),
+      onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+    },
+    {
+      key: MenuItem.RequestEdit,
+      label: formatMessage({ id: 'title.dropdown.requestEdit' }),
+      onClick: () => handleItemClick(MenuItem.RequestEdit),
+    },
+    {
+      key: MenuItem.Report,
       label: formatMessage({ id: 'title.dropdown.kpi.report' }),
       onClick: () => handleItemClick(MenuItem.Report),
     },
   ];
 
   return (
-    <Dropdown menu={{ items }} placement="bottomRight">
+    <Dropdown menu={{ items: isSale ? saleItems : items }} placement="bottomRight">
       <span css={dropdownIcon}>
         <CustomIcon type="three-dot" width={16} height={18} />
       </span>

@@ -2,8 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type KPIState = {
   data: DataKPIType[];
-  totalRecords?: number;
+  pagination?: PaginationAPI;
   report?: DataKPIType;
+  status?: KPIStatus[];
+  totalExtend?: number;
 };
 
 export const kpiInitialState: KPIState = {
@@ -20,11 +22,13 @@ const slice = createSlice({
         payload,
       }: PayloadAction<{
         data: DataKPIType[];
-        totalRecords: number;
+        pagination: PaginationAPI;
+        totalExtend: number;
       }>,
     ) {
       state.data = payload.data;
-      state.totalRecords = payload.totalRecords;
+      state.pagination = payload.pagination;
+      state.totalExtend = payload.totalExtend;
     },
     addKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.data = [payload, ...state.data];
@@ -37,11 +41,14 @@ const slice = createSlice({
         return item;
       });
     },
-    deleteKPIAction(state, { payload }: PayloadAction<string>) {
-      state.data = state.data.filter((item) => item.id !== payload);
+    deleteKPIAction(state, { payload }: PayloadAction<string[]>) {
+      state.data = state.data.filter((item) => !payload.includes(item.id!));
     },
     setDataReportAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.report = payload;
+    },
+    setDataStatusAction(state, { payload }: PayloadAction<KPIStatus[]>) {
+      state.status = payload;
     },
   },
 });
@@ -52,5 +59,6 @@ export const {
   updateKPIAction,
   deleteKPIAction,
   setDataReportAction,
+  setDataStatusAction,
 } = slice.actions;
 export default slice.reducer;

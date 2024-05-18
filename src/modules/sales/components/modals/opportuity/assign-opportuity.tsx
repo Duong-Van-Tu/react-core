@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useLocale } from '@/hooks/locale.hook';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space, Select } from 'antd';
+import { Button, Form, FormProps, Row, Space, Select } from 'antd';
 import { Fragment } from 'react';
 
 type AssignOpportuityProps = {
@@ -16,7 +16,7 @@ export const AssignOpportuity = ({ ...props }: AssignOpportuityProps) => {
   const { Option } = Select;
   const { formatMessage } = useLocale();
 
-  const onCustomerChange = (value: string) => {};
+  const onCustomerChange = () => {};
 
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useWatchLoading } from '@/hooks/loading.hook';
+import { usePermission } from '@/hooks/permission.hook';
 import { Status } from '@/modules/sales/enum/status.enum';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
@@ -25,6 +26,7 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
   const { refuseEditKPI, updateStatusKPI } = useKPI();
   const [form] = Form.useForm();
   const [loading] = useWatchLoading(['edit-status', false]);
+  const { isSaleDirector, isSale } = usePermission();
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const { suggestEndTime, suggestTargetKPI, suggestTargetPoint } = values;
@@ -34,7 +36,7 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
       suggestTargetKPI: suggestTargetKPI.toString(),
       suggestTargetPoint: suggestTargetPoint.toString(),
       applicationUserId: data.userSuggest?.id,
-      status: Status.Updated,
+      status: isSale ? Status.Request : Status.Updated,
     } as DataKPIType;
 
     const editStatus = await updateStatusKPI(dataUpdateKPI);
@@ -65,6 +67,7 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
     });
   }, [data]);
 
+  console.log(data.goalStatus?.code);
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Đề xuất chỉnh sửa mục tiêu</h3>
@@ -133,10 +136,17 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
         <Row justify="end" css={formFooterStyle}>
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button ghost type="primary" onClick={handleRefuseEditKPI}>
-              Từ chối chỉnh sửa
-            </Button>
-            <Button loading={loading} type="primary" htmlType="submit">
+            {isSaleDirector && (
+              <Button ghost type="primary" onClick={handleRefuseEditKPI}>
+                Từ chối chỉnh sửa
+              </Button>
+            )}
+            <Button
+              disabled={data.goalStatus?.code !== Status.Processing}
+              loading={loading}
+              type="primary"
+              htmlType="submit"
+            >
               Xác nhận
             </Button>
           </Space>

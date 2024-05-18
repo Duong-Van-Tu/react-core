@@ -6,6 +6,7 @@ import {
   addKPIAction,
   deleteKPIAction,
   setDataReportAction,
+  setDataStatusAction,
   setListKPIAction,
   updateKPIAction,
 } from '../reducers/slicers/kpi.slice';
@@ -13,7 +14,17 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { Status } from '../enum/status.enum';
+import { generateUrlParams } from '@/utils/common';
+import dayjs from 'dayjs';
 
+type FilterKPIType = {
+  pageIndex: number;
+  pageSize: number;
+  textSearch?: string;
+  statusId?: string;
+  time?: string;
+  roleType: string;
+};
 export const useKPI = () => {
   const api = useApi('');
   const caller = useCaller();
@@ -22,23 +33,47 @@ export const useKPI = () => {
   const user = useRootSelector((state) => state.auth.user);
 
   const getAllKPI = useCallback(
-    async (
-      pageIndex: number = Pagination.PAGEINDEX,
-      pageSize: number = Pagination.PAGESIZE,
-      searchText?: string,
-    ) => {
+    async ({
+      pageIndex = Pagination.PAGEINDEX,
+      pageSize = Pagination.PAGESIZE,
+      textSearch,
+      statusId,
+      time = dayjs().year().toString(),
+      roleType,
+    }: FilterKPIType) => {
+      const queryParams: { [key: string]: string | undefined } = {
+        PageIndex: pageIndex.toString(),
+        PageSize: pageSize.toString(),
+        UserId: user?.id,
+        RoleId: user?.applicationRoles[0].id,
+        StatusId: statusId,
+        Time: `1-1-${time}`, // value is first day Of year
+        TextSearch: textSearch,
+        tenant: tenant,
+        roleType,
+      };
+
+      const urlParams = generateUrlParams(queryParams);
+
       const { data, succeeded } = await caller(
-        () =>
-          api.post(
-            `/Goal/get-list-with-pagination?PageIndex=${pageIndex}&PageSize=${pageSize}&UserId=${user?.id}&RoleId=${user?.applicationRoles[0].id}&TextSearch=${searchText ?? ''}&tenant=${tenant}`,
-          ),
+        () => api.post(`/Goal/get-list-with-pagination?${urlParams}`),
         {
           loadingKey: 'get-kpi',
         },
       );
       if (succeeded) {
-        const { items, totalRecords } = data;
-        dispatch(setListKPIAction({ data: items, totalRecords }));
+        const { items, totalRecords, pageIndex, totalPages, totalExtend } = data;
+        dispatch(
+          setListKPIAction({
+            data: items,
+            pagination: {
+              pageIndex,
+              totalRecords,
+              totalPages,
+            },
+            totalExtend,
+          }),
+        );
       }
     },
     [caller, api],
@@ -84,13 +119,16 @@ export const useKPI = () => {
   );
 
   const deleteKPI = useCallback(
-    async (goalId: string) => {
-      const { succeeded } = await caller(() =>
-        api.post(`/Goal/delete-by-ids/${goalId}/${user?.id}?tenant=${tenant}`),
+    async (goalIds: string[]) => {
+      const deleteIds = goalIds.join(',');
+      const { succeeded } = await caller(
+        () => api.del(`/Goal/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
+        { loadingKey: 'delete-kpi' },
       );
 
       if (succeeded) {
-        dispatch(deleteKPIAction(goalId));
+        dispatch(deleteKPIAction(goalIds));
+
         return succeeded;
       }
       return false;
@@ -126,7 +164,7 @@ export const useKPI = () => {
       const dataUpdateStatusKPI = convertToUppercaseFirstLetter({
         id: values.id,
         applicationUserId: values.userSuggest?.id,
-        status: Status.AcceptRequest,
+        status: Status.Updated,
       });
 
       const { data, succeeded } = await caller(
@@ -149,7 +187,7 @@ export const useKPI = () => {
       const { data, succeeded } = await caller(
         () => api.get(`/Goal/get-by-id/${values.id}?tenant=${tenant}`),
         {
-          loadingKey: 'refuse-edit',
+          loadingKey: 'report-kpi',
         },
       );
 
@@ -163,5 +201,27 @@ export const useKPI = () => {
     [api, caller],
   );
 
-  return { getAllKPI, addKPI, deleteKPI, updateKPI, updateStatusKPI, refuseEditKPI, showReport };
+  const getAllStatusKPI = useCallback(async () => {
+    const { data, succeeded } = await caller(
+      () => api.get(`/GoalStatus/get-all?tenant=${tenant}`),
+      {
+        loadingKey: 'status-kpi',
+      },
+    );
+
+    if (succeeded) {
+      dispatch(setDataStatusAction(data));
+    }
+  }, [api, caller]);
+
+  return {
+    getAllKPI,
+    addKPI,
+    deleteKPI,
+    updateKPI,
+    updateStatusKPI,
+    refuseEditKPI,
+    showReport,
+    getAllStatusKPI,
+  };
 };

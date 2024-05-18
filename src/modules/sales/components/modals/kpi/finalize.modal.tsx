@@ -30,7 +30,12 @@ export const FinalizeKPI = ({ closeModal, data }: FinalizeKPIProps) => {
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>
-          <Button loading={loading} type="primary" onClick={handleFinalizeKPI}>
+          <Button
+            disabled={data.goalStatus?.code !== Status.Updated}
+            loading={loading}
+            type="primary"
+            onClick={handleFinalizeKPI}
+          >
             Xác nhận
           </Button>
         </Space>

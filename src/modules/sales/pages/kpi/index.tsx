@@ -6,30 +6,46 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 import { Tabs, TabsProps } from 'antd';
-import MyKPI from './my-kpi';
-import EmployeeKPI from './employee-kpi';
+import TableKPI from './table-kpi';
 import { ModalProvider } from '../../components/modals/kpi';
+import { usePermission } from '@/hooks/permission.hook';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@/hooks/query.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { getTenant } from '@/utils/common';
+import { RoleType } from '../../enum/kpi.enum';
 
 export default function KPIPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
+  const { isSale, isAdmin, isSaleDirector } = usePermission();
+  const tenant = useRootSelector((state) => state.auth.tenant) || getTenant();
+  const totalRecords = useRootSelector((state) => state.sale.kpi.pagination?.totalRecords);
+  const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
-      key: '1',
-      label: formatMessage({ id: 'title.tab.kpi.my' }),
-      children: <MyKPI />,
+      key: isAdmin ? RoleType.Manager : RoleType.MySelf,
+      label: isAdmin ? 'Mục tiêu của giám đốc' : formatMessage({ id: 'title.tab.kpi.my' }),
+      children: <TableKPI />,
     },
     {
-      key: '2',
+      key: RoleType.Employee,
       label: formatMessage({ id: 'title.tab.kpi.employee' }),
-      children: <EmployeeKPI />,
+      children: <TableKPI />,
     },
   ];
 
   const onChange = (key: string) => {
-    console.log(key);
+    navigate(`?tab=${key}&tenant=${tenant}`);
   };
+
+  useEffect(() => {
+    if (!activeKey) {
+      navigate(`?tab=${isAdmin ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
+    }
+  }, [activeKey]);
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -55,9 +71,14 @@ export default function KPIPage() {
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.kpi' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
-        <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
+        <span>
+          {totalRecords} {formatMessage({ id: 'title.document.kpi' })}
+        </span>
       </div>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      {(isAdmin || isSaleDirector) && (
+        <Tabs activeKey={activeKey} items={items} onChange={onChange} />
+      )}
+      {isSale && <TableKPI />}
     </ModalProvider>
   );
 }
