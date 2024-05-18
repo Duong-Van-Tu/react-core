@@ -6,11 +6,9 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 import { Tabs, TabsProps } from 'antd';
-import MyKPI from './my-kpi';
-import EmployeeKPI from './employee-kpi';
+import TableKPI from './table-kpi';
 import { ModalProvider } from '../../components/modals/kpi';
 import { usePermission } from '@/hooks/permission.hook';
-import SaleKPI from './sale-kpi';
 
 export default function KPIPage() {
   const dispatch = useDispatch();
@@ -21,12 +19,12 @@ export default function KPIPage() {
     {
       key: '1',
       label: formatMessage({ id: 'title.tab.kpi.my' }),
-      children: <MyKPI />,
+      children: <TableKPI />,
     },
     {
       key: '2',
       label: formatMessage({ id: 'title.tab.kpi.employee' }),
-      children: <EmployeeKPI />,
+      children: <TableKPI />,
     },
   ];
 
@@ -61,7 +59,7 @@ export default function KPIPage() {
         <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
       </div>
       {!isSale && <Tabs defaultActiveKey="1" items={items} onChange={onChange} />}
-      {isSale && <SaleKPI />}
+      {isSale && <TableKPI />}
     </ModalProvider>
   );
 }
