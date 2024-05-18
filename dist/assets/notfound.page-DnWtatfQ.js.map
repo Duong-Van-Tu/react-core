@@ -1,0 +1,1 @@
+{"version":3,"file":"notfound.page-DnWtatfQ.js","sources":["../../src/pages/notfound.page.tsx"],"sourcesContent":["const NotfoundPage = () => {\n  return <div>NotfoundPage</div>;\n};\n\nexport default NotfoundPage;\n"],"names":["NotfoundPage","jsx"],"mappings":"mCAAA,MAAMA,EAAeA,IACZC,EAAC,OAAI,SAAY,cAAA,CAAA"}
