@@ -6,29 +6,42 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
-import { DataOpportunityType } from './type.opportunity';
 import { opportunityColumns } from './columns/opportunity.column';
 import { ModalOpportunityProvider } from '../../components/modals/opportuity';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
-const data: DataOpportunityType[] = [
-  {
-    key: 1,
-    customers: 'customers',
-    decisionMakers: 'decisionMakers',
-    technicalLeads: 'technicalLeads',
-    beneficiaries: 'beneficiaries',
-    customerNeeds: 'customerNeeds',
-    expectedTime: 'expectedTime',
-    budget: 'budget',
-  },
-];
+import { useOpportunity } from '../../services/opportunity.service';
+import { Pagination } from '@/constants/pagination';
+import { RoleType } from '@/enum/role.enum';
+import { Search, SearchParams } from '@/components/search';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 export default function OpportunityPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
   const navigate = useNavigate();
+  const { getAllOpportunity, getAllStatusOpportunity } = useOpportunity();
+  const { pagination, status } = useRootSelector((state) => state.sale.opportunity);
+
+  const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
+    getAllOpportunity({
+      pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+      textSearch,
+      statusId,
+      time,
+      roleType: RoleType.MySelf,
+    });
+  };
+
+  useEffect(() => {
+    getAllOpportunity({
+      pageIndex: Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+      roleType: RoleType.MySelf,
+    });
+    getAllStatusOpportunity();
+  }, [getAllOpportunity, getAllStatusOpportunity]);
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -71,9 +84,13 @@ export default function OpportunityPage() {
         </div>
       </div>
 
+      <div css={searchContainer}>
+        <Search onSearch={handleSearch} status={status} />
+      </div>
+
       <TableCustom
         columns={opportunityColumns}
-        dataSource={data}
+        dataSource={[]}
         loading={false}
         rowKey={(record) => record.key}
         pagination={{ current: 1, pageSize: 7 }}
@@ -107,4 +124,8 @@ const addKOpportunitytnStyle = css`
     background: #0070b8 !important;
     opacity: 0.9;
   }
+`;
+
+const searchContainer = css`
+  margin: 2.6rem 0;
 `;

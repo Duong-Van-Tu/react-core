@@ -1,8 +1,7 @@
 import { TableProps } from 'antd';
-import { DataUpdateOpportunityType } from '../type.opportunity';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const updateOpportunityColumns: ColumnsType<DataUpdateOpportunityType> = [
+export const updateOpportunityColumns: ColumnsType<any> = [
   {
     title: 'Mục tiêu',
     dataIndex: 'target',

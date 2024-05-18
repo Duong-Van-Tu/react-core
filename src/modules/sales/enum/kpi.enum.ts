@@ -8,9 +8,3 @@ export enum ModalKPIType {
   RequestEdit = 'Request edit',
   Report = 'Report',
 }
-
-export enum RoleType {
-  MySelf = 'MYSELF',
-  Employee = 'EMPLOYEE',
-  Manager = 'MANAGER',
-}

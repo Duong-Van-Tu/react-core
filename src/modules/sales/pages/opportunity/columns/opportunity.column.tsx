@@ -1,5 +1,4 @@
 import { TableProps } from 'antd';
-import { DataOpportunityType } from '../type.opportunity';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { OpportunityDropdown } from '@/modules/sales/components/dropdown/opportunity.dropdown';
 

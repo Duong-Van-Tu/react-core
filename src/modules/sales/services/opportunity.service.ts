@@ -30,7 +30,7 @@ export const useOpportunity = () => {
   const tenant = getTenant();
   const user = useRootSelector((state) => state.auth.user);
 
-  const getAllPrivileges = useCallback(
+  const getAllOpportunity = useCallback(
     async ({
       pageIndex = Pagination.PAGEINDEX,
       pageSize = Pagination.PAGESIZE,
@@ -167,7 +167,7 @@ export const useOpportunity = () => {
     [api, caller],
   );
 
-  const getAllStatusKPI = useCallback(async () => {
+  const getAllStatusOpportunity = useCallback(async () => {
     const { data, succeeded } = await caller(
       () => api.get(`/OpportunityStatus/get-all?tenant=${tenant}`),
       {
@@ -181,11 +181,11 @@ export const useOpportunity = () => {
   }, [api, caller]);
 
   return {
-    getAllPrivileges,
+    getAllOpportunity,
     addOpportunity,
     updateOpportunity,
     deleteOpportunity,
     updateStatusOpportunity,
-    getAllStatusKPI,
+    getAllStatusOpportunity,
   };
 };

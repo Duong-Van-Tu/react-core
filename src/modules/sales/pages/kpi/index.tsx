@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@/hooks/query.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { getTenant } from '@/utils/common';
-import { RoleType } from '../../enum/kpi.enum';
+import { RoleType } from '@/enum/role.enum';
 
 export default function KPIPage() {
   const navigate = useNavigate();

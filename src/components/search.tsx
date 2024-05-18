@@ -5,6 +5,7 @@ import { Button, Col, Input, Row, Select } from 'antd';
 import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { useWatchLoading } from '@/hooks/loading.hook';
+import { OptionProps } from 'antd/es/select';
 
 export type SearchParams = {
   textSearch?: string;
@@ -13,7 +14,7 @@ export type SearchParams = {
 };
 type SearchProps = {
   onSearch: (values: SearchParams) => void;
-  status?: KPIStatus[];
+  status?: any;
 };
 
 export const Search = ({ onSearch, status }: SearchProps) => {
@@ -34,7 +35,7 @@ export const Search = ({ onSearch, status }: SearchProps) => {
   const statusOptions =
     useMemo(
       () =>
-        status?.map((status) => ({
+        status?.map((status: OptionProps) => ({
           value: status.id,
           label: status.name,
         })),

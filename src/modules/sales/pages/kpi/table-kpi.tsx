@@ -13,8 +13,8 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
 import { Key } from 'antd/es/table/interface';
 import { usePermission } from '@/hooks/permission.hook';
-import { RoleType } from '../../enum/kpi.enum';
 import { useLocation } from 'react-router-dom';
+import { RoleType } from '@/enum/role.enum';
 
 export default function TableKPI() {
   const { openModal } = useModalKPI();

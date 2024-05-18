@@ -1,9 +1,8 @@
 import { SeeDetailsOpportunity } from '@/modules/sales/components/modals/opportuity/seeDetails-opportunity';
 import { TableProps } from 'antd';
-import { DataUpdateHistoryOpportunityType } from '../type.opportunity';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const updateHistoryOpportunityColumns: ColumnsType<DataUpdateHistoryOpportunityType> = [
+export const updateHistoryOpportunityColumns: ColumnsType<any> = [
   {
     title: 'Thời gian cập nhật',
     dataIndex: 'updateTime',

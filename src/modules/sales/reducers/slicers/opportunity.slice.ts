@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type PrivilegeInitialStateState = {
+export type OpportunityInitialStateState = {
   data: DataOpportunityType[];
   pagination?: PaginationAPI;
   status?: OpportunityStatus[];
   totalExtend?: number;
 };
 
-export const privilegeInitialState: PrivilegeInitialStateState = {
+export const opportunityInitialState: OpportunityInitialStateState = {
   data: [],
 };
 
 const slice = createSlice({
   name: 'opportunity',
-  initialState: privilegeInitialState,
+  initialState: opportunityInitialState,
   reducers: {
     setListOpportunityAction(
       state,
