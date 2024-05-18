@@ -1,80 +1,109 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { Status } from '@/modules/sales/enum/status.enum';
+import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 type FieldType = {
   objectiveProposer: string;
   criteria: string;
-  objective: string;
+  targetKPI: string;
   targetPoint: number;
-  startDate: string;
-  endDate: string;
-  calculationMethod: string;
+  calculate: string;
 };
 
 type ModifyKPIProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
+  data: DataKPIType;
 };
 
-export const ModifyKPI = ({ closeModal }: ModifyKPIProps) => {
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal?.();
+export const ModifyKPI = ({ closeModal, data }: ModifyKPIProps) => {
+  const { updateStatusKPI } = useKPI();
+  const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['edit-status', false]);
+
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const { targetKPI, targetPoint, calculate, criteria } = values;
+    const dataUpdateKPI = {
+      id: data.id,
+      targetKPI: targetKPI.toString(),
+      targetPoint: targetPoint.toString(),
+      criteria,
+      calculate,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      applicationUserId: data.userSuggest?.id,
+      status: Status.Updated,
+    } as DataKPIType;
+
+    const editStatus = await updateStatusKPI(dataUpdateKPI);
+    if (editStatus) {
+      form.resetFields();
+      closeModal();
+    }
   };
 
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
+
+  useEffect(() => {
+    form.setFieldsValue({
+      objectiveProposer: `${data.userSuggest?.firstName} ${data.userSuggest?.lastName}`,
+      ...data,
+    });
+  }, [data]);
 
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Điều chỉnh mục tiêu</h3>
-      <Form css={formStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
+      <Form form={form} css={formStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Người đề xuất mục tiêu</span>}
           name="objectiveProposer"
         >
-          <Input size="large" placeholder="Dương Văn Tú" disabled />
+          <Input size="large" disabled allowClear />
         </Form.Item>
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
           name="criteria"
-          rules={[{ required: true, message: 'Please input your criteria!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập tiêu chí!' }]}
         >
-          <Input.TextArea placeholder="Criteria" />
+          <Input.TextArea placeholder="Nhập tiêu chí" allowClear />
         </Form.Item>
         <Row gutter={[20, 0]}>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mục tiêu</span>}
-              name="objective"
-              rules={[{ required: true, message: 'Please input your objective!' }]}
+              name="targetKPI"
+              rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
-              <Input size="large" placeholder="objective" />
+              <Input size="large" placeholder="Nhập mục tiêu" allowClear />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điểm mục tiêu</span>}
               name="targetPoint"
-              rules={[{ required: true, message: 'Please input your targetPoint!' }]}
+              rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu!' }]}
             >
-              <Input size="large" placeholder="targetPoint" />
+              <Input size="large" placeholder="Nhập điểm mục tiêu" allowClear />
             </Form.Item>
           </Col>
         </Row>
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Cách tính</span>}
-          name="calculationMethod"
-          rules={[{ required: true, message: 'Please input your calculationMethod!' }]}
+          name="calculate"
+          rules={[{ required: true, message: 'Vui lòng nhập cách tính!' }]}
         >
-          <Input size="large" placeholder="calculationMethod" />
+          <Input size="large" placeholder="Nhập cách tính" allowClear />
         </Form.Item>
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>

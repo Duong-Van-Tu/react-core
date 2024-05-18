@@ -3,7 +3,6 @@ import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalOpportunityType } from '../../../enum/opportunity.enum';
 import { AssignOpportuity } from './assign-opportuity';
 import { CloseOpportuity } from './close-opportuity';
-import { AddUpdateOpportuity } from './add-update-opportuity';
 
 type ModalContexttype = {
   openModal: (modalName: string) => void;

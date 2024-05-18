@@ -7,13 +7,11 @@ import { Status } from '@/modules/sales/enum/status.enum';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
-export const myKPIColumns: ColumnsType<DataKPIType> = [
+const columns: ColumnsType<DataKPIType> = [
   {
     title: <LocaleFormatter id="table.column.kpi.proposer" />,
     dataIndex: ['userSuggest'],
-    render: (user: UserSuggest) => {
-      return `${user.firstName} ${user.lastName}`;
-    },
+    render: (user: UserSuggest) => `${user.firstName} ${user.lastName}`,
   },
   {
     title: <LocaleFormatter id="table.column.kpi.criteria" />,
@@ -68,10 +66,12 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
         default:
           messageType = 'warning';
       }
-      return (
+      return record.goalStatus ? (
         <Message hasBackground type={messageType}>
-          {record.goalStatus?.name ?? ''}
+          {record.goalStatus.name}
         </Message>
+      ) : (
+        ''
       );
     },
   },
@@ -79,6 +79,8 @@ export const myKPIColumns: ColumnsType<DataKPIType> = [
     title: '',
     fixed: 'right',
     width: '6%',
-    render: () => <KPIDropdown />,
+    render: (__, record) => <KPIDropdown data={record} />,
   },
 ];
+
+export default columns;

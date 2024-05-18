@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
@@ -15,12 +16,14 @@ type FieldType = {
 };
 
 type AddKPIProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
 };
 
 export const AddKPI = ({ closeModal }: AddKPIProps) => {
   const { addKPI } = useKPI();
   const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['add-kpi', false]);
+
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddKPI = {
       ...values,
@@ -31,19 +34,19 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
     };
     const add = await addKPI(dataAddKPI);
     if (add) {
-      closeModal?.();
       form.resetFields();
+      closeModal();
     }
   };
 
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
 
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Thêm đề xuất mục tiêu</h3>
-      <Form css={formEditKPIStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
+      <Form form={form} css={formEditKPIStyle} name="add-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Tiêu chí</span>}
           name="criteria"
@@ -78,7 +81,11 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
               name="startTime"
               rules={[{ required: true, message: 'Vui lòng nhập ngày bắt đầu mục tiêu!' }]}
             >
-              <DatePicker css={inputStyle} placeholder="Nhập ngày bắt đầu mục tiêu" />
+              <DatePicker
+                css={inputStyle}
+                format={['DD/MM/YYYY']}
+                placeholder="Nhập ngày bắt đầu mục tiêu"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -87,7 +94,11 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
               name="endTime"
               rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc!' }]}
             >
-              <DatePicker css={inputStyle} placeholder="Nhập thời gian kết thúc" />
+              <DatePicker
+                css={inputStyle}
+                format={['DD/MM/YYYY']}
+                placeholder="Nhập thời gian kết thúc"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -103,7 +114,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>

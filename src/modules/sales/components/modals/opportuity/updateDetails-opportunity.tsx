@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { useLocale } from '@/hooks/locale.hook';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space, Select } from 'antd';
+import { Button, Col, Row, Space } from 'antd';
 import { Fragment } from 'react';
 
 type AssignOpportuityProps = {
@@ -10,7 +9,6 @@ type AssignOpportuityProps = {
 
 export const UpdateDetailsOpportunity = ({ ...props }: AssignOpportuityProps) => {
   const { closeModal } = props;
-  const { formatMessage } = useLocale();
 
   const oncancel = () => {
     closeModal();

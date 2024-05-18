@@ -1,27 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type KPIState = {
-  data: DataKPIType[];
+export type PrivilegeInitialStateState = {
+  data: DataOpportunityType[];
   pagination?: PaginationAPI;
-  report?: DataKPIType;
-  status?: KPIStatus[];
+  status?: OpportunityStatus[];
   totalExtend?: number;
 };
 
-export const kpiInitialState: KPIState = {
+export const privilegeInitialState: PrivilegeInitialStateState = {
   data: [],
 };
 
 const slice = createSlice({
-  name: 'kpi',
-  initialState: kpiInitialState,
+  name: 'opportunity',
+  initialState: privilegeInitialState,
   reducers: {
-    setListKPIAction(
+    setListOpportunityAction(
       state,
       {
         payload,
       }: PayloadAction<{
-        data: DataKPIType[];
+        data: DataOpportunityType[];
         pagination: PaginationAPI;
         totalExtend: number;
       }>,
@@ -30,10 +29,10 @@ const slice = createSlice({
       state.pagination = payload.pagination;
       state.totalExtend = payload.totalExtend;
     },
-    addKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
+    addOpportunityAction(state, { payload }: PayloadAction<DataOpportunityType>) {
       state.data = [payload, ...state.data];
     },
-    updateKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
+    updateOpportunityAction(state, { payload }: PayloadAction<DataOpportunityType>) {
       state.data = state.data.map((item) => {
         if (item.id === payload.id) {
           return payload;
@@ -41,24 +40,21 @@ const slice = createSlice({
         return item;
       });
     },
-    deleteKPIAction(state, { payload }: PayloadAction<string[]>) {
+    deleteOpportunityAction(state, { payload }: PayloadAction<string[]>) {
       state.data = state.data.filter((item) => !payload.includes(item.id!));
     },
-    setDataReportAction(state, { payload }: PayloadAction<DataKPIType>) {
-      state.report = payload;
-    },
-    setDataStatusAction(state, { payload }: PayloadAction<KPIStatus[]>) {
+
+    setDataStatusAction(state, { payload }: PayloadAction<OpportunityStatus[]>) {
       state.status = payload;
     },
   },
 });
 
 export const {
-  setListKPIAction,
-  addKPIAction,
-  updateKPIAction,
-  deleteKPIAction,
-  setDataReportAction,
+  setListOpportunityAction,
+  addOpportunityAction,
+  updateOpportunityAction,
+  deleteOpportunityAction,
   setDataStatusAction,
 } = slice.actions;
 export default slice.reducer;

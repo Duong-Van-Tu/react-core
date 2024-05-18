@@ -27,13 +27,9 @@ type FieldType = {
 export const AddOpportuity = () => {
   const { formatMessage } = useLocale();
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    // closeModal();
+    console.log(values);
   };
 
-  const oncancel = () => {
-    // closeModal();
-  };
   return (
     <div css={containerStyle}>
       <div css={closeStyle}>
@@ -43,391 +39,381 @@ export const AddOpportuity = () => {
         </Link>
       </div>
       <h1 css={titleStyle}>{formatMessage({ id: 'title.addOpportuity' })}</h1>
-      <div css={tableStyle}>
-        <Form
-          css={formUpdateResultStyle}
-          name="add-opportunity"
-          onFinish={onFinish}
-          layout="vertical"
+      <Form
+        css={formUpdateResultStyle}
+        name="add-opportunity"
+        onFinish={onFinish}
+        layout="vertical"
+      >
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>{formatMessage({ id: 'form.input.customer' })}</span>
+              }
+              name="customer"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.customer' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.customer' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>{formatMessage({ id: 'form.input.decisionMaker' })}</span>
+              }
+              name="decisionMaker"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.decisionMaker' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.decisionMaker' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.technicalPerson' })}
+                </span>
+              }
+              name="technicalPerson"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.technicalPerson' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.technicalPerson' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>{formatMessage({ id: 'form.input.beneficiary' })}</span>
+              }
+              name="beneficiary"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.beneficiary' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.beneficiary' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Form.Item<FieldType>
+          label={
+            <span css={labelFormItem}>{formatMessage({ id: 'form.input.customerNeeds' })}</span>
+          }
+          name="customerNeeds"
+          rules={[
+            {
+              required: true,
+              message: formatMessage({ id: 'form.input.require.customerNeeds' }),
+            },
+          ]}
         >
-          <Row gutter={[20, 0]}>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>{formatMessage({ id: 'form.input.customer' })}</span>
-                }
-                name="customer"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.customer' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.customer' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.decisionMaker' })}
-                  </span>
-                }
-                name="decisionMaker"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.decisionMaker' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.decisionMaker' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+          <Input.TextArea
+            placeholder={formatMessage({ id: 'form.input.placeholder.customerNeeds' })}
+            css={formTextareaStyle}
+          />
+        </Form.Item>
 
-          <Row gutter={[20, 0]}>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.technicalPerson' })}
-                  </span>
-                }
-                name="technicalPerson"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.technicalPerson' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.technicalPerson' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>{formatMessage({ id: 'form.input.beneficiary' })}</span>
-                }
-                name="beneficiary"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.beneficiary' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.beneficiary' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.OpportunityTimeline' })}
+                </span>
+              }
+              name="OpportunityTimeline"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.OpportunityTimeline' }),
+                },
+              ]}
+            >
+              <DatePicker placeholder="DD/MM/YYYY" css={formPickerStyle} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={<span css={labelFormItem}>{formatMessage({ id: 'form.input.budget' })}</span>}
+              name="budget"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.budget' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.budget' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-          <Form.Item<FieldType>
-            label={
-              <span css={labelFormItem}>{formatMessage({ id: 'form.input.customerNeeds' })}</span>
-            }
-            name="customerNeeds"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'form.input.require.customerNeeds' }),
-              },
-            ]}
-          >
-            <Input.TextArea
-              placeholder={formatMessage({ id: 'form.input.placeholder.customerNeeds' })}
-              css={formTextareaStyle}
-            />
-          </Form.Item>
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.estimatedPrice' })}
+                </span>
+              }
+              name="estimatedPrice"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.estimatedPrice' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.estimatedPrice' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.commissionConsultant' })}
+                </span>
+              }
+              name="commissionConsultant"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.commissionConsultant' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.commissionConsultant' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-          <Row gutter={[20, 0]}>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.OpportunityTimeline' })}
-                  </span>
-                }
-                name="OpportunityTimeline"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.OpportunityTimeline' }),
-                  },
-                ]}
-              >
-                <DatePicker placeholder="DD/MM/YYYY" css={formPickerStyle} />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>{formatMessage({ id: 'form.input.budget' })}</span>
-                }
-                name="budget"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.budget' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.budget' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>{formatMessage({ id: 'form.input.oneCompetitor' })}</span>
+              }
+              name="oneCompetitor"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.oneCompetitor' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({ id: 'form.input.placeholder.oneCompetitor' })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.strengthsAndWeaknesses' })}
+                </span>
+              }
+              name="strengthsAndWeaknessesOneCompetitor"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.strengthsAndWeaknesses' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({
+                  id: 'form.input.placeholder.strengthsAndWeaknesses',
+                })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-          <Row gutter={[20, 0]}>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.estimatedPrice' })}
-                  </span>
-                }
-                name="estimatedPrice"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.estimatedPrice' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.estimatedPrice' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.commissionConsultant' })}
-                  </span>
-                }
-                name="commissionConsultant"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.commissionConsultant' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.commissionConsultant' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>{formatMessage({ id: 'form.input.twoCompetitor' })}</span>
+              }
+              name="twoCompetitor"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.twoCompetitor' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({
+                  id: 'form.input.placeholder.twoCompetitor',
+                })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.strengthsAndWeaknesses' })}
+                </span>
+              }
+              name="strengthsAndWeaknessesTwoCompetitor"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.strengthsAndWeaknesses' }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({
+                  id: 'form.input.placeholder.strengthsAndWeaknesses',
+                })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-          <Row gutter={[20, 0]}>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.oneCompetitor' })}
-                  </span>
-                }
-                name="oneCompetitor"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.oneCompetitor' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({ id: 'form.input.placeholder.oneCompetitor' })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.strengthsAndWeaknesses' })}
-                  </span>
-                }
-                name="strengthsAndWeaknessesOneCompetitor"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.strengthsAndWeaknesses' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({
-                    id: 'form.input.placeholder.strengthsAndWeaknesses',
-                  })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+        <Form.Item<FieldType>
+          label={<span css={labelFormItem}>{formatMessage({ id: 'form.input.strategy' })}</span>}
+          name="strategy"
+          rules={[
+            {
+              required: true,
+              message: formatMessage({ id: 'form.input.require.strategy' }),
+            },
+          ]}
+        >
+          <Input.TextArea
+            placeholder={formatMessage({
+              id: 'form.input.placeholder.strategy',
+            })}
+            css={formTextareaStyle}
+          />
+        </Form.Item>
 
-          <Row gutter={[20, 0]}>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.twoCompetitor' })}
-                  </span>
-                }
-                name="twoCompetitor"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.twoCompetitor' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({
-                    id: 'form.input.placeholder.twoCompetitor',
-                  })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.strengthsAndWeaknesses' })}
-                  </span>
-                }
-                name="strengthsAndWeaknessesTwoCompetitor"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({ id: 'form.input.require.strengthsAndWeaknesses' }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({
-                    id: 'form.input.placeholder.strengthsAndWeaknesses',
-                  })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.interactionBetweenCompanyAndCustomer' })}
+                </span>
+              }
+              name="interactionBetweenCompanyAndCustomer"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'form.input.require.interactionBetweenCompanyAndCustomer',
+                  }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({
+                  id: 'form.input.placeholder.interactionBetweenCompanyAndCustomer',
+                })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={
+                <span css={labelFormItem}>
+                  {formatMessage({ id: 'form.input.WinProbabilityEvaluation' })}
+                </span>
+              }
+              name="WinProbabilityEvaluation"
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({
+                    id: 'form.input.require.WinProbabilityEvaluation',
+                  }),
+                },
+              ]}
+            >
+              <Input
+                size="middle"
+                placeholder={formatMessage({
+                  id: 'form.input.placeholder.WinProbabilityEvaluation',
+                })}
+                css={formInputItemStyle}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
 
-          <Form.Item<FieldType>
-            label={<span css={labelFormItem}>{formatMessage({ id: 'form.input.strategy' })}</span>}
-            name="strategy"
-            rules={[
-              {
-                required: true,
-                message: formatMessage({ id: 'form.input.require.strategy' }),
-              },
-            ]}
-          >
-            <Input.TextArea
-              placeholder={formatMessage({
-                id: 'form.input.placeholder.strategy',
-              })}
-              css={formTextareaStyle}
-            />
-          </Form.Item>
-
-          <Row gutter={[20, 0]}>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.interactionBetweenCompanyAndCustomer' })}
-                  </span>
-                }
-                name="interactionBetweenCompanyAndCustomer"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({
-                      id: 'form.input.require.interactionBetweenCompanyAndCustomer',
-                    }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({
-                    id: 'form.input.placeholder.interactionBetweenCompanyAndCustomer',
-                  })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item<FieldType>
-                label={
-                  <span css={labelFormItem}>
-                    {formatMessage({ id: 'form.input.WinProbabilityEvaluation' })}
-                  </span>
-                }
-                name="WinProbabilityEvaluation"
-                rules={[
-                  {
-                    required: true,
-                    message: formatMessage({
-                      id: 'form.input.require.WinProbabilityEvaluation',
-                    }),
-                  },
-                ]}
-              >
-                <Input
-                  size="middle"
-                  placeholder={formatMessage({
-                    id: 'form.input.placeholder.WinProbabilityEvaluation',
-                  })}
-                  css={formInputItemStyle}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-
-          <Row justify="end">
-            <Space>
-              <Button type="primary" htmlType="submit" css={btnConfirmStyle}>
-                Xác nhận
-              </Button>
-            </Space>
-          </Row>
-        </Form>
-      </div>
+        <Row justify="end">
+          <Space>
+            <Button type="primary" htmlType="submit" css={btnConfirmStyle}>
+              Xác nhận
+            </Button>
+          </Space>
+        </Row>
+      </Form>
     </div>
   );
 };
@@ -437,7 +423,7 @@ const containerStyle = css`
   max-width: 90rem;
   height: 100%;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 2rem;
 `;
 
 const closeStyle = css`
@@ -445,7 +431,7 @@ const closeStyle = css`
   align-items: center;
   justify-content: flex-end;
   gap: 0.4rem;
-  margin-top: 3.7rem;
+  margin-top: 3.6rem;
   svg path {
     fill: rgba(0, 0, 0, 1);
   }
@@ -465,10 +451,6 @@ const titleStyle = css`
   margin-bottom: 2rem;
 `;
 
-const tableStyle = css`
-  /* padding: 4rem 0; */
-`;
-
 const formUpdateResultStyle = css`
   .ant-form-item-required::before {
     display: none !important;
@@ -480,7 +462,7 @@ const formUpdateResultStyle = css`
 const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
-  font-weight: 700;
+  font-weight: 500;
   color: rgba(16, 24, 40, 1);
 `;
 
@@ -531,6 +513,6 @@ const btnConfirmStyle = css`
   span {
     color: #fff;
     font-size: 1.4rem;
-    font-weight: 600;
+    font-weight: 500;
   }
 `;

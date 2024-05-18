@@ -34,3 +34,14 @@ export function isJSON(str: string): boolean {
 export function isEmpty(value: any) {
   return value === '' || value == null;
 }
+
+export function generateUrlParams(params: { [key: string]: string | undefined }): string {
+  const filteredParams: Record<string, string> = {};
+  for (const key in params) {
+    if (params[key] !== undefined && params[key] !== '') {
+      filteredParams[key] = params[key]!;
+    }
+  }
+  const urlParams = new URLSearchParams(filteredParams);
+  return urlParams.toString();
+}

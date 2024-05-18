@@ -28,12 +28,8 @@ export const EditOpportuity = () => {
   const { formatMessage } = useLocale();
   const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
     console.log('Success:', values);
-    // closeModal();
   };
 
-  const oncancel = () => {
-    // closeModal();
-  };
   return (
     <div css={containerStyle}>
       <div css={closeStyle}>

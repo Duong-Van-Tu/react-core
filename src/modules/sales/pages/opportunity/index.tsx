@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
@@ -10,8 +9,7 @@ import { CustomIcon } from '@/components/icons';
 import { DataOpportunityType } from './type.opportunity';
 import { opportunityColumns } from './columns/opportunity.column';
 import { ModalOpportunityProvider } from '../../components/modals/opportuity';
-import { Search } from '@/components/search';
-import { Button, Checkbox, Col, Row } from 'antd';
+import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 const data: DataOpportunityType[] = [
@@ -31,18 +29,7 @@ export default function OpportunityPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
   const navigate = useNavigate();
-  // const onSelectChange = (newSelectedRowKeys: Key[]) => {
-  //   // console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-  //   // setSelectedRowKeys(newSelectedRowKeys);
-  // };
 
-  const handleSelectAllChange = (e: CheckboxChangeEvent) => {
-    // if (e.target.checked) {
-    //   onSelectChange(data.map((item) => item.key!));
-    // } else {
-    //   onSelectChange([]);
-    // }
-  };
   useEffect(() => {
     const breadCrumbItems = [
       {
@@ -83,12 +70,7 @@ export default function OpportunityPage() {
           </Button>
         </div>
       </div>
-      <Search />
-      <Row css={rowHeaderStyle} justify="start">
-        <Col>
-          <Checkbox onChange={handleSelectAllChange}>Chọn tất cả</Checkbox>
-        </Col>
-      </Row>
+
       <TableCustom
         columns={opportunityColumns}
         dataSource={data}
@@ -115,9 +97,7 @@ const titleStyle = css`
   line-height: 2.3rem;
   font-weight: 600;
 `;
-const rowHeaderStyle = css`
-  margin: 2.4rem 0 1.4rem 0;
-`;
+
 const addKOpportunitytnStyle = css`
   background: #0070b8;
   display: flex;

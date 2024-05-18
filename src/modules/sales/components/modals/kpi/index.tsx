@@ -7,9 +7,10 @@ import { RequestEdit } from './request-edit.modal';
 import { Report } from './report.modal';
 import { ModifyKPI } from './modify.modal';
 import { AddKPI } from './add.modal';
+import { DeleteKPI } from './delete.kpi';
 
 type ModalContexttype = {
-  openModal: (modalName: string) => void;
+  openModal: (modalName: string, data?: DataKPIType, goalIds?: string[]) => void;
   closeModal: () => void;
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
@@ -27,11 +28,13 @@ type ModalProviderProps = {
 };
 
 export const ModalProvider = ({ children }: ModalProviderProps) => {
-  const [currentModal, setCurrentModal] = useState<string>();
+  const [currentModal, setCurrentModal] = useState<
+    { modalName: string; data?: DataKPIType; goalIds?: string[] } | undefined
+  >();
   const [open, setOpen] = useState<boolean>(false);
 
-  const openModal = (modalName: string) => {
-    setCurrentModal(modalName);
+  const openModal = (modalName: string, data?: DataKPIType, goalIds?: string[]) => {
+    setCurrentModal({ modalName, data, goalIds });
     setOpen(true);
   };
 
@@ -44,17 +47,37 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal
-        width={currentModal === ModalKPIType.FinalizeKPI ? '34rem' : '54rem'}
+        width={
+          currentModal?.modalName === ModalKPIType.FinalizeKPI ||
+          currentModal?.modalName === ModalKPIType.DeleteKPI
+            ? '38rem'
+            : currentModal?.modalName === ModalKPIType.RequestEdit
+              ? '68rem'
+              : '54rem'
+        }
         open={open}
         onCancel={closeModal}
         footer={null}
       >
-        {currentModal === ModalKPIType.EditKPI && <EditKPI closeModal={closeModal} />}
-        {currentModal === ModalKPIType.AddKPI && <AddKPI closeModal={closeModal} />}
-        {currentModal === ModalKPIType.FinalizeKPI && <FinalizeKPI closeModal={closeModal} />}
-        {currentModal === ModalKPIType.RequestEdit && <RequestEdit closeModal={closeModal} />}
-        {currentModal === ModalKPIType.Report && <Report closeModal={closeModal} />}
-        {currentModal === ModalKPIType.ModifyKPI && <ModifyKPI closeModal={closeModal} />}
+        {currentModal?.modalName === ModalKPIType.EditKPI && (
+          <EditKPI closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalKPIType.AddKPI && <AddKPI closeModal={closeModal} />}
+        {currentModal?.modalName === ModalKPIType.FinalizeKPI && (
+          <FinalizeKPI closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalKPIType.RequestEdit && (
+          <RequestEdit closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalKPIType.Report && (
+          <Report closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalKPIType.ModifyKPI && (
+          <ModifyKPI closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalKPIType.DeleteKPI && (
+          <DeleteKPI closeModal={closeModal} goalIds={currentModal.goalIds!} />
+        )}
       </Modal>
     </ModalContext.Provider>
   );
