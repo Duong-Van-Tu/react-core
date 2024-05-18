@@ -17,7 +17,6 @@ import { Status } from '../enum/status.enum';
 import { generateUrlParams } from '@/utils/common';
 import dayjs from 'dayjs';
 import { RoleType } from '../enum/kpi.enum';
-import { usePermission } from '@/hooks/permission.hook';
 
 type FilterKPIType = {
   pageIndex: number;
@@ -33,7 +32,6 @@ export const useKPI = () => {
   const dispatch = useDispatch();
   const { tenant } = useQuery();
   const user = useRootSelector((state) => state.auth.user);
-  const { isSale } = usePermission();
 
   const getAllKPI = useCallback(
     async ({
@@ -42,7 +40,7 @@ export const useKPI = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType = isSale ? RoleType.MySelf : RoleType.Manager,
+      roleType,
     }: FilterKPIType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
@@ -64,7 +62,7 @@ export const useKPI = () => {
         },
       );
       if (succeeded) {
-        const { items, totalRecords, pageIndex, totalPages } = data;
+        const { items, totalRecords, pageIndex, totalPages, totalExtend } = data;
         dispatch(
           setListKPIAction({
             data: items,
@@ -73,6 +71,7 @@ export const useKPI = () => {
               totalRecords,
               totalPages,
             },
+            totalExtend,
           }),
         );
       }
@@ -165,7 +164,7 @@ export const useKPI = () => {
       const dataUpdateStatusKPI = convertToUppercaseFirstLetter({
         id: values.id,
         applicationUserId: values.userSuggest?.id,
-        status: Status.AcceptRequest,
+        status: Status.Updated,
       });
 
       const { data, succeeded } = await caller(
