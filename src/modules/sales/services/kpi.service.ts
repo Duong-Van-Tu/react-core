@@ -16,7 +16,6 @@ import { Pagination } from '@/constants/pagination';
 import { Status } from '../enum/status.enum';
 import { generateUrlParams } from '@/utils/common';
 import dayjs from 'dayjs';
-import { RoleType } from '../enum/kpi.enum';
 
 type FilterKPIType = {
   pageIndex: number;
@@ -24,7 +23,7 @@ type FilterKPIType = {
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType?: RoleType;
+  roleType: string;
 };
 export const useKPI = () => {
   const api = useApi('');
@@ -53,6 +52,7 @@ export const useKPI = () => {
         tenant: tenant,
         roleType,
       };
+
       const urlParams = generateUrlParams(queryParams);
 
       const { data, succeeded } = await caller(

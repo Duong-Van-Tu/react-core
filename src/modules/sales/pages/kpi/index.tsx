@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@/hooks/query.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { getTenant } from '@/utils/common';
+import { RoleType } from '../../enum/kpi.enum';
 
 export default function KPIPage() {
   const navigate = useNavigate();
@@ -25,12 +26,12 @@ export default function KPIPage() {
 
   const items: TabsProps['items'] = [
     {
-      key: '1',
+      key: isAdmin ? RoleType.Manager : RoleType.MySelf,
       label: isAdmin ? 'Mục tiêu của giám đốc' : formatMessage({ id: 'title.tab.kpi.my' }),
       children: <TableKPI />,
     },
     {
-      key: '2',
+      key: RoleType.Employee,
       label: formatMessage({ id: 'title.tab.kpi.employee' }),
       children: <TableKPI />,
     },
@@ -42,9 +43,9 @@ export default function KPIPage() {
 
   useEffect(() => {
     if (!activeKey) {
-      navigate(`?tab=1&tenant=${tenant}`);
+      navigate(`?tab=${isAdmin ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
     }
-  }, []);
+  }, [activeKey]);
 
   useEffect(() => {
     const breadCrumbItems = [
