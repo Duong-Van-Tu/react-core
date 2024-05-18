@@ -8,3 +8,16 @@ export type DataOpportunityType = {
   expectedTime: string;
   budget: string;
 };
+export type DataUpdateOpportunityType = {
+  key: number;
+  target:string;
+  activites:string;
+  time:string;
+  result:string
+};
+export type DataUpdateHistoryOpportunityType = {
+  key: number;
+  updateTime:string;
+  updatePerson:string;
+  target:string;
+};

@@ -105,7 +105,6 @@ const formTitleStyle = css`
   line-height: 2.6rem;
   margin-top: 3rem;
   color: rgba(21, 41, 75, 1);
-  font-family: 'Roboto', sans-serif;
 `;
 
 const labelFormItem = css`
@@ -113,7 +112,6 @@ const labelFormItem = css`
   line-height: 1.6rem;
   font-weight: 600;
   color: rgba(16, 24, 40, 1);
-  font-family: 'Roboto', sans-serif;
 `;
 
 const selectFormStyle = css`
@@ -124,7 +122,7 @@ const textAreaStyle = css`
   &::placeholder {
     color: rgba(208, 213, 221, 1);
     font-size: 1.4rem;
-    font-family: Roboto, sans-serif;
-    font-weight: 600;
+
+    font-weight: 500;
   }
 `;

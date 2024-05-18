@@ -5,37 +5,28 @@ import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { ModalOpportunityType } from '../../enum/opportunity.enum';
-import { useOpportunityModal } from '../modals/opportuity';
+import { useModalOpportunity } from '../modals/opportuity';
+import { useNavigate } from 'react-router-dom';
 
 enum MenuItem {
-  RequestEdit = 1,
-  AssignOpportunity,
-  UpdateOpportunity,
+  AssignOpportunity = 1,
+
   CloseOpportunity,
-  Report,
   Delete,
 }
 
 export function OpportunityDropdown() {
-  const { openModal } = useOpportunityModal();
+  const { openModal } = useModalOpportunity();
   const { formatMessage } = useLocale();
+  const navigate = useNavigate();
 
   const handleItemClick = (key: number) => {
     switch (key) {
-      case MenuItem.RequestEdit:
-        openModal(ModalOpportunityType.RequestEdit);
-        break;
       case MenuItem.AssignOpportunity:
         openModal(ModalOpportunityType.AssignOpportunity);
         break;
-      case MenuItem.UpdateOpportunity:
-        openModal(ModalOpportunityType.UpdateOpportunity);
-        break;
       case MenuItem.CloseOpportunity:
         openModal(ModalOpportunityType.CloseOpportunity);
-        break;
-      case MenuItem.Report:
-        openModal(ModalOpportunityType.Report);
         break;
       case MenuItem.Delete:
         openModal(ModalOpportunityType.Delete);
@@ -48,7 +39,7 @@ export function OpportunityDropdown() {
     {
       key: '1',
       label: <span>{formatMessage({ id: 'title.dropdown.requestEdit' })}</span>,
-      onClick: () => handleItemClick(MenuItem.RequestEdit),
+      onClick: () => navigate('/sales/opportunity/edit-opportunity'),
     },
     {
       key: '2',
@@ -58,7 +49,7 @@ export function OpportunityDropdown() {
     {
       key: '3',
       label: <span>{formatMessage({ id: 'title.dropdown.opportunity.updateOpportunity' })}</span>,
-      onClick: () => handleItemClick(MenuItem.UpdateOpportunity),
+      onClick: () => navigate('/sales/opportunity/update-opportunity'),
     },
     {
       key: '4',
@@ -68,7 +59,7 @@ export function OpportunityDropdown() {
     {
       key: '5',
       label: <span>{formatMessage({ id: 'title.dropdown.opportunity.resultReport' })}</span>,
-      onClick: () => handleItemClick(MenuItem.Report),
+      onClick: () => navigate('/sales/opportunity/report-opportunity'),
     },
     {
       key: '6',

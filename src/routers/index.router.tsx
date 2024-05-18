@@ -5,6 +5,11 @@ import MainLayout from '@/layouts/main.layout';
 
 import WrapperRouteComponent from './config';
 import AuthLayout from '@/layouts/auth.layout';
+import { AddOpportuity } from '@/modules/sales/components/modals/opportuity/add.modal';
+import { UpdateOpportunity } from '@/modules/sales/components/modals/opportuity/update-opportunity';
+import { ReportOpportunity } from '@/modules/sales/components/modals/opportuity/report-opportunity';
+import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportuity/update-history-opportunity';
+import { EditOpportuity } from '@/modules/sales/components/modals/opportuity/edit.modal';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -166,6 +171,46 @@ const routes: RouteObject[] = [
   {
     path: 'not-found',
     element: <NotfoundPage />,
+  },
+  {
+    path: '/sales/opportunity/add-opportunity',
+    element: (
+      <WrapperRouteComponent titleId="title.document.addOpportunity">
+        <AddOpportuity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/sales/opportunity/edit-opportunity',
+    element: (
+      <WrapperRouteComponent titleId="title.document.editOpportunity">
+        <EditOpportuity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/sales/opportunity/update-opportunity',
+    element: (
+      <WrapperRouteComponent titleId="title.document.updateOpportunity">
+        <UpdateOpportunity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/sales/opportunity/report-opportunity',
+    element: (
+      <WrapperRouteComponent titleId="title.document.reportOpportunity">
+        <ReportOpportunity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/sales/opportunity/update-opportunity/update-history',
+    element: (
+      <WrapperRouteComponent titleId="title.document.updateHistory">
+        <UpdateHistoryOpportunity />
+      </WrapperRouteComponent>
+    ),
   },
   {
     path: '*',
