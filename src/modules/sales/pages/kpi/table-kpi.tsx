@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TableCustom } from '@/components/table';
 import columns from './columns';
 import { Search, SearchParams } from '@/components/search';
@@ -22,8 +22,15 @@ export default function TableKPI() {
   const [loading] = useWatchLoading(['get-kpi', true]);
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
   const { tab } = useQuery();
-  const { isAdmin } = usePermission();
+  const { isAdmin, isSaleDirector } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
+
+  const columnTable = useMemo(() => {
+    if (tab === '1' && isSaleDirector) {
+      return columns?.slice(1);
+    }
+    return columns;
+  }, [tab, isSaleDirector]);
 
   const rowSelection = {
     onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
@@ -43,30 +50,29 @@ export default function TableKPI() {
 
   useEffect(() => {
     const roleType =
-      tab === '1'
-        ? isAdmin
-          ? RoleType.Manager
-          : RoleType.MySelf
-        : tab === '2'
-          ? RoleType.Employee
-          : RoleType.MySelf;
+      tab === '1' && isAdmin ? RoleType.Manager : tab === '2' ? RoleType.Employee : RoleType.MySelf;
     getAllKPI({ pageIndex: Pagination.PAGEINDEX, pageSize: Pagination.PAGESIZE, roleType });
     getAllStatusKPI();
   }, [getAllKPI, getAllStatusKPI, tab]);
 
   return (
     <div css={rootStyle}>
-      <Button
-        onClick={() => openModal('Add KPI')}
-        type="primary"
-        css={addKPIBtnStyle}
-        iconPosition="start"
-        size="large"
-      >
-        <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-        <span>Thêm mục tiêu</span>
-      </Button>
-      <Search onSearch={handleSearch} status={status} />
+      {(isAdmin || isSaleDirector) && (
+        <Button
+          onClick={() => openModal('Add KPI')}
+          type="primary"
+          css={addKPIBtnStyle}
+          iconPosition="start"
+          size="large"
+        >
+          <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
+          <span>Thêm mục tiêu</span>
+        </Button>
+      )}
+
+      <div css={searchContainer}>
+        <Search onSearch={handleSearch} status={status} />
+      </div>
       <Row css={rowHeaderStyle} justify="space-between">
         <Col>
           <Button
@@ -82,7 +88,7 @@ export default function TableKPI() {
       </Row>
       <TableCustom
         rowSelection={rowSelection}
-        columns={columns}
+        columns={columnTable}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
@@ -108,7 +114,7 @@ const rootStyle = css`
 const addKPIBtnStyle = css`
   position: absolute;
   right: 0;
-  top: -6.5rem;
+  top: -10rem;
   background: #0070b8;
   display: flex;
   align-items: center;
@@ -121,4 +127,8 @@ const addKPIBtnStyle = css`
 
 const rowHeaderStyle = css`
   margin: 2.4rem 0 1.4rem 0;
+`;
+
+const searchContainer = css`
+  margin-top: 2.6rem;
 `;

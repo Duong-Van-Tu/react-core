@@ -12,13 +12,15 @@ import { usePermission } from '@/hooks/permission.hook';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@/hooks/query.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
+import { getTenant } from '@/utils/common';
 
 export default function KPIPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
   const { isSale, isAdmin, isSaleDirector } = usePermission();
-  const tenant = useRootSelector((state) => state.auth.tenant);
+  const tenant = useRootSelector((state) => state.auth.tenant) || getTenant();
+  const totalRecords = useRootSelector((state) => state.sale.kpi.pagination?.totalRecords);
   const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
@@ -39,10 +41,10 @@ export default function KPIPage() {
   };
 
   useEffect(() => {
-    if (activeKey) {
-      navigate(`?tab=${activeKey}&tenant=${tenant}`);
+    if (!activeKey) {
+      navigate(`?tab=1&tenant=${tenant}`);
     }
-  }, [activeKey]);
+  }, []);
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -68,7 +70,9 @@ export default function KPIPage() {
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.kpi' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
-        <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
+        <span>
+          {totalRecords} {formatMessage({ id: 'title.document.kpi' })}
+        </span>
       </div>
       {(isAdmin || isSaleDirector) && (
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
