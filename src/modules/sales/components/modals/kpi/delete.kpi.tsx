@@ -5,6 +5,7 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
+import { useLocation } from 'react-router-dom';
 
 type FinalizeKPIProps = {
   closeModal: () => void;
@@ -14,12 +15,15 @@ export const DeleteKPI = ({ closeModal, goalIds }: FinalizeKPIProps) => {
   const { deleteKPI, getAllKPI } = useKPI();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-kpi', false]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const tab = searchParams.get('tab');
 
   const handleFinalizeKPI = async () => {
     const deleteGoal = await deleteKPI(goalIds);
     if (deleteGoal) {
       if (goalIds.length === Pagination.PAGESIZE) {
-        getAllKPI({ pageIndex: pageIndex - 1 || 1, pageSize: Pagination.PAGESIZE });
+        getAllKPI({ pageIndex: pageIndex - 1 || 1, pageSize: Pagination.PAGESIZE, roleType: tab! });
       }
       closeModal();
     }
