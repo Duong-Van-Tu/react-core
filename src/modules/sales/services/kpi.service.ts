@@ -1,5 +1,4 @@
 import { useApi, useCaller } from '@/hooks/api.hook';
-import { useQuery } from '@/hooks/query.hook';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
@@ -14,7 +13,7 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { Status } from '../enum/status.enum';
-import { generateUrlParams } from '@/utils/common';
+import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
 
 type FilterKPIType = {
@@ -29,7 +28,7 @@ export const useKPI = () => {
   const api = useApi('');
   const caller = useCaller();
   const dispatch = useDispatch();
-  const { tenant } = useQuery();
+  const tenant = getTenant();
   const user = useRootSelector((state) => state.auth.user);
 
   const getAllKPI = useCallback(
