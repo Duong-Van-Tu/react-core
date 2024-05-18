@@ -12,12 +12,17 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
 import { Key } from 'antd/es/table/interface';
+import { useQuery } from '@/hooks/query.hook';
+import { usePermission } from '@/hooks/permission.hook';
+import { RoleType } from '../../enum/kpi.enum';
 
 export default function TableKPI() {
   const { openModal } = useModalKPI();
   const { getAllKPI, getAllStatusKPI } = useKPI();
   const [loading] = useWatchLoading(['get-kpi', true]);
-  const { data, pagination, status } = useRootSelector((state) => state.sale.kpi);
+  const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
+  const { tab } = useQuery();
+  const { isAdmin } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
 
   const rowSelection = {
@@ -37,9 +42,17 @@ export default function TableKPI() {
   };
 
   useEffect(() => {
-    getAllKPI({ pageIndex: Pagination.PAGEINDEX, pageSize: Pagination.PAGESIZE });
+    const roleType =
+      tab === '1'
+        ? isAdmin
+          ? RoleType.Manager
+          : RoleType.MySelf
+        : tab === '2'
+          ? RoleType.Employee
+          : RoleType.MySelf;
+    getAllKPI({ pageIndex: Pagination.PAGEINDEX, pageSize: Pagination.PAGESIZE, roleType });
     getAllStatusKPI();
-  }, [getAllKPI, getAllStatusKPI]);
+  }, [getAllKPI, getAllStatusKPI, tab]);
 
   return (
     <div css={rootStyle}>
@@ -65,7 +78,7 @@ export default function TableKPI() {
             Xoá mục tiêu đã chọn
           </Button>
         </Col>
-        <Col>Tổng điểm đạt được: 200</Col>
+        <Col>Tổng điểm đạt được: {totalExtend ?? 0}</Col>
       </Row>
       <TableCustom
         rowSelection={rowSelection}

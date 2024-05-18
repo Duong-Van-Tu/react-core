@@ -5,6 +5,7 @@ export type KPIState = {
   pagination?: PaginationAPI;
   report?: DataKPIType;
   status?: KPIStatus[];
+  totalExtend?: number;
 };
 
 export const kpiInitialState: KPIState = {
@@ -22,10 +23,12 @@ const slice = createSlice({
       }: PayloadAction<{
         data: DataKPIType[];
         pagination: PaginationAPI;
+        totalExtend: number;
       }>,
     ) {
       state.data = payload.data;
       state.pagination = payload.pagination;
+      state.totalExtend = payload.totalExtend;
     },
     addKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.data = [payload, ...state.data];

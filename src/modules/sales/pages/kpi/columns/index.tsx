@@ -61,7 +61,6 @@ const columns: ColumnsType<DataKPIType> = [
           messageType = 'info';
           break;
         case Status.Failed:
-        case Status.AcceptRequest:
           messageType = 'error';
           break;
         default:

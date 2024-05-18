@@ -17,14 +17,14 @@ export default function KPIPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const { isSale, isSaleDirector } = usePermission();
+  const { isSale, isAdmin, isSaleDirector } = usePermission();
   const tenant = useRootSelector((state) => state.auth.tenant);
   const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: isSaleDirector ? 'Mục tiêu của giám đốc' : formatMessage({ id: 'title.tab.kpi.my' }),
+      label: isAdmin ? 'Mục tiêu của giám đốc' : formatMessage({ id: 'title.tab.kpi.my' }),
       children: <TableKPI />,
     },
     {
@@ -70,7 +70,9 @@ export default function KPIPage() {
         <CustomIcon width={8} height={8} type="dot" />
         <span>10 {formatMessage({ id: 'title.document.kpi' })}</span>
       </div>
-      {!isSale && <Tabs activeKey={activeKey} items={items} onChange={onChange} />}
+      {(isAdmin || isSaleDirector) && (
+        <Tabs activeKey={activeKey} items={items} onChange={onChange} />
+      )}
       {isSale && <TableKPI />}
     </ModalProvider>
   );

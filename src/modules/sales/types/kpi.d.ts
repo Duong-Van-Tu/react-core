@@ -31,4 +31,5 @@ type DataKPIType = {
   suggestEndTime?: string;
   suggestTargetKPI?: string;
   suggestTargetPoint?: string;
+  totalExtend?: number;
 };

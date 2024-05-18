@@ -5,5 +5,4 @@ export enum Status {
   Updated = 'UPDATED',
   Processing = 'PROCESSING',
   Failed = 'FAILED',
-  AcceptRequest = 'ACCEPTREQUEST',
 }
