@@ -68,6 +68,6 @@ export default defineConfig(({ mode }) => {
         include: '**/*.svg?react',
       }),
     ],
-    base: '/subscriber/',
+    base: '/',
   };
 });
