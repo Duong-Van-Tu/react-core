@@ -7,6 +7,7 @@ type DataOpportunityType = {
   beneficiary?: string;
   estimatedTime?: string;
   budget?: string;
+  estimatedMoney: ?string;
   commissionMoney?: string;
   opponent1?: string;
   opponent1Attribute?: string;

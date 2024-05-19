@@ -15,13 +15,19 @@ import { Pagination } from '@/constants/pagination';
 import { RoleType } from '@/enum/role.enum';
 import { Search, SearchParams } from '@/components/search';
 import { useRootSelector } from '@/hooks/selector.hook';
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { getTenant } from '@/utils/common';
 
 export default function OpportunityPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
   const navigate = useNavigate();
   const { getAllOpportunity, getAllStatusOpportunity } = useOpportunity();
-  const { pagination, status } = useRootSelector((state) => state.sale.opportunity);
+  const [loading, loadingStatus] = useWatchLoading(
+    ['get-opportunity', true],
+    ['status-opportunity', true],
+  );
+  const { pagination, status, data } = useRootSelector((state) => state.sale.opportunity);
 
   const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
     getAllOpportunity({
@@ -63,42 +69,56 @@ export default function OpportunityPage() {
 
   return (
     <ModalOpportunityProvider>
-      <div css={subTitleStyle}>
-        <div>
-          <h3 css={titleStyle}>{formatMessage({ id: 'title.document.opportunity' })}</h3>
-          <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
-          <CustomIcon width={8} height={8} type="dot" />
-          <span>10 {formatMessage({ id: 'title.document.opportunity' })}</span>
+      <div css={rootStyle}>
+        <div css={subTitleStyle}>
+          <div>
+            <h3 css={titleStyle}>{formatMessage({ id: 'title.document.opportunity' })}</h3>
+            <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
+            <CustomIcon width={8} height={8} type="dot" />
+            <span>10 {formatMessage({ id: 'title.document.opportunity' })}</span>
+          </div>
         </div>
-        <div>
-          <Button
-            onClick={() => navigate('/sales/opportunity/add-opportunity')}
-            type="primary"
-            css={addKOpportunitytnStyle}
-            iconPosition="start"
-            size="middle"
-          >
-            <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
-            <span>Thêm cơ hội</span>
-          </Button>
+        <Button
+          onClick={() => navigate(`add-opportunity?tenant=${getTenant()}`)}
+          type="primary"
+          css={addKOpportunitytnStyle}
+          iconPosition="start"
+          size="large"
+        >
+          <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
+          <span>Thêm cơ hội</span>
+        </Button>
+        <div css={searchContainer}>
+          <Search onSearch={handleSearch} loadingStatus={loadingStatus} status={status as any} />
         </div>
+        <TableCustom
+          columns={opportunityColumns}
+          dataSource={data}
+          loading={loading}
+          rowKey={(record) => record.id}
+          pagination={{
+            current: pagination?.pageIndex,
+            pageSize: Pagination.PAGESIZE,
+            total: pagination?.totalRecords,
+            position: ['bottomCenter'],
+            onChange: (page) => {
+              getAllOpportunity({
+                pageIndex: page,
+                pageSize: Pagination.PAGESIZE,
+                roleType: RoleType.MySelf,
+              });
+            },
+          }}
+          scroll={{ x: 1450 }}
+        />
       </div>
-
-      <div css={searchContainer}>
-        <Search onSearch={handleSearch} status={status} />
-      </div>
-
-      <TableCustom
-        columns={opportunityColumns}
-        dataSource={[]}
-        loading={false}
-        rowKey={(record) => record.key}
-        pagination={{ current: 1, pageSize: 7 }}
-        scroll={{ x: 1450 }}
-      />
     </ModalOpportunityProvider>
   );
 }
+
+const rootStyle = css`
+  position: relative;
+`;
 
 const subTitleStyle = css`
   display: flex;
@@ -107,8 +127,8 @@ const subTitleStyle = css`
   margin-top: 0.4rem;
   gap: 4px;
   font-size: 1.4rem;
-  margin-bottom: 2rem;
 `;
+
 const titleStyle = css`
   font-size: 1.8rem;
   line-height: 2.3rem;
@@ -120,6 +140,9 @@ const addKOpportunitytnStyle = css`
   display: flex;
   align-items: center;
   gap: 0.2rem;
+  position: absolute;
+  top: 1.4rem;
+  right: 0;
   &:hover {
     background: #0070b8 !important;
     opacity: 0.9;

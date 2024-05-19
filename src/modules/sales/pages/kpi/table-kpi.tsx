@@ -19,7 +19,8 @@ import { RoleType } from '@/enum/role.enum';
 export default function TableKPI() {
   const { openModal } = useModalKPI();
   const { getAllKPI, getAllStatusKPI } = useKPI();
-  const [loading] = useWatchLoading(['get-kpi', true]);
+  const [loading, loadingStatus] = useWatchLoading(['get-kpi', true], ['status-kpi', true]);
+
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
   const { isAdmin, isSaleDirector } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
@@ -76,7 +77,7 @@ export default function TableKPI() {
       )}
 
       <div css={searchContainer}>
-        <Search onSearch={handleSearch} status={status} />
+        <Search onSearch={handleSearch} status={status as any} loadingStatus={loadingStatus} />
       </div>
       <Row css={rowHeaderStyle} justify="space-between">
         <Col>

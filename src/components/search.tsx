@@ -4,7 +4,6 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Select } from 'antd';
 import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import { useWatchLoading } from '@/hooks/loading.hook';
 import { OptionProps } from 'antd/es/select';
 
 export type SearchParams = {
@@ -12,16 +11,17 @@ export type SearchParams = {
   statusId?: string;
   time?: string;
 };
+
 type SearchProps = {
   onSearch: (values: SearchParams) => void;
-  status?: any;
+  loadingStatus?: boolean;
+  status?: OptionProps[];
 };
 
-export const Search = ({ onSearch, status }: SearchProps) => {
+export const Search = ({ onSearch, status, loadingStatus }: SearchProps) => {
   const [textSearch, setSearchers] = useState<string>();
   const [statusId, SetStatusId] = useState<string>();
   const [time, setTime] = useState<string>();
-  const [loading] = useWatchLoading(['status-kpi', true]);
   const handleSearch = (values?: SearchParams) => {
     onSearch({ textSearch, statusId, time, ...values });
   };
@@ -62,7 +62,7 @@ export const Search = ({ onSearch, status }: SearchProps) => {
       </Col>
       <Col span={4}>
         <Select
-          loading={loading}
+          loading={loadingStatus}
           css={selectStyle}
           size="large"
           defaultValue={''}

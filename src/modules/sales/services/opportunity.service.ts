@@ -81,13 +81,12 @@ export const useOpportunity = () => {
     async (values: DataOpportunityType) => {
       const dataAddOpportunity = convertToUppercaseFirstLetter({
         ...values,
-        userSuggestId: user?.id,
       });
 
       const { data, succeeded } = await caller(
         () =>
           api.post(`/Opportunity/add-or-update?tenant=${tenant}`, [{ data: dataAddOpportunity }]),
-        { loadingKey: 'add-opportunity' },
+        { loadingKey: 'add-opportunity', messageKey: 'opportunity-message' },
       );
 
       if (succeeded) {

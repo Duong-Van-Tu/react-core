@@ -5,7 +5,7 @@ import MainLayout from '@/layouts/main.layout';
 
 import WrapperRouteComponent from './config';
 import AuthLayout from '@/layouts/auth.layout';
-import { AddOpportuity } from '@/modules/sales/components/modals/opportuity/add.modal';
+import { AddOpportuity } from '@/modules/sales/components/forms/opportuity/add-opportuity';
 import { UpdateOpportunity } from '@/modules/sales/components/modals/opportuity/update-opportunity';
 import { ReportOpportunity } from '@/modules/sales/components/modals/opportuity/report-opportunity';
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportuity/update-history-opportunity';
@@ -176,7 +176,9 @@ const routes: RouteObject[] = [
     path: '/sales/opportunity/add-opportunity',
     element: (
       <WrapperRouteComponent titleId="title.document.addOpportunity">
-        <AddOpportuity />
+        <Middleware mode="private">
+          <AddOpportuity />
+        </Middleware>
       </WrapperRouteComponent>
     ),
   },
