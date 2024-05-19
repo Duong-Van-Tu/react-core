@@ -47,7 +47,7 @@ export const AddOpportuity = () => {
   const [loading] = useWatchLoading(['add-opportunity', false]);
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = messageAnt.useMessage();
-  const { errors } = useWatchMessage('opportunity-message');
+  const { errors } = useWatchMessage('addOpportunity-message');
   const navigate = useNavigate();
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddOpportunity = {
@@ -108,12 +108,12 @@ export const AddOpportuity = () => {
                 <span css={labelFormItem}>{formatMessage({ id: 'form.input.decisionMaker' })}</span>
               }
               name="accountable"
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: formatMessage({ id: 'form.input.require.decisionMaker' }),
-              //   },
-              // ]}
+              rules={[
+                {
+                  required: true,
+                  message: formatMessage({ id: 'form.input.require.decisionMaker' }),
+                },
+              ]}
             >
               <Input
                 size="large"

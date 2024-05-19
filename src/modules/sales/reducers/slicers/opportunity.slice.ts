@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type OpportunityInitialStateState = {
   data: DataOpportunityType[];
   pagination?: PaginationAPI;
+  detail?: DataOpportunityType;
   status?: OpportunityStatus[];
   totalExtend?: number;
 };
@@ -47,6 +48,10 @@ const slice = createSlice({
     setDataStatusAction(state, { payload }: PayloadAction<OpportunityStatus[]>) {
       state.status = payload;
     },
+
+    setDataOpportunityDetail(state, { payload }: PayloadAction<DataOpportunityType>) {
+      state.detail = payload;
+    },
   },
 });
 
@@ -56,5 +61,6 @@ export const {
   updateOpportunityAction,
   deleteOpportunityAction,
   setDataStatusAction,
+  setDataOpportunityDetail,
 } = slice.actions;
 export default slice.reducer;

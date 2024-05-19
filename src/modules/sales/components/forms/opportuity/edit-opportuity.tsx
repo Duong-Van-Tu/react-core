@@ -1,46 +1,110 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
-import { Button, Col, DatePicker, Form, FormProps, Input, Row, Space } from 'antd';
+import { useEffect } from 'react';
+import dayjs from 'dayjs';
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  FormProps,
+  Input,
+  InputNumber,
+  Row,
+  Spin,
+  message as messageAnt,
+} from 'antd';
 import Close from '@/assets/svg/close.svg?react';
 import { useLocale } from '@/hooks/locale.hook';
+import { LocaleFormatter } from '@/components/locale-formatter';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getTenant } from '@/utils/common';
+import { useOpportunity } from '@/modules/sales/services/opportunity.service';
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { Messages } from '@/constants/message';
+import { useWatchMessage } from '@/hooks/message.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 type FieldType = {
-  customer: string;
-  decisionMaker: string;
-  technicalPerson: string;
+  customerName: string;
+  accountable: string;
+  technicalLead: string;
   beneficiary: string;
-  customerNeeds: string;
-  OpportunityTimeline: string;
-  budget: string;
-  estimatedPrice: number;
-  commissionConsultant: string;
-  oneCompetitor: string;
-  strengthsAndWeaknessesOneCompetitor: string;
-  twoCompetitor: string;
-  strengthsAndWeaknessesTwoCompetitor: string;
+  need: string;
+  estimatedTime: string;
+  budget: number;
+  estimatedMoney: number;
+  commissionMoney: number;
+  opponent1: string;
+  opponent1Attribute: string;
+  opponent2: string;
+  opponent2Attribute: string;
   strategy: string;
-  interactionBetweenCompanyAndCustomer: string;
-  WinProbabilityEvaluation: string;
+  lastTimeInteract: string;
+  winningOppotunity: string;
 };
 
 export const EditOpportuity = () => {
   const { formatMessage } = useLocale();
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
+  const { updateOpportunity, getOpportunityById } = useOpportunity();
+  const { id: opportuityId } = useParams();
+  const [loading, opportunityDetailLoading] = useWatchLoading(
+    ['edit-opportunity', false],
+    ['get-opportunityDetail', true],
+  );
+  const [form] = Form.useForm();
+  const [messageApi, contextHolder] = messageAnt.useMessage();
+  const { errors } = useWatchMessage('editOpportunity-message');
+  const navigate = useNavigate();
+  const tenant = getTenant();
+  const dataOpportuity = useRootSelector((state) => state.sale.opportunity.detail);
+
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const dataUpdateOpportunity = {
+      id: opportuityId,
+      ...values,
+      estimatedMoney: values.estimatedMoney.toString(),
+      budget: values.budget.toString(),
+      commissionMoney: values.commissionMoney.toString(),
+      estimatedTime: dayjs(values.estimatedTime).format('DD/MM/YYYY'),
+      lastTimeInteract: dayjs(values.lastTimeInteract).format('DD/MM/YYYY'),
+    };
+    const edit = await updateOpportunity(dataUpdateOpportunity);
+    if (edit) {
+      messageApi.success(Messages.UPDATE_SUCCESS);
+    } else {
+      messageApi.success(errors[0]);
+    }
   };
 
+  useEffect(() => {
+    if (opportuityId) {
+      getOpportunityById(opportuityId);
+    }
+  }, [getOpportunityById, opportuityId]);
+
+  useEffect(() => {
+    if (dataOpportuity) {
+      const formatData = {
+        ...dataOpportuity,
+        estimatedTime: dayjs(dataOpportuity.estimatedTime),
+        lastTimeInteract: dayjs(dataOpportuity.lastTimeInteract),
+      };
+      form.setFieldsValue(formatData);
+    }
+  }, [dataOpportuity]);
+
   return (
-    <div css={containerStyle}>
-      <div css={closeStyle}>
-        <Close width={20} height={20} />
-        <Link to="/sales/opportunity" css={closeLinkStyle}>
-          {formatMessage({ id: 'title.exit' })}
-        </Link>
-      </div>
-      <h1 css={titleStyle}>{formatMessage({ id: 'title.editOpportuity' })}</h1>
-      <div css={tableStyle}>
+    <Spin spinning={opportunityDetailLoading} size="large">
+      <div css={containerStyle}>
+        {contextHolder}
+        <Button css={closeStyle} onClick={() => navigate(`/sales/opportunity?tenant=${tenant}`)}>
+          <Close width={16} height={16} color="#ccc" />
+          <LocaleFormatter id="title.exit" />
+        </Button>
+        <h1 css={titleStyle}>{formatMessage({ id: 'title.editOpportuity' })}</h1>
         <Form
+          form={form}
           css={formUpdateResultStyle}
           name="add-opportunity"
           onFinish={onFinish}
@@ -52,7 +116,7 @@ export const EditOpportuity = () => {
                 label={
                   <span css={labelFormItem}>{formatMessage({ id: 'form.input.customer' })}</span>
                 }
-                name="customer"
+                name="customerName"
                 rules={[
                   {
                     required: true,
@@ -61,9 +125,8 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.customer' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -74,7 +137,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.decisionMaker' })}
                   </span>
                 }
-                name="decisionMaker"
+                name="accountable"
                 rules={[
                   {
                     required: true,
@@ -83,9 +146,8 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.decisionMaker' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -99,7 +161,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.technicalPerson' })}
                   </span>
                 }
-                name="technicalPerson"
+                name="technicalLead"
                 rules={[
                   {
                     required: true,
@@ -108,9 +170,8 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.technicalPerson' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -128,9 +189,8 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.beneficiary' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -140,7 +200,7 @@ export const EditOpportuity = () => {
             label={
               <span css={labelFormItem}>{formatMessage({ id: 'form.input.customerNeeds' })}</span>
             }
-            name="customerNeeds"
+            name="need"
             rules={[
               {
                 required: true,
@@ -150,7 +210,6 @@ export const EditOpportuity = () => {
           >
             <Input.TextArea
               placeholder={formatMessage({ id: 'form.input.placeholder.customerNeeds' })}
-              css={formTextareaStyle}
             />
           </Form.Item>
 
@@ -162,7 +221,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.OpportunityTimeline' })}
                   </span>
                 }
-                name="OpportunityTimeline"
+                name="estimatedTime"
                 rules={[
                   {
                     required: true,
@@ -170,7 +229,12 @@ export const EditOpportuity = () => {
                   },
                 ]}
               >
-                <DatePicker placeholder="DD/MM/YYYY" css={formPickerStyle} />
+                <DatePicker
+                  css={inputStyle}
+                  size="large"
+                  format={['DD/MM/YYYY']}
+                  placeholder="DD/MM/YYYY"
+                />
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -186,10 +250,10 @@ export const EditOpportuity = () => {
                   },
                 ]}
               >
-                <Input
-                  size="middle"
+                <InputNumber
+                  css={inputStyle}
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.budget' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -203,7 +267,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.estimatedPrice' })}
                   </span>
                 }
-                name="estimatedPrice"
+                name="estimatedMoney"
                 rules={[
                   {
                     required: true,
@@ -211,10 +275,10 @@ export const EditOpportuity = () => {
                   },
                 ]}
               >
-                <Input
-                  size="middle"
+                <InputNumber
+                  css={inputStyle}
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.estimatedPrice' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -225,7 +289,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.commissionConsultant' })}
                   </span>
                 }
-                name="commissionConsultant"
+                name="commissionMoney"
                 rules={[
                   {
                     required: true,
@@ -233,10 +297,10 @@ export const EditOpportuity = () => {
                   },
                 ]}
               >
-                <Input
-                  size="middle"
+                <InputNumber
+                  css={inputStyle}
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.commissionConsultant' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -250,7 +314,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.oneCompetitor' })}
                   </span>
                 }
-                name="oneCompetitor"
+                name="opponent1"
                 rules={[
                   {
                     required: true,
@@ -259,9 +323,8 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({ id: 'form.input.placeholder.oneCompetitor' })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -272,7 +335,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.strengthsAndWeaknesses' })}
                   </span>
                 }
-                name="strengthsAndWeaknessesOneCompetitor"
+                name="opponent1Attribute"
                 rules={[
                   {
                     required: true,
@@ -281,11 +344,10 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({
                     id: 'form.input.placeholder.strengthsAndWeaknesses',
                   })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -299,7 +361,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.twoCompetitor' })}
                   </span>
                 }
-                name="twoCompetitor"
+                name="opponent2"
                 rules={[
                   {
                     required: true,
@@ -308,11 +370,10 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({
                     id: 'form.input.placeholder.twoCompetitor',
                   })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -323,7 +384,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.strengthsAndWeaknesses' })}
                   </span>
                 }
-                name="strengthsAndWeaknessesTwoCompetitor"
+                name="opponent2Attribute"
                 rules={[
                   {
                     required: true,
@@ -332,11 +393,10 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({
                     id: 'form.input.placeholder.strengthsAndWeaknesses',
                   })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -356,7 +416,6 @@ export const EditOpportuity = () => {
               placeholder={formatMessage({
                 id: 'form.input.placeholder.strategy',
               })}
-              css={formTextareaStyle}
             />
           </Form.Item>
 
@@ -368,7 +427,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.interactionBetweenCompanyAndCustomer' })}
                   </span>
                 }
-                name="interactionBetweenCompanyAndCustomer"
+                name="lastTimeInteract"
                 rules={[
                   {
                     required: true,
@@ -378,12 +437,13 @@ export const EditOpportuity = () => {
                   },
                 ]}
               >
-                <Input
-                  size="middle"
+                <DatePicker
+                  format={['DD/MM/YYYY']}
+                  css={inputStyle}
+                  size="large"
                   placeholder={formatMessage({
                     id: 'form.input.placeholder.interactionBetweenCompanyAndCustomer',
                   })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
@@ -394,7 +454,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.WinProbabilityEvaluation' })}
                   </span>
                 }
-                name="WinProbabilityEvaluation"
+                name="winningOppotunity"
                 rules={[
                   {
                     required: true,
@@ -405,26 +465,23 @@ export const EditOpportuity = () => {
                 ]}
               >
                 <Input
-                  size="middle"
+                  size="large"
                   placeholder={formatMessage({
                     id: 'form.input.placeholder.WinProbabilityEvaluation',
                   })}
-                  css={formInputItemStyle}
                 />
               </Form.Item>
             </Col>
           </Row>
 
           <Row justify="end">
-            <Space>
-              <Button type="primary" htmlType="submit" css={btnConfirmStyle}>
-                Xác nhận
-              </Button>
-            </Space>
+            <Button loading={loading} size="large" type="primary" htmlType="submit">
+              Xác nhận
+            </Button>
           </Row>
         </Form>
       </div>
-    </div>
+    </Spin>
   );
 };
 
@@ -432,37 +489,31 @@ const containerStyle = css`
   width: 100%;
   max-width: 90rem;
   height: 100%;
-  margin: 0 auto;
-  padding: 0 15px;
+  margin: 3rem auto;
+  position: relative;
 `;
 
 const closeStyle = css`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 0.4rem;
-  margin-top: 3.7rem;
-  svg path {
-    fill: rgba(0, 0, 0, 1);
+  position: absolute;
+  right: 0;
+  top: 0;
+  &:hover {
+    svg {
+      path {
+        fill: #4096ff;
+      }
+    }
   }
-`;
-
-const closeLinkStyle = css`
-  font-size: 1.4rem;
-  color: rgba(16, 24, 40, 1);
-  font-weight: 600;
 `;
 
 const titleStyle = css`
   font-size: 2.4rem;
+  line-height: 2.4rem;
   font-weight: 600;
   color: rgba(16, 24, 40, 1);
-  margin-top: 3rem;
-  margin-bottom: 2rem;
-`;
-
-const tableStyle = css`
-  /* padding: 4rem 0; */
 `;
 
 const formUpdateResultStyle = css`
@@ -470,63 +521,15 @@ const formUpdateResultStyle = css`
     display: none !important;
   }
   margin-top: 2rem;
-  padding: 1rem;
 `;
 
 const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
-  font-weight: 700;
+  font-weight: 500;
   color: rgba(16, 24, 40, 1);
 `;
 
-const formPickerStyle = css`
+const inputStyle = css`
   width: 100%;
-  height: 4.5rem;
-  border-radius: 0.8rem;
-  input {
-    &::placeholder {
-      color: rgba(208, 213, 221, 1);
-      font-size: 1.4rem;
-      font-weight: 500;
-    }
-  }
-`;
-
-const formInputItemStyle = css`
-  height: 4.5rem;
-  border-radius: 0.8rem;
-  &::placeholder {
-    color: rgba(208, 213, 221, 1);
-    font-size: 1.4rem;
-    font-weight: 400;
-  }
-`;
-
-const formTextareaStyle = css`
-  resize: none !important;
-  height: 9.3rem !important;
-  padding-top: 1.25rem;
-  padding-left: 1.4rem;
-  border-radius: 0.8rem;
-  &::placeholder {
-    color: rgba(208, 213, 221, 1);
-    font-size: 1.4rem;
-    font-weight: 500;
-  }
-`;
-
-const btnConfirmStyle = css`
-  padding: 1.2rem 5.6rem;
-  background: rgba(0, 112, 184, 1);
-  border: 1px solid rgba(0, 112, 184, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 3rem 0;
-  span {
-    color: #fff;
-    font-size: 1.4rem;
-    font-weight: 600;
-  }
 `;

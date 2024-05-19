@@ -9,7 +9,7 @@ import { AddOpportuity } from '@/modules/sales/components/forms/opportuity/add-o
 import { UpdateOpportunity } from '@/modules/sales/components/modals/opportuity/update-opportunity';
 import { ReportOpportunity } from '@/modules/sales/components/modals/opportuity/report-opportunity';
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportuity/update-history-opportunity';
-import { EditOpportuity } from '@/modules/sales/components/modals/opportuity/edit.modal';
+import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -183,10 +183,12 @@ const routes: RouteObject[] = [
     ),
   },
   {
-    path: '/sales/opportunity/edit-opportunity',
+    path: '/sales/opportunity/:id',
     element: (
       <WrapperRouteComponent titleId="title.document.editOpportunity">
-        <EditOpportuity />
+        <Middleware mode="private">
+          <EditOpportuity />
+        </Middleware>
       </WrapperRouteComponent>
     ),
   },

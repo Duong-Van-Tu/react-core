@@ -27,7 +27,9 @@ export default function OpportunityPage() {
     ['get-opportunity', true],
     ['status-opportunity', true],
   );
-  const { pagination, status, data } = useRootSelector((state) => state.sale.opportunity);
+  const { pagination, status, data, totalExtend } = useRootSelector(
+    (state) => state.sale.opportunity,
+  );
 
   const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
     getAllOpportunity({
@@ -59,7 +61,7 @@ export default function OpportunityPage() {
       },
       {
         title: {
-          vi_VN: 'Quyền lợi',
+          vi_VN: 'Cơ hội',
           en_US: 'Opportunity',
         },
       },
@@ -70,13 +72,13 @@ export default function OpportunityPage() {
   return (
     <ModalOpportunityProvider>
       <div css={rootStyle}>
+        <h3 css={titleStyle}>{formatMessage({ id: 'title.document.opportunity' })}</h3>
         <div css={subTitleStyle}>
-          <div>
-            <h3 css={titleStyle}>{formatMessage({ id: 'title.document.opportunity' })}</h3>
-            <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
-            <CustomIcon width={8} height={8} type="dot" />
-            <span>10 {formatMessage({ id: 'title.document.opportunity' })}</span>
-          </div>
+          <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
+          <CustomIcon width={8} height={8} type="dot" />
+          <span>
+            {totalExtend ?? 0} {formatMessage({ id: 'title.document.opportunity' })}
+          </span>
         </div>
         <Button
           onClick={() => navigate(`add-opportunity?tenant=${getTenant()}`)}
@@ -123,10 +125,9 @@ const rootStyle = css`
 const subTitleStyle = css`
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-top: 0.4rem;
   gap: 4px;
   font-size: 1.4rem;
+  line-height: 1.8rem;
 `;
 
 const titleStyle = css`

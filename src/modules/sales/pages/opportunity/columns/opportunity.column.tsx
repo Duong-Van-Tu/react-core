@@ -43,6 +43,6 @@ export const opportunityColumns: ColumnsType<DataOpportunityType> = [
     dataIndex: 'calculationMethod',
     fixed: 'right',
     width: '6%',
-    render: () => <OpportunityDropdown />,
+    render: (__, record) => <OpportunityDropdown data={record} />,
   },
 ];

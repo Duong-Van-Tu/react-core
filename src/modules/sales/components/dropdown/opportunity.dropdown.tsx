@@ -7,18 +7,22 @@ import { useLocale } from '@/hooks/locale.hook';
 import { ModalOpportunityType } from '../../enum/opportunity.enum';
 import { useModalOpportunity } from '../modals/opportuity';
 import { useNavigate } from 'react-router-dom';
+import { getTenant } from '@/utils/common';
 
 enum MenuItem {
   AssignOpportunity = 1,
-
   CloseOpportunity,
   Delete,
 }
 
-export function OpportunityDropdown() {
+type OpportunityDropdownProps = {
+  data: DataOpportunityType;
+};
+export function OpportunityDropdown({ data }: OpportunityDropdownProps) {
   const { openModal } = useModalOpportunity();
   const { formatMessage } = useLocale();
   const navigate = useNavigate();
+  const tenant = getTenant();
 
   const handleItemClick = (key: number) => {
     switch (key) {
@@ -39,7 +43,7 @@ export function OpportunityDropdown() {
     {
       key: '1',
       label: <span>{formatMessage({ id: 'title.dropdown.requestEdit' })}</span>,
-      onClick: () => navigate('/sales/opportunity/edit-opportunity'),
+      onClick: () => navigate(`/sales/opportunity/${data?.id}?tenant=${tenant}`),
     },
     {
       key: '2',
@@ -49,7 +53,7 @@ export function OpportunityDropdown() {
     {
       key: '3',
       label: <span>{formatMessage({ id: 'title.dropdown.opportunity.updateOpportunity' })}</span>,
-      onClick: () => navigate('/sales/opportunity/update-opportunity'),
+      onClick: () => navigate(`/sales/opportunity/update-opportunity?tenant=${tenant}`),
     },
     {
       key: '4',
@@ -59,7 +63,7 @@ export function OpportunityDropdown() {
     {
       key: '5',
       label: <span>{formatMessage({ id: 'title.dropdown.opportunity.resultReport' })}</span>,
-      onClick: () => navigate('/sales/opportunity/report-opportunity'),
+      onClick: () => navigate(`/sales/opportunity/report-opportunity?tenant=${tenant}`),
     },
     {
       key: '6',

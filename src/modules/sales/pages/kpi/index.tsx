@@ -86,7 +86,6 @@ export default function KPIPage() {
 const subTitleStyle = css`
   display: flex;
   align-items: center;
-  margin-top: 0.4rem;
   gap: 4px;
   font-size: 1.4rem;
 `;

@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import {
   addOpportunityAction,
   deleteOpportunityAction,
+  setDataOpportunityDetail,
   setDataStatusAction,
   setListOpportunityAction,
   updateOpportunityAction,
@@ -77,6 +78,19 @@ export const useOpportunity = () => {
     [caller, api],
   );
 
+  const getOpportunityById = useCallback(
+    async (id: string) => {
+      const { data, succeeded } = await caller(() => api.get(`/Opportunity/get-by-id/${id}`), {
+        loadingKey: 'get-opportunityDetail',
+        messageKey: 'opportunityDetail-message',
+      });
+      if (succeeded) {
+        dispatch(setDataOpportunityDetail(data));
+      }
+    },
+    [caller, api],
+  );
+
   const addOpportunity = useCallback(
     async (values: DataOpportunityType) => {
       const dataAddOpportunity = convertToUppercaseFirstLetter({
@@ -86,7 +100,7 @@ export const useOpportunity = () => {
       const { data, succeeded } = await caller(
         () =>
           api.post(`/Opportunity/add-or-update?tenant=${tenant}`, [{ data: dataAddOpportunity }]),
-        { loadingKey: 'add-opportunity', messageKey: 'opportunity-message' },
+        { loadingKey: 'add-opportunity', messageKey: 'addOpportunity-message' },
       );
 
       if (succeeded) {
@@ -103,7 +117,6 @@ export const useOpportunity = () => {
     async (values: DataOpportunityType) => {
       const dataAddOpportunity = convertToUppercaseFirstLetter({
         ...values,
-        userSuggestId: user?.id,
       });
 
       const { data, succeeded } = await caller(
@@ -111,7 +124,7 @@ export const useOpportunity = () => {
           api.post(`/Opportunity/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataAddOpportunity },
           ]),
-        { loadingKey: 'edit-opportunity' },
+        { loadingKey: 'edit-opportunity', messageKey: 'editOpportunity-message' },
       );
 
       if (succeeded) {
@@ -186,5 +199,6 @@ export const useOpportunity = () => {
     deleteOpportunity,
     updateStatusOpportunity,
     getAllStatusOpportunity,
+    getOpportunityById,
   };
 };
