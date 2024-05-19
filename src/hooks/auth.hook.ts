@@ -13,6 +13,7 @@ export const useAuth = () => {
 
   const clearData = useCallback(() => {
     localStorage.removeItem(KEYS.LOGIN_TOKEN_STORE_KEY);
+    localStorage.removeItem(KEYS.TENANT_KEY);
     dispatch(clearAuthDataAction());
   }, [dispatch]);
 

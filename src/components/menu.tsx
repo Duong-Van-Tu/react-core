@@ -7,6 +7,7 @@ import { getFirstPathCode } from '@/utils/get-pathCode';
 import { MenuItem } from '@/types/menu';
 import { CustomIcon } from './icons';
 import { useRootSelector } from '@/hooks/selector.hook';
+import { getTenant } from '@/utils/common';
 
 type MenuProps = {
   items: MenuItem[];
@@ -18,9 +19,10 @@ export default function Menu({ items }: MenuProps) {
   const [openKey, setOpenKey] = useState<string>();
   const language = useRootSelector((state) => state.locale.language);
   const navigate = useNavigate();
+  const tetant = getTenant();
   const onMenuClick = (path: string) => {
     setSelectedKey(path);
-    navigate(path);
+    navigate(`${path}?tenant=${tetant}`);
   };
 
   const onOpenChange = (keys: string[]) => {
