@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
-import { DataUpdateHistoryOpportunityType } from '@/modules/sales/pages/opportunity/type.opportunity';
 import { updateHistoryOpportunityColumns } from '@/modules/sales/pages/opportunity/columns/update-history-opportunity.column';
 
-const data: DataUpdateHistoryOpportunityType[] = [
+const data: any = [
   {
     key: 1,
     updateTime: '19/4/2024',

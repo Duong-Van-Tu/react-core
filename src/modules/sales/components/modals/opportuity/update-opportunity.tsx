@@ -5,12 +5,11 @@ import { Button, Modal } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
-import { DataUpdateOpportunityType } from '@/modules/sales/pages/opportunity/type.opportunity';
 import { updateOpportunityColumns } from '@/modules/sales/pages/opportunity/columns/update-opportunity.column';
 import { AddUpdateOpportuity } from './add-update-opportuity';
 import { useState } from 'react';
 
-const data: DataUpdateOpportunityType[] = [
+const data: any = [
   {
     key: 1,
     target: 'Duy trì HĐ năm 2023 và tăng giá trị hợp đồng năm 2024',
