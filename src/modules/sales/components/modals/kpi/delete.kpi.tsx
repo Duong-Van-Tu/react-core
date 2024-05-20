@@ -10,8 +10,9 @@ import { useLocation } from 'react-router-dom';
 type FinalizeKPIProps = {
   closeModal: () => void;
   goalIds: string[];
+  data?: DataKPIType;
 };
-export const DeleteKPI = ({ closeModal, goalIds }: FinalizeKPIProps) => {
+export const DeleteKPI = ({ closeModal, goalIds, data }: FinalizeKPIProps) => {
   const { deleteKPI, getAllKPI } = useKPI();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-kpi', false]);

@@ -67,10 +67,11 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
     });
   }, [data]);
 
-  console.log(data.goalStatus?.code);
   return (
     <Fragment>
-      <h3 css={formTitleStyle}>Đề xuất chỉnh sửa mục tiêu</h3>
+      <h3 css={formTitleStyle}>
+        {isSaleDirector ? 'Xem đề xuất chỉnh sửa' : 'Đề xuất chỉnh sửa mục tiêu'}
+      </h3>
       <Form form={form} css={formStyle} name="edit-kpi" onFinish={onFinish} layout="vertical">
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Thời gian kết thúc mục tiêu hiện tại</span>}

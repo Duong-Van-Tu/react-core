@@ -77,7 +77,11 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
           <ModifyKPI closeModal={closeModal} data={currentModal.data!} />
         )}
         {currentModal?.modalName === ModalKPIType.DeleteKPI && (
-          <DeleteKPI closeModal={closeModal} goalIds={currentModal.goalIds!} />
+          <DeleteKPI
+            closeModal={closeModal}
+            goalIds={currentModal.goalIds!}
+            data={currentModal.data!}
+          />
         )}
         {currentModal?.modalName === ModalKPIType.UpdateRequest && (
           <UpdateRequest closeModal={closeModal} data={currentModal.data!} />

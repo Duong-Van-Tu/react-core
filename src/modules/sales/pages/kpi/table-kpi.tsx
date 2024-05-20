@@ -22,7 +22,7 @@ export default function TableKPI() {
   const [loading, loadingStatus] = useWatchLoading(['get-kpi', true], ['status-kpi', true]);
 
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
-  const { isAdmin, isSaleDirector } = usePermission();
+  const { isSaleDirector, isSale } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -63,7 +63,7 @@ export default function TableKPI() {
 
   return (
     <div css={rootStyle}>
-      {(isAdmin || isSaleDirector) && (
+      {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
         <Button
           onClick={() => openModal('Add KPI')}
           type="primary"
@@ -124,7 +124,7 @@ const rootStyle = css`
 const addKPIBtnStyle = css`
   position: absolute;
   right: 0;
-  top: -10rem;
+  top: -9rem;
   background: #0070b8;
   display: flex;
   align-items: center;

@@ -7,6 +7,9 @@ import { useLocale } from '@/hooks/locale.hook';
 import { useModalKPI } from '../modals/kpi';
 import { ModalKPIType } from '../../enum/kpi.enum';
 import { usePermission } from '@/hooks/permission.hook';
+import { useQuery } from '@/hooks/query.hook';
+import { RoleType } from '@/enum/role.enum';
+import { useMemo } from 'react';
 
 enum MenuItem {
   EditKPI = 1,
@@ -24,7 +27,8 @@ type KPIDropdownProps = {
 export function KPIDropdown({ data }: KPIDropdownProps) {
   const { openModal } = useModalKPI();
   const { formatMessage } = useLocale();
-  const { isSale, isAdmin } = usePermission();
+  const { isSale, isAdmin, isSaleDirector } = usePermission();
+  const { tab } = useQuery();
 
   const handleItemClick = (key: number) => {
     switch (key) {
@@ -47,62 +51,86 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
       case MenuItem.UpdateRequest:
         openModal(ModalKPIType.UpdateRequest, data);
         break;
-        break;
     }
   };
 
-  const items: MenuProps['items'] = [
-    {
-      key: MenuItem.EditKPI,
-      label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
-      onClick: () => handleItemClick(MenuItem.EditKPI),
-    },
-    {
-      key: MenuItem.RequestEdit,
-      label: formatMessage({ id: 'title.dropdown.requestEdit' }),
-      onClick: () => handleItemClick(MenuItem.RequestEdit),
-    },
-    {
-      key: MenuItem.ModifyKPI,
-      label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
-      onClick: () => handleItemClick(MenuItem.ModifyKPI),
-    },
-    {
-      key: MenuItem.Report,
-      label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-      onClick: () => handleItemClick(MenuItem.Report),
-    },
-  ];
+  const items: MenuProps['items'] = useMemo(() => {
+    if (isSaleDirector) {
+      return tab === RoleType.MySelf
+        ? [
+            {
+              key: MenuItem.EditKPI,
+              label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
+              onClick: () => handleItemClick(MenuItem.EditKPI),
+            },
+            {
+              key: MenuItem.Report,
+              label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+              onClick: () => handleItemClick(MenuItem.Report),
+            },
+          ]
+        : [
+            {
+              key: MenuItem.FinalizeKPI,
+              label: formatMessage({ id: 'title.dropdown.finalize' }),
+              onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+            },
+            {
+              key: MenuItem.RequestEdit,
+              label: isSaleDirector
+                ? 'Xem đề xuất chỉnh sửa'
+                : formatMessage({ id: 'title.dropdown.requestEdit' }),
+              onClick: () => handleItemClick(MenuItem.RequestEdit),
+            },
+            {
+              key: MenuItem.ModifyKPI,
+              label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
+              onClick: () => handleItemClick(MenuItem.ModifyKPI),
+            },
+            {
+              key: MenuItem.Report,
+              label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+              onClick: () => handleItemClick(MenuItem.Report),
+            },
+          ];
+    }
 
-  const saleItems: MenuProps['items'] = [
-    {
-      key: MenuItem.FinalizeKPI,
-      label: formatMessage({ id: 'title.dropdown.finalize' }),
-      onClick: () => handleItemClick(MenuItem.FinalizeKPI),
-    },
-    {
-      key: MenuItem.RequestEdit,
-      label: formatMessage({ id: 'title.dropdown.requestEdit' }),
-      onClick: () => handleItemClick(MenuItem.RequestEdit),
-    },
-    {
-      key: MenuItem.Report,
-      label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-      onClick: () => handleItemClick(MenuItem.Report),
-    },
-  ];
-
-  const editorItems: MenuProps['items'] = [
-    {
-      key: MenuItem.UpdateRequest,
-      label: formatMessage({ id: 'title.dropdown.updateResult' }),
-      onClick: () => handleItemClick(MenuItem.UpdateRequest),
-    },
-  ];
+    if (isSale) {
+      return [
+        {
+          key: MenuItem.FinalizeKPI,
+          label: formatMessage({ id: 'title.dropdown.finalize' }),
+          onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+        },
+        {
+          key: MenuItem.EditKPI,
+          label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
+          onClick: () => handleItemClick(MenuItem.EditKPI),
+        },
+        {
+          key: MenuItem.Report,
+          label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+          onClick: () => handleItemClick(MenuItem.Report),
+        },
+      ];
+    }
+    if (isAdmin) {
+      return [
+        {
+          key: MenuItem.UpdateRequest,
+          label: formatMessage({ id: 'title.dropdown.updateResult' }),
+          onClick: () => handleItemClick(MenuItem.UpdateRequest),
+        },
+      ];
+    }
+    return [];
+  }, [isSaleDirector, tab]);
 
   return (
     <Dropdown
-      menu={{ items: isSale ? saleItems : isAdmin ? editorItems : items }}
+      menu={{
+        items,
+      }}
       placement="bottomRight"
     >
       <span css={dropdownIcon}>
