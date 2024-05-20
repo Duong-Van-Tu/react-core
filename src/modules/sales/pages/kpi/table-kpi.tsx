@@ -79,7 +79,7 @@ export default function TableKPI() {
       <div css={searchContainer}>
         <Search onSearch={handleSearch} status={status as any} loadingStatus={loadingStatus} />
       </div>
-      <Row css={rowHeaderStyle} justify="space-between">
+      <Row css={rowHeaderStyle} justify="space-between" align="bottom">
         <Col>
           <Button
             disabled={!goalIds}

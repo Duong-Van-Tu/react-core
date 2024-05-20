@@ -6,30 +6,44 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
 import { Tabs, TabsProps } from 'antd';
-import MyPrivilegesTable from './my-privileges';
-import EmployeePrivilegesTable from './employee-privileges';
+import TablePrivileges from './table-privileges';
 import { ModalPrivilegesProvider } from '../../components/modals/privileges';
+import { useQuery } from '@/hooks/query.hook';
+import { useNavigate } from 'react-router-dom';
+import { getTenant } from '@/utils/common';
+import { usePermission } from '@/hooks/permission.hook';
+import { RoleType } from '@/enum/role.enum';
 
 export default function PrivilegesPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
+  const navigate = useNavigate();
+  const tenant = getTenant();
+  const { isAdmin, isSaleDirector, isSale } = usePermission();
+  const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
-      key: '1',
+      key: isAdmin ? RoleType.Manager : RoleType.MySelf,
       label: formatMessage({ id: 'title.tab.privileges.my' }),
-      children: <MyPrivilegesTable />,
+      children: <TablePrivileges />,
     },
     {
-      key: '2',
+      key: RoleType.Employee,
       label: formatMessage({ id: 'title.tab.privileges.employee' }),
-      children: <EmployeePrivilegesTable />,
+      children: <TablePrivileges />,
     },
   ];
 
   const onChange = (key: string) => {
-    console.log(key);
+    navigate(`?tab=${key}&tenant=${tenant}`);
   };
+
+  useEffect(() => {
+    if (!activeKey) {
+      navigate(`?tab=${isAdmin ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
+    }
+  }, [activeKey]);
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -57,7 +71,10 @@ export default function PrivilegesPage() {
         <CustomIcon width={8} height={8} type="dot" />
         <span>10 {formatMessage({ id: 'title.document.privileges' })}</span>
       </div>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      {(isAdmin || isSaleDirector) && (
+        <Tabs activeKey={activeKey} items={items} onChange={onChange} />
+      )}
+      {isSale && <TablePrivileges />}
     </ModalPrivilegesProvider>
   );
 }
@@ -69,6 +86,7 @@ const subTitleStyle = css`
   gap: 4px;
   font-size: 1.4rem;
 `;
+
 const titleStyle = css`
   font-size: 1.8rem;
   line-height: 2.3rem;

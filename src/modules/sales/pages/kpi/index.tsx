@@ -20,7 +20,7 @@ export default function KPIPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
   const { isSale, isAdmin, isSaleDirector } = usePermission();
-  const tenant = useRootSelector((state) => state.auth.tenant) || getTenant();
+  const tenant = getTenant();
   const totalRecords = useRootSelector((state) => state.sale.kpi.pagination?.totalRecords);
   const { tab: activeKey } = useQuery();
 
