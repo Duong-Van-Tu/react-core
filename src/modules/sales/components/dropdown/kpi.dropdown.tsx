@@ -10,6 +10,7 @@ import { usePermission } from '@/hooks/permission.hook';
 import { useQuery } from '@/hooks/query.hook';
 import { RoleType } from '@/enum/role.enum';
 import { useMemo } from 'react';
+import { Status } from '../../enum/status.enum';
 
 enum MenuItem {
   EditKPI = 1,
@@ -69,12 +70,85 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
               onClick: () => handleItemClick(MenuItem.Report),
             },
           ]
-        : [
+        : data?.goalStatus?.code === Status.Pending
+          ? [
+              {
+                key: MenuItem.FinalizeKPI,
+                label: formatMessage({ id: 'title.dropdown.finalize' }),
+                onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+              },
+              {
+                key: MenuItem.RequestEdit,
+                label: isSaleDirector
+                  ? 'Xem đề xuất chỉnh sửa'
+                  : formatMessage({ id: 'title.dropdown.requestEdit' }),
+                onClick: () => handleItemClick(MenuItem.RequestEdit),
+              },
+              {
+                key: MenuItem.ModifyKPI,
+                label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
+                onClick: () => handleItemClick(MenuItem.ModifyKPI),
+              },
+              {
+                key: MenuItem.Report,
+                label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+                onClick: () => handleItemClick(MenuItem.Report),
+              },
+            ]
+          : data?.goalStatus?.code === Status.Request
+            ? [
+                {
+                  key: MenuItem.RequestEdit,
+                  label: isSaleDirector
+                    ? 'Xem đề xuất chỉnh sửa'
+                    : formatMessage({ id: 'title.dropdown.requestEdit' }),
+                  onClick: () => handleItemClick(MenuItem.RequestEdit),
+                },
+                {
+                  key: MenuItem.ModifyKPI,
+                  label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
+                  onClick: () => handleItemClick(MenuItem.ModifyKPI),
+                },
+                {
+                  key: MenuItem.Report,
+                  label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+                  onClick: () => handleItemClick(MenuItem.Report),
+                },
+              ]
+            : [
+                {
+                  key: MenuItem.ModifyKPI,
+                  label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
+                  onClick: () => handleItemClick(MenuItem.ModifyKPI),
+                },
+                {
+                  key: MenuItem.Report,
+                  label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+                  onClick: () => handleItemClick(MenuItem.Report),
+                },
+              ];
+    }
+
+    if (isSale) {
+      return data?.goalStatus?.code === Status.Updated
+        ? [
             {
               key: MenuItem.FinalizeKPI,
               label: formatMessage({ id: 'title.dropdown.finalize' }),
               onClick: () => handleItemClick(MenuItem.FinalizeKPI),
             },
+            {
+              key: MenuItem.EditKPI,
+              label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
+              onClick: () => handleItemClick(MenuItem.EditKPI),
+            },
+            {
+              key: MenuItem.Report,
+              label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+              onClick: () => handleItemClick(MenuItem.Report),
+            },
+          ]
+        : [
             {
               key: MenuItem.RequestEdit,
               label: isSaleDirector
@@ -83,9 +157,9 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
               onClick: () => handleItemClick(MenuItem.RequestEdit),
             },
             {
-              key: MenuItem.ModifyKPI,
-              label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
-              onClick: () => handleItemClick(MenuItem.ModifyKPI),
+              key: MenuItem.EditKPI,
+              label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
+              onClick: () => handleItemClick(MenuItem.EditKPI),
             },
             {
               key: MenuItem.Report,
@@ -93,26 +167,6 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
               onClick: () => handleItemClick(MenuItem.Report),
             },
           ];
-    }
-
-    if (isSale) {
-      return [
-        {
-          key: MenuItem.FinalizeKPI,
-          label: formatMessage({ id: 'title.dropdown.finalize' }),
-          onClick: () => handleItemClick(MenuItem.FinalizeKPI),
-        },
-        {
-          key: MenuItem.EditKPI,
-          label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
-          onClick: () => handleItemClick(MenuItem.EditKPI),
-        },
-        {
-          key: MenuItem.Report,
-          label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-          onClick: () => handleItemClick(MenuItem.Report),
-        },
-      ];
     }
     if (isAdmin) {
       return [
@@ -124,7 +178,7 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
       ];
     }
     return [];
-  }, [isSaleDirector, tab]);
+  }, [isSaleDirector, tab, data, formatMessage]);
 
   return (
     <Dropdown

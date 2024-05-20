@@ -69,6 +69,7 @@ export default function TableKPI() {
     getAllStatusKPI();
   }, [getAllKPI, getAllStatusKPI, tab]);
 
+  const addKPIBtnStyle = isSale ? addKPIBtnStyleSale : addKPIBtnStyleBase;
   return (
     <div css={rootStyle}>
       {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
@@ -123,7 +124,7 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addKPIBtnStyle = css`
+const addKPIBtnStyleBase = css`
   position: absolute;
   right: 0;
   top: -9rem;
@@ -135,6 +136,11 @@ const addKPIBtnStyle = css`
     background: #0070b8 !important;
     opacity: 0.9;
   }
+`;
+
+const addKPIBtnStyleSale = css`
+  ${addKPIBtnStyleBase}
+  top: -5rem;
 `;
 
 const rowHeaderStyle = css`
