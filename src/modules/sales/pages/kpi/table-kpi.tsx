@@ -29,7 +29,7 @@ export default function TableKPI() {
   const tab = searchParams.get('tab');
 
   const columnTable = useMemo(() => {
-    if (tab === RoleType.Manager) {
+    if (isSaleDirector && tab === RoleType.MySelf) {
       return columns?.slice(1);
     }
     return columns;
