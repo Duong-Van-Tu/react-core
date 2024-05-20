@@ -10,7 +10,7 @@ import { UpdateOpportunity } from '@/modules/sales/components/modals/opportuity/
 import { ReportOpportunity } from '@/modules/sales/components/modals/opportuity/report-opportunity';
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportuity/update-history-opportunity';
 import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
-import { TicketIncomeDetails } from '@/modules/personnel/components/inforIncome/details-view';
+import { TicketIncomeDetails } from '@/modules/users/pages/income/details-view';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -43,17 +43,10 @@ const ResetPasswordPage = lazy(
 );
 
 const InforPesonnelPage = lazy(
-  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforPersonnel'),
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/human-resources'),
 );
 const InforIncomePage = lazy(
-  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforIncome'),
-);
-const InforOrganizationalPage = lazy(
-  () =>
-    import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforOrganizational'),
-);
-const InforOtherPage = lazy(
-  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforOther'),
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/income'),
 );
 
 const routes: RouteObject[] = [
@@ -158,10 +151,10 @@ const routes: RouteObject[] = [
       },
 
       {
-        path: '/personnel',
+        path: '/users',
         children: [
           {
-            path: 'infor-personnel',
+            path: 'human-resources',
             element: (
               <WrapperRouteComponent titleId="title.document.inforPersonnel">
                 <InforPesonnelPage />
@@ -169,26 +162,10 @@ const routes: RouteObject[] = [
             ),
           },
           {
-            path: 'infor-income',
+            path: 'income',
             element: (
               <WrapperRouteComponent titleId="title.document.inforIncome">
                 <InforIncomePage />
-              </WrapperRouteComponent>
-            ),
-          },
-          {
-            path: 'infor-organizational',
-            element: (
-              <WrapperRouteComponent titleId="title.document.inforOrganizational">
-                <InforOrganizationalPage />
-              </WrapperRouteComponent>
-            ),
-          },
-          {
-            path: 'infor-other',
-            element: (
-              <WrapperRouteComponent titleId="title.document.inforOther">
-                <InforOtherPage />
               </WrapperRouteComponent>
             ),
           },

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
-import { ticketIncomeDetailsColumns } from '../../pages/inforIncome/column/ticket-income-details.column';
+import { ticketIncomeDetailsColumns } from './column/ticket-income-details.column';
 
 const data: any = [
   {

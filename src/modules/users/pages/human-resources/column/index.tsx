@@ -1,9 +1,8 @@
-import { DataInforPersonnelType } from '@/modules/personnel/pages/inforPersonnel/type.inforPersonnel';
 import { TableProps } from 'antd';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
-export const inforPersonnelColumns: ColumnsType<DataInforPersonnelType> = [
+export const usersColumns: ColumnsType<DataHumanResourcesType> = [
   {
     title: 'Họ và tên',
     dataIndex: 'fullName',

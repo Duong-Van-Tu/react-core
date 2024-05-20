@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
-import { Menu as MenuAntd } from 'antd';
+import { Menu as MenuAnt } from 'antd';
 import { useLocation, useNavigate } from 'react-router';
 import { getFirstPathCode } from '@/utils/get-pathCode';
 import { MenuItem } from '@/types/menu';
@@ -19,10 +19,10 @@ export default function Menu({ items }: MenuProps) {
   const [openKey, setOpenKey] = useState<string>();
   const language = useRootSelector((state) => state.locale.language);
   const navigate = useNavigate();
-  const tetant = getTenant();
+  const tenant = getTenant();
   const onMenuClick = (path: string) => {
     setSelectedKey(path);
-    navigate(`${path}?tenant=${tetant}`);
+    navigate(`${path}?tenant=${tenant}`);
   };
 
   const onOpenChange = (keys: string[]) => {
@@ -32,13 +32,12 @@ export default function Menu({ items }: MenuProps) {
 
   useEffect(() => {
     const firstPathCode = getFirstPathCode(pathname);
-    // const lastPathCode = getLastPathCode(pathname);
     setSelectedKey(pathname);
     setOpenKey(firstPathCode);
   }, [pathname, setSelectedKey, setOpenKey]);
 
   return (
-    <MenuAntd
+    <MenuAnt
       theme="light"
       mode="inline"
       css={menuStyle}

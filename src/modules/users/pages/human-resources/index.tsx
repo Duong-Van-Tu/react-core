@@ -4,11 +4,9 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { TableCustom } from '@/components/table';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
-import { ModalInforPersonnelProvider } from '../../components/inforPersonnel';
-import { inforPersonnelColumns } from './column';
-import { DataInforPersonnelType } from './type.inforPersonnel';
+import { usersColumns } from './column';
 
-const data: DataInforPersonnelType[] = [
+const data: DataHumanResourcesType[] = [
   {
     key: 1,
     fullName: 'Bùi Công Quân',
@@ -19,7 +17,8 @@ const data: DataInforPersonnelType[] = [
     phone: '0123123123',
   },
 ];
-export default function InforPersonnelPage() {
+
+export default function HumanResourcesPage() {
   const dispatch = useDispatch();
   useEffect(() => {
     const breadCrumbItems = [
@@ -38,20 +37,19 @@ export default function InforPersonnelPage() {
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
   }, [dispatch]);
+
   return (
-    <ModalInforPersonnelProvider>
-      <div>
-        <h3 css={titleStyle}>Thông tin nhân viên</h3>
-        <TableCustom
-          columns={inforPersonnelColumns}
-          dataSource={data}
-          loading={false}
-          rowKey={(record) => record.id}
-          pagination={{ current: 1, pageSize: 7 }}
-          scroll={{ x: 1450 }}
-        />
-      </div>
-    </ModalInforPersonnelProvider>
+    <div>
+      <h3 css={titleStyle}>Thông tin nhân viên</h3>
+      <TableCustom
+        columns={usersColumns}
+        dataSource={data}
+        loading={false}
+        rowKey={(record) => record.id}
+        pagination={{ current: 1, pageSize: 7 }}
+        scroll={{ x: 1450 }}
+      />
+    </div>
   );
 }
 

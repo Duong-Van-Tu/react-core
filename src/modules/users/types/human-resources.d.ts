@@ -1,4 +1,4 @@
-export type DataInforPersonnelType = {
+type DataHumanResourcesType = {
   key: number;
   fullName: string;
   location: string;

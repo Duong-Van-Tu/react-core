@@ -1,43 +1,43 @@
 import { MenuItem } from '@/types/menu';
-export const personnelMenus: MenuItem = {
-  code: 'personnel',
+export const menuUsers: MenuItem = {
+  code: 'users',
   icon: 'user-group',
   label: {
     vi_VN: 'Nhân sự',
-    en_US: 'Personnel',
+    en_US: 'users',
   },
   children: [
     {
-      code: 'inforPersonnel',
+      code: 'human-resources',
       icon: 'dot',
-      path: '/personnel/infor-personnel',
+      path: '/users/human-resources',
       label: {
         vi_VN: 'Thông tin nhân sự',
-        en_US: 'Personnel information ',
+        en_US: 'users information ',
       },
     },
     {
-      code: 'inforIncome',
+      code: 'income',
       icon: 'dot',
-      path: '/personnel/infor-income',
+      path: '/users/income',
       label: {
         vi_VN: 'Thông tin thu nhập',
         en_US: 'Income information',
       },
     },
     {
-      code: 'inforOrganizational ',
+      code: 'organizational ',
       icon: 'dot',
-      path: '/personnel/infor-organizational',
+      path: '/users/organizational',
       label: {
         vi_VN: 'Thông tin tổ chức',
         en_US: 'Organizational information',
       },
     },
     {
-      code: 'inforOther',
+      code: 'other',
       icon: 'dot',
-      path: '/personnel/infor-other',
+      path: '/users/other',
       label: {
         vi_VN: 'Thông tin khác',
         en_US: 'Other information',

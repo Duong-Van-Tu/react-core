@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Tabs, TabsProps } from 'antd';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
-import { ModalInforIncomeProvider } from '../../components/inforIncome';
 import LocationIncomeTable from './location-income';
 import CurrentIncomeTable from './current-income';
 export default function InformationIncomePage() {
@@ -45,12 +44,10 @@ export default function InformationIncomePage() {
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
   }, [dispatch]);
   return (
-    <ModalInforIncomeProvider>
-      <div>
-        <h3 css={titleStyle}>Thông tin thu nhập</h3>
-        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-      </div>
-    </ModalInforIncomeProvider>
+    <div>
+      <h3 css={titleStyle}>Thông tin thu nhập</h3>
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    </div>
   );
 }
 
