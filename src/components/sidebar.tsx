@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import logo from '@/assets/images/logo.png';
 import { saleMenus } from '@/modules/sales/menu.sale';
+import { personnelMenus } from '@/modules/personnel/types/menu.personnel';
 import { settingMenus } from '@/modules/settings/menu-settings';
 import { payrollMenus } from '@/modules/payroll/menu-payroll';
 import { reportMenus } from '@/modules/reports/menu-reports';
@@ -14,7 +15,7 @@ export default function Sidebar() {
   const { Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const menus = useMemo(() => {
-    return [saleMenus, payrollMenus, reportMenus, settingMenus];
+    return [saleMenus, personnelMenus, payrollMenus, reportMenus, settingMenus];
   }, []);
   return (
     <Sider

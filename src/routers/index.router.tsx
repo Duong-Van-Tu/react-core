@@ -10,6 +10,7 @@ import { UpdateOpportunity } from '@/modules/sales/components/modals/opportuity/
 import { ReportOpportunity } from '@/modules/sales/components/modals/opportuity/report-opportunity';
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportuity/update-history-opportunity';
 import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
+import { TicketIncomeDetails } from '@/modules/personnel/components/inforIncome/details-view';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -39,6 +40,20 @@ const EmailVerificationPage = lazy(
 );
 const ResetPasswordPage = lazy(
   () => import(/* webpackChunkName: "reset-password"*/ '@/pages/reset-password.page'),
+);
+
+const InforPesonnelPage = lazy(
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforPersonnel'),
+);
+const InforIncomePage = lazy(
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforIncome'),
+);
+const InforOrganizationalPage = lazy(
+  () =>
+    import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforOrganizational'),
+);
+const InforOtherPage = lazy(
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/personnel/pages/inforOther'),
 );
 
 const routes: RouteObject[] = [
@@ -143,6 +158,44 @@ const routes: RouteObject[] = [
       },
 
       {
+        path: '/personnel',
+        children: [
+          {
+            path: 'infor-personnel',
+            element: (
+              <WrapperRouteComponent titleId="title.document.inforPersonnel">
+                <InforPesonnelPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'infor-income',
+            element: (
+              <WrapperRouteComponent titleId="title.document.inforIncome">
+                <InforIncomePage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'infor-organizational',
+            element: (
+              <WrapperRouteComponent titleId="title.document.inforOrganizational">
+                <InforOrganizationalPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'infor-other',
+            element: (
+              <WrapperRouteComponent titleId="title.document.inforOther">
+                <InforOtherPage />
+              </WrapperRouteComponent>
+            ),
+          },
+        ],
+      },
+
+      {
         path: 'settings',
         element: (
           <WrapperRouteComponent titleId="title.document.setting">
@@ -213,6 +266,14 @@ const routes: RouteObject[] = [
     element: (
       <WrapperRouteComponent titleId="title.document.updateHistory">
         <UpdateHistoryOpportunity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/personnel/infor-income/details-view',
+    element: (
+      <WrapperRouteComponent titleId="title.document.detailsView">
+        <TicketIncomeDetails />
       </WrapperRouteComponent>
     ),
   },
