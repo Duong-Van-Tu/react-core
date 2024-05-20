@@ -8,7 +8,8 @@ import dayjs from 'dayjs';
 import {
   addOpportunityAction,
   deleteOpportunityAction,
-  setDataOpportunityDetail,
+  setDataOpportunityDetailAction,
+  setDataSaleAndSupplierAction,
   setDataStatusAction,
   setListOpportunityAction,
   updateOpportunityAction,
@@ -21,7 +22,6 @@ type FilterPrivilegesType = {
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType: string;
 };
 
 export const useOpportunity = () => {
@@ -38,7 +38,6 @@ export const useOpportunity = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType,
     }: FilterPrivilegesType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
@@ -49,7 +48,6 @@ export const useOpportunity = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
-        roleType,
       };
 
       const urlParams = generateUrlParams(queryParams);
@@ -85,7 +83,7 @@ export const useOpportunity = () => {
         messageKey: 'opportunityDetail-message',
       });
       if (succeeded) {
-        dispatch(setDataOpportunityDetail(data));
+        dispatch(setDataOpportunityDetailAction(data));
       }
     },
     [caller, api],
@@ -159,14 +157,12 @@ export const useOpportunity = () => {
   // status
   const updateStatusOpportunity = useCallback(
     async (values: DataOpportunityType) => {
-      const dataUpdateStatusOpportunity = convertToUppercaseFirstLetter({
-        ...values,
-      });
+      const dataUpdateStatusOpportunity = convertToUppercaseFirstLetter(values);
 
       const { data, succeeded } = await caller(
         () =>
-          api.put(`/Opportunity/update-status-by-id?tenant=${tenant}`, dataUpdateStatusOpportunity),
-        { loadingKey: 'edit-status' },
+          api.put(`/OpportunityStatus/add-or-update?tenant=${tenant}`, dataUpdateStatusOpportunity),
+        { loadingKey: 'edit-statusOpportunity' },
       );
 
       if (succeeded) {
@@ -192,6 +188,38 @@ export const useOpportunity = () => {
     }
   }, [api, caller]);
 
+  const getAllSaleAndSupplier = useCallback(async () => {
+    const { data, succeeded } = await caller(
+      () => api.get(`/ApplicationUsers/get-all?tenant=${tenant}`),
+      {
+        loadingKey: 'getAllSaleAndSupplier-opportunity',
+      },
+    );
+
+    if (succeeded) {
+      dispatch(setDataSaleAndSupplierAction(data));
+    }
+  }, [api, caller]);
+
+  const assignSaleAndSupplier = useCallback(
+    async (values: DataOpportunityType) => {
+      const dataAssignUser = convertToUppercaseFirstLetter(values);
+      const { data, succeeded } = await caller(
+        () => api.post(`/Opportunity/assign-user?tenant=${tenant}`, dataAssignUser),
+        {
+          loadingKey: 'assignUser-opportunity',
+        },
+      );
+
+      if (succeeded) {
+        console.log({ data });
+        return succeeded;
+      }
+      return false;
+    },
+    [api, caller],
+  );
+
   return {
     getAllOpportunity,
     addOpportunity,
@@ -200,5 +228,7 @@ export const useOpportunity = () => {
     updateStatusOpportunity,
     getAllStatusOpportunity,
     getOpportunityById,
+    getAllSaleAndSupplier,
+    assignSaleAndSupplier,
   };
 };

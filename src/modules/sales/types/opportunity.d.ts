@@ -19,6 +19,7 @@ type DataOpportunityType = {
   reason?: string;
   applicationUser?: ApplicationUser;
   opportunityStatus?: OpportunityStatus;
+  saleAndSupplierId?: string;
 };
 
 type ApplicationUser = {
@@ -34,4 +35,32 @@ type OpportunityStatus = {
   id?: string;
   code?: string;
   name?: string;
+};
+
+type ApplicationRole = {
+  id: string;
+  name: string | null;
+  displayName: string;
+  description: string | null;
+  applicationUserId: string;
+};
+
+type SaleAndSupplier = {
+  id: string;
+  userName: string;
+  passwordHash: string | null;
+  firstName: string;
+  lastName: string;
+  fullName: string | null;
+  avatar: string;
+  email: string;
+  phone: string;
+  applicationUserStatus: string | null;
+  createdApplicationUserId: string;
+  lastModifiedApplicationUserId: string;
+  createdDate: string;
+  lastModifiedDate: string;
+  sms: boolean;
+  notes: string | null;
+  applicationRoles: ApplicationRole[];
 };

@@ -6,6 +6,7 @@ export type OpportunityInitialStateState = {
   detail?: DataOpportunityType;
   status?: OpportunityStatus[];
   totalExtend?: number;
+  saleAndSupplier?: SaleAndSupplier[];
 };
 
 export const opportunityInitialState: OpportunityInitialStateState = {
@@ -49,8 +50,11 @@ const slice = createSlice({
       state.status = payload;
     },
 
-    setDataOpportunityDetail(state, { payload }: PayloadAction<DataOpportunityType>) {
+    setDataOpportunityDetailAction(state, { payload }: PayloadAction<DataOpportunityType>) {
       state.detail = payload;
+    },
+    setDataSaleAndSupplierAction(state, { payload }: PayloadAction<SaleAndSupplier[]>) {
+      state.saleAndSupplier = payload;
     },
   },
 });
@@ -61,6 +65,7 @@ export const {
   updateOpportunityAction,
   deleteOpportunityAction,
   setDataStatusAction,
-  setDataOpportunityDetail,
+  setDataOpportunityDetailAction,
+  setDataSaleAndSupplierAction,
 } = slice.actions;
 export default slice.reducer;

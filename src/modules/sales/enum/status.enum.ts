@@ -6,3 +6,11 @@ export enum Status {
   Processing = 'PROCESSING',
   Failed = 'FAILED',
 }
+
+export enum StatusOpportunity {
+  Active = 'ACTIVE',
+  Cancel = 'CANCEL',
+  Close = 'CLOSE',
+  Fail = 'FAIL',
+  OnHold = 'ONHOLD',
+}
