@@ -10,6 +10,7 @@ import { UpdateOpportunity } from '@/modules/sales/components/modals/opportunity
 import { ReportOpportunity } from '@/modules/sales/components/modals/opportunity/report-opportunity';
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportunity/update-history-opportunity';
 import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
+import { TicketIncomeDetails } from '@/modules/users/pages/income/details-view';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -39,6 +40,13 @@ const EmailVerificationPage = lazy(
 );
 const ResetPasswordPage = lazy(
   () => import(/* webpackChunkName: "reset-password"*/ '@/pages/reset-password.page'),
+);
+
+const InforPesonnelPage = lazy(
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/human-resources'),
+);
+const InforIncomePage = lazy(
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/income'),
 );
 
 const routes: RouteObject[] = [
@@ -143,6 +151,28 @@ const routes: RouteObject[] = [
       },
 
       {
+        path: '/users',
+        children: [
+          {
+            path: 'human-resources',
+            element: (
+              <WrapperRouteComponent titleId="title.document.inforPersonnel">
+                <InforPesonnelPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'income',
+            element: (
+              <WrapperRouteComponent titleId="title.document.inforIncome">
+                <InforIncomePage />
+              </WrapperRouteComponent>
+            ),
+          },
+        ],
+      },
+
+      {
         path: 'settings',
         element: (
           <WrapperRouteComponent titleId="title.document.setting">
@@ -213,6 +243,14 @@ const routes: RouteObject[] = [
     element: (
       <WrapperRouteComponent titleId="title.document.updateHistory">
         <UpdateHistoryOpportunity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/personnel/infor-income/details-view',
+    element: (
+      <WrapperRouteComponent titleId="title.document.detailsView">
+        <TicketIncomeDetails />
       </WrapperRouteComponent>
     ),
   },
