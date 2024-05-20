@@ -52,6 +52,14 @@ export default function TableKPI() {
     });
   };
 
+  const handleTableChange = (page: number) => {
+    getAllKPI({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+      roleType: tab!,
+    });
+  };
+
   useEffect(() => {
     getAllKPI({
       pageIndex: Pagination.PAGEINDEX,
@@ -103,13 +111,7 @@ export default function TableKPI() {
           pageSize: Pagination.PAGESIZE,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
-          onChange: (page) => {
-            getAllKPI({
-              pageIndex: page,
-              pageSize: Pagination.PAGESIZE,
-              roleType: tab!,
-            });
-          },
+          onChange: (page) => handleTableChange(page),
         }}
         scroll={{ x: 1450 }}
       />

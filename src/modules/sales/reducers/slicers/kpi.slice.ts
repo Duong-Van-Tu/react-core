@@ -1,8 +1,9 @@
+import { Pagination } from '@/constants/pagination';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type KPIState = {
   data: DataKPIType[];
-  pagination?: PaginationAPI;
+  pagination: PaginationAPI;
   report?: DataKPIType;
   status?: KPIStatus[];
   totalExtend?: number;
@@ -10,6 +11,11 @@ export type KPIState = {
 
 export const kpiInitialState: KPIState = {
   data: [],
+  pagination: {
+    pageIndex: Pagination.PAGEINDEX,
+    totalPages: 0,
+    totalRecords: 0,
+  },
 };
 
 const slice = createSlice({
@@ -32,6 +38,11 @@ const slice = createSlice({
     },
     addKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.data = [payload, ...state.data];
+      state.pagination = {
+        ...state.pagination,
+        totalRecords: state.pagination.totalRecords + 1,
+        totalPages: Math.ceil((state.pagination.totalRecords + 1) / Pagination.PAGESIZE),
+      };
     },
     updateKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
       state.data = state.data.map((item) => {
