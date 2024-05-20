@@ -15,6 +15,7 @@ enum MenuItem {
   FinalizeKPI,
   ReviewEdit,
   Report,
+  UpdateRequest,
 }
 type KPIDropdownProps = {
   data?: DataKPIType;
@@ -23,7 +24,7 @@ type KPIDropdownProps = {
 export function KPIDropdown({ data }: KPIDropdownProps) {
   const { openModal } = useModalKPI();
   const { formatMessage } = useLocale();
-  const { isSale } = usePermission();
+  const { isSale, isAdmin } = usePermission();
 
   const handleItemClick = (key: number) => {
     switch (key) {
@@ -43,6 +44,9 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
         openModal(ModalKPIType.ModifyKPI, data);
         break;
       default:
+      case MenuItem.UpdateRequest:
+        openModal(ModalKPIType.UpdateRequest, data);
+        break;
         break;
     }
   };
@@ -88,8 +92,19 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
     },
   ];
 
+  const editorItems: MenuProps['items'] = [
+    {
+      key: MenuItem.UpdateRequest,
+      label: formatMessage({ id: 'title.dropdown.updateResult' }),
+      onClick: () => handleItemClick(MenuItem.UpdateRequest),
+    },
+  ];
+
   return (
-    <Dropdown menu={{ items: isSale ? saleItems : items }} placement="bottomRight">
+    <Dropdown
+      menu={{ items: isSale ? saleItems : isAdmin ? editorItems : items }}
+      placement="bottomRight"
+    >
       <span css={dropdownIcon}>
         <CustomIcon type="three-dot" width={16} height={18} />
       </span>

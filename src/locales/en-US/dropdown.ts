@@ -5,6 +5,7 @@ export const enUS_dropdown = {
   'title.dropdown.requestEdit': 'Request edit',
   'title.dropdown.finalize': 'Finalize',
   'title.dropdown.reviewEdit': 'Review edit proposal',
+  'title.dropdown.updateResult': 'Update results',
   'title.dropdown.kpi.report': 'View report',
   'title.dropdown.kpi.editKPI': 'Edit KPI',
   'title.dropdown.kpi.modifyKPI': 'Modify KPI',

@@ -8,6 +8,7 @@ import { Report } from './report.modal';
 import { ModifyKPI } from './modify.modal';
 import { AddKPI } from './add.modal';
 import { DeleteKPI } from './delete.kpi';
+import { UpdateRequest } from './update-request';
 
 type ModalContexttype = {
   openModal: (modalName: string, data?: DataKPIType, goalIds?: string[]) => void;
@@ -77,6 +78,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
         )}
         {currentModal?.modalName === ModalKPIType.DeleteKPI && (
           <DeleteKPI closeModal={closeModal} goalIds={currentModal.goalIds!} />
+        )}
+        {currentModal?.modalName === ModalKPIType.UpdateRequest && (
+          <UpdateRequest closeModal={closeModal} data={currentModal.data!} />
         )}
       </Modal>
     </ModalContext.Provider>

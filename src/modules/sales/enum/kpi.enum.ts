@@ -7,4 +7,5 @@ export enum ModalKPIType {
   ReviewEdit = 'Review edit',
   RequestEdit = 'Request edit',
   Report = 'Report',
+  UpdateRequest = 'Update request',
 }
