@@ -1,11 +1,11 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalOpportunityType } from '../../../enum/opportunity.enum';
-import { AssignOpportuity } from './assign-opportuity';
+import { AssignOpportunity } from './assign-opportuity';
 import { CloseOpportuity } from './close-opportuity';
 
 type ModalContexttype = {
-  openModal: (modalName: string) => void;
+  openModal: (modalName: string, data?: DataOpportunityType) => void;
   closeModal: () => void;
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
@@ -22,11 +22,13 @@ type ModalProviderProps = {
   children?: ReactNode;
 };
 export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
-  const [currentModal, setCurrentModal] = useState<string>();
+  const [currentModal, setCurrentModal] = useState<
+    { modalName: string; data?: DataOpportunityType } | undefined
+  >();
   const [open, setOpen] = useState<boolean>(false);
 
-  const openModal = (modalName: string) => {
-    setCurrentModal(modalName);
+  const openModal = (modalName: string, data?: DataOpportunityType) => {
+    setCurrentModal({ modalName, data });
     setOpen(true);
   };
 
@@ -39,13 +41,13 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal open={open} onCancel={closeModal} footer={null}>
-        {currentModal === ModalOpportunityType.AssignOpportunity && (
-          <AssignOpportuity closeModal={closeModal} />
+        {currentModal?.modalName === ModalOpportunityType.AssignOpportunity && (
+          <AssignOpportunity closeModal={closeModal} data={currentModal.data!} />
         )}
-        {currentModal === ModalOpportunityType.CloseOpportunity && (
+        {currentModal?.modalName === ModalOpportunityType.CloseOpportunity && (
           <CloseOpportuity closeModal={closeModal} />
         )}
-        {currentModal === ModalOpportunityType.Delete && <div>Delete Modal</div>}
+        {currentModal?.modalName === ModalOpportunityType.Delete && <div>Delete Modal</div>}
       </Modal>
     </ModalContext.Provider>
   );

@@ -7,12 +7,11 @@ import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { CustomIcon } from '@/components/icons';
 import { opportunityColumns } from './columns/opportunity.column';
-import { ModalOpportunityProvider } from '../../components/modals/opportuity';
+import { ModalOpportunityProvider } from '../../components/modals/opportunity';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useOpportunity } from '../../services/opportunity.service';
 import { Pagination } from '@/constants/pagination';
-import { RoleType } from '@/enum/role.enum';
 import { Search, SearchParams } from '@/components/search';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
@@ -38,7 +37,6 @@ export default function OpportunityPage() {
       textSearch,
       statusId,
       time,
-      roleType: RoleType.MySelf,
     });
   };
 
@@ -46,7 +44,6 @@ export default function OpportunityPage() {
     getAllOpportunity({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: RoleType.MySelf,
     });
     getAllStatusOpportunity();
   }, [getAllOpportunity, getAllStatusOpportunity]);
@@ -83,7 +80,7 @@ export default function OpportunityPage() {
         <Button
           onClick={() => navigate(`add-opportunity?tenant=${getTenant()}`)}
           type="primary"
-          css={addKOpportunitytnStyle}
+          css={addKOpportunityStyle}
           iconPosition="start"
           size="large"
         >
@@ -107,11 +104,10 @@ export default function OpportunityPage() {
               getAllOpportunity({
                 pageIndex: page,
                 pageSize: Pagination.PAGESIZE,
-                roleType: RoleType.MySelf,
               });
             },
           }}
-          scroll={{ x: 1450 }}
+          scroll={{ x: 2500 }}
         />
       </div>
     </ModalOpportunityProvider>
@@ -136,7 +132,7 @@ const titleStyle = css`
   font-weight: 600;
 `;
 
-const addKOpportunitytnStyle = css`
+const addKOpportunityStyle = css`
   background: #0070b8;
   display: flex;
   align-items: center;

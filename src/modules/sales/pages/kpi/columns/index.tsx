@@ -66,12 +66,10 @@ const columns: ColumnsType<DataKPIType> = [
         default:
           messageType = 'warning';
       }
-      return record.goalStatus ? (
+      return (
         <Message hasBackground type={messageType}>
-          {record.goalStatus.name}
+          {record.goalStatus?.name!}
         </Message>
-      ) : (
-        ''
       );
     },
   },

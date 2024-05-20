@@ -5,7 +5,7 @@ import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { ModalOpportunityType } from '../../enum/opportunity.enum';
-import { useModalOpportunity } from '../modals/opportuity';
+import { useModalOpportunity } from '../modals/opportunity';
 import { useNavigate } from 'react-router-dom';
 import { getTenant } from '@/utils/common';
 
@@ -27,7 +27,7 @@ export function OpportunityDropdown({ data }: OpportunityDropdownProps) {
   const handleItemClick = (key: number) => {
     switch (key) {
       case MenuItem.AssignOpportunity:
-        openModal(ModalOpportunityType.AssignOpportunity);
+        openModal(ModalOpportunityType.AssignOpportunity, data);
         break;
       case MenuItem.CloseOpportunity:
         openModal(ModalOpportunityType.CloseOpportunity);

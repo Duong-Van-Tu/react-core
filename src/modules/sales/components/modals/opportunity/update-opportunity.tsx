@@ -6,7 +6,7 @@ import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { updateOpportunityColumns } from '@/modules/sales/pages/opportunity/columns/update-opportunity.column';
-import { AddUpdateOpportuity } from './add-update-opportuity';
+import { CreateUpdateOpportunity } from './add-update-opportunity';
 import { useState } from 'react';
 
 const data: any = [
@@ -114,7 +114,7 @@ export const UpdateOpportunity = () => {
             <span>Thêm cập nhật</span>
           </Button>
           <Modal open={open} onCancel={closeModal} footer={null}>
-            <AddUpdateOpportuity closeModal={closeModal} />
+            <CreateUpdateOpportunity closeModal={closeModal} />
           </Modal>
         </div>
       </div>

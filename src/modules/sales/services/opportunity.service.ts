@@ -203,16 +203,19 @@ export const useOpportunity = () => {
 
   const assignSaleAndSupplier = useCallback(
     async (values: DataOpportunityType) => {
-      const dataAssignUser = convertToUppercaseFirstLetter(values);
       const { data, succeeded } = await caller(
-        () => api.post(`/Opportunity/assign-user?tenant=${tenant}`, dataAssignUser),
+        () =>
+          api.post(`/Opportunity/assign-user?tenant=${tenant}`, {
+            id: values.id,
+            applicationUserId: values.saleAndSupplierId,
+          }),
         {
           loadingKey: 'assignUser-opportunity',
         },
       );
 
       if (succeeded) {
-        console.log({ data });
+        dispatch(updateOpportunityAction(data));
         return succeeded;
       }
       return false;

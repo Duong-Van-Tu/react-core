@@ -1,4 +1,4 @@
-import { SeeDetailsOpportunity } from '@/modules/sales/components/modals/opportuity/seeDetails-opportunity';
+import { SeeDetailsOpportunity } from '@/modules/sales/components/modals/opportunity/seeDetails-opportunity';
 import { TableProps } from 'antd';
 
 type ColumnsType<T> = TableProps<T>['columns'];

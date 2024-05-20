@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
 import { Fragment } from 'react';
 
-type AddUpdateOpportuityProps = {
+type AddUpdateOpportunityProps = {
   closeModal: () => void;
 };
 type FieldType = {
@@ -14,7 +14,7 @@ type FieldType = {
   result: string;
 };
 
-export const AddUpdateOpportuity = ({ ...props }: AddUpdateOpportuityProps) => {
+export const CreateUpdateOpportunity = ({ ...props }: AddUpdateOpportunityProps) => {
   const { closeModal } = props;
   const { formatMessage } = useLocale();
 
@@ -30,8 +30,8 @@ export const AddUpdateOpportuity = ({ ...props }: AddUpdateOpportuityProps) => {
     <Fragment>
       <h3 css={formTitleStyle}>Thêm cập nhật cơ hội</h3>
       <Form
-        css={formUpdateOpportuityStyle}
-        name="update-opportuity"
+        css={formUpdateOpportunityStyle}
+        name="update-opportunity"
         onFinish={onFinish}
         layout="vertical"
       >
@@ -103,7 +103,7 @@ export const AddUpdateOpportuity = ({ ...props }: AddUpdateOpportuityProps) => {
   );
 };
 
-const formUpdateOpportuityStyle = css`
+const formUpdateOpportunityStyle = css`
   .ant-form-item-required::before {
     display: none !important;
   }
