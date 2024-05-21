@@ -3,7 +3,7 @@ import { TableProps } from 'antd';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
-export const usersColumns: ColumnsType<DataHumanResourcesType> = [
+export const usersColumns: ColumnsType<DataUserType> = [
   {
     title: <LocaleFormatter id="title.myRelationships.proposedReport.fullName" />,
     dataIndex: 'fullName',
