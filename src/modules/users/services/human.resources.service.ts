@@ -70,9 +70,9 @@ export const useHumanResources = () => {
       const urlParams = generateUrlParams(queryParams);
 
       const { data, succeeded } = await caller(
-        () => api.get(`/ApplicationUsers/get-list-with-pagination?${urlParams}`),
+        () => api.post(`/Employee/get-list-with-pagination?${urlParams}`),
         {
-          loadingKey: 'get-list-users',
+          loadingKey: 'get-list-employee',
         },
       );
       if (succeeded) {

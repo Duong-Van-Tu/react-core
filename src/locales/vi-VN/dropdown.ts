@@ -2,7 +2,7 @@ export const viVN_dropdown = {
   'dropdown.edit': 'Chỉnh sửa',
   'dropdown.report': 'Xem báo cáo',
   'dropdown.delete': 'Xoá',
-  'title.dropdown.updateResult': 'Cập nhật kểt quả',
+  'title.dropdown.updateResult': 'Cập nhật kết quả',
   'title.dropdown.requestEdit': 'Gửi yêu cầu chỉnh sửa',
   'title.dropdown.finalize': 'Chốt',
   'title.dropdown.reviewEdit': 'Xem đề xuất chỉnh sửa',

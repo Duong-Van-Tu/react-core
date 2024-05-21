@@ -41,6 +41,8 @@ export const enUS_title = {
   'title.myRelationships.proposedReport.address': 'Address',
   'title.myRelationships.proposedReport.numberPhone': 'Number phone',
   'title.myRelationships.proposedReport.position': 'Position',
+  'title.myRelationships.proposedReport.userInfo': 'User information',
+
   'title.myRelationships.proposedReport.CurrentRelationshipLevel': 'Current relationship level',
   'title.myRelationships.proposedReport.TargetlationshipLevel': 'Current relationship level',
   'title.myRelationships.proposedReport.ReasonUpgrade': 'Reason for relationship upgrade',
