@@ -9,7 +9,7 @@ import { useLocale } from '@/hooks/locale.hook';
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 
 type TableCustom = TableProps & {
-  onTableChange?: () => void;
+  onTableChange?: (page: number) => void;
 };
 
 type TableParams = {
@@ -48,11 +48,12 @@ export function TableCustom(props: TableCustom) {
       ...pagination,
       position: ['bottomCenter'],
       itemRender: itemRender,
+      showSizeChanger: false,
     },
   });
 
   const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
-    onTableChange?.();
+    onTableChange?.(pagination.current!);
     setTableParams((prevParams) => ({
       pagination: {
         ...prevParams.pagination,
@@ -65,21 +66,26 @@ export function TableCustom(props: TableCustom) {
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
     }
   };
+
   useEffect(() => {
-    setTableParams((prevParams) => ({
-      ...prevParams,
-      pagination: {
-        ...prevParams.pagination,
-        total: (pagination as TablePaginationConfig).total,
-      },
-    }));
+    if (pagination) {
+      setTableParams((prevParams) => ({
+        ...prevParams,
+        pagination: {
+          ...prevParams.pagination,
+          total: (pagination as TablePaginationConfig).total,
+        },
+      }));
+    } else {
+      setTableParams({ pagination: undefined });
+    }
   }, [(pagination as TablePaginationConfig).total]);
 
   return (
     <Table
       {...props}
       css={tableStyle}
-      pagination={tableParams.pagination}
+      pagination={tableParams.pagination ?? false}
       loading={{ indicator: antIcon, spinning: !!loading }}
       onChange={handleTableChange}
     />

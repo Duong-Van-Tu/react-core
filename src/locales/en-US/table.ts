@@ -18,7 +18,7 @@ export const enUS_table = {
   'table.column.privileges.beneficiaryName': 'Beneficiary name',
   'table.column.privileges.fixedMonthlySalary': 'Fixed monthly salary',
   'table.column.privileges.totalTargetVariableSalary': 'Total target variable salary',
-  'table.column.privileges.actualVariableSalary': 'Actual variable salary',
+  'table.column.privileges.totalSalary': 'Fluctuations in total salary',
   'table.column.relationship.jobPosition': 'Job position',
   'table.column.relationship.targetLevel': 'Relationship target level',
   'table.column.relationship.upgrade': 'Reason for relationship upgrade',

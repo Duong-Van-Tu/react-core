@@ -1,70 +1,110 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
-import { myPrivilegesColumns } from './columns';
-import { DataPrivilegesType } from './type.privileges';
-import { Button, Col, Row } from 'antd';
+import { columnsEmployee, columnsManager } from './columns';
+import { Button } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { usePermission } from '@/hooks/permission.hook';
 import { useModalPrivileges } from '../../components/modals/privileges';
-import { Search } from '@/components/search';
+import { Search, SearchParams } from '@/components/search';
 import { Key } from 'antd/es/table/interface';
-
-const myData: DataPrivilegesType[] = [
-  {
-    key: 1,
-    beneficiaryName: 'beneficiaryName',
-    fixedMonthlySalary: 'fixedMonthlySalary',
-    totalTargetVariableSalary: 'totalTargetVariableSalary',
-    actualVariableSalary: 'actualVariableSalary',
-    status: 'status',
-  },
-];
-
-const rowSelection = {
-  onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
-    console.log({ selectedRows });
-  },
-};
-const handleSearch = () => {};
+import { Fragment, useEffect, useMemo } from 'react';
+import { useBenefit } from '../../services/benefit.service';
+import { Pagination } from '@/constants/pagination';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { RoleType } from '@/enum/role.enum';
+import { useWatchLoading } from '@/hooks/loading.hook';
 
 export default function TablePrivileges() {
   const { openModal } = useModalPrivileges();
-  const { isAdmin, isSaleDirector } = usePermission();
+  const { getAllStatusBenefit, getAllBenefit } = useBenefit();
+  const [loading, loadingStatus] = useWatchLoading(['get-benefit', true], ['status-benefit', true]);
+  const { isSaleDirector } = usePermission();
+  const { data, pagination, status } = useRootSelector((state) => state.sale.benefit);
+  const searchParams = new URLSearchParams(location.search);
+  const tab = searchParams.get('tab');
+
+  const columnTable = useMemo(() => {
+    if (isSaleDirector && tab === RoleType.MySelf) {
+      return columnsManager;
+    }
+    return columnsEmployee;
+  }, [tab, isSaleDirector]);
+
+  const rowSelection = {
+    onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
+      console.log({ selectedRows });
+    },
+  };
+  const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
+    getAllBenefit({
+      pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+      textSearch,
+      statusId,
+      time,
+      roleType: tab!,
+    });
+  };
+
+  const handleTableChange = (page: number) => {
+    getAllBenefit({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+      roleType: tab!,
+    });
+  };
+
+  useEffect(() => {
+    getAllBenefit({
+      pageIndex: Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+      roleType: tab!,
+    });
+    getAllStatusBenefit();
+  }, [getAllBenefit, getAllStatusBenefit, tab]);
+
   return (
     <div css={rootStyle}>
-      {(isAdmin || isSaleDirector) && (
-        <Button
-          onClick={() => openModal('Add Privileges')}
-          type="primary"
-          css={addKPIBtnStyle}
-          iconPosition="start"
-          size="large"
-        >
-          <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-          <span>Thêm Quyền lợi</span>
-        </Button>
-      )}
-      <div css={searchContainer}>
-        <Search onSearch={handleSearch} status={[]} loadingStatus={false} />
-      </div>
-
-      <Row css={rowHeaderStyle} justify="space-between" align="bottom">
-        <Col>
-          <Button onClick={() => openModal('Delete KPI')} size="large" danger>
+      {tab === RoleType.Employee && isSaleDirector && (
+        <Fragment>
+          <Button
+            onClick={() => openModal('Add Privileges')}
+            type="primary"
+            css={addKPIBtnStyle}
+            iconPosition="start"
+            size="large"
+          >
+            <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
+            <span>Thêm Quyền lợi</span>
+          </Button>
+          <div css={searchContainer}>
+            <Search onSearch={handleSearch} status={status as any} loadingStatus={loadingStatus} />
+          </div>
+          <Button css={deleteBtnStyle} onClick={() => openModal('Delete KPI')} size="large" danger>
             Xoá Quyền lợi đã chọn
           </Button>
-        </Col>
-        <Col>Tổng điểm đạt được: 10</Col>
-      </Row>
+        </Fragment>
+      )}
+
       <TableCustom
-        rowSelection={rowSelection}
-        columns={myPrivilegesColumns}
-        dataSource={myData}
-        loading={false}
-        rowKey={(record) => record.key}
-        pagination={{ current: 1, pageSize: 7 }}
-        scroll={{ x: 1450 }}
+        rowSelection={tab === RoleType.Employee ? rowSelection : undefined}
+        columns={columnTable}
+        dataSource={data}
+        loading={loading}
+        rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
+        pagination={
+          isSaleDirector &&
+          tab === RoleType.Employee && {
+            current: pagination?.pageIndex,
+            pageSize: Pagination.PAGESIZE,
+            total: pagination?.totalRecords,
+            position: ['bottomCenter'],
+            onChange: handleTableChange,
+          }
+        }
+        scroll={{ x: tab === RoleType.MySelf ? 1200 : 1800 }}
       />
     </div>
   );
@@ -77,7 +117,7 @@ const rootStyle = css`
 const addKPIBtnStyle = css`
   position: absolute;
   right: 0;
-  top: -10rem;
+  top: -9rem;
   background: #0070b8;
   display: flex;
   align-items: center;
@@ -92,6 +132,6 @@ const searchContainer = css`
   margin-top: 2.6rem;
 `;
 
-const rowHeaderStyle = css`
+const deleteBtnStyle = css`
   margin: 2.4rem 0 1.4rem 0;
 `;

@@ -5,11 +5,11 @@ import { Fragment } from 'react';
 import Dot from '@/assets/svg/dot.svg?react';
 import { useLocale } from '@/hooks/locale.hook';
 
-type EmployeeReportPrivilegesProps = {
+type ReportPrivilegesProps = {
   closeModal: () => void;
 };
 
-export const EmployeeReportPrivileges = ({ closeModal }: EmployeeReportPrivilegesProps) => {
+export const ReportPrivileges = ({ closeModal }: ReportPrivilegesProps) => {
   const { formatMessage } = useLocale();
 
   return (

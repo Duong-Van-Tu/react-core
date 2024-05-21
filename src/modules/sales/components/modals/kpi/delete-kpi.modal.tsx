@@ -12,7 +12,7 @@ type FinalizeKPIProps = {
   goalIds: string[];
   data?: DataKPIType;
 };
-export const DeleteKPI = ({ closeModal, goalIds, data }: FinalizeKPIProps) => {
+export const DeleteKPI = ({ closeModal, goalIds }: FinalizeKPIProps) => {
   const { deleteKPI, getAllKPI } = useKPI();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-kpi', false]);

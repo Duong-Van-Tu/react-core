@@ -143,7 +143,11 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
               </Button>
             )}
             <Button
-              disabled={data.goalStatus?.code !== Status.Processing}
+              disabled={
+                isSaleDirector
+                  ? data.goalStatus?.code !== Status.Request
+                  : data.goalStatus?.code !== Status.Processing
+              }
               loading={loading}
               type="primary"
               htmlType="submit"
