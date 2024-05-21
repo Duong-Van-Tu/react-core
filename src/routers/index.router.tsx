@@ -11,6 +11,14 @@ import { ReportOpportunity } from '@/modules/sales/components/modals/opportunity
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportunity/update-history-opportunity';
 import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
 import { TicketIncomeDetails } from '@/modules/users/pages/income/details-view';
+import CustomerPage from '@/modules/category/pages/customer';
+import HumanResourcePage from '@/modules/category/pages/human-resource';
+import QuestionrPage from '@/modules/category/pages/questions';
+import SaleKitCategoryPage from '@/modules/category/pages/sale-kit';
+import ServicePage from '@/modules/category/pages/service';
+import SupplierPage from '@/modules/category/pages/supplier';
+import RelationshipCategoryPage from '@/modules/category/pages/relationship';
+import HumanResourceCategoryPage from '@/modules/category/pages/human-resource';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -166,6 +174,68 @@ const routes: RouteObject[] = [
             element: (
               <WrapperRouteComponent titleId="title.document.inforIncome">
                 <InforIncomePage />
+              </WrapperRouteComponent>
+            ),
+          },
+        ],
+      },
+
+      {
+        path: '/category',
+        children: [
+          {
+            path: 'customer',
+            element: (
+              <WrapperRouteComponent titleId="title.document.customer">
+                <CustomerPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'human-resource',
+            element: (
+              <WrapperRouteComponent titleId="title.document.human-resource">
+                <HumanResourceCategoryPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'supplier',
+            element: (
+              <WrapperRouteComponent titleId="title.document.supplier">
+                <SupplierPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'service',
+            element: (
+              <WrapperRouteComponent titleId="title.document.service">
+                <ServicePage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'relationship',
+            element: (
+              <WrapperRouteComponent titleId="title.document.relationship">
+                <RelationshipCategoryPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'questions',
+            element: (
+              <WrapperRouteComponent titleId="title.document.questions">
+                <QuestionrPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'sale-kit',
+            element: (
+              <WrapperRouteComponent titleId="title.document.saleKit">
+                <SaleKitCategoryPage />
               </WrapperRouteComponent>
             ),
           },
