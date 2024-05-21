@@ -1,25 +1,26 @@
+import { LocaleFormatter } from '@/components/locale-formatter';
 import { TableProps } from 'antd';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
 export const usersColumns: ColumnsType<DataHumanResourcesType> = [
   {
-    title: 'Họ và tên',
+    title: <LocaleFormatter id="title.myRelationships.proposedReport.fullName" />,
     dataIndex: 'fullName',
     render: (fullName) => fullName,
   },
   {
-    title: 'Vị trí',
+    title: <LocaleFormatter id="title.myRelationships.proposedReport.position" />,
     dataIndex: 'location',
     render: (location) => location,
   },
   {
-    title: 'Ngày sinh',
+    title: <LocaleFormatter id="title.myRelationships.proposedReport.dob" />,
     dataIndex: 'dateBirth',
     render: (dateBirth) => dateBirth,
   },
   {
-    title: 'Địa chỉ',
+    title: <LocaleFormatter id="title.myRelationships.proposedReport.address" />,
     dataIndex: 'address',
     render: (address) => address,
   },
@@ -29,7 +30,7 @@ export const usersColumns: ColumnsType<DataHumanResourcesType> = [
     render: (email) => email,
   },
   {
-    title: 'Số điện thoại',
+    title: <LocaleFormatter id="title.myRelationships.proposedReport.numberPhone" />,
     dataIndex: 'phone',
     render: (phone) => phone,
   },
