@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { StatusBenefit } from '@/modules/sales/enum/status.enum';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
@@ -18,8 +19,12 @@ type FieldType = {
 
 export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilegesProps) => {
   const { formatMessage } = useLocale();
-  const { updateBenefit } = useBenefit();
+  const { updateStatusBenefit, autoEditBenefit } = useBenefit();
   const [form] = Form.useForm();
+  const [loading, autoEditLoading] = useWatchLoading(
+    ['edit-statusBenefit', false],
+    ['autoEdit-benefit', false],
+  );
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const { monthlySalary, targetSalary, totalSalary } = values;
@@ -32,8 +37,16 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
       applicationUserId: data.applicationUser?.id,
       status: StatusBenefit.Update,
     };
-    const edit = await updateBenefit(dataUpdateBenefit);
+    const edit = await updateStatusBenefit(dataUpdateBenefit);
     if (edit) {
+      form.resetFields();
+      closeModal();
+    }
+  };
+
+  const handleAutoEdit = async () => {
+    const autoEdit = await autoEditBenefit(data);
+    if (autoEdit) {
       form.resetFields();
       closeModal();
     }
@@ -150,10 +163,10 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
         <Row justify="end" css={formFooterStyle}>
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button onClick={oncancel} type="primary" ghost>
+            <Button loading={autoEditLoading} onClick={handleAutoEdit} type="primary" ghost>
               Tự động chỉnh sửa
             </Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>

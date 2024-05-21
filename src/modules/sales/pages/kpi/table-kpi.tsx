@@ -15,6 +15,7 @@ import { Key } from 'antd/es/table/interface';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocation } from 'react-router-dom';
 import { RoleType } from '@/enum/role.enum';
+import { ModalKPIType } from '../../enum/kpi.enum';
 
 export default function TableKPI() {
   const { openModal } = useModalKPI();
@@ -92,7 +93,7 @@ export default function TableKPI() {
         <Col>
           <Button
             disabled={!goalIds}
-            onClick={() => openModal('Delete KPI', undefined, goalIds)}
+            onClick={() => openModal(ModalKPIType.DeleteKPI, undefined, goalIds)}
             size="large"
             danger
           >
@@ -107,12 +108,12 @@ export default function TableKPI() {
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
         pagination={{
           current: pagination?.pageIndex,
           pageSize: Pagination.PAGESIZE,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
-          onChange: (page) => handleTableChange(page),
         }}
         scroll={{ x: 1450 }}
       />

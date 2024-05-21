@@ -16,6 +16,7 @@ import {
 } from '../reducers/slicers/benefit.slice';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { RoleType } from '@/enum/role.enum';
+import { StatusBenefit } from '../enum/status.enum';
 
 type FilterPrivilegesType = {
   pageIndex: number;
@@ -101,7 +102,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Benefit/add-or-update?tenant=${tenant}`, [{ data: dataAddBenefit }]),
-        { loadingKey: 'add-Benefit', messageKey: 'addBenefit-message' },
+        { loadingKey: 'add-benefit', messageKey: 'addBenefit-message' },
       );
 
       if (succeeded) {
@@ -135,15 +136,15 @@ export const useBenefit = () => {
   );
 
   const deleteBenefit = useCallback(
-    async (BenefitIds: string[]) => {
-      const deleteIds = BenefitIds.join(',');
+    async (benefitIds: string[]) => {
+      const deleteIds = benefitIds.join(',');
       const { succeeded } = await caller(
         () => api.del(`/Benefit/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
-        { loadingKey: 'delete-Benefit' },
+        { loadingKey: 'delete-benefit' },
       );
 
       if (succeeded) {
-        dispatch(deleteBenefitAction(BenefitIds));
+        dispatch(deleteBenefitAction(benefitIds));
 
         return succeeded;
       }
@@ -161,6 +162,29 @@ export const useBenefit = () => {
       const { data, succeeded } = await caller(
         () => api.post(`/BenefitStatus/add-or-update?tenant=${tenant}`, dataUpdateStatusBenefit),
         { loadingKey: 'edit-statusBenefit' },
+      );
+
+      if (succeeded) {
+        dispatch(updateBenefitAction(data));
+        return succeeded;
+      }
+      return false;
+    },
+
+    [api, caller],
+  );
+
+  const autoEditBenefit = useCallback(
+    async (values: DataBenefitType) => {
+      const dataUpdateStatusBenefit = convertToUppercaseFirstLetter({
+        id: values.id,
+        applicationUserId: values.applicationUser?.id,
+        status: StatusBenefit.Update,
+      });
+
+      const { data, succeeded } = await caller(
+        () => api.post(`/BenefitStatus/add-or-update?tenant=${tenant}`, dataUpdateStatusBenefit),
+        { loadingKey: 'autoEdit-benefit' },
       );
 
       if (succeeded) {
@@ -205,5 +229,6 @@ export const useBenefit = () => {
     getAllStatusBenefit,
     getBenefitById,
     getUsersBenefit,
+    autoEditBenefit,
   };
 };

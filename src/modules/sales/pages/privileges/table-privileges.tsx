@@ -8,12 +8,13 @@ import { usePermission } from '@/hooks/permission.hook';
 import { useModalPrivileges } from '../../components/modals/privileges';
 import { Search, SearchParams } from '@/components/search';
 import { Key } from 'antd/es/table/interface';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { useBenefit } from '../../services/benefit.service';
 import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { RoleType } from '@/enum/role.enum';
 import { useWatchLoading } from '@/hooks/loading.hook';
+import { ModalPrivilegesType } from '../../enum/privileges.enum';
 
 export default function TablePrivileges() {
   const { openModal } = useModalPrivileges();
@@ -24,6 +25,8 @@ export default function TablePrivileges() {
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
 
+  const [benefitIds, setBenefitIds] = useState<string[]>();
+
   const columnTable = useMemo(() => {
     if (isSaleDirector && tab === RoleType.MySelf) {
       return columnsManager;
@@ -33,9 +36,10 @@ export default function TablePrivileges() {
 
   const rowSelection = {
     onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
-      console.log({ selectedRows });
+      setBenefitIds(selectedRows.map((row) => row.id!));
     },
   };
+
   const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
     getAllBenefit({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
@@ -81,7 +85,13 @@ export default function TablePrivileges() {
           <div css={searchContainer}>
             <Search onSearch={handleSearch} status={status as any} loadingStatus={loadingStatus} />
           </div>
-          <Button css={deleteBtnStyle} onClick={() => openModal('Delete KPI')} size="large" danger>
+          <Button
+            css={deleteBtnStyle}
+            onClick={() => openModal(ModalPrivilegesType.Delete, undefined, benefitIds)}
+            size="large"
+            danger
+            disabled={!benefitIds}
+          >
             Xoá Quyền lợi đã chọn
           </Button>
         </Fragment>

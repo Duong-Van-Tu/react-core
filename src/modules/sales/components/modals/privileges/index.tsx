@@ -5,6 +5,7 @@ import { AddPrivileges } from './add-privileges.modal';
 import { ReportPrivileges } from './report-privileges';
 import { SuggestEditPrivileges } from './suggestedEdit-privileges';
 import { EditPrivileges } from './edit-privileges.modal';
+import { DeletePrivileges } from './delete-privileges.modal';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataBenefitType, benefitIds?: string[]) => void;
@@ -42,8 +43,19 @@ export const ModalPrivilegesProvider = ({ children }: ModalProviderProps) => {
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
-      <Modal open={open} onCancel={closeModal} footer={null}>
-        {currentModal?.modalName === ModalPrivilegesType.Delete && <div>Delete Modal</div>}
+      <Modal
+        width={currentModal?.modalName === ModalPrivilegesType.Delete ? '38rem' : '54rem'}
+        open={open}
+        onCancel={closeModal}
+        footer={null}
+      >
+        {currentModal?.modalName === ModalPrivilegesType.Delete && (
+          <DeletePrivileges
+            closeModal={closeModal}
+            data={currentModal.data!}
+            benefitIds={currentModal.benefitIds!}
+          />
+        )}
         {currentModal?.modalName === ModalPrivilegesType.SuggestedEdit && (
           <SuggestEditPrivileges closeModal={closeModal} data={currentModal.data!} />
         )}

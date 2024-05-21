@@ -2,40 +2,44 @@
 import { Pagination } from '@/constants/pagination';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
-import { useKPI } from '@/modules/sales/services/kpi.service';
+import { useBenefit } from '@/modules/sales/services/benefit.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
 import { useLocation } from 'react-router-dom';
 
-type DeleteKPIProps = {
+type DeletePrivilegesProps = {
   closeModal: () => void;
-  goalIds: string[];
-  data?: DataKPIType;
+  benefitIds: string[];
+  data?: DataBenefitType;
 };
-export const DeleteKPI = ({ closeModal, goalIds }: DeleteKPIProps) => {
-  const { deleteKPI, getAllKPI } = useKPI();
+export const DeletePrivileges = ({ closeModal, benefitIds }: DeletePrivilegesProps) => {
+  const { deleteBenefit, getAllBenefit } = useBenefit();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
-  const [loading] = useWatchLoading(['delete-kpi', false]);
+  const [loading] = useWatchLoading(['delete-benefit', false]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
 
-  const handleDeleteKPI = async () => {
-    const deleteGoal = await deleteKPI(goalIds);
+  const handleDeletePrivileges = async () => {
+    const deleteGoal = await deleteBenefit(benefitIds);
     if (deleteGoal) {
-      if (goalIds.length === Pagination.PAGESIZE) {
-        getAllKPI({ pageIndex: pageIndex - 1 || 1, pageSize: Pagination.PAGESIZE, roleType: tab! });
+      if (benefitIds.length === Pagination.PAGESIZE) {
+        getAllBenefit({
+          pageIndex: pageIndex - 1 || 1,
+          pageSize: Pagination.PAGESIZE,
+          roleType: tab!,
+        });
       }
       closeModal();
     }
   };
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá các mục tiêu đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá các quyền lọi đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>
-          <Button loading={loading} type="primary" danger onClick={handleDeleteKPI}>
+          <Button loading={loading} type="primary" danger onClick={handleDeletePrivileges}>
             Xoá
           </Button>
         </Space>

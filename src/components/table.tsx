@@ -19,7 +19,8 @@ type TableParams = {
   filters?: Parameters<GetProp<TableProps, 'onChange'>>[1];
 };
 
-const antIcon = <CustomIcon type="loading" color="#3498db" />;
+const icon = <CustomIcon type="loading" color="#3498db" />;
+
 export function TableCustom(props: TableCustom) {
   const { onTableChange, loading, pagination } = props;
   const { formatMessage } = useLocale();
@@ -86,7 +87,7 @@ export function TableCustom(props: TableCustom) {
       {...props}
       css={tableStyle}
       pagination={tableParams.pagination ?? false}
-      loading={{ indicator: antIcon, spinning: !!loading }}
+      loading={{ indicator: icon, spinning: !!loading }}
       onChange={handleTableChange}
     />
   );

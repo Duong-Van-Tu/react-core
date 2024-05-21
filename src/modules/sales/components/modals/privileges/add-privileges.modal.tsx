@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
@@ -20,6 +21,7 @@ type AddPrivilegesProps = {
 export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
   const { formatMessage } = useLocale();
   const { getUsersBenefit, addBenefit } = useBenefit();
+  const [loading] = useWatchLoading(['add-benefit', false]);
   const [form] = Form.useForm();
   const users = useRootSelector((state) => state.sale.benefit.users);
 
@@ -153,7 +155,7 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>
