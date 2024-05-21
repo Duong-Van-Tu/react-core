@@ -112,6 +112,7 @@ const menuStyle = css`
   .ant-menu-sub .ant-menu-item {
     font-size: 1.4rem;
     font-weight: 500;
+    padding-left: 30px !important;
   }
 
   .ant-menu-sub .ant-menu-item-selected {

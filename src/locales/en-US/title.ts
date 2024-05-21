@@ -1,4 +1,7 @@
 export const enUS_title = {
+  'title.year': 'Year',
+  'title.month': 'Month',
+
   'title.back': 'Go back',
   'title.continue': 'Continue',
   'title.document.sale': 'Sale',
@@ -19,6 +22,9 @@ export const enUS_title = {
   'title.document.inforOrganizational': 'Organizational information',
   'title.document.inforOther': 'Other information',
   'title.document.detailsView': 'Details view',
+  'title.document.incomeDuringTheYear': 'Income during the year',
+  'title.document.incomeByPosition': 'Income by job position',
+
   'title.form.login': 'Sign In',
   'title.form.forgotPassword': 'Forgot password',
   'title.form.resetPassword': 'Reset password',
@@ -35,13 +41,6 @@ export const enUS_title = {
   'title.employee.reportPrivileges.totalChangesTarget': 'Total target variable salary',
   'title.employee.reportPrivileges.actualSalaryFluctuates': 'Actual target variable salary',
   'title.status': 'Status',
-  'title.myRelationships.proposedReport.fullName': 'Full name',
-  'title.myRelationships.proposedReport.jobPosition': 'Job position',
-  'title.myRelationships.proposedReport.dob': 'Date of birth',
-  'title.myRelationships.proposedReport.address': 'Address',
-  'title.myRelationships.proposedReport.numberPhone': 'Number phone',
-  'title.myRelationships.proposedReport.position': 'Position',
-  'title.myRelationships.proposedReport.userInfo': 'User information',
 
   'title.myRelationships.proposedReport.CurrentRelationshipLevel': 'Current relationship level',
   'title.myRelationships.proposedReport.TargetlationshipLevel': 'Current relationship level',

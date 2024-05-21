@@ -2,46 +2,46 @@ import { TableProps } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { DataLocationIncomeType } from '../type.locationIncome';
+import { LocaleFormatter } from '@/components/locale-formatter';
 type ColumnsType<T> = TableProps<T>['columns'];
-
 export const locationIncomeColumns: ColumnsType<DataLocationIncomeType> = [
   {
-    title: 'Tháng',
+    title: <LocaleFormatter id="title.month" />,
     dataIndex: 'month',
     render: (month) => month,
   },
   {
-    title: 'Vị trí 1',
+    title: <LocaleFormatter id="table.column.currentIncome.position1" />,
     dataIndex: 'oneLocation',
     render: (oneLocation) => oneLocation,
   },
   {
-    title: 'Vị trí 2',
+    title: <LocaleFormatter id="table.column.currentIncome.position2" />,
     dataIndex: 'twoLocation',
     render: (twoLocation) => twoLocation,
   },
   {
-    title: 'Vị trí 3',
+    title: <LocaleFormatter id="table.column.currentIncome.position3" />,
     dataIndex: 'threeLocation',
     render: (threeLocation) => threeLocation,
   },
   {
-    title: 'Vị trí 4',
+    title: <LocaleFormatter id="table.column.currentIncome.position4" />,
     dataIndex: 'fourLocation',
     render: (fourLocation) => fourLocation,
   },
   {
-    title: 'Vị trí 5',
+    title: <LocaleFormatter id="table.column.currentIncome.position5" />,
     dataIndex: 'fiveLocation',
     render: (fiveLocation) => fiveLocation,
   },
   {
-    title: 'Các khoản thu nhập khác',
+    title: <LocaleFormatter id="table.column.currentIncome.otherIncome" />,
     dataIndex: 'incomeOther',
     render: (incomeOther) => incomeOther,
   },
   {
-    title: 'Tổng thu nhập nhận được',
+    title: <LocaleFormatter id="table.column.currentIncome.totalIncomeReceived" />,
     dataIndex: 'incomeTotal',
     render: (incomeTotal) => incomeTotal,
   },
@@ -50,6 +50,10 @@ export const locationIncomeColumns: ColumnsType<DataLocationIncomeType> = [
     dataIndex: 'detailsView',
     fixed: 'right',
     width: '7%',
-    render: () => <Link to="/personnel/infor-income/details-view">Xem chi tiết</Link>,
+    render: () => (
+      <Link to="/personnel/infor-income/details-view">
+        <LocaleFormatter id="title.document.detailsView" />
+      </Link>
+    ),
   },
 ];

@@ -1,40 +1,43 @@
 import { TableProps } from 'antd';
 import { DataCurrentIncomeType } from '../type.currentIncome';
+import { LocaleFormatter } from '@/components/locale-formatter';
 type ColumnsType<T> = TableProps<T>['columns'];
 
 export const currentIncomeColumns: ColumnsType<DataCurrentIncomeType> = [
   {
-    title: 'Tổng thu nhập trước thuế',
+    title: <LocaleFormatter id="table.column.currentIncome.totalIncomeBeforeTaxes" />,
     dataIndex: 'incomePreTaxTotal',
     render: (incomePreTaxTotal) => incomePreTaxTotal,
   },
   {
-    title: 'Tổng thu nhập không chịu thuế',
+    title: <LocaleFormatter id="table.column.currentIncome.totalIncomeIsNotTaxable" />,
     dataIndex: 'incomeNonTaxTotal',
     render: (incomeNonTaxTotal) => incomeNonTaxTotal,
   },
   {
-    title: 'Tổng giảm trừ gia cảnh',
+    title: (
+      <LocaleFormatter id="table.column.currentIncome.totalDeductionDueToFamilyCircumstances" />
+    ),
     dataIndex: 'deductionForFamilyCircumstances',
     render: (deductionForFamilyCircumstances) => deductionForFamilyCircumstances,
   },
   {
-    title: 'Tổng tiền BHXH NLD đóng',
+    title: <LocaleFormatter id="table.column.currentIncome.totalSocialInsuranceAmount" />,
     dataIndex: 'socialInsurancePaidByEmployee',
     render: (socialInsurancePaidByEmployee) => socialInsurancePaidByEmployee,
   },
   {
-    title: 'Tổng thu nhập chịu thuế',
+    title: <LocaleFormatter id="table.column.currentIncome.totalTaxableIncome" />,
     dataIndex: 'taxableIncome',
     render: (taxableIncome) => taxableIncome,
   },
   {
-    title: 'Tổng thuế TNCN tạm thu',
+    title: <LocaleFormatter id="table.column.currentIncome.totalTemporaryTaxCollected" />,
     dataIndex: 'personalIncomeTaxTemporarilyCollected',
     render: (personalIncomeTaxTemporarilyCollected) => personalIncomeTaxTemporarilyCollected,
   },
   {
-    title: 'Tổng thu nhập nhận được',
+    title: <LocaleFormatter id="table.column.currentIncome.totalIncomeReceived" />,
     dataIndex: 'incomeReceived',
     render: (incomeReceived) => incomeReceived,
   },

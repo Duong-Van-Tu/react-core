@@ -5,22 +5,22 @@ type ColumnsType<T> = TableProps<T>['columns'];
 
 export const usersColumns: ColumnsType<DataUserType> = [
   {
-    title: <LocaleFormatter id="title.myRelationships.proposedReport.fullName" />,
+    title: <LocaleFormatter id="title.column.humanResources.fullName" />,
     dataIndex: 'fullName',
     render: (fullName) => fullName,
   },
   {
-    title: <LocaleFormatter id="title.myRelationships.proposedReport.position" />,
+    title: <LocaleFormatter id="title.column.humanResources.position" />,
     dataIndex: 'location',
     render: (location) => location,
   },
   {
-    title: <LocaleFormatter id="title.myRelationships.proposedReport.dob" />,
+    title: <LocaleFormatter id="title.column.humanResources.dob" />,
     dataIndex: 'dateBirth',
     render: (dateBirth) => dateBirth,
   },
   {
-    title: <LocaleFormatter id="title.myRelationships.proposedReport.address" />,
+    title: <LocaleFormatter id="title.column.humanResources.address" />,
     dataIndex: 'address',
     render: (address) => address,
   },
@@ -30,7 +30,7 @@ export const usersColumns: ColumnsType<DataUserType> = [
     render: (email) => email,
   },
   {
-    title: <LocaleFormatter id="title.myRelationships.proposedReport.numberPhone" />,
+    title: <LocaleFormatter id="title.column.humanResources.numberPhone" />,
     dataIndex: 'phone',
     render: (phone) => phone,
   },

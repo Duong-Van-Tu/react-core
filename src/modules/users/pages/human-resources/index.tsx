@@ -66,9 +66,7 @@ export default function HumanResourcesPage() {
 
   return (
     <div>
-      <h3 css={titleStyle}>
-        {formatMessage({ id: 'title.myRelationships.proposedReport.userInfo' })}
-      </h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.inforPersonnel' })}</h3>
       {isAdmin && (
         <div css={searchContainer}>
           <Search onSearch={handleSearch} />

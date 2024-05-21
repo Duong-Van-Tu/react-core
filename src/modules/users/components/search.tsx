@@ -4,6 +4,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Col, Input, Row, Select } from 'antd';
 import { useState } from 'react';
 import dayjs from 'dayjs';
+import { useLocale } from '@/hooks/locale.hook';
 
 export type SearchParams = {
   textSearch?: string;
@@ -15,6 +16,8 @@ type SearchProps = {
 };
 
 export const Search = ({ onSearch }: SearchProps) => {
+  const { formatMessage } = useLocale();
+
   const [textSearch, setSearchers] = useState<string>();
   const [time, setTime] = useState<string>();
   const handleSearch = (values?: SearchParams) => {
@@ -55,7 +58,7 @@ export const Search = ({ onSearch }: SearchProps) => {
         >
           {years.map((year) => (
             <Select.Option key={year} value={year.toString()}>
-              Năm {year}
+              {formatMessage({ id: 'title.year' })} {year}
             </Select.Option>
           ))}
         </Select>

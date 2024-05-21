@@ -6,18 +6,22 @@ import { Tabs, TabsProps } from 'antd';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import LocationIncomeTable from './location-income';
 import CurrentIncomeTable from './current-income';
+import { useLocale } from '@/hooks/locale.hook';
+
 export default function InformationIncomePage() {
+  const { formatMessage } = useLocale();
+
   const dispatch = useDispatch();
 
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: 'Thu nhập trong năm',
+      label: formatMessage({ id: 'title.document.incomeDuringTheYear' }),
       children: <CurrentIncomeTable />,
     },
     {
       key: '2',
-      label: 'Thu nhập theo vị trí',
+      label: formatMessage({ id: 'title.document.incomeByPosition' }),
       children: <LocationIncomeTable />,
     },
   ];
@@ -45,7 +49,7 @@ export default function InformationIncomePage() {
   }, [dispatch]);
   return (
     <div>
-      <h3 css={titleStyle}>Thông tin thu nhập</h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.inforIncome' })}</h3>
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
   );
