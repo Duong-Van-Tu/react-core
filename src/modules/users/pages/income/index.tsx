@@ -35,7 +35,7 @@ export default function InformationIncomePage() {
       {
         title: {
           vi_VN: 'Nhân sự',
-          en_US: 'Personsel',
+          en_US: 'Personnel',
         },
       },
       {
