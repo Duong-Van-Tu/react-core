@@ -4,7 +4,7 @@ export const menuUsers: MenuItem = {
   icon: 'user-group',
   label: {
     vi_VN: 'Nhân sự',
-    en_US: 'users',
+    en_US: 'Users',
   },
   children: [
     {
@@ -13,7 +13,7 @@ export const menuUsers: MenuItem = {
       path: '/users/human-resources',
       label: {
         vi_VN: 'Thông tin nhân sự',
-        en_US: 'users information ',
+        en_US: 'Users information ',
       },
     },
     {

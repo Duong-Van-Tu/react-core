@@ -79,7 +79,7 @@ export function TableCustom(props: TableCustom) {
     <Table
       {...props}
       css={tableStyle}
-      pagination={tableParams.pagination}
+      pagination={!!pagination ? tableParams.pagination : false}
       loading={{ indicator: antIcon, spinning: !!loading }}
       onChange={handleTableChange}
     />
