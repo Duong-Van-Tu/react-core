@@ -1,14 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type HumanResourcesState = {
-  item: DataHumanResourcesType;
-  data: DataHumanResourcesType[];
+  data: DataUserType[];
   pagination?: PaginationAPI;
   totalExtend?: number;
 };
 
 export const humanResourcesInitialState: HumanResourcesState = {
-  item: {},
   data: [],
 };
 
@@ -21,7 +19,7 @@ const slice = createSlice({
       {
         payload,
       }: PayloadAction<{
-        data: DataHumanResourcesType[];
+        data: DataUserType[];
         pagination: PaginationAPI;
         totalExtend: number;
       }>,
@@ -30,18 +28,8 @@ const slice = createSlice({
       state.pagination = payload.pagination;
       state.totalExtend = payload.totalExtend;
     },
-    setUserProfileAction(
-      state,
-      {
-        payload,
-      }: PayloadAction<{
-        data: DataHumanResourcesType;
-      }>,
-    ) {
-      state.item = payload.data;
-    },
   },
 });
 
-export const { setListHumanResourcesAction, setUserProfileAction } = slice.actions;
+export const { setListHumanResourcesAction } = slice.actions;
 export default slice.reducer;

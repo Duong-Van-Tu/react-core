@@ -11,17 +11,16 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
-import { Search } from '@/components/search';
+import { Search, SearchParams } from '../../components/search';
 
 export default function HumanResourcesPage() {
   const { formatMessage } = useLocale();
-  const { getListUsers, getUserProfile } = useHumanResources();
-  const [loadingAdmin, loadingUser] = useWatchLoading(
-    ['get-list-employee', true],
-    ['get-user-profile', true],
-  );
+  const { getListUsers } = useHumanResources();
+  const [loadingAdmin] = useWatchLoading(['get-list-employee', true]);
 
-  const { item, data, pagination } = useRootSelector((state) => state.user.humanResources);
+  const { data, pagination } = useRootSelector((state) => state.user.humanResources);
+  const user = useRootSelector((state) => state.auth.user);
+
   const { isAdmin } = usePermission();
   const dispatch = useDispatch();
 
@@ -53,9 +52,16 @@ export default function HumanResourcesPage() {
         pageIndex: Pagination.PAGEINDEX,
         pageSize: Pagination.PAGESIZE,
       });
-    } else {
-      getUserProfile();
     }
+  };
+
+  const handleSearch = ({ textSearch, time }: SearchParams) => {
+    getListUsers({
+      pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+      textSearch,
+      time,
+    });
   };
 
   return (
@@ -63,13 +69,15 @@ export default function HumanResourcesPage() {
       <h3 css={titleStyle}>
         {formatMessage({ id: 'title.myRelationships.proposedReport.userInfo' })}
       </h3>
-      <div css={searchContainer}>
-        <Search onSearch={() => {}} />
-      </div>
+      {isAdmin && (
+        <div css={searchContainer}>
+          <Search onSearch={handleSearch} />
+        </div>
+      )}
       <TableCustom
         columns={usersColumns}
-        dataSource={isAdmin ? data : [item]}
-        loading={isAdmin ? loadingAdmin : loadingUser}
+        dataSource={isAdmin ? data : [user]}
+        loading={isAdmin && loadingAdmin}
         rowKey={(record) => record.id}
         pagination={
           isAdmin
@@ -102,5 +110,5 @@ const titleStyle = css`
 `;
 
 const searchContainer = css`
-  margin-top: 2.6rem;
+  margin: 2.6rem 0;
 `;

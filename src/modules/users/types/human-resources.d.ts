@@ -6,7 +6,7 @@ type ApplicationRolesType = {
   applicationUserId: string;
 };
 
-type DataHumanResourcesType = {
+type DataUserType = {
   id?: string;
   userName?: string;
   passwordHash?: string | null;
