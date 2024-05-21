@@ -10,11 +10,14 @@ import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
+import { useLocale } from '@/hooks/locale.hook';
+import { Search } from '@/components/search';
 
 export default function HumanResourcesPage() {
+  const { formatMessage } = useLocale();
   const { getListUsers, getUserProfile } = useHumanResources();
   const [loadingAdmin, loadingUser] = useWatchLoading(
-    ['get-list-users', true],
+    ['get-list-employee', true],
     ['get-user-profile', true],
   );
 
@@ -57,7 +60,12 @@ export default function HumanResourcesPage() {
 
   return (
     <div>
-      <h3 css={titleStyle}>Thông tin nhân viên</h3>
+      <h3 css={titleStyle}>
+        {formatMessage({ id: 'title.myRelationships.proposedReport.userInfo' })}
+      </h3>
+      <div css={searchContainer}>
+        <Search onSearch={() => {}} />
+      </div>
       <TableCustom
         columns={usersColumns}
         dataSource={isAdmin ? data : [item]}
@@ -77,7 +85,7 @@ export default function HumanResourcesPage() {
                   });
                 },
               }
-            : false
+            : undefined
         }
         scroll={{ x: 1450 }}
       />
@@ -91,4 +99,8 @@ const titleStyle = css`
   font-weight: 600;
   margin-bottom: 3rem;
   color: #101828;
+`;
+
+const searchContainer = css`
+  margin-top: 2.6rem;
 `;

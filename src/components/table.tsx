@@ -13,7 +13,7 @@ type TableCustom = TableProps & {
 };
 
 type TableParams = {
-  pagination?: TablePaginationConfig;
+  pagination?: TablePaginationConfig | false;
   sortField?: string;
   sortOrder?: string;
   filters?: Parameters<GetProp<TableProps, 'onChange'>>[1];
@@ -55,31 +55,39 @@ export function TableCustom(props: TableCustom) {
     onTableChange?.();
     setTableParams((prevParams) => ({
       pagination: {
-        ...prevParams.pagination,
+        ...(typeof prevParams.pagination === 'object' ? prevParams.pagination : {}),
         ...pagination,
       },
       filters,
       ...sorter,
     }));
 
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-    }
+    // if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+    // }
   };
+
   useEffect(() => {
-    setTableParams((prevParams) => ({
-      ...prevParams,
-      pagination: {
-        ...prevParams.pagination,
-        total: (pagination as TablePaginationConfig).total,
-      },
-    }));
-  }, [(pagination as TablePaginationConfig).total]);
+    if (pagination) {
+      setTableParams((prevParams) => ({
+        ...prevParams,
+        pagination: {
+          ...(typeof prevParams.pagination === 'object' ? prevParams.pagination : {}),
+          total: (pagination as TablePaginationConfig)?.total,
+        },
+      }));
+    } else {
+      setTableParams((prevParams) => ({
+        ...prevParams,
+        pagination: false,
+      }));
+    }
+  }, [(pagination as TablePaginationConfig)?.total]);
 
   return (
     <Table
       {...props}
       css={tableStyle}
-      pagination={!!pagination ? tableParams.pagination : false}
+      pagination={tableParams.pagination}
       loading={{ indicator: antIcon, spinning: !!loading }}
       onChange={handleTableChange}
     />

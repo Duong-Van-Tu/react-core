@@ -43,6 +43,7 @@ export const viVN_title = {
   'title.myRelationships.proposedReport.numberPhone': 'Số điện thoại',
   'title.myRelationships.proposedReport.jobPosition': 'Vị trí làm việc',
   'title.myRelationships.proposedReport.position': 'Vị trí',
+  'title.myRelationships.proposedReport.userInfo': 'Thông tin nhân viên',
 
   'title.myRelationships.proposedReport.CurrentRelationshipLevel': 'Mức độ QH hiện tại',
   'title.myRelationships.proposedReport.TargetlationshipLevel': 'Mức độ QH mục tiêu',
