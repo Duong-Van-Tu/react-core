@@ -48,7 +48,7 @@ export const ModalPrivilegesProvider = ({ children }: ModalProviderProps) => {
           <SuggestEditPrivileges closeModal={closeModal} data={currentModal.data!} />
         )}
         {currentModal?.modalName === ModalPrivilegesType.Report && (
-          <ReportPrivileges closeModal={closeModal} />
+          <ReportPrivileges closeModal={closeModal} data={currentModal.data!} />
         )}
         {currentModal?.modalName === ModalPrivilegesType.AddPrivileges && (
           <AddPrivileges closeModal={closeModal} />

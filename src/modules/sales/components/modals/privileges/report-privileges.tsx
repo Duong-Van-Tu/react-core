@@ -1,142 +1,83 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button, Col, Row } from 'antd';
-import { Fragment } from 'react';
-import Dot from '@/assets/svg/dot.svg?react';
-import { useLocale } from '@/hooks/locale.hook';
+import { Button, Col, Row, Space } from 'antd';
+import { LocaleFormatter } from '@/components/locale-formatter';
 
 type ReportPrivilegesProps = {
   closeModal: () => void;
+  data: DataBenefitType;
 };
 
-export const ReportPrivileges = ({ closeModal }: ReportPrivilegesProps) => {
-  const { formatMessage } = useLocale();
-
+export const ReportPrivileges = ({ closeModal, data }: ReportPrivilegesProps) => {
   return (
-    <Fragment>
-      <h3 css={TitleStyle}>Báo cáo</h3>
-      <div css={contentEmployeeReportPrivileges}>
-        <Row justify="space-between" css={rowStyle}>
-          <Col span={12}>
-            <p css={titleSemiBoldStyle}>
-              {formatMessage({ id: 'title.employee.reportPrivileges.nameBenifitsProposer' })}
-            </p>
+    <div css={rootStyle}>
+      <h3 css={titleStyle}>Báo cáo</h3>
+      <div css={contentStyle}>
+        <Row justify="space-between">
+          <Col>
+            <LocaleFormatter id="title.employee.reportPrivileges.nameBenifitsProposer" />
           </Col>
-          <Col span={12}>
-            <p css={titleValuetyle}>Tanner Finsha</p>
-          </Col>
+          <Col>{data.applicationUser?.fullName}</Col>
         </Row>
-
-        <Row justify="space-between" css={rowStyle}>
+        <Row justify="space-between">
           <Col>
-            <p css={titleBoldStyle}>
-              {formatMessage({ id: 'title.employee.reportPrivileges.baseSalary' })}
-            </p>
+            <LocaleFormatter id="title.employee.reportPrivileges.baseSalary" />
           </Col>
-          <Col>
-            <p css={titleValuetyle}>1.000.000 VND</p>
-          </Col>
+          <Col>{data.monthlySalary}</Col>
         </Row>
-
-        <Row justify="space-between" css={rowStyle}>
+        <Row justify="space-between">
           <Col>
-            <p css={titleBoldStyle}>
-              {formatMessage({ id: 'title.employee.reportPrivileges.totalChangesTarget' })}
-            </p>
+            <LocaleFormatter id="title.employee.reportPrivileges.totalChangesTarget" />
           </Col>
-          <Col>
-            <p css={titleValuetyle}>1.000.000.000 VND</p>
-          </Col>
-        </Row>
-
-        <Row justify="space-between" css={rowStyle}>
-          <Col>
-            <p css={titleBoldStyle}>
-              {formatMessage({ id: 'title.employee.reportPrivileges.actualSalaryFluctuates' })}
-            </p>
-          </Col>
-          <Col>
-            <p css={titleValuetyle}>1.000.000.000 VND</p>
-          </Col>
+          <Col>{data.targetSalary}</Col>
         </Row>
 
         <Row justify="space-between">
           <Col>
-            <p css={titleSemiBoldStyle}>{formatMessage({ id: 'title.status' })}</p>
+            <LocaleFormatter id="title.employee.reportPrivileges.actualSalaryFluctuates" />
           </Col>
+          <Col>{data.totalSalary}</Col>
+        </Row>
+
+        <Row justify="space-between">
           <Col>
-            <div css={statusStyle}>
-              <Dot />
-              <p>Chốt quyền lợi</p>
-            </div>
+            <LocaleFormatter id="title.status" />
           </Col>
+          <Col>{data.benefitStatus?.name}</Col>
+        </Row>
+
+        <Row justify="end">
+          <Space css={reportFooter}>
+            <Button onClick={() => closeModal}>Chia sẻ</Button>
+            <Button type="primary" onClick={() => closeModal}>
+              Xác nhận
+            </Button>
+          </Space>
         </Row>
       </div>
-
-      <Button type="primary" onClick={() => closeModal()} css={btnConfirmStyle}>
-        Xác nhận
-      </Button>
-    </Fragment>
+    </div>
   );
 };
 
-const TitleStyle = css`
-  font-weight: 500;
-  font-size: 2.2rem;
-  line-height: 2.4rem;
-  margin-top: 4rem;
-  text-align: center;
-  color: rgba(21, 41, 75, 1);
+const rootStyle = css`
+  padding: 1rem;
 `;
 
-const titleBoldStyle = css`
-  color: rgba(16, 24, 40, 1);
-  font-weight: 500;
-  font-size: 1.4rem;
-`;
-const titleValuetyle = css`
-  text-align: right;
-  color: rgba(16, 24, 40, 1);
-  font-weight: 500;
-  font-size: 1.4rem;
-`;
-
-const titleSemiBoldStyle = css`
-  text-align: left;
-  color: rgba(66, 82, 109, 1);
-  font-weight: 500;
-  font-size: 1.2rem;
-`;
-
-const rowStyle = css`
-  margin-bottom: 1.5rem;
-`;
-
-const contentEmployeeReportPrivileges = css`
-  margin: 3rem 0;
-`;
-
-const statusStyle = css`
-  padding: 0.2rem 0.8rem;
+const contentStyle = css`
   display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background-color: rgba(236, 253, 243, 1);
-  border-radius: 1.6rem;
-  border: 1px solid transpatrent;
-  svg path {
-    fill: rgba(18, 183, 106, 1);
-  }
-  p {
-    color: rgba(2, 122, 72, 1);
-    font-weight: 700;
-    font-size: 1.2rem;
-  }
+  flex-direction: column;
+  gap: 1.4rem;
+  font-weight: 500;
 `;
 
-const btnConfirmStyle = css`
-  display: inline-block;
-  width: 100%;
-  border-radius: 0.8rem;
-  background: rgba(0, 112, 184, 1);
+const reportFooter = css`
+  margin-top: 1rem;
+`;
+
+const titleStyle = css`
+  font-size: 2rem;
+  line-height: 2.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: 500;
 `;

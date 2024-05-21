@@ -31,7 +31,7 @@ export function PrivilegesDropdown({ data }: PrivilegesDropdownProps) {
         openModal(ModalPrivilegesType.SuggestedEdit, data);
         break;
       case MenuItem.Report:
-        openModal(ModalPrivilegesType.Report);
+        openModal(ModalPrivilegesType.Report, data);
         break;
       case MenuItem.Delete:
         openModal(ModalPrivilegesType.Delete);
