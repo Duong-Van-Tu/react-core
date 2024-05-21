@@ -63,6 +63,7 @@ export const opportunityColumns: ColumnsType<DataOpportunityType> = [
   {
     title: 'Lần tương tác gần nhất giữa AT&A và khách hàng ',
     dataIndex: 'lastTimeInteract',
+    render: (value) => dayjs(value).format('DD/MM/YYYY'),
   },
   {
     title: 'Đánh giá khả năng thắng',
