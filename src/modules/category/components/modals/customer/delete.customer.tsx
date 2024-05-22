@@ -9,8 +9,9 @@ import { useLocation } from 'react-router-dom';
 type DeleteCustomerProps = {
   closeModal: () => void;
   data?: DataCustomerType;
+  customerIds: string[];
 };
-export const DeleteCustomer = ({ closeModal, data }: DeleteCustomerProps) => {
+export const DeleteCustomer = ({ closeModal, customerIds }: DeleteCustomerProps) => {
   const { deleteCustomer, getAllCustomer } = useCustomer();
   const pageIndex = useRootSelector((state) => state.category.customer.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-customer', false]);
@@ -18,14 +19,7 @@ export const DeleteCustomer = ({ closeModal, data }: DeleteCustomerProps) => {
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
   const handleDeleteCustomer = async () => {
-    const id = data?.id;
-
-    if (!id) {
-      console.error('Sai ID');
-      return;
-    }
-
-    const deleteclient = await deleteCustomer(id as string);
+    const deleteclient = await deleteCustomer(customerIds);
     if (deleteclient) {
       getAllCustomer({
         pageIndex: pageIndex || 1,

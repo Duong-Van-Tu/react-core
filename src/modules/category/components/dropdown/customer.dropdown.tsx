@@ -9,11 +9,11 @@ import { useModalCustomer } from '../modals/customer';
 
 enum MenuItem {
   Edit = 1,
-  Delete,
 }
 
 type CustomerDropdownProps = {
   data?: DataCustomerType;
+  customerIds?: string[];
 };
 
 export function CustomerDropdown({ data }: CustomerDropdownProps) {
@@ -25,9 +25,6 @@ export function CustomerDropdown({ data }: CustomerDropdownProps) {
       case MenuItem.Edit:
         openModal(ModalCustomerType.Edit, data);
         break;
-      case MenuItem.Delete:
-        openModal(ModalCustomerType.Delete, data);
-        break;
       default:
         break;
     }
@@ -35,13 +32,8 @@ export function CustomerDropdown({ data }: CustomerDropdownProps) {
   const items: MenuProps['items'] = [
     {
       key: '1',
-      label: <span>Chỉnh sửa</span>,
+      label: <span>{formatMessage({ id: 'dropdown.edit' })}</span>,
       onClick: () => handleItemClick(MenuItem.Edit),
-    },
-    {
-      key: '2',
-      label: <span>{formatMessage({ id: 'dropdown.delete' })}</span>,
-      onClick: () => handleItemClick(MenuItem.Delete),
     },
   ];
 

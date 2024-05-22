@@ -1,5 +1,5 @@
 export enum ModalCustomerType {
   Edit = 'Edit',
-  Delete = 'Delete',
+  Delete = 'Delete Customer',
   AddCustomer = 'Add Customer',
 }

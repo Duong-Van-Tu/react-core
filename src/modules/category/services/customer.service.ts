@@ -5,6 +5,7 @@ import {
   setListCustomerAction,
   addCustomerAction,
   deleteCustomerAction,
+  updateCustomerAction,
 } from '../reducers/slicers/customer.slice';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
@@ -95,8 +96,8 @@ export const useCustomer = () => {
   );
 
   const deleteCustomer = useCallback(
-    async (id: string) => {
-      const ids = id;
+    async (customerIds: string[]) => {
+      const ids = customerIds.join(',');
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/Customer/delete-by-ids/${ids}/${ApplicationUserId}`),
@@ -104,7 +105,7 @@ export const useCustomer = () => {
       );
 
       if (succeeded !== null && succeeded) {
-        dispatch(deleteCustomerAction(id));
+        dispatch(deleteCustomerAction(customerIds));
         return true;
       }
       return false;
@@ -113,5 +114,27 @@ export const useCustomer = () => {
     [api, caller],
   );
 
-  return { getAllCustomer, addKCustomer, deleteCustomer };
+  const updateCustomer = useCallback(
+    async (values: DataCustomerType) => {
+      const dataAddKPI = convertToUppercaseFirstLetter({ ...values });
+
+      const { data, succeeded } = await caller(
+        () =>
+          api.post(`/Customer/add-or-update?tenant=${tenant}`, [
+            { id: values.id, data: dataAddKPI },
+          ]),
+        { loadingKey: 'edit-customer' },
+      );
+
+      if (succeeded) {
+        dispatch(updateCustomerAction(data[0]));
+        return succeeded;
+      }
+      return false;
+    },
+
+    [api, caller],
+  );
+
+  return { getAllCustomer, addKCustomer, deleteCustomer, updateCustomer };
 };

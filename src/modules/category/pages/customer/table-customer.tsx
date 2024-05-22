@@ -3,8 +3,8 @@ import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Button, Checkbox } from 'antd';
-import type { CheckboxProps } from 'antd';
+import { Button } from 'antd';
+
 import { Search, SearchParams } from '@/components/search';
 import { customerColumns } from './column/customer.column';
 import { CustomIcon } from '@/components/icons';
@@ -12,11 +12,13 @@ import { useModalCustomer } from '../../components/modals/customer';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useCustomer } from '../../services/customer.service';
+import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
 
 export default function TableCustomer() {
   const { openModal } = useModalCustomer();
   const { getAllCustomer } = useCustomer();
+  const [customerIds, setCustomerIds] = useState<string[]>();
 
   const { data, pagination } = useRootSelector((state) => state.category.customer);
   const [loading] = useWatchLoading(['get-customer', true]);
@@ -35,6 +37,12 @@ export default function TableCustomer() {
     });
   };
 
+  const rowSelection = {
+    onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
+      setCustomerIds(selectedRows.map((row) => row.id!));
+    },
+  };
+
   const handleTableChange = (page: number) => {
     getAllCustomer({
       pageIndex: page,
@@ -51,8 +59,8 @@ export default function TableCustomer() {
     });
   }, [getAllCustomer, tab]);
 
-  const onChange: CheckboxProps['onChange'] = (e) => {
-    console.log(`checked = ${e.target.checked}`);
+  const handleDeleteCustomer = () => {
+    openModal('Delete Customer', undefined, customerIds);
   };
   return (
     <div css={rootStyle}>
@@ -71,9 +79,12 @@ export default function TableCustomer() {
         <Search onSearch={handleSearch} status={undefined} loadingStatus={false} />
       </div>
       <div css={checkBoxStyle}>
-        <Checkbox onChange={onChange}>Chọn tất cả</Checkbox>
+        <Button disabled={!customerIds} onClick={() => handleDeleteCustomer()} size="large" danger>
+          Xoá mục tiêu đã chọn
+        </Button>
       </div>
       <TableCustom
+        rowSelection={rowSelection}
         columns={customerColumns}
         dataSource={data}
         loading={loading}

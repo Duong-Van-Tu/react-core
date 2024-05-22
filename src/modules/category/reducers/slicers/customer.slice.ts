@@ -44,11 +44,25 @@ const slice = createSlice({
       };
     },
 
-    deleteCustomerAction(state, { payload }: PayloadAction<string>) {
+    updateCustomerAction(state, { payload }: PayloadAction<DataCustomerType>) {
+      state.data = state.data.map((item) => {
+        if (item.id === payload.id) {
+          return payload;
+        }
+        return item;
+      });
+    },
+
+    deleteCustomerAction(state, { payload }: PayloadAction<string[]>) {
       state.data = state.data.filter((item) => !payload.includes(item.id!));
     },
   },
 });
 
-export const { setListCustomerAction, addCustomerAction, deleteCustomerAction } = slice.actions;
+export const {
+  setListCustomerAction,
+  addCustomerAction,
+  deleteCustomerAction,
+  updateCustomerAction,
+} = slice.actions;
 export default slice.reducer;

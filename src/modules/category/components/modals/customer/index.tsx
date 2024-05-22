@@ -3,9 +3,10 @@ import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalCustomerType } from '../../../enum/customer.enum';
 import { AddCustomer } from './add.modal';
 import { DeleteCustomer } from './delete.customer';
+import { UpdateCustomer } from './update.customer';
 
 type ModalContexttype = {
-  openModal: (modalName: string, data?: DataCustomerType) => void;
+  openModal: (modalName: string, data?: DataCustomerType, customerIds?: string[]) => void;
   closeModal: () => void;
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
@@ -24,12 +25,12 @@ type ModalCustomerProviderProps = {
 
 export const ModalCustomerProvider = ({ children }: ModalCustomerProviderProps) => {
   const [currentModal, setCurrentModal] = useState<
-    { modalName: string; data?: DataCustomerType } | undefined
+    { modalName: string; data?: DataCustomerType; customerIds?: string[] } | undefined
   >();
   const [open, setOpen] = useState<boolean>(false);
 
-  const openModal = (modalName: string, data?: DataCustomerType) => {
-    setCurrentModal({ modalName, data });
+  const openModal = (modalName: string, data?: DataCustomerType, customerIds?: string[]) => {
+    setCurrentModal({ modalName, data, customerIds });
     setOpen(true);
   };
 
@@ -42,9 +43,15 @@ export const ModalCustomerProvider = ({ children }: ModalCustomerProviderProps) 
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal open={open} onCancel={closeModal} footer={null}>
-        {currentModal?.modalName === ModalCustomerType.Edit && <div> Edit Modal</div>}
+        {currentModal?.modalName === ModalCustomerType.Edit && (
+          <UpdateCustomer closeModal={closeModal} data={currentModal.data!} />
+        )}
         {currentModal?.modalName === ModalCustomerType.Delete && (
-          <DeleteCustomer closeModal={closeModal} data={currentModal.data!} />
+          <DeleteCustomer
+            closeModal={closeModal}
+            data={currentModal.data!}
+            customerIds={currentModal.customerIds!}
+          />
         )}
         {currentModal?.modalName === ModalCustomerType.AddCustomer && (
           <AddCustomer closeModal={closeModal} />
