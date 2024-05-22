@@ -49,7 +49,7 @@ export const saleMenus: MenuItem = {
       path: '/sales/sale-kit',
       label: {
         vi_VN: 'Sale kit',
-        en_US: 'Sale Kit',
+        en_US: 'Sale kit',
       },
     },
   ],

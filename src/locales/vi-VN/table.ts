@@ -37,6 +37,13 @@ export const viVN_table = {
   'table.column.currentIncome.position4': 'Vị trí 4',
   'table.column.currentIncome.position5': 'Vị trí 5',
 
+  'title.column.humanResources.humanResourceCode': 'Mã nhân sự',
+  'title.column.humanResources.humanResourceName': 'Tên nhân sự',
+  'title.column.humanResources.title': 'Chức danh',
+  'title.column.humanResources.startDate': 'Ngày bắt đầu',
+  'title.column.humanResources.endDate': 'Ngày kết thúc',
+  'title.column.humanResources.evaluate': 'Đánh giá',
+  'title.column.humanResources.note': 'Ghi chú',
   'title.column.humanResources.fullName': 'Họ và tên',
   'title.column.humanResources.dob': 'Ngày sinh',
   'title.column.humanResources.address': 'Địa chỉ',

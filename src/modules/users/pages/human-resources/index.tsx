@@ -11,12 +11,12 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
-import { Search, SearchParams } from '../../components/search';
+import { Search, SearchParams } from '@/components/search';
 
 export default function HumanResourcesPage() {
   const { formatMessage } = useLocale();
   const { getListUsers } = useHumanResources();
-  const [loadingAdmin] = useWatchLoading(['get-list-employee', true]);
+  const [loadingAdmin] = useWatchLoading(['get-list-user', true]);
 
   const { data, pagination } = useRootSelector((state) => state.user.humanResources);
   const user = useRootSelector((state) => state.auth.user);
