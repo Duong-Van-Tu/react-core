@@ -44,7 +44,7 @@ const slice = createSlice({
       };
     },
 
-    deleteCustomerAction(state, { payload }: PayloadAction<string[]>) {
+    deleteCustomerAction(state, { payload }: PayloadAction<string>) {
       state.data = state.data.filter((item) => !payload.includes(item.id!));
     },
   },

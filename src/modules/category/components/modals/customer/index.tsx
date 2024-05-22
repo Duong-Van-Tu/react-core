@@ -5,7 +5,7 @@ import { AddCustomer } from './add.modal';
 import { DeleteCustomer } from './delete.customer';
 
 type ModalContexttype = {
-  openModal: (modalName: string, data?: DataCustomerType, customerIds?: string[]) => void;
+  openModal: (modalName: string, data?: DataCustomerType) => void;
   closeModal: () => void;
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
@@ -24,12 +24,12 @@ type ModalCustomerProviderProps = {
 
 export const ModalCustomerProvider = ({ children }: ModalCustomerProviderProps) => {
   const [currentModal, setCurrentModal] = useState<
-    { modalName: string; data?: DataCustomerType; customerIds?: string[] } | undefined
+    { modalName: string; data?: DataCustomerType } | undefined
   >();
   const [open, setOpen] = useState<boolean>(false);
 
-  const openModal = (modalName: string, data?: DataCustomerType, customerIds?: string[]) => {
-    setCurrentModal({ modalName, data, customerIds });
+  const openModal = (modalName: string, data?: DataCustomerType) => {
+    setCurrentModal({ modalName, data });
     setOpen(true);
   };
 
@@ -44,11 +44,7 @@ export const ModalCustomerProvider = ({ children }: ModalCustomerProviderProps) 
       <Modal open={open} onCancel={closeModal} footer={null}>
         {currentModal?.modalName === ModalCustomerType.Edit && <div> Edit Modal</div>}
         {currentModal?.modalName === ModalCustomerType.Delete && (
-          <DeleteCustomer
-            closeModal={closeModal}
-            customerIds={currentModal.customerIds!}
-            data={currentModal.data!}
-          />
+          <DeleteCustomer closeModal={closeModal} data={currentModal.data!} />
         )}
         {currentModal?.modalName === ModalCustomerType.AddCustomer && (
           <AddCustomer closeModal={closeModal} />

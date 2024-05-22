@@ -8,27 +8,34 @@ import { Button, Row, Space } from 'antd';
 import { useLocation } from 'react-router-dom';
 type DeleteCustomerProps = {
   closeModal: () => void;
-  customerIds: string[];
   data?: DataCustomerType;
 };
-export const DeleteCustomer = ({ closeModal, customerIds }: DeleteCustomerProps) => {
+export const DeleteCustomer = ({ closeModal, data }: DeleteCustomerProps) => {
   const { deleteCustomer, getAllCustomer } = useCustomer();
-  const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
+  const pageIndex = useRootSelector((state) => state.category.customer.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-customer', false]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
   const handleDeleteCustomer = async () => {
-    const deleteGoal = await deleteCustomer(customerIds);
-    if (deleteGoal) {
-      if (customerIds.length === Pagination.PAGESIZE) {
-        getAllCustomer({
-          pageIndex: pageIndex - 1 || 1,
-          pageSize: Pagination.PAGESIZE,
-          roleType: tab!,
-        });
-      }
+    const id = data?.id;
+
+    if (!id) {
+      console.error('Sai ID');
+      return;
+    }
+
+    const deleteclient = await deleteCustomer(id as string);
+    if (deleteclient) {
+      getAllCustomer({
+        pageIndex: pageIndex || 1,
+        pageSize: Pagination.PAGESIZE,
+        roleType: tab!,
+      });
+
       closeModal();
+    } else {
+      console.error('Failed to delete customer');
     }
   };
   return (

@@ -95,18 +95,17 @@ export const useCustomer = () => {
   );
 
   const deleteCustomer = useCallback(
-    async (customerIds: string[]) => {
-      console.log('customerIds: ', customerIds);
-      const deleteIds = customerIds.join(',');
+    async (id: string) => {
+      const ids = id;
+      const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
-        () => api.del(`/Customer/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
+        () => api.del(`/Customer/delete-by-ids/${ids}/${ApplicationUserId}`),
         { loadingKey: 'delete-customer' },
       );
 
-      if (succeeded) {
-        dispatch(deleteCustomerAction(customerIds));
-
-        return succeeded;
+      if (succeeded !== null && succeeded) {
+        dispatch(deleteCustomerAction(id));
+        return true;
       }
       return false;
     },
