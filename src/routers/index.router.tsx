@@ -31,7 +31,7 @@ const OpportunityPage = lazy(
   () => import(/* webpackChunkName: "opportunity"*/ '@/modules/sales/pages/opportunity'),
 );
 const SaleKitPage = lazy(
-  () => import(/* webpackChunkName: "sale-kit"*/ '@/modules/sales/pages/sale-kit.page'),
+  () => import(/* webpackChunkName: "sale-kit"*/ '@/modules/sales/pages/sale-kit'),
 );
 const SettingPage = lazy(
   () => import(/* webpackChunkName: "settings"*/ '@/modules/settings/pages'),

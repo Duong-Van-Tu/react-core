@@ -167,10 +167,10 @@ export default function InformationIncomePage() {
 }
 
 const titleStyle = css`
-  font-size: 2.4rem;
-  line-height: 2.3rem;
-  font-weight: 600;
-  margin-bottom: 3rem;
+  font-size: 1.8rem;
+  line-height: 2rem;
+  font-weight: 500;
+  margin-bottom: 2.4rem;
   color: #101828;
 `;
 

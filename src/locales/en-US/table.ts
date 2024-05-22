@@ -65,4 +65,6 @@ export const enUS_table = {
 
   'table.pagination.button.prev': 'Previous',
   'table.pagination.button.next': 'Next',
+
+  'table.column.saleKit.selectAll': 'Select all',
 };
