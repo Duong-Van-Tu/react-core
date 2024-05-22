@@ -19,6 +19,7 @@ export const enUS_title = {
   'title.document.inforOrganizational': 'Organizational information',
   'title.document.inforOther': 'Other information',
   'title.document.detailsView': 'Details view',
+  'title.document.customer': 'Customer',
   'title.form.login': 'Sign In',
   'title.form.forgotPassword': 'Forgot password',
   'title.form.resetPassword': 'Reset password',

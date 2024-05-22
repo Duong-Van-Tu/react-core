@@ -25,4 +25,6 @@ export const viVN_table = {
   'table.column.relationship.responsiblePerson': 'Người chịu trách nhiệm',
   'table.pagination.button.prev': 'Trang trước',
   'table.pagination.button.next': 'Trang kế',
+  'table.column.customersID': 'Mã KH',
+  'table.column.customersName': 'Tên khách hàng',
 };

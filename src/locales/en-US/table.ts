@@ -25,4 +25,6 @@ export const enUS_table = {
   'table.column.relationship.responsiblePerson': 'Responsible person',
   'table.pagination.button.prev': 'Previous',
   'table.pagination.button.next': 'Next',
+  'table.column.customersID': 'Customers ID',
+  'table.column.customersName': 'Customers Name',
 };

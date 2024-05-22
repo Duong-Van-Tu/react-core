@@ -21,6 +21,7 @@ export const viVN_title = {
   'title.document.inforOrganizational': 'Thông tin tổ chức',
   'title.document.inforOther': 'Thông tin khác',
   'title.document.detailsView': 'Xem chi tiết',
+  'title.document.customer': 'Khách hàng',
   'title.form.login': 'Đăng Nhập',
   'title.form.forgotPassword': 'Quên mật khẩu',
   'title.form.resetPassword': 'Đặt lại mật khẩu',
