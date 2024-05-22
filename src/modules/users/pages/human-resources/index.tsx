@@ -11,20 +11,12 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
-<<<<<<< HEAD
 import { Search, SearchParams } from '@/components/search';
-=======
-import { Search, SearchParams } from '../../components/search';
->>>>>>> develop
 
 export default function HumanResourcesPage() {
   const { formatMessage } = useLocale();
   const { getListUsers } = useHumanResources();
-<<<<<<< HEAD
   const [loadingAdmin] = useWatchLoading(['get-list-user', true]);
-=======
-  const [loadingAdmin] = useWatchLoading(['get-list-employee', true]);
->>>>>>> develop
 
   const { data, pagination } = useRootSelector((state) => state.user.humanResources);
   const user = useRootSelector((state) => state.auth.user);
@@ -74,13 +66,7 @@ export default function HumanResourcesPage() {
 
   return (
     <div>
-<<<<<<< HEAD
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.inforPersonnel' })}</h3>
-=======
-      <h3 css={titleStyle}>
-        {formatMessage({ id: 'title.myRelationships.proposedReport.userInfo' })}
-      </h3>
->>>>>>> develop
       {isAdmin && (
         <div css={searchContainer}>
           <Search onSearch={handleSearch} />

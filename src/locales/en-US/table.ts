@@ -52,6 +52,17 @@ export const enUS_table = {
   'title.column.humanResources.numberPhone': 'Number phone',
   'title.column.humanResources.position': 'Position',
 
+  'title.column.income.humanResourceCode': 'Human resource code',
+  'title.column.income.fullName': 'Full name',
+  'title.column.income.position': 'Position',
+  'title.column.income.content': 'Content',
+  'title.column.income.expectedAmount': 'Expected amount',
+  'title.column.income.actualAmountSpent': 'Actual amount spent',
+  'title.column.income.object': 'Object',
+  'title.column.income.type': 'Type',
+  'title.column.income.projectName': 'Name of project',
+  'title.column.income.timeSpent': 'Time spent',
+
   'table.pagination.button.prev': 'Previous',
   'table.pagination.button.next': 'Next',
 };

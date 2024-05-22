@@ -25,6 +25,7 @@ export const enUS_title = {
   'title.document.incomeDuringTheYear': 'Income during the year',
   'title.document.incomeByPosition': 'Income by job position',
   'title.document.human-resource': 'Human resource',
+  'title.document.income-ticket': 'Income details by ticket',
 
   'title.form.login': 'Sign In',
   'title.form.forgotPassword': 'Forgot password',

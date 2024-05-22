@@ -51,6 +51,18 @@ export const viVN_table = {
   'title.column.humanResources.jobPosition': 'Vị trí làm việc',
   'title.column.humanResources.position': 'Vị trí',
 
+  'title.column.income.humanResourceCode': 'Mã nhân viên',
+  'title.column.income.fullName': 'Họ và tên',
+  'title.column.income.position': 'Vị trí',
+
+  'title.column.income.content': 'Nội dung',
+  'title.column.income.expectedAmount': 'Số tiền dự kiến',
+  'title.column.income.actualAmountSpent': 'Số tiền thực chi',
+  'title.column.income.object': 'Đối tượng',
+  'title.column.income.type': 'Loại CP',
+  'title.column.income.projectName': 'Tên dự án',
+  'title.column.income.timeSpent': 'Thời điểm chi	',
+
   'table.pagination.button.prev': 'Trang trước',
   'table.pagination.button.next': 'Trang kế',
 };

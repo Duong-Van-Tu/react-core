@@ -26,6 +26,7 @@ export const viVN_title = {
   'title.document.incomeDuringTheYear': 'Thu nhập trong năm',
   'title.document.incomeByPosition': 'Thu nhập theo vị trí',
   'title.document.human-resource': 'Nhân sự',
+  'title.document.income-ticket': 'Chi tiết thu nhập theo ticket',
 
   'title.form.login': 'Đăng Nhập',
   'title.form.forgotPassword': 'Quên mật khẩu',

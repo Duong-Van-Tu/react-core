@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
@@ -44,11 +43,16 @@ export const TicketIncomeDetails = () => {
     <div css={containerStyle}>
       <div css={closeStyle}>
         <CustomIcon width={12} height={14} type="prev" />
-        <Link css={goBackLinkStyle} to="/personnel/infor-income/">
+        <span
+          css={goBackLinkStyle}
+          onClick={() => {
+            window.history.back();
+          }}
+        >
           {formatMessage({ id: 'title.back' })}
-        </Link>
+        </span>
       </div>
-      <h1 css={titleStyle}>Chi tiết thu nhập theo ticket</h1>
+      <h1 css={titleStyle}>{formatMessage({ id: 'title.document.income-ticket' })}</h1>
       <div css={tableCustomStyle}>
         <TableCustom
           columns={ticketIncomeDetailsColumns}
@@ -90,6 +94,7 @@ const titleStyle = css`
 `;
 
 const goBackLinkStyle = css`
+  cursor: pointer;
   font-size: 1.4rem;
   color: #000;
 `;
