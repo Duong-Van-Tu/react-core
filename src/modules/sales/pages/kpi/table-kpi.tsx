@@ -76,7 +76,7 @@ export default function TableKPI() {
     <div css={rootStyle}>
       {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
         <Button
-          onClick={() => openModal('Add KPI')}
+          onClick={() => openModal(ModalKPIType.AddKPI)}
           type="primary"
           css={addKPIBtnStyle}
           iconPosition="start"

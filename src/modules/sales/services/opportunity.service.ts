@@ -175,6 +175,26 @@ export const useOpportunity = () => {
     [api, caller],
   );
 
+  const updateStatusOpportunityById = useCallback(
+    async (values: DataOpportunityType) => {
+      const dataUpdateStatusOpportunity = convertToUppercaseFirstLetter(values);
+
+      const { data, succeeded } = await caller(
+        () =>
+          api.put(`/Opportunity/update-status-by-id?tenant=${tenant}`, dataUpdateStatusOpportunity),
+        { loadingKey: 'edit-statusOpportunityById' },
+      );
+
+      if (succeeded) {
+        dispatch(updateOpportunityAction(data));
+        return succeeded;
+      }
+      return false;
+    },
+
+    [api, caller],
+  );
+
   const getAllStatusOpportunity = useCallback(async () => {
     const { data, succeeded } = await caller(
       () => api.get(`/OpportunityStatus/get-all?tenant=${tenant}`),
@@ -233,5 +253,6 @@ export const useOpportunity = () => {
     getOpportunityById,
     getAllSaleAndSupplier,
     assignSaleAndSupplier,
+    updateStatusOpportunityById,
   };
 };

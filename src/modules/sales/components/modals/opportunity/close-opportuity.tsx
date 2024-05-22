@@ -1,41 +1,69 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { css } from '@emotion/react';
-import { Button, Form, FormProps, Input, Row, Space, Select } from 'antd';
-import { Fragment, useState } from 'react';
+import { Button, Form, FormProps, Row, Space, Select, Input } from 'antd';
+import { Fragment, useEffect, useMemo } from 'react';
 
-type CloseOpportuityProps = {
+type CloseOpportunityProps = {
   closeModal: () => void;
+  data: DataOpportunityType;
 };
+
 type FieldType = {
-  customer: string;
-  reason?: string;
+  status: string;
+  reason: string;
 };
 
-export const CloseOpportuity = ({ ...props }: CloseOpportuityProps) => {
-  const { closeModal } = props;
-  const { Option } = Select;
+export const CloseOpportunity = ({ ...props }: CloseOpportunityProps) => {
+  const { closeModal, data } = props;
   const { formatMessage } = useLocale();
-  const [showReasonInput, setShowReasonInput] = useState(false);
+  const { getAllSaleAndSupplier, updateStatusOpportunityById } = useOpportunity();
+  const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['edit-statusOpportunityById', false]);
+  const status = useRootSelector((state) => state.sale.opportunity.status);
 
-  const onStatusChange = (value: string) => {
-    setShowReasonInput(value === 'Fail');
-  };
+  const statusOptions = useMemo(
+    () =>
+      status?.map((item) => ({
+        label: item.name,
+        value: item.id,
+      })),
+    [status],
+  );
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal();
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const dataUpdate = {
+      id: data.id,
+      applicationUserId: data.applicationUser?.id,
+      status: status?.find((item) => item.id === values.status)?.code,
+      reason: values.reason,
+    } as DataOpportunityType;
+
+    const update = await updateStatusOpportunityById(dataUpdate);
+    if (update) {
+      form.resetFields();
+      closeModal();
+    }
   };
 
   const oncancel = () => {
     closeModal();
   };
+
+  useEffect(() => {
+    getAllSaleAndSupplier();
+  }, [getAllSaleAndSupplier]);
+
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Đóng cơ hội</h3>
       <Form
-        css={formCLoseOpportuityStyle}
-        name="assign-opportuity"
+        form={form}
+        css={formStyle}
+        name="close-opportunity"
         onFinish={onFinish}
         layout="vertical"
       >
@@ -43,41 +71,29 @@ export const CloseOpportuity = ({ ...props }: CloseOpportuityProps) => {
           label={
             <span css={labelFormItem}>{formatMessage({ id: 'title.form.selectStatus' })}</span>
           }
-          name="customer"
+          name="status"
           rules={[
             { required: true, message: formatMessage({ id: 'form.input.require.selectStatus' }) },
           ]}
         >
           <Select
+            size="large"
             placeholder={formatMessage({ id: 'title.form.selectStatus' })}
-            onChange={onStatusChange}
-            css={selectFormStyle}
             allowClear
-          >
-            <Option value="Activity">Đang active</Option>
-            <Option value="Close">Close</Option>
-            <Option value="Fail">Fail</Option>
-            <Option value="Cancel">Cancel</Option>
-            <Option value="Hold">On Hold</Option>
-          </Select>
+            loading={loading}
+            options={statusOptions}
+          />
         </Form.Item>
-
-        {showReasonInput && (
-          <Form.Item<FieldType>
-            label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.reason' })}</span>}
-            name="reason"
-            rules={[
-              { required: true, message: formatMessage({ id: 'form.input.require.reason' }) },
-            ]}
-          >
-            <Input.TextArea
-              style={{ resize: 'none' }}
-              placeholder={formatMessage({ id: 'form.input.reason' })}
-              css={textAreaStyle}
-            />
-          </Form.Item>
-        )}
-
+        <Form.Item<FieldType>
+          label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.reason' })}</span>}
+          name="reason"
+          rules={[{ required: true, message: formatMessage({ id: 'form.input.require.reason' }) }]}
+        >
+          <Input.TextArea
+            style={{ resize: 'none' }}
+            placeholder={formatMessage({ id: 'form.input.reason' })}
+          />
+        </Form.Item>
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
@@ -91,7 +107,7 @@ export const CloseOpportuity = ({ ...props }: CloseOpportuityProps) => {
   );
 };
 
-const formCLoseOpportuityStyle = css`
+const formStyle = css`
   .ant-form-item-required::before {
     display: none !important;
   }
@@ -100,29 +116,15 @@ const formCLoseOpportuityStyle = css`
 `;
 
 const formTitleStyle = css`
-  font-weight: 700;
-  font-size: 2.1rem;
-  line-height: 2.6rem;
-  margin-top: 3rem;
-  color: rgba(21, 41, 75, 1);
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.2rem;
+  margin-top: 2rem;
 `;
 
 const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(16, 24, 40, 1);
-`;
-
-const selectFormStyle = css`
-  height: 4.5rem;
-`;
-const textAreaStyle = css`
-  padding: 0.8rem 1.4rem;
-  &::placeholder {
-    color: rgba(208, 213, 221, 1);
-    font-size: 1.4rem;
-
-    font-weight: 500;
-  }
 `;

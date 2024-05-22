@@ -452,7 +452,7 @@ const containerStyle = css`
   width: 100%;
   max-width: 90rem;
   height: 100%;
-  margin: 3rem auto;
+  margin: 4rem auto;
   position: relative;
 `;
 

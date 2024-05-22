@@ -2,10 +2,11 @@ import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalOpportunityType } from '../../../enum/opportunity.enum';
 import { AssignOpportunity } from './assign-opportuity';
-import { CloseOpportuity } from './close-opportuity';
+import { CloseOpportunity } from './close-opportuity';
+import { DeleteOpportunity } from './delete-opportuity';
 
 type ModalContexttype = {
-  openModal: (modalName: string, data?: DataOpportunityType) => void;
+  openModal: (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => void;
   closeModal: () => void;
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
@@ -23,12 +24,11 @@ type ModalProviderProps = {
 };
 export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
   const [currentModal, setCurrentModal] = useState<
-    { modalName: string; data?: DataOpportunityType } | undefined
+    { modalName: string; data?: DataOpportunityType; opportunityIds?: string[] } | undefined
   >();
   const [open, setOpen] = useState<boolean>(false);
-
-  const openModal = (modalName: string, data?: DataOpportunityType) => {
-    setCurrentModal({ modalName, data });
+  const openModal = (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => {
+    setCurrentModal({ modalName, data, opportunityIds });
     setOpen(true);
   };
 
@@ -45,9 +45,15 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
           <AssignOpportunity closeModal={closeModal} data={currentModal.data!} />
         )}
         {currentModal?.modalName === ModalOpportunityType.CloseOpportunity && (
-          <CloseOpportuity closeModal={closeModal} />
+          <CloseOpportunity closeModal={closeModal} data={currentModal.data!} />
         )}
-        {currentModal?.modalName === ModalOpportunityType.Delete && <div>Delete Modal</div>}
+        {currentModal?.modalName === ModalOpportunityType.Delete && (
+          <DeleteOpportunity
+            closeModal={closeModal}
+            data={currentModal.data!}
+            opportunityIds={currentModal.opportunityIds!}
+          />
+        )}
       </Modal>
     </ModalContext.Provider>
   );

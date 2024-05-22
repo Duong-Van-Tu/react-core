@@ -20,6 +20,8 @@ type DataOpportunityType = {
   applicationUser?: ApplicationUser;
   opportunityStatus?: OpportunityStatus;
   saleAndSupplierId?: string;
+  status?: string;
+  applicationUserId?: string;
 };
 
 type OpportunityStatus = {

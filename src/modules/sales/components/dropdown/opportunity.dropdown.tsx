@@ -30,10 +30,10 @@ export function OpportunityDropdown({ data }: OpportunityDropdownProps) {
         openModal(ModalOpportunityType.AssignOpportunity, data);
         break;
       case MenuItem.CloseOpportunity:
-        openModal(ModalOpportunityType.CloseOpportunity);
+        openModal(ModalOpportunityType.CloseOpportunity, data);
         break;
       case MenuItem.Delete:
-        openModal(ModalOpportunityType.Delete);
+        openModal(ModalOpportunityType.Delete, data);
         break;
       default:
         break;
