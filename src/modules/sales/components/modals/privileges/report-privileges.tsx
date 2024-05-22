@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Button, Col, Row, Space } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { StatusBenefit } from '@/modules/sales/enum/status.enum';
 import { Message } from '@/components/message';

@@ -16,6 +16,7 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { getTenant } from '@/utils/common';
 import { Key } from 'antd/es/table/interface';
 import { ModalOpportunityType } from '../../enum/opportunity.enum';
+import { useQuery } from '@/hooks/query.hook';
 
 export default function TableOpportunity() {
   const { openModal } = useModalOpportunity();
@@ -30,6 +31,7 @@ export default function TableOpportunity() {
   const { pagination, status, data, totalExtend } = useRootSelector(
     (state) => state.sale.opportunity,
   );
+  const { textSearch, time, statusId } = useQuery();
 
   const rowSelection = {
     onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
@@ -41,6 +43,9 @@ export default function TableOpportunity() {
     getAllOpportunity({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
+      time,
+      statusId,
     });
   };
 

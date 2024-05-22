@@ -51,7 +51,7 @@ export const useKPI = () => {
         tenant: tenant,
         roleType,
       };
-      // console.log({ textSearch });
+
       const urlParams = generateUrlParams(queryParams);
 
       const { data, succeeded } = await caller(

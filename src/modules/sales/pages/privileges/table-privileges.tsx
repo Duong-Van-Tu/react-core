@@ -61,7 +61,7 @@ export default function TablePrivileges() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
-      textSearch,
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
       time,
       statusId,
     });

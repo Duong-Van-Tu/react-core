@@ -56,7 +56,7 @@ export default function TableKPI() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
-      textSearch: decodeURI(textSearch).replace(/\+/g, ' '),
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
       time,
       statusId,
     });
