@@ -5,6 +5,7 @@ import { Button, Col, Input, Row, Select } from 'antd';
 import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { OptionProps } from 'antd/es/select';
+import { useNavigate } from 'react-router-dom';
 
 export type SearchParams = {
   textSearch?: string;
@@ -22,8 +23,20 @@ export const Search = ({ onSearch, status, loadingStatus }: SearchProps) => {
   const [textSearch, setSearchers] = useState<string>();
   const [statusId, SetStatusId] = useState<string>();
   const [time, setTime] = useState<string>();
+  const navigate = useNavigate();
+  let queryParams = new URLSearchParams(location.search);
+
   const handleSearch = (values?: SearchParams) => {
     onSearch({ textSearch, statusId, time, ...values });
+
+    Object.entries({ textSearch, statusId, time, ...values }).forEach(([key, value]) => {
+      if (value) {
+        queryParams.set(key, Array.isArray(value) ? value.join(',') : value);
+      } else {
+        queryParams.delete(key);
+      }
+    });
+    navigate(`?${queryParams.toString()}`);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -60,19 +73,22 @@ export const Search = ({ onSearch, status, loadingStatus }: SearchProps) => {
           allowClear
         />
       </Col>
-      <Col span={4}>
-        <Select
-          loading={loadingStatus}
-          css={selectStyle}
-          size="large"
-          defaultValue={''}
-          options={[{ value: '', label: 'Tất cả trạng thái' }, ...statusOptions]}
-          onChange={(value) => SetStatusId(value)}
-          onSelect={(value) => {
-            handleSearch({ statusId: value });
-          }}
-        />
-      </Col>
+      {status && (
+        <Col span={4}>
+          <Select
+            loading={loadingStatus}
+            css={selectStyle}
+            size="large"
+            defaultValue={''}
+            options={[{ value: '', label: 'Tất cả trạng thái' }, ...statusOptions]}
+            onChange={(value) => SetStatusId(value)}
+            onSelect={(value) => {
+              handleSearch({ statusId: value });
+            }}
+          />
+        </Col>
+      )}
+
       <Col span={4}>
         <Select
           css={selectStyle}

@@ -12,7 +12,7 @@ type DeletePrivilegesProps = {
   benefitIds: string[];
   data?: DataBenefitType;
 };
-export const DeletePrivileges = ({ closeModal, benefitIds }: DeletePrivilegesProps) => {
+export const DeletePrivileges = ({ closeModal, benefitIds, data }: DeletePrivilegesProps) => {
   const { deleteBenefit, getAllBenefit } = useBenefit();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-benefit', false]);
@@ -21,8 +21,9 @@ export const DeletePrivileges = ({ closeModal, benefitIds }: DeletePrivilegesPro
   const tab = searchParams.get('tab');
 
   const handleDeletePrivileges = async () => {
-    const deleteGoal = await deleteBenefit(benefitIds);
+    const deleteGoal = await deleteBenefit(!!data ? [data.id!] : benefitIds);
     if (deleteGoal) {
+      closeModal();
       if (benefitIds.length === Pagination.PAGESIZE) {
         getAllBenefit({
           pageIndex: pageIndex - 1 || 1,
@@ -30,12 +31,12 @@ export const DeletePrivileges = ({ closeModal, benefitIds }: DeletePrivilegesPro
           roleType: tab!,
         });
       }
-      closeModal();
     }
   };
+
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá các quyền lọi đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá quyền lợi đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>

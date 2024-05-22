@@ -13,9 +13,9 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
 import { Key } from 'antd/es/table/interface';
 import { usePermission } from '@/hooks/permission.hook';
-import { useLocation } from 'react-router-dom';
 import { RoleType } from '@/enum/role.enum';
 import { ModalKPIType } from '../../enum/kpi.enum';
+import { useQuery } from '@/hooks/query.hook';
 
 export default function TableKPI() {
   const { openModal } = useModalKPI();
@@ -25,9 +25,7 @@ export default function TableKPI() {
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
   const { isSaleDirector, isSale } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const { tab, textSearch, time, statusId } = useQuery();
 
   const columnTable = useMemo(() => {
     if (isSaleDirector && tab === RoleType.MySelf) {
@@ -58,6 +56,9 @@ export default function TableKPI() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
+      textSearch,
+      time,
+      statusId,
     });
   };
 

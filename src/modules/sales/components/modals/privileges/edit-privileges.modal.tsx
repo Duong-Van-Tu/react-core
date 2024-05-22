@@ -1,11 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
-import { useRootSelector } from '@/hooks/selector.hook';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
 import { css } from '@emotion/react';
-import { Button, Form, FormProps, InputNumber, Row, Select, Space } from 'antd';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Button, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
+import { Fragment, useEffect } from 'react';
 
 type FieldType = {
   applicationUserId: string;
@@ -14,33 +13,22 @@ type FieldType = {
   totalSalary: string;
 };
 
-type AddPrivilegesProps = {
+type EditPrivilegesProps = {
   closeModal: () => void;
   data: DataBenefitType;
 };
 
-export const EditPrivileges = ({ closeModal, data }: AddPrivilegesProps) => {
+export const EditPrivileges = ({ closeModal, data }: EditPrivilegesProps) => {
   const { formatMessage } = useLocale();
   const { getUsersBenefit, updateBenefit } = useBenefit();
   const [loading] = useWatchLoading(['edit-benefit', false]);
   const [form] = Form.useForm();
-  const users = useRootSelector((state) => state.sale.benefit.users);
-
-  const userOptions =
-    useMemo(
-      () =>
-        users?.map((user) => ({
-          value: user.id,
-          label: user.fullName,
-        })),
-      [users],
-    ) ?? [];
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const { monthlySalary, targetSalary, totalSalary } = values;
     const dataUpdateBenefit = {
       id: data.id,
-      ...values,
+      applicationUserId: data.applicationUser?.id,
       monthlySalary: monthlySalary.toString(),
       targetSalary: targetSalary.toString(),
       totalSalary: totalSalary.toString(),
@@ -74,15 +62,8 @@ export const EditPrivileges = ({ closeModal, data }: AddPrivilegesProps) => {
               {formatMessage({ id: 'form.input.addPrivileges.beneficiaryName' })}
             </span>
           }
-          name="applicationUserId"
-          rules={[
-            {
-              required: true,
-              message: formatMessage({ id: 'form.input.addPrivileges.require.beneficiaryName' }),
-            },
-          ]}
         >
-          <Select size="large" placeholder="Người hưởng quyền lợi" options={userOptions} />
+          <Input value={data.applicationUser?.fullName} disabled size="large" />
         </Form.Item>
 
         <Form.Item<FieldType>

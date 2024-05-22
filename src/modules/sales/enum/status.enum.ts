@@ -17,7 +17,7 @@ export enum StatusOpportunity {
 
 export enum StatusBenefit {
   Pending = 'PENDING',
-  Update = 'UPDATE',
+  Updated = 'UPDATED',
   Request = 'REQUEST',
   Confirm = 'CONFIRMED',
 }
