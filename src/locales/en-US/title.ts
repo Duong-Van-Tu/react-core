@@ -1,4 +1,7 @@
 export const enUS_title = {
+  'title.year': 'Year',
+  'title.month': 'Month',
+
   'title.back': 'Go back',
   'title.continue': 'Continue',
   'title.document.sale': 'Sale',
@@ -20,10 +23,16 @@ export const enUS_title = {
   'title.document.inforOther': 'Other information',
   'title.document.detailsView': 'Details view',
   'title.document.customer': 'Customer',
+  'title.document.incomeDuringTheYear': 'Income during the year',
+  'title.document.incomeByPosition': 'Income by job position',
+  'title.document.human-resource': 'Human resource',
+  'title.document.income-ticket': 'Income details by ticket',
+
   'title.form.login': 'Sign In',
   'title.form.forgotPassword': 'Forgot password',
   'title.form.resetPassword': 'Reset password',
   'title.form.emailVerification': 'Email verification',
+  'title.tab.kpi.manager': 'Manager KPI',
   'title.tab.kpi.my': 'My KPI',
   'title.tab.kpi.employee': `Employee's KPI`,
   'title.tab.privileges.my': 'My privileges',
@@ -35,8 +44,7 @@ export const enUS_title = {
   'title.employee.reportPrivileges.totalChangesTarget': 'Total target variable salary',
   'title.employee.reportPrivileges.actualSalaryFluctuates': 'Actual target variable salary',
   'title.status': 'Status',
-  'title.myRelationships.proposedReport.fullName': 'Full name',
-  'title.myRelationships.proposedReport.jobPosition': 'Job position',
+
   'title.myRelationships.proposedReport.CurrentRelationshipLevel': 'Current relationship level',
   'title.myRelationships.proposedReport.TargetlationshipLevel': 'Current relationship level',
   'title.myRelationships.proposedReport.ReasonUpgrade': 'Reason for relationship upgrade',

@@ -5,6 +5,7 @@ import type { GetProp, TableProps } from 'antd';
 import { css } from '@emotion/react';
 import { CustomIcon } from './icons';
 import { useLocale } from '@/hooks/locale.hook';
+// import { useRootSelector } from '@/hooks/selector.hook';
 
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 
@@ -22,8 +23,11 @@ type TableParams = {
 const icon = <CustomIcon type="loading" color="#3498db" />;
 
 export function TableCustom(props: TableCustom) {
+  // const locale = useRootSelector((state) => state.locale.language);
+
   const { onTableChange, loading, pagination } = props;
   const { formatMessage } = useLocale();
+
   const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
     if (type === 'prev') {
       return (

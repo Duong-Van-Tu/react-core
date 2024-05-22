@@ -4,7 +4,7 @@ export const categoryMenus: MenuItem = {
   icon: 'user-group',
   label: {
     vi_VN: 'Danh mục',
-    en_US: 'category',
+    en_US: 'Category',
   },
   children: [
     {
@@ -22,7 +22,7 @@ export const categoryMenus: MenuItem = {
       path: '/category/human-resource',
       label: {
         vi_VN: 'Nhân sự',
-        en_US: 'Human-resource',
+        en_US: 'Human resource',
       },
     },
     {
@@ -67,7 +67,7 @@ export const categoryMenus: MenuItem = {
       path: '/category/sale-kit',
       label: {
         vi_VN: 'Sale kit',
-        en_US: 'Sale Kit',
+        en_US: 'Sale kit',
       },
     },
   ],

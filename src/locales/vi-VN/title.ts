@@ -1,4 +1,6 @@
 export const viVN_title = {
+  'title.year': 'Năm',
+  'title.month': 'Tháng',
   'form.action.update': 'Cập nhật',
   'title.back': 'Quay lại',
   'title.continue': 'Tiếp tục',
@@ -22,10 +24,16 @@ export const viVN_title = {
   'title.document.inforOther': 'Thông tin khác',
   'title.document.detailsView': 'Xem chi tiết',
   'title.document.customer': 'Khách hàng',
+  'title.document.incomeDuringTheYear': 'Thu nhập trong năm',
+  'title.document.incomeByPosition': 'Thu nhập theo vị trí',
+  'title.document.human-resource': 'Nhân sự',
+  'title.document.income-ticket': 'Chi tiết thu nhập theo ticket',
+
   'title.form.login': 'Đăng Nhập',
   'title.form.forgotPassword': 'Quên mật khẩu',
   'title.form.resetPassword': 'Đặt lại mật khẩu',
   'title.form.emailVerification': 'Xác thực email',
+  'title.tab.kpi.manager': 'Mục tiêu của giám đốc',
   'title.tab.kpi.my': 'Mục tiêu của tôi',
   'title.tab.kpi.employee': 'Mục tiêu của nhân viên',
   'title.tab.privileges.my': 'Quyền lợi của tôi',
@@ -37,8 +45,7 @@ export const viVN_title = {
   'title.employee.reportPrivileges.totalChangesTarget': 'Tổng mức lương biến động mục tiêu',
   'title.employee.reportPrivileges.actualSalaryFluctuates': 'Mức lương biến động mục tiêu thực tế',
   'title.status': 'Trạng thái',
-  'title.myRelationships.proposedReport.fullName': 'Họ và tên',
-  'title.myRelationships.proposedReport.jobPosition': 'Vị trí làm việc',
+
   'title.myRelationships.proposedReport.CurrentRelationshipLevel': 'Mức độ QH hiện tại',
   'title.myRelationships.proposedReport.TargetlationshipLevel': 'Mức độ QH mục tiêu',
   'title.myRelationships.proposedReport.ReasonUpgrade': 'Lý do cần phải nâng cấp quan hệ',
