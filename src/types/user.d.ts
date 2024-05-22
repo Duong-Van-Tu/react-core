@@ -12,3 +12,12 @@ type Role = {
   description: string;
   displayName: string;
 };
+
+type ApplicationUser = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  fullName: string;
+  email: string;
+  phone: string;
+};

@@ -8,30 +8,30 @@ import { useModalPrivileges } from '../modals/privileges';
 import { ModalPrivilegesType } from '../../enum/privileges.enum';
 
 enum MenuItem {
-  RequestEdit = 1,
+  EditPrivileges = 1,
   Report,
   SuggestedEdit,
-  RefuseEdit,
   Delete,
 }
 
-export function PrivilegesDropdown() {
+type PrivilegesDropdownProps = {
+  data: DataBenefitType;
+};
+
+export function PrivilegesDropdown({ data }: PrivilegesDropdownProps) {
   const { openModal } = useModalPrivileges();
   const { formatMessage } = useLocale();
 
   const handleItemClick = (key: number) => {
     switch (key) {
-      case MenuItem.RequestEdit:
-        openModal(ModalPrivilegesType.RequestEdit);
+      case MenuItem.EditPrivileges:
+        openModal(ModalPrivilegesType.EditPrivileges, data);
         break;
       case MenuItem.SuggestedEdit:
-        openModal(ModalPrivilegesType.SuggestedEdit);
+        openModal(ModalPrivilegesType.SuggestedEdit, data);
         break;
       case MenuItem.Report:
-        openModal(ModalPrivilegesType.Report);
-        break;
-      case MenuItem.RefuseEdit:
-        openModal(ModalPrivilegesType.RefuseEdit);
+        openModal(ModalPrivilegesType.Report, data);
         break;
       case MenuItem.Delete:
         openModal(ModalPrivilegesType.Delete);
@@ -45,27 +45,23 @@ export function PrivilegesDropdown() {
     {
       key: '1',
       label: <span>{formatMessage({ id: 'dropdown.edit' })}</span>,
-      onClick: () => handleItemClick(MenuItem.RequestEdit),
+      onClick: () => handleItemClick(MenuItem.EditPrivileges),
     },
     {
       key: '2',
-      label: <span>{formatMessage({ id: 'dropdown.delete' })}</span>,
-      onClick: () => handleItemClick(MenuItem.Delete),
-    },
-    {
-      key: '3',
       label: <span>{formatMessage({ id: 'dropdown.privileges.suggestedEdit' })}</span>,
       onClick: () => handleItemClick(MenuItem.SuggestedEdit),
     },
+
     {
-      key: '4',
-      label: <span>{formatMessage({ id: 'dropdown.privileges.refuseEdit' })}</span>,
-      onClick: () => handleItemClick(MenuItem.RefuseEdit),
-    },
-    {
-      key: '5',
+      key: '3',
       label: <span>{formatMessage({ id: 'dropdown.report' })}</span>,
       onClick: () => handleItemClick(MenuItem.Report),
+    },
+    {
+      key: '4',
+      label: <span>{formatMessage({ id: 'dropdown.delete' })}</span>,
+      onClick: () => handleItemClick(MenuItem.Delete),
     },
   ];
 

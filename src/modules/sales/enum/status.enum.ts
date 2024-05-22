@@ -14,3 +14,10 @@ export enum StatusOpportunity {
   Fail = 'FAIL',
   OnHold = 'ONHOLD',
 }
+
+export enum StatusBenefit {
+  Pending = 'PENDING',
+  Update = 'UPDATE',
+  Request = 'REQUEST',
+  Confirm = 'CONFIRMED',
+}

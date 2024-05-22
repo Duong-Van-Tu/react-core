@@ -17,7 +17,7 @@ type UpdateRequestProps = {
 };
 
 export const UpdateRequest = ({ closeModal, data }: UpdateRequestProps) => {
-  const { updateStatusKPI } = useKPI();
+  const { updateKPI } = useKPI();
   const [form] = Form.useForm();
   const [loading] = useWatchLoading(['edit-status', false]);
 
@@ -27,11 +27,10 @@ export const UpdateRequest = ({ closeModal, data }: UpdateRequestProps) => {
       id: data.id,
       actualKPI: actualKPI.toString(),
       actualPoint: actualPoint.toString(),
-      status: Status.Updated,
     } as DataKPIType;
 
-    const editStatus = await updateStatusKPI(dataUpdateKPI);
-    if (editStatus) {
+    const update = await updateKPI(dataUpdateKPI);
+    if (update) {
       form.resetFields();
       closeModal();
     }
