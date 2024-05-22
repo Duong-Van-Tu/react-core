@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { TableCustom } from '@/components/table';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
@@ -11,22 +11,21 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
-import { Key } from 'antd/es/table/interface';
+
 import { useHumanResources } from '../../services/human.resources.service';
 import { Search, SearchParams } from '@/components/search';
+import { ModalUserCategoryProvider } from '../../components/modals/human-resource';
 
 export default function HumanResourcesPage() {
   const { formatMessage } = useLocale();
   const { getListUsers } = useHumanResources();
   const [loadingAdmin] = useWatchLoading(['get-list-user', true]);
 
-  const { data, pagination } = useRootSelector((state) => state.user.humanResources);
+  const { data, pagination } = useRootSelector((state) => state.category.humanResources);
   const user = useRootSelector((state) => state.auth.user);
 
   const { isAdmin } = usePermission();
   const dispatch = useDispatch();
-
-  const [humanResourceId, setHumanResourceId] = useState<string[]>();
 
   useEffect(() => {
     const breadCrumbItems = [
@@ -45,12 +44,6 @@ export default function HumanResourcesPage() {
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
   }, [dispatch]);
-
-  const rowSelection = {
-    onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
-      setHumanResourceId(selectedRows.map((row) => row.id!));
-    },
-  };
 
   useEffect(() => {
     handleGetInfo();
@@ -75,38 +68,31 @@ export default function HumanResourcesPage() {
   };
 
   return (
-    <div>
+    <ModalUserCategoryProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.human-resource' })}</h3>
-      {isAdmin && (
-        <div css={searchContainer}>
-          <Search onSearch={handleSearch} />
-        </div>
-      )}
+      <div css={searchContainer}>
+        <Search onSearch={handleSearch} />
+      </div>
       <TableCustom
-        rowSelection={rowSelection}
         columns={usersColumns}
         dataSource={isAdmin ? data : [user]}
         loading={loadingAdmin}
         rowKey={(record) => record.id}
-        pagination={
-          isAdmin
-            ? {
-                current: pagination?.pageIndex,
-                pageSize: Pagination.PAGESIZE,
-                total: pagination?.totalRecords,
-                position: ['bottomCenter'],
-                onChange: (page) => {
-                  getListUsers({
-                    pageIndex: page,
-                    pageSize: Pagination.PAGESIZE,
-                  });
-                },
-              }
-            : undefined
-        }
+        pagination={{
+          current: pagination?.pageIndex,
+          pageSize: Pagination.PAGESIZE,
+          total: pagination?.totalRecords,
+          position: ['bottomCenter'],
+          onChange: (page) => {
+            getListUsers({
+              pageIndex: page,
+              pageSize: Pagination.PAGESIZE,
+            });
+          },
+        }}
         scroll={{ x: 1450 }}
       />
-    </div>
+    </ModalUserCategoryProvider>
   );
 }
 

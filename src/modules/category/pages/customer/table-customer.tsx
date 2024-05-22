@@ -26,12 +26,11 @@ export default function TableCustomer() {
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
 
-  const handleSearch = ({ textSearch, statusId, time }: SearchParams) => {
+  const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllCustomer({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       textSearch,
-      statusId,
       time,
       roleType: tab!,
     });
@@ -76,7 +75,7 @@ export default function TableCustomer() {
       </Button>
 
       <div css={searchContainer}>
-        <Search onSearch={handleSearch} status={undefined} loadingStatus={false} />
+        <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
         <Button disabled={!customerIds} onClick={() => handleDeleteCustomer()} size="large" danger>

@@ -11,13 +11,22 @@ import { payrollMenus } from '@/modules/payroll/menu-payroll';
 import { reportMenus } from '@/modules/reports/menu-reports';
 import Menu from './menu';
 import { categoryMenus } from '@/modules/category/menu.category';
+import { usePermission } from '@/hooks/permission.hook';
 
 export default function Sidebar() {
   const { Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
+  const { isAdmin } = usePermission();
   const menus = useMemo(() => {
-    return [saleMenus, menuUsers, categoryMenus, payrollMenus, reportMenus, settingMenus];
-  }, []);
+    return [
+      saleMenus,
+      menuUsers,
+      ...(isAdmin ? [categoryMenus] : []),
+      payrollMenus,
+      reportMenus,
+      settingMenus,
+    ];
+  }, [isAdmin]);
   return (
     <Sider
       css={sidebarStyle}
