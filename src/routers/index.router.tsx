@@ -5,12 +5,12 @@ import MainLayout from '@/layouts/main.layout';
 
 import WrapperRouteComponent from './config';
 import AuthLayout from '@/layouts/auth.layout';
-import { AddOpportuity } from '@/modules/sales/components/forms/opportuity/add-opportuity';
+import { AddOpportunityPage } from '@/modules/sales/pages/opportunity/add-opportunity';
 import { UpdateOpportunity } from '@/modules/sales/components/modals/opportunity/update-opportunity';
 import { ReportOpportunity } from '@/modules/sales/components/modals/opportunity/report-opportunity';
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportunity/update-history-opportunity';
-import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
 import { TicketIncomeDetails } from '@/modules/users/pages/income/details-view';
+import { EditOpportunityPage } from '@/modules/sales/pages/opportunity/edit-opportunity';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -28,6 +28,7 @@ const SaleKitPage = lazy(
 const SettingPage = lazy(
   () => import(/* webpackChunkName: "settings"*/ '@/modules/settings/pages'),
 );
+
 const ReportPage = lazy(() => import(/* webpackChunkName: "settings"*/ '@/modules/reports/pages'));
 const PayrollPage = lazy(() => import(/* webpackChunkName: "payroll"*/ '@/modules/payroll/pages'));
 const NotfoundPage = lazy(() => import(/* webpackChunkName: "notfound"*/ '@/pages/notfound.page'));
@@ -207,7 +208,7 @@ const routes: RouteObject[] = [
     element: (
       <WrapperRouteComponent titleId="title.document.addOpportunity">
         <Middleware mode="private">
-          <AddOpportuity />
+          <AddOpportunityPage />
         </Middleware>
       </WrapperRouteComponent>
     ),
@@ -217,7 +218,7 @@ const routes: RouteObject[] = [
     element: (
       <WrapperRouteComponent titleId="title.document.editOpportunity">
         <Middleware mode="private">
-          <EditOpportuity />
+          <EditOpportunityPage />
         </Middleware>
       </WrapperRouteComponent>
     ),

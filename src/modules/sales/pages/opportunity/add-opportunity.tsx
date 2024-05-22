@@ -41,7 +41,7 @@ type FieldType = {
   winningOppotunity: string;
 };
 
-export const AddOpportuity = () => {
+export const AddOpportunityPage = () => {
   const { formatMessage } = useLocale();
   const { addOpportunity } = useOpportunity();
   const [loading] = useWatchLoading(['add-opportunity', false]);
