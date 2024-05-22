@@ -47,9 +47,15 @@ export const useHumanResources = () => {
       const urlParams = generateUrlParams(queryParams);
 
       const { data, succeeded } = await caller(
+<<<<<<< HEAD
         () => api.get(`/ApplicationUsers/get-list-with-pagination?${urlParams}`),
         {
           loadingKey: 'get-list-user',
+=======
+        () => api.post(`/Employee/get-list-with-pagination?${urlParams}`),
+        {
+          loadingKey: 'get-list-employee',
+>>>>>>> develop
         },
       );
       if (succeeded) {
