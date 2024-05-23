@@ -13,19 +13,21 @@ import { useNavigate } from 'react-router-dom';
 import { getTenant } from '@/utils/common';
 import { usePermission } from '@/hooks/permission.hook';
 import { RoleType } from '@/enum/role.enum';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 export default function PrivilegesPage() {
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
   const navigate = useNavigate();
   const tenant = getTenant();
-  const { isAdmin, isSaleDirector, isSale } = usePermission();
+  const totalRecords = useRootSelector((state) => state.sale.benefit.pagination?.totalRecords);
+  const { isAdmin, isSaleDirector } = usePermission();
   const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
       key: isAdmin ? RoleType.Manager : RoleType.MySelf,
-      label: formatMessage({ id: 'title.tab.privileges.my' }),
+      label: isAdmin ? ' Quyền lợi của giám đốc' : formatMessage({ id: 'title.tab.privileges.my' }),
       children: <TablePrivileges />,
     },
     {
@@ -69,12 +71,14 @@ export default function PrivilegesPage() {
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.privileges' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
-        <span>10 {formatMessage({ id: 'title.document.privileges' })}</span>
+        <span>
+          {totalRecords} {formatMessage({ id: 'title.document.privileges' })}
+        </span>
       </div>
       {(isAdmin || isSaleDirector) && (
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
       )}
-      {isSale && <TablePrivileges />}
+      {!(isAdmin || isSaleDirector) && <TablePrivileges />}
     </ModalPrivilegesProvider>
   );
 }

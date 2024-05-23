@@ -3,6 +3,7 @@ export const viVN_title = {
   'title.month': 'Tháng',
   'form.action.update': 'Cập nhật',
   'title.back': 'Quay lại',
+  'title.role': 'Quyền',
   'title.continue': 'Tiếp tục',
   'title.breadcrumb.sale': 'Sale',
   'title.document.kpi': 'Mục tiêu',
@@ -34,6 +35,7 @@ export const viVN_title = {
   'title.document.incomeByPosition': 'Thu nhập theo vị trí',
   'title.document.human-resource': 'Nhân sự',
   'title.document.income-ticket': 'Chi tiết thu nhập theo ticket',
+  'title.document.saltKitAuth': 'Quản lý quyền truy cập sale kit',
 
   'title.form.login': 'Đăng Nhập',
   'title.form.forgotPassword': 'Quên mật khẩu',

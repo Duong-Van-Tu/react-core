@@ -15,21 +15,26 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { RoleType } from '@/enum/role.enum';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { ModalPrivilegesType } from '../../enum/privileges.enum';
+import { useQuery } from '@/hooks/query.hook';
 
 export default function TablePrivileges() {
   const { openModal } = useModalPrivileges();
   const { getAllStatusBenefit, getAllBenefit } = useBenefit();
   const [loading, loadingStatus] = useWatchLoading(['get-benefit', true], ['status-benefit', true]);
-  const { isSaleDirector } = usePermission();
+  const { isSaleDirector, isAdmin, isSale } = usePermission();
   const { data, pagination, status } = useRootSelector((state) => state.sale.benefit);
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const { tab, textSearch, time, statusId } = useQuery();
 
   const [benefitIds, setBenefitIds] = useState<string[]>();
 
   const columnTable = useMemo(() => {
     if (isSaleDirector && tab === RoleType.MySelf) {
       return columnsManager;
+    }
+    if (isAdmin && tab === RoleType.Manager) {
+      const updatedColumnsEmployee = [...columnsEmployee!];
+      updatedColumnsEmployee.splice(5, 1);
+      return updatedColumnsEmployee;
     }
     return columnsEmployee;
   }, [tab, isSaleDirector]);
@@ -56,6 +61,9 @@ export default function TablePrivileges() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
+      time,
+      statusId,
     });
   };
 
@@ -70,7 +78,7 @@ export default function TablePrivileges() {
 
   return (
     <div css={rootStyle}>
-      {tab === RoleType.Employee && isSaleDirector && (
+      {((tab === RoleType.Employee && isSaleDirector) || isAdmin) && (
         <Fragment>
           <Button
             onClick={() => openModal('Add Privileges')}
@@ -82,8 +90,12 @@ export default function TablePrivileges() {
             <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
             <span>Thêm Quyền lợi</span>
           </Button>
-          <div css={searchContainer}>
-            <Search onSearch={handleSearch} status={status as any} loadingStatus={loadingStatus} />
+          <div css={[searchContainer, isAdmin && adminSearchStyle]}>
+            <Search
+              onSearch={handleSearch}
+              status={tab === RoleType.Manager ? undefined : (status as any)}
+              loadingStatus={loadingStatus}
+            />
           </div>
           <Button
             css={deleteBtnStyle}
@@ -98,20 +110,19 @@ export default function TablePrivileges() {
       )}
 
       <TableCustom
-        rowSelection={tab === RoleType.Employee ? rowSelection : undefined}
+        css={[isSale && tableStyle]}
+        rowSelection={tab === RoleType.Employee || isAdmin ? rowSelection : undefined}
         columns={columnTable}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
         pagination={
-          isSaleDirector &&
-          tab === RoleType.Employee && {
+          ((isSaleDirector && tab === RoleType.Employee) || isAdmin) && {
             current: pagination?.pageIndex,
             pageSize: Pagination.PAGESIZE,
             total: pagination?.totalRecords,
             position: ['bottomCenter'],
-            onChange: handleTableChange,
           }
         }
         scroll={{ x: tab === RoleType.MySelf ? 1200 : 1800 }}
@@ -144,4 +155,12 @@ const searchContainer = css`
 
 const deleteBtnStyle = css`
   margin: 2.4rem 0 1.4rem 0;
+`;
+
+const adminSearchStyle = css`
+  margin-bottom: 2.6rem;
+`;
+
+const tableStyle = css`
+  margin-top: 2.6rem;
 `;

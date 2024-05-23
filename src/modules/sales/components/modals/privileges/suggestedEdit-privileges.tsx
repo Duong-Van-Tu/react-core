@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
+import { usePermission } from '@/hooks/permission.hook';
 import { StatusBenefit } from '@/modules/sales/enum/status.enum';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
 import { css } from '@emotion/react';
@@ -19,11 +20,12 @@ type FieldType = {
 
 export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilegesProps) => {
   const { formatMessage } = useLocale();
-  const { updateStatusBenefit, autoEditBenefit } = useBenefit();
+  const { updateStatusById, refuseEditBenefit } = useBenefit();
+  const { isSale, isSaleDirector } = usePermission();
   const [form] = Form.useForm();
-  const [loading, autoEditLoading] = useWatchLoading(
+  const [loading, refuseEditLoading] = useWatchLoading(
     ['edit-statusBenefit', false],
-    ['autoEdit-benefit', false],
+    ['refuseEdit-benefit', false],
   );
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
@@ -35,18 +37,18 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
       targetSalary: targetSalary.toString(),
       totalSalary: totalSalary.toString(),
       applicationUserId: data.applicationUser?.id,
-      status: StatusBenefit.Update,
+      status: isSale ? StatusBenefit.Request : StatusBenefit.Updated,
     };
-    const edit = await updateStatusBenefit(dataUpdateBenefit);
+    const edit = await updateStatusById(dataUpdateBenefit);
     if (edit) {
       form.resetFields();
       closeModal();
     }
   };
 
-  const handleAutoEdit = async () => {
-    const autoEdit = await autoEditBenefit(data);
-    if (autoEdit) {
+  const handlerefuseEdit = async () => {
+    const refuseEdit = await refuseEditBenefit(data);
+    if (refuseEdit) {
       form.resetFields();
       closeModal();
     }
@@ -163,9 +165,12 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
         <Row justify="end" css={formFooterStyle}>
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button loading={autoEditLoading} onClick={handleAutoEdit} type="primary" ghost>
-              Tự động chỉnh sửa
-            </Button>
+            {isSaleDirector && (
+              <Button loading={refuseEditLoading} onClick={handlerefuseEdit} type="primary" ghost>
+                Từ chối chỉnh sửa
+              </Button>
+            )}
+
             <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>

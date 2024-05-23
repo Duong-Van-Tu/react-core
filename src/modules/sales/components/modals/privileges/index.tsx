@@ -6,6 +6,8 @@ import { ReportPrivileges } from './report-privileges';
 import { SuggestEditPrivileges } from './suggestedEdit-privileges';
 import { EditPrivileges } from './edit-privileges.modal';
 import { DeletePrivileges } from './delete-privileges.modal';
+import { UpdateTotalPrivileges } from './update-totalPrivileges.modal';
+import { FinalizePrivileges } from './finalize-privileges.modal';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataBenefitType, benefitIds?: string[]) => void;
@@ -44,7 +46,14 @@ export const ModalPrivilegesProvider = ({ children }: ModalProviderProps) => {
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal
-        width={currentModal?.modalName === ModalPrivilegesType.Delete ? '38rem' : '54rem'}
+        width={
+          currentModal?.modalName === ModalPrivilegesType.Delete ||
+          currentModal?.modalName === ModalPrivilegesType.FinalizePrivileges
+            ? '38rem'
+            : currentModal?.modalName === ModalPrivilegesType.Report
+              ? '45rem'
+              : '54rem'
+        }
         open={open}
         onCancel={closeModal}
         footer={null}
@@ -67,6 +76,12 @@ export const ModalPrivilegesProvider = ({ children }: ModalProviderProps) => {
         )}
         {currentModal?.modalName === ModalPrivilegesType.EditPrivileges && (
           <EditPrivileges closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalPrivilegesType.TotalPrivileges && (
+          <UpdateTotalPrivileges closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalPrivilegesType.FinalizePrivileges && (
+          <FinalizePrivileges closeModal={closeModal} data={currentModal.data!} />
         )}
       </Modal>
     </ModalContext.Provider>

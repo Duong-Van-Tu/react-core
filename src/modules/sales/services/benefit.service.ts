@@ -135,6 +135,27 @@ export const useBenefit = () => {
     [api, caller],
   );
 
+  const updateTotalBenefit = useCallback(
+    async (values: DataBenefitType) => {
+      const { id, ...rest } = values;
+      const dataAddBenefit = convertToUppercaseFirstLetter(rest);
+
+      const { data, succeeded } = await caller(
+        () =>
+          api.put(`/Benefit/update-total-benefit?tenant=${tenant}`, [{ id, data: dataAddBenefit }]),
+        { loadingKey: 'edit-totalBenefit', messageKey: 'editBenefit-message' },
+      );
+
+      if (succeeded) {
+        dispatch(updateBenefitAction(data[0]));
+        return succeeded;
+      }
+      return false;
+    },
+
+    [api, caller],
+  );
+
   const deleteBenefit = useCallback(
     async (benefitIds: string[]) => {
       const deleteIds = benefitIds.join(',');
@@ -174,17 +195,36 @@ export const useBenefit = () => {
     [api, caller],
   );
 
-  const autoEditBenefit = useCallback(
+  const updateStatusById = useCallback(
+    async (values: DataBenefitType) => {
+      const dataUpdateStatusBenefit = convertToUppercaseFirstLetter(values);
+
+      const { data, succeeded } = await caller(
+        () => api.put(`/Benefit/update-status-by-id?tenant=${tenant}`, dataUpdateStatusBenefit),
+        { loadingKey: 'edit-statusById' },
+      );
+
+      if (succeeded) {
+        dispatch(updateBenefitAction(data));
+        return succeeded;
+      }
+      return false;
+    },
+
+    [api, caller],
+  );
+
+  const refuseEditBenefit = useCallback(
     async (values: DataBenefitType) => {
       const dataUpdateStatusBenefit = convertToUppercaseFirstLetter({
         id: values.id,
         applicationUserId: values.applicationUser?.id,
-        status: StatusBenefit.Update,
+        status: StatusBenefit.Confirm,
       });
 
       const { data, succeeded } = await caller(
-        () => api.post(`/BenefitStatus/add-or-update?tenant=${tenant}`, dataUpdateStatusBenefit),
-        { loadingKey: 'autoEdit-benefit' },
+        () => api.put(`/Benefit/update-status-by-id?tenant=${tenant}`, dataUpdateStatusBenefit),
+        { loadingKey: 'refuseEdit-benefit' },
       );
 
       if (succeeded) {
@@ -229,6 +269,8 @@ export const useBenefit = () => {
     getAllStatusBenefit,
     getBenefitById,
     getUsersBenefit,
-    autoEditBenefit,
+    refuseEditBenefit,
+    updateTotalBenefit,
+    updateStatusById,
   };
 };

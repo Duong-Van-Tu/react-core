@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { Status } from '@/modules/sales/enum/status.enum';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';

@@ -78,4 +78,6 @@ export const viVN_table = {
   'table.column.relationshipLvDesc': 'Định nghĩa',
   'table.column.questionGainsSerialNumber': 'Stt',
   'table.column.questionGainsQuestion': 'Câu hỏi',
+
+  'table.column.saleKit.selectAll': 'Chọn tất cả',
 };

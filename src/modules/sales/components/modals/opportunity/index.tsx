@@ -1,14 +1,16 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalOpportunityType } from '../../../enum/opportunity.enum';
-import { AssignOpportunity } from './assign-opportuity';
-import { CloseOpportuity } from './close-opportuity';
+import { AssignOpportunity } from './assign-opportunity';
+import { CloseOpportunity } from './close-opportunity';
+import { DeleteOpportunity } from './delete-opportunity';
+import { CreateHistoryOpportunity } from './create-HistoryOpportunity';
 
-type ModalContexttype = {
-  openModal: (modalName: string, data?: DataOpportunityType) => void;
+type ModalContextType = {
+  openModal: (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => void;
   closeModal: () => void;
 };
-const ModalContext = createContext<ModalContexttype | undefined>(undefined);
+const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const useModalOpportunity = () => {
   const context = useContext(ModalContext);
@@ -23,12 +25,11 @@ type ModalProviderProps = {
 };
 export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
   const [currentModal, setCurrentModal] = useState<
-    { modalName: string; data?: DataOpportunityType } | undefined
+    { modalName: string; data?: DataOpportunityType; opportunityIds?: string[] } | undefined
   >();
   const [open, setOpen] = useState<boolean>(false);
-
-  const openModal = (modalName: string, data?: DataOpportunityType) => {
-    setCurrentModal({ modalName, data });
+  const openModal = (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => {
+    setCurrentModal({ modalName, data, opportunityIds });
     setOpen(true);
   };
 
@@ -45,9 +46,18 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
           <AssignOpportunity closeModal={closeModal} data={currentModal.data!} />
         )}
         {currentModal?.modalName === ModalOpportunityType.CloseOpportunity && (
-          <CloseOpportuity closeModal={closeModal} />
+          <CloseOpportunity closeModal={closeModal} data={currentModal.data!} />
         )}
-        {currentModal?.modalName === ModalOpportunityType.Delete && <div>Delete Modal</div>}
+        {currentModal?.modalName === ModalOpportunityType.Delete && (
+          <DeleteOpportunity
+            closeModal={closeModal}
+            data={currentModal.data!}
+            opportunityIds={currentModal.opportunityIds!}
+          />
+        )}
+        {currentModal?.modalName === ModalOpportunityType.CreateHistoryOpportunity && (
+          <CreateHistoryOpportunity closeModal={closeModal} data={currentModal.data!} />
+        )}
       </Modal>
     </ModalContext.Provider>
   );

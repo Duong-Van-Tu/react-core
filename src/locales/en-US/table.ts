@@ -79,4 +79,6 @@ export const enUS_table = {
   'table.column.relationshipLvDesc': 'Description',
   'table.column.questionGainsSerialNumber': 'Serial number',
   'table.column.questionGainsQuestion': 'Question',
+
+  'table.column.saleKit.selectAll': 'Select all',
 };

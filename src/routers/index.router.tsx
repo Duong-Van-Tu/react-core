@@ -5,12 +5,8 @@ import MainLayout from '@/layouts/main.layout';
 
 import WrapperRouteComponent from './config';
 import AuthLayout from '@/layouts/auth.layout';
-import { AddOpportuity } from '@/modules/sales/components/forms/opportuity/add-opportuity';
-import { UpdateOpportunity } from '@/modules/sales/components/modals/opportunity/update-opportunity';
-import { ReportOpportunity } from '@/modules/sales/components/modals/opportunity/report-opportunity';
-import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportunity/update-history-opportunity';
-import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
-import { TicketIncomeDetails } from '@/modules/users/pages/income/details-view';
+
+import BaseLayout from '@/layouts/base.layout';
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
   () => import(/* webpackChunkName: "privileges"*/ '@/modules/sales/pages/privileges'),
@@ -22,11 +18,12 @@ const OpportunityPage = lazy(
   () => import(/* webpackChunkName: "opportunity"*/ '@/modules/sales/pages/opportunity'),
 );
 const SaleKitPage = lazy(
-  () => import(/* webpackChunkName: "sale-kit"*/ '@/modules/sales/pages/sale-kit.page'),
+  () => import(/* webpackChunkName: "sale-kit"*/ '@/modules/sales/pages/sale-kit'),
 );
 const SettingPage = lazy(
   () => import(/* webpackChunkName: "settings"*/ '@/modules/settings/pages'),
 );
+
 const ReportPage = lazy(() => import(/* webpackChunkName: "settings"*/ '@/modules/reports/pages'));
 const PayrollPage = lazy(() => import(/* webpackChunkName: "payroll"*/ '@/modules/payroll/pages'));
 const NotfoundPage = lazy(() => import(/* webpackChunkName: "notfound"*/ '@/pages/notfound.page'));
@@ -46,6 +43,37 @@ const InforPesonnelPage = lazy(
 );
 const InforIncomePage = lazy(
   () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/income'),
+);
+const HistoryOpportunityPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "ListUpdateOpportunityPage"*/ '@/modules/sales/pages/opportunity/history-opportunity'
+    ),
+);
+const TicketIncomeDetailsPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "TicketIncomeDetailsPage"*/ '@/modules/users/pages/income/details-view'
+    ),
+);
+
+const ReportOpportunityPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "ReportOpportunityPage"*/ '@/modules/sales/pages/opportunity/report-opportunity'
+    ),
+);
+const AddOpportunityPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "AddOpportunityPage"*/ '@/modules/sales/pages/opportunity/add-opportunity'
+    ),
+);
+const EditOpportunityPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "EditOpportunityPage"*/ '@/modules/sales/pages/opportunity/edit-opportunity'
+    ),
 );
 
 // module category
@@ -210,7 +238,6 @@ const routes: RouteObject[] = [
           },
         ],
       },
-
       {
         path: '/category',
         children: [
@@ -320,57 +347,58 @@ const routes: RouteObject[] = [
     element: <NotfoundPage />,
   },
   {
-    path: '/sales/opportunity/add-opportunity',
+    path: '',
     element: (
-      <WrapperRouteComponent titleId="title.document.addOpportunity">
+      <WrapperRouteComponent titleId="">
         <Middleware mode="private">
-          <AddOpportuity />
+          <BaseLayout />
         </Middleware>
       </WrapperRouteComponent>
     ),
+    children: [
+      {
+        path: '/sales/opportunity/add-opportunity',
+        element: (
+          <WrapperRouteComponent titleId="title.document.addOpportunity">
+            <AddOpportunityPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/sales/opportunity/history-opportunity/:id',
+        element: (
+          <WrapperRouteComponent titleId="title.document.updateOpportunity">
+            <HistoryOpportunityPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/sales/opportunity/:id',
+        element: (
+          <WrapperRouteComponent titleId="title.document.editOpportunity">
+            <EditOpportunityPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/sales/opportunity/report-opportunity/:id',
+        element: (
+          <WrapperRouteComponent titleId="title.document.reportOpportunity">
+            <ReportOpportunityPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/personnel/infor-income/details-view',
+        element: (
+          <WrapperRouteComponent titleId="title.document.detailsView">
+            <TicketIncomeDetailsPage />
+          </WrapperRouteComponent>
+        ),
+      },
+    ],
   },
-  {
-    path: '/sales/opportunity/:id',
-    element: (
-      <WrapperRouteComponent titleId="title.document.editOpportunity">
-        <Middleware mode="private">
-          <EditOpportuity />
-        </Middleware>
-      </WrapperRouteComponent>
-    ),
-  },
-  {
-    path: '/sales/opportunity/update-opportunity',
-    element: (
-      <WrapperRouteComponent titleId="title.document.updateOpportunity">
-        <UpdateOpportunity />
-      </WrapperRouteComponent>
-    ),
-  },
-  {
-    path: '/sales/opportunity/report-opportunity',
-    element: (
-      <WrapperRouteComponent titleId="title.document.reportOpportunity">
-        <ReportOpportunity />
-      </WrapperRouteComponent>
-    ),
-  },
-  {
-    path: '/sales/opportunity/update-opportunity/update-history',
-    element: (
-      <WrapperRouteComponent titleId="title.document.updateHistory">
-        <UpdateHistoryOpportunity />
-      </WrapperRouteComponent>
-    ),
-  },
-  {
-    path: '/personnel/infor-income/details-view',
-    element: (
-      <WrapperRouteComponent titleId="title.document.detailsView">
-        <TicketIncomeDetails />
-      </WrapperRouteComponent>
-    ),
-  },
+
   {
     path: '*',
     element: <Navigate to="/not-found" replace />,

@@ -2,33 +2,28 @@
 import { Pagination } from '@/constants/pagination';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
-import { useBenefit } from '@/modules/sales/services/benefit.service';
+import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
-import { useLocation } from 'react-router-dom';
 
-type DeletePrivilegesProps = {
+type DeleteOpportunityProps = {
   closeModal: () => void;
-  benefitIds: string[];
-  data?: DataBenefitType;
+  opportunityIds: string[];
+  data?: DataOpportunityType;
 };
-export const DeletePrivileges = ({ closeModal, benefitIds, data }: DeletePrivilegesProps) => {
-  const { deleteBenefit, getAllBenefit } = useBenefit();
+export const DeleteOpportunity = ({ closeModal, opportunityIds, data }: DeleteOpportunityProps) => {
+  const { deleteOpportunity, getAllOpportunity } = useOpportunity();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
-  const [loading] = useWatchLoading(['delete-benefit', false]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const [loading] = useWatchLoading(['delete-opportunity', false]);
 
-  const handleDeletePrivileges = async () => {
-    const deleteGoal = await deleteBenefit(!!data ? [data.id!] : benefitIds);
-    if (deleteGoal) {
+  const handleDeleteOpportunity = async () => {
+    const isDelete = await deleteOpportunity(!!data ? [data.id!] : opportunityIds);
+    if (isDelete) {
       closeModal();
-      if (benefitIds.length === Pagination.PAGESIZE) {
-        getAllBenefit({
+      if (opportunityIds.length === Pagination.PAGESIZE) {
+        getAllOpportunity({
           pageIndex: pageIndex - 1 || 1,
           pageSize: Pagination.PAGESIZE,
-          roleType: tab!,
         });
       }
     }
@@ -36,11 +31,11 @@ export const DeletePrivileges = ({ closeModal, benefitIds, data }: DeletePrivile
 
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá quyền lợi đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá cơ hội đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>
-          <Button loading={loading} type="primary" danger onClick={handleDeletePrivileges}>
+          <Button loading={loading} type="primary" danger onClick={handleDeleteOpportunity}>
             Xoá
           </Button>
         </Space>

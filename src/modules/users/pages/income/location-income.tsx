@@ -7,7 +7,7 @@ import { FilterIncomeType } from '../../services/income.service';
 import { Pagination } from '@/constants/pagination';
 
 type Props = {
-  data: DataIncomTypeWithRoleAdmin[] | DataIncomTypeWithRoleUser[] | undefined;
+  data: DataIncomTypeWithRoleAdminType[] | DataIncomTypeWithRoleUserType[] | undefined;
   loading: boolean;
   isAdmin: boolean | undefined;
   pagination: PaginationAPI | undefined;

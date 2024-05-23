@@ -41,13 +41,13 @@ type FieldType = {
   opponent2Attribute: string;
   strategy: string;
   lastTimeInteract: string;
-  winningOppotunity: string;
+  winningOpportunity: string;
 };
 
-export const EditOpportuity = () => {
+export default function EditOpportunityPage() {
   const { formatMessage } = useLocale();
   const { updateOpportunity, getOpportunityById } = useOpportunity();
-  const { id: opportuityId } = useParams();
+  const { id: opportunityId } = useParams();
   const [loading, opportunityDetailLoading] = useWatchLoading(
     ['edit-opportunity', false],
     ['get-opportunityDetail', true],
@@ -57,11 +57,11 @@ export const EditOpportuity = () => {
   const { errors } = useWatchMessage('editOpportunity-message');
   const navigate = useNavigate();
   const tenant = getTenant();
-  const dataOpportuity = useRootSelector((state) => state.sale.opportunity.detail);
+  const dataOpportunity = useRootSelector((state) => state.sale.opportunity.detail);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataUpdateOpportunity = {
-      id: opportuityId,
+      id: opportunityId,
       ...values,
       estimatedMoney: values.estimatedMoney.toString(),
       budget: values.budget.toString(),
@@ -78,21 +78,21 @@ export const EditOpportuity = () => {
   };
 
   useEffect(() => {
-    if (opportuityId) {
-      getOpportunityById(opportuityId);
+    if (opportunityId) {
+      getOpportunityById(opportunityId);
     }
-  }, [getOpportunityById, opportuityId]);
+  }, [getOpportunityById, opportunityId]);
 
   useEffect(() => {
-    if (dataOpportuity) {
+    if (dataOpportunity) {
       const formatData = {
-        ...dataOpportuity,
-        estimatedTime: dayjs(dataOpportuity.estimatedTime),
-        lastTimeInteract: dayjs(dataOpportuity.lastTimeInteract),
+        ...dataOpportunity,
+        estimatedTime: dayjs(dataOpportunity.estimatedTime),
+        lastTimeInteract: dayjs(dataOpportunity.lastTimeInteract),
       };
       form.setFieldsValue(formatData);
     }
-  }, [dataOpportuity]);
+  }, [dataOpportunity]);
 
   return (
     <Spin spinning={opportunityDetailLoading} size="large">
@@ -454,7 +454,7 @@ export const EditOpportuity = () => {
                     {formatMessage({ id: 'form.input.WinProbabilityEvaluation' })}
                   </span>
                 }
-                name="winningOppotunity"
+                name="winningOpportunity"
                 rules={[
                   {
                     required: true,
@@ -483,7 +483,7 @@ export const EditOpportuity = () => {
       </div>
     </Spin>
   );
-};
+}
 
 const containerStyle = css`
   width: 100%;

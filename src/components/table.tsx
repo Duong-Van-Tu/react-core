@@ -5,7 +5,6 @@ import type { GetProp, TableProps } from 'antd';
 import { css } from '@emotion/react';
 import { CustomIcon } from './icons';
 import { useLocale } from '@/hooks/locale.hook';
-// import { useRootSelector } from '@/hooks/selector.hook';
 
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 

@@ -14,9 +14,9 @@ export const viVN_form = {
   'form.input.employeePrivileges.actualSalaryFluctuatesEdit':
     'Mức lương biến động thực tế muốn chỉnh sửa',
   'form.input.auth.resendCode': 'Gửi lại mã',
-  'form.input.target': 'Nhập mục tiêu KPI',
+  'form.input.target': 'Nhập mục tiêu',
   'form.input.realityKPI': 'Nhập KPI thực tế',
-  'form.input.activity': 'Nhập tiêu chí KPI',
+  'form.input.activity': 'Nhập hoạt động',
   'form.input.reason': 'Nhập lý do',
   'form.input.require.username': 'Vui lòng nhập tên đăng nhập!',
   'form.input.require.password': 'Vui lòng nhập mật khẩu!',

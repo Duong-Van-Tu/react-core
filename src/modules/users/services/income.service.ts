@@ -5,6 +5,7 @@ import {
   setListIncomeAction,
   setListIncomeActionWithRoleAdmin,
   setListIncomeActionWithRoleUser,
+  setListIncomeDetail,
 } from '../reducers/slicers/income.slice';
 // import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
@@ -14,6 +15,8 @@ import dayjs from 'dayjs';
 export type FilterIncomeType = {
   pageIndex: number;
   pageSize: number;
+  month?: string;
+  year?: string;
   textSearch?: string;
   orderCol?: string;
   orderDir?: string;
@@ -154,7 +157,54 @@ export const useIncome = () => {
     },
     [caller, api],
   );
+
+  const getListIncomeDetail = useCallback(
+    async ({
+      pageIndex = Pagination.PAGEINDEX,
+      pageSize = Pagination.PAGESIZE,
+      month,
+      year,
+      userId,
+    }: FilterIncomeType) => {
+      const queryParams: { [key: string]: string | undefined } = {
+        tenant,
+        PageIndex: pageIndex.toString(),
+        PageSize: pageSize.toString(),
+        month,
+        year,
+        userId,
+      };
+
+      const urlParams = generateUrlParams(queryParams);
+
+      const { data, succeeded } = await caller(
+        () => api.post(`/EmployeeSalaryDetail/get-list-with-pagination?${urlParams}`),
+        {
+          loadingKey: 'get-list-income-detail',
+        },
+      );
+      if (succeeded) {
+        const { items, totalRecords, pageIndex, totalPages, totalExtend } = data;
+
+        dispatch(
+          setListIncomeDetail({
+            data: items,
+            pagination: {
+              pageIndex,
+              totalRecords,
+              totalPages,
+            },
+            totalExtend,
+          }),
+        );
+      }
+    },
+    [caller, api],
+  );
+
+  // EmployeeSalaryDetail/get-list-with-pagination
   return {
+    getListIncomeDetail,
     getListIncome,
     getListIncomeWithRoleUser,
     getListIncomeWithRoleAdmin,

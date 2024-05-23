@@ -1,6 +1,8 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { PrivilegesDropdown } from '@/modules/sales/components/dropdown/privileges.dropdown';
+import { StatusBenefit } from '@/modules/sales/enum/status.enum';
+import { Message } from '@/components/message';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 export const columnsEmployee: ColumnsType<DataBenefitType> = [
@@ -27,7 +29,28 @@ export const columnsEmployee: ColumnsType<DataBenefitType> = [
   {
     title: <LocaleFormatter id="table.column.status" />,
     dataIndex: ['benefitStatus', 'name'],
-    render: (status) => status,
+    align: 'center',
+    render: (__, record) => {
+      let messageType: MessageType;
+      switch (record.benefitStatus?.code) {
+        case StatusBenefit.Updated:
+          messageType = 'success';
+          break;
+        case StatusBenefit.Request:
+        case StatusBenefit.Confirm:
+          messageType = 'info';
+          break;
+        default:
+          messageType = 'warning';
+      }
+      return record.benefitStatus ? (
+        <Message hasBackground type={messageType}>
+          {record.benefitStatus.name!}
+        </Message>
+      ) : (
+        ''
+      );
+    },
   },
   {
     title: '',
