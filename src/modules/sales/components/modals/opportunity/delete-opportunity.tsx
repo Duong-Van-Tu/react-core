@@ -20,7 +20,7 @@ export const DeleteOpportunity = ({ closeModal, opportunityIds, data }: DeleteOp
     const isDelete = await deleteOpportunity(!!data ? [data.id!] : opportunityIds);
     if (isDelete) {
       closeModal();
-      if (opportunityIds.length === Pagination.PAGESIZE) {
+      if (opportunityIds?.length === Pagination.PAGESIZE) {
         getAllOpportunity({
           pageIndex: pageIndex - 1 || 1,
           pageSize: Pagination.PAGESIZE,

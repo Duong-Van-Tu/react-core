@@ -2,10 +2,11 @@
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
+import { StatusOpportunity } from '@/modules/sales/enum/status.enum';
 import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { css } from '@emotion/react';
 import { Button, Form, FormProps, Row, Space, Select, Input } from 'antd';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 
 type CloseOpportunityProps = {
   closeModal: () => void;
@@ -24,7 +25,11 @@ export const CloseOpportunity = ({ ...props }: CloseOpportunityProps) => {
   const [form] = Form.useForm();
   const [loading] = useWatchLoading(['edit-statusOpportunityById', false]);
   const status = useRootSelector((state) => state.sale.opportunity.status);
-
+  const [selectedStatusId, setSelectedStatusId] = useState<string>();
+  const isFailure = useMemo(
+    () => status?.find((item) => item.id === selectedStatusId)?.code === StatusOpportunity.Fail,
+    [status, selectedStatusId],
+  );
   const statusOptions = useMemo(
     () =>
       status?.map((item) => ({
@@ -82,18 +87,24 @@ export const CloseOpportunity = ({ ...props }: CloseOpportunityProps) => {
             allowClear
             loading={loading}
             options={statusOptions}
+            onSelect={(value) => setSelectedStatusId(value)}
           />
         </Form.Item>
-        <Form.Item<FieldType>
-          label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.reason' })}</span>}
-          name="reason"
-          rules={[{ required: true, message: formatMessage({ id: 'form.input.require.reason' }) }]}
-        >
-          <Input.TextArea
-            style={{ resize: 'none' }}
-            placeholder={formatMessage({ id: 'form.input.reason' })}
-          />
-        </Form.Item>
+        {isFailure && (
+          <Form.Item<FieldType>
+            label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.reason' })}</span>}
+            name="reason"
+            rules={[
+              { required: true, message: formatMessage({ id: 'form.input.require.reason' }) },
+            ]}
+          >
+            <Input.TextArea
+              style={{ resize: 'none' }}
+              placeholder={formatMessage({ id: 'form.input.reason' })}
+            />
+          </Form.Item>
+        )}
+
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>

@@ -21,6 +21,7 @@ import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { Messages } from '@/constants/message';
 import { useWatchMessage } from '@/hooks/message.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 type FieldType = {
   customerName: string;
@@ -46,6 +47,7 @@ export default function AddOpportunityPage() {
   const { addOpportunity } = useOpportunity();
   const [loading] = useWatchLoading(['add-opportunity', false]);
   const [form] = Form.useForm();
+  const user = useRootSelector((state) => state.auth.user);
   const [messageApi, contextHolder] = messageAnt.useMessage();
   const { errors } = useWatchMessage('addOpportunity-message');
   const navigate = useNavigate();
@@ -57,6 +59,7 @@ export default function AddOpportunityPage() {
       commissionMoney: values.commissionMoney.toString(),
       estimatedTime: dayjs(values.estimatedTime).format('DD/MM/YYYY'),
       lastTimeInteract: dayjs(values.lastTimeInteract).format('DD/MM/YYYY'),
+      applicationUserId: user?.id,
     };
     const add = await addOpportunity(dataAddOpportunity);
     if (add) {

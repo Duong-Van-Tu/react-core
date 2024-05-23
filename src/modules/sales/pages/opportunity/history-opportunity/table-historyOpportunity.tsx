@@ -31,8 +31,6 @@ export function TableHistoryOpportunity() {
     });
   };
 
-  console.log({ history });
-
   useEffect(() => {
     getAllHistoryOpportunity({
       pageIndex: Pagination.PAGEINDEX,
