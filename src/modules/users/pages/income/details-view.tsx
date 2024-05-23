@@ -1,29 +1,43 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { ticketIncomeDetailsColumns } from './column/ticket-income-details.column';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { Pagination } from '@/constants/pagination';
 
 export default function TicketIncomeDetails() {
   const { formatMessage } = useLocale();
+
+  const { dataDetailIncome, pagination } = useRootSelector((state) => state.user.income);
+
   return (
     <div css={containerStyle}>
       <div css={closeStyle}>
         <CustomIcon width={12} height={14} type="prev" />
-        <Link css={goBackLinkStyle} to="/personnel/infor-income/">
+        <span
+          css={goBackLinkStyle}
+          onClick={() => {
+            window.history.back();
+          }}
+        >
           {formatMessage({ id: 'title.back' })}
-        </Link>
+        </span>
       </div>
-      <h1 css={titleStyle}>Chi tiết thu nhập theo ticket</h1>
+      <h1 css={titleStyle}>{formatMessage({ id: 'title.document.income-ticket' })}</h1>
       <div css={tableCustomStyle}>
         <TableCustom
           columns={ticketIncomeDetailsColumns}
-          dataSource={[]}
+          dataSource={dataDetailIncome}
           loading={false}
           rowKey={(record) => record.key}
-          pagination={{ current: 1, pageSize: 3 }}
+          pagination={{
+            current: pagination?.pageIndex,
+            pageSize: Pagination.PAGESIZE,
+            total: pagination?.totalRecords,
+            position: ['bottomCenter'],
+          }}
           scroll={{ x: 1000 }}
         />
       </div>
@@ -58,6 +72,7 @@ const titleStyle = css`
 `;
 
 const goBackLinkStyle = css`
+  cursor: pointer;
   font-size: 1.4rem;
   color: #000;
 `;

@@ -1,46 +1,37 @@
+import { LocaleFormatter } from '@/components/locale-formatter';
 import { TableProps } from 'antd';
+import dayjs from 'dayjs';
 
 type ColumnsType<T> = TableProps<T>['columns'];
+
 export const ticketIncomeDetailsColumns: ColumnsType<any> = [
   {
-    title: 'Nội dung',
-    dataIndex: 'content',
-    render: (content) => content,
+    title: <LocaleFormatter id="title.column.income.content" />,
+    dataIndex: 'note',
   },
   {
-    title: 'Số tiền dự kiến',
-    dataIndex: 'expectedAmount',
-    render: (expectedAmount) => expectedAmount,
+    title: <LocaleFormatter id="title.column.income.expectedAmount" />,
+    dataIndex: 'incomeEta',
   },
   {
-    title: 'Số tiền thực chi',
-    dataIndex: 'actualAmount',
-    render: (actualAmount) => actualAmount,
+    title: <LocaleFormatter id="title.column.income.actualAmountSpent" />,
+    dataIndex: 'incomeReal',
   },
   {
-    title: 'Đối tượng',
-    dataIndex: 'object',
-    render: (object) => object,
+    title: <LocaleFormatter id="title.column.income.object" />,
+    dataIndex: 'employeeCode',
   },
   {
-    title: 'Loại CP',
-    dataIndex: 'CPType',
-    render: (CPType) => CPType,
+    title: <LocaleFormatter id="title.column.income.type" />,
+    dataIndex: 'typeCP',
   },
   {
-    title: 'Project Name',
+    title: <LocaleFormatter id="title.column.income.projectName" />,
     dataIndex: 'projectName',
-    render: (projectName) => projectName,
   },
   {
-    title: 'Thời điểm chi',
-    dataIndex: 'spentTime',
-    render: (spentTime) => spentTime,
-  },
-  {
-    title: '',
-    fixed: 'right',
-    width: '5%',
-    render: () => '',
+    title: <LocaleFormatter id="title.column.income.timeSpent" />,
+    dataIndex: 'timeSpent',
+    render: (timeSpent) => dayjs(timeSpent).format('DD/MM/YYYY, HH:mm:ss'),
   },
 ];

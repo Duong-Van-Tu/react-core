@@ -5,6 +5,7 @@ import { Button, Col, Input, Row, Select } from 'antd';
 import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { OptionProps } from 'antd/es/select';
+import { useLocale } from '@/hooks/locale.hook';
 import { useNavigate } from 'react-router-dom';
 
 export type SearchParams = {
@@ -20,6 +21,8 @@ type SearchProps = {
 };
 
 export const Search = ({ onSearch, status, loadingStatus }: SearchProps) => {
+  const { formatMessage } = useLocale();
+
   const [textSearch, setSearchers] = useState<string>();
   const [statusId, SetStatusId] = useState<string>();
   const [time, setTime] = useState<string>();
@@ -99,7 +102,7 @@ export const Search = ({ onSearch, status, loadingStatus }: SearchProps) => {
         >
           {years.map((year) => (
             <Select.Option key={year} value={year.toString()}>
-              Năm {year}
+              {formatMessage({ id: 'title.year' })} {year}
             </Select.Option>
           ))}
         </Select>

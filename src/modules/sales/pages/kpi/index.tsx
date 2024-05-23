@@ -27,7 +27,9 @@ export default function KPIPage() {
   const items: TabsProps['items'] = [
     {
       key: isAdmin ? RoleType.Manager : RoleType.MySelf,
-      label: isAdmin ? 'Mục tiêu của giám đốc' : formatMessage({ id: 'title.tab.kpi.my' }),
+      label: isAdmin
+        ? formatMessage({ id: 'title.tab.kpi.manager' })
+        : formatMessage({ id: 'title.tab.kpi.my' }),
       children: <TableKPI />,
     },
     {

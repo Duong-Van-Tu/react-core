@@ -1,29 +1,53 @@
 import { TableCustom } from '@/components/table';
-import { locationIncomeColumns } from './column/location-income.column';
-import { DataLocationIncomeType } from './type.locationIncome';
+import {
+  locationIncomeColumnsAdmin,
+  locationIncomeColumnsUser,
+} from './column/location-income.column';
+import { FilterIncomeType } from '../../services/income.service';
+import { Pagination } from '@/constants/pagination';
 
-const locationIcomeData: DataLocationIncomeType[] = [
-  {
-    key: 1,
-    month: 'Tháng 1',
-    oneLocation: '1.000.000.000',
-    twoLocation: '1.000.000.000',
-    threeLocation: '-',
-    fourLocation: '-',
-    fiveLocation: '-',
-    incomeOther: '-',
-    incomeTotal: '2.000.000.000',
-  },
-];
+type Props = {
+  data: DataIncomTypeWithRoleAdminType[] | DataIncomTypeWithRoleUserType[] | undefined;
+  loading: boolean;
+  isAdmin: boolean | undefined;
+  pagination: PaginationAPI | undefined;
+  getListIncomeWithRoleAdmin: (params: FilterIncomeType) => void;
+  getListIncomeWithRoleUser: (params: FilterIncomeType) => void;
+};
 
-export default function LocationIncomeTable() {
+export default function LocationIncomeTable({
+  data,
+  isAdmin,
+  loading,
+  pagination,
+  getListIncomeWithRoleAdmin,
+  getListIncomeWithRoleUser,
+}: Props) {
   return (
     <TableCustom
-      columns={locationIncomeColumns}
-      dataSource={locationIcomeData}
-      loading={false}
+      columns={isAdmin ? locationIncomeColumnsAdmin : locationIncomeColumnsUser}
+      dataSource={data}
+      loading={loading}
       rowKey={(record) => record.key}
-      pagination={{ current: 1, pageSize: 7 }}
+      pagination={{
+        current: pagination?.pageIndex,
+        pageSize: Pagination.PAGESIZE,
+        total: pagination?.totalRecords,
+        position: ['bottomCenter'],
+        onChange: (page) => {
+          if (isAdmin) {
+            getListIncomeWithRoleAdmin({
+              pageIndex: page,
+              pageSize: Pagination.PAGESIZE,
+            });
+          } else {
+            getListIncomeWithRoleUser({
+              pageIndex: page,
+              pageSize: Pagination.PAGESIZE,
+            });
+          }
+        },
+      }}
       scroll={{ x: 1450 }}
     />
   );

@@ -10,12 +10,13 @@ import { settingMenus } from '@/modules/settings/menu-settings';
 import { payrollMenus } from '@/modules/payroll/menu-payroll';
 import { reportMenus } from '@/modules/reports/menu-reports';
 import Menu from './menu';
+import { categoryMenus } from '@/modules/category/menu.category';
 
 export default function Sidebar() {
   const { Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const menus = useMemo(() => {
-    return [saleMenus, menuUsers, payrollMenus, reportMenus, settingMenus];
+    return [saleMenus, menuUsers, categoryMenus, payrollMenus, reportMenus, settingMenus];
   }, []);
   return (
     <Sider

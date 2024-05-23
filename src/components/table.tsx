@@ -22,8 +22,11 @@ type TableParams = {
 const icon = <CustomIcon type="loading" color="#3498db" />;
 
 export function TableCustom(props: TableCustom) {
+  // const locale = useRootSelector((state) => state.locale.language);
+
   const { onTableChange, loading, pagination } = props;
   const { formatMessage } = useLocale();
+
   const itemRender: PaginationProps['itemRender'] = (_, type, originalElement) => {
     if (type === 'prev') {
       return (
