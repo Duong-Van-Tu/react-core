@@ -74,4 +74,6 @@ export const viVN_table = {
   'table.column.serviceCode': 'Mã mảng DV',
   'table.column.serviceName': 'Tên mảng DV',
   'table.column.serviceShortName': 'Tên viết tắt',
+  'table.column.relationshipLvCode': 'Mức',
+  'table.column.relationshipLvDesc': 'Định nghĩa',
 };

@@ -67,9 +67,11 @@ const ServicePage = lazy(
     import(/* webpackChunkName: "Service-category"*/ '@/modules/category/pages/service-category'),
 );
 
-const RelationshipCategoryPage = lazy(
+const RelationshipLvPage = lazy(
   () =>
-    import(/* webpackChunkName: "relationship-category"*/ '@/modules/category/pages/relationship'),
+    import(
+      /* webpackChunkName: "relationship-category"*/ '@/modules/category/pages/relationship-level'
+    ),
 );
 
 const QuestionrPage = lazy(
@@ -248,7 +250,7 @@ const routes: RouteObject[] = [
             path: 'relationship',
             element: (
               <WrapperRouteComponent titleId="title.document.relationshipLevel">
-                <RelationshipCategoryPage />
+                <RelationshipLvPage />
               </WrapperRouteComponent>
             ),
           },

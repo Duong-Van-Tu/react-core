@@ -75,4 +75,6 @@ export const enUS_table = {
   'table.column.serviceCode': 'Service code',
   'table.column.serviceName': 'Service name',
   'table.column.serviceShortName': 'Short name',
+  'table.column.relationshipLvCode': 'Level',
+  'table.column.relationshipLvDesc': 'Description',
 };
