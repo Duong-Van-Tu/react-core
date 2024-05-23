@@ -1,5 +1,4 @@
 import { TableProps } from 'antd';
-import { Link } from 'react-router-dom';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import ViewDetail from '../components/view.detail';
 

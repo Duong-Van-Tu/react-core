@@ -6,7 +6,7 @@ import ListSaleKit from './list.sale.kit';
 import { usePermission } from '@/hooks/permission.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { userSaleKit } from '../../services/sale.kit.service';
 import { Select } from 'antd';
 import { Link } from 'react-router-dom';

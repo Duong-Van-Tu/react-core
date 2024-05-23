@@ -6,6 +6,7 @@ import locale, { localeInitialState } from './slicers/locale.slice';
 import auth, { authInitialState } from './slicers/auth.slice';
 import saleReducer from '@/modules/sales/reducers';
 import categoryReducer from '@/modules/category/reducers';
+import userReducer from '@/modules/users/reducers';
 
 export type RawRootState = typeof rootState;
 export const allInitialStates = {
@@ -23,6 +24,7 @@ const rootState = {
   auth,
   sale: saleReducer,
   category: categoryReducer,
+  user: userReducer,
 };
 const rootReducer = combineReducers(rootState);
 export type RootState = ReturnType<typeof rootReducer>;

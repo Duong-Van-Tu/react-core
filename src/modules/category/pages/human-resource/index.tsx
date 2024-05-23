@@ -5,13 +5,11 @@ import { useDispatch } from 'react-redux';
 import { TableCustom } from '@/components/table';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { usersColumns } from './column';
-// import { useHumanResources } from '../../services/human.resources.service';
 import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
-
 import { useHumanResources } from '../../services/human.resources.service';
 import { Search, SearchParams } from '@/components/search';
 import { ModalUserCategoryProvider } from '../../components/modals/human-resource';

@@ -6,10 +6,7 @@ import {
   setListSaleKitActionRole,
   setListSaleKitRoleAction,
 } from '../reducers/slicers/sale.kit.slice';
-import { useRootSelector } from '@/hooks/selector.hook';
-import { Pagination } from '@/constants/pagination';
-import { generateUrlParams, getTenant } from '@/utils/common';
-import dayjs from 'dayjs';
+import { generateUrlParams } from '@/utils/common';
 
 export type FilterSaleKitType = {
   id?: string;
@@ -23,8 +20,6 @@ export const userSaleKit = () => {
   const api = useApi('');
   const caller = useCaller();
   const dispatch = useDispatch();
-  //   const tenant = getTenant();
-  //   const user = useRootSelector((state) => state.auth.user);
 
   const getAllSaleKit = useCallback(
     async ({ textSearch, tenant, roleType, roleId }: FilterSaleKitType) => {

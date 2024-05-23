@@ -24,6 +24,8 @@ export const AddReltionshipLv = ({ closeModal }: AddReltionshipLvProps) => {
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddCustomer = {
       ...values,
+      pointFrom: values.pointFrom.toString(),
+      pointTo: values.pointTo.toString(),
     };
     const add = await addKRelationshipLv(dataAddCustomer);
     if (add) {
