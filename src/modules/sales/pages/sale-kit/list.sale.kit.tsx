@@ -3,45 +3,88 @@ import { Checkbox } from 'antd';
 import type { CheckboxProps, GetProp } from 'antd';
 import { useLocale } from '@/hooks/locale.hook';
 import { DownloadOutlined } from '@ant-design/icons';
-import { FilterSaleKitType } from '../../services/sale.kit.service';
+import { FilterSaleKitType, userSaleKit } from '../../services/sale.kit.service';
+import { useRootSelector } from '@/hooks/selector.hook';
 
 type CheckboxValueType = GetProp<typeof Checkbox.Group, 'value'>[number];
 
 const CheckboxGroup = Checkbox.Group;
 
-const plainOptions = ['Apple', 'Pear', 'Orange'];
-
 type Props = {
-  data: DataSaleKitType[];
+  isAdmin?: boolean;
+  checkedList: CheckboxValueType[];
+  setCheckedList: (params: CheckboxValueType[]) => void;
+  data?: DataSaleKitType[];
+  dataWithRole?: DataSaleKitRoleType[];
   downLoadDocument: (params: FilterSaleKitType) => Promise<string>;
 };
 
-const ListSaleKit = ({ data, downLoadDocument }: Props) => {
+const ListSaleKit = ({
+  isAdmin,
+  checkedList,
+  setCheckedList,
+  data,
+  dataWithRole,
+  downLoadDocument,
+}: Props) => {
   const { formatMessage } = useLocale();
 
-  const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
+  const { updateSaleKitWithRole } = userSaleKit();
+  const user = useRootSelector((state) => state.auth.user);
+
   const [options, setOptions] = useState<
     {
       value: string;
       label: string;
-      filePath: string;
     }[]
   >([]);
 
   useEffect(() => {
-    const options = data?.map((it: DataSaleKitType) => ({
-      value: it.id,
-      label: it.name,
-      filePath: it.filePath,
-    }));
+    if (data) {
+      const options = data?.map((it: DataSaleKitType) => ({
+        value: it.id,
+        label: it.name,
+      }));
 
-    setOptions(options);
-  }, [data]);
+      setOptions(options);
+      return;
+    }
+
+    if (dataWithRole) {
+      const checkedList: string[] = [];
+      const options = dataWithRole?.map((it: DataSaleKitRoleType) => {
+        if (it.access) {
+          checkedList.push(it.id);
+        }
+        return {
+          value: it.id,
+          label: it.fileName,
+        };
+      });
+
+      setCheckedList(checkedList);
+      setOptions(options);
+    }
+  }, [data, dataWithRole]);
 
   const checkAll = options.length === checkedList.length;
   const indeterminate = checkedList.length > 0 && checkedList.length < options.length;
 
-  const onChange = (list: CheckboxValueType[]) => {
+  const onChange = async (list: CheckboxValueType[]) => {
+    if (dataWithRole && dataWithRole.length > 0) {
+      const newData = dataWithRole.map((item) => {
+        if (list.includes(item.id)) {
+          return { ...item, access: true };
+        } else {
+          return { ...item, access: false };
+        }
+      });
+
+      await updateSaleKitWithRole({
+        dataUpdate: { data: newData, lastModifiedApplicationUserId: user?.id! },
+      });
+    }
+
     setCheckedList(list);
   };
 
@@ -71,17 +114,19 @@ const ListSaleKit = ({ data, downLoadDocument }: Props) => {
   };
 
   const handleDownloadFile = async (id: string, name: string) => {
-    const base64Data = await downLoadDocument({ id });
-    const binaryData = base64DecToArr(base64Data.split(',')[1], 0);
-    const blob = new Blob([binaryData], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
+    if (!dataWithRole) {
+      const base64Data = await downLoadDocument({ id });
+      const binaryData = base64DecToArr(base64Data.split(',')[1], 0);
+      const blob = new Blob([binaryData], { type: 'application/octet-stream' });
+      const url = URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = name; // Set the file name
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = name; // Set the file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
 
   return (
@@ -90,47 +135,78 @@ const ListSaleKit = ({ data, downLoadDocument }: Props) => {
         margin: '18px 0',
       }}
     >
-      <Checkbox
-        indeterminate={indeterminate}
-        onChange={onCheckAllChange}
-        checked={checkAll}
-        style={{
-          marginBottom: '16px',
-        }}
-      >
-        <p
+      {isAdmin && (
+        <Checkbox
+          indeterminate={indeterminate}
+          onChange={onCheckAllChange}
+          checked={checkAll}
           style={{
-            fontSize: '16px',
-            color: '#8993A4',
+            marginBottom: '16px',
           }}
         >
-          {formatMessage({ id: 'table.column.saleKit.selectAll' })}
-        </p>
-      </Checkbox>
-      <CheckboxGroup
-        style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
-        value={checkedList}
-        onChange={onChange}
-      >
-        {options.map((option) => (
-          <Checkbox key={option.value} value={option.value}>
-            <a
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '6px',
-                fontSize: '18px',
-                textDecoration: 'underline',
-              }}
-              href={'#'}
-              onClick={() => handleDownloadFile(option.value, option.label)}
-            >
-              <DownloadOutlined />
-              {option.label}
-            </a>
-          </Checkbox>
-        ))}
-      </CheckboxGroup>
+          <p
+            style={{
+              fontSize: '16px',
+              color: '#8993A4',
+            }}
+          >
+            {formatMessage({ id: 'table.column.saleKit.selectAll' })}
+          </p>
+        </Checkbox>
+      )}
+      {isAdmin ? (
+        <CheckboxGroup
+          style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
+          value={checkedList}
+          onChange={onChange}
+        >
+          {options.map((option) => (
+            <Checkbox key={option.value} value={option.value}>
+              <a
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '18px',
+                  textDecoration: 'underline',
+                }}
+                href={'#'}
+                onClick={() => handleDownloadFile(option.value, option.label)}
+              >
+                <DownloadOutlined />
+                {option.label}
+              </a>
+            </Checkbox>
+          ))}
+        </CheckboxGroup>
+      ) : (
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '32px',
+          }}
+        >
+          {options.map((option) => (
+            <span key={option.value}>
+              <a
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  fontSize: '18px',
+                  textDecoration: 'underline',
+                }}
+                href={'#'}
+                onClick={() => handleDownloadFile(option.value, option.label)}
+              >
+                <DownloadOutlined />
+                {option.label}
+              </a>
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

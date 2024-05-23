@@ -1,48 +1,37 @@
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { TableProps } from 'antd';
+import dayjs from 'dayjs';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 
 export const ticketIncomeDetailsColumns: ColumnsType<any> = [
   {
     title: <LocaleFormatter id="title.column.income.content" />,
-    dataIndex: 'content',
-    render: (content) => content,
+    dataIndex: 'note',
   },
   {
     title: <LocaleFormatter id="title.column.income.expectedAmount" />,
-    dataIndex: 'expectedAmount',
-    render: (expectedAmount) => expectedAmount,
+    dataIndex: 'incomeEta',
   },
   {
     title: <LocaleFormatter id="title.column.income.actualAmountSpent" />,
-    dataIndex: 'actualAmount',
-    render: (actualAmount) => actualAmount,
+    dataIndex: 'incomeReal',
   },
   {
     title: <LocaleFormatter id="title.column.income.object" />,
-    dataIndex: 'object',
-    render: (object) => object,
+    dataIndex: 'employeeCode',
   },
   {
     title: <LocaleFormatter id="title.column.income.type" />,
-    dataIndex: 'CPType',
-    render: (CPType) => CPType,
+    dataIndex: 'typeCP',
   },
   {
     title: <LocaleFormatter id="title.column.income.projectName" />,
     dataIndex: 'projectName',
-    render: (projectName) => projectName,
   },
   {
     title: <LocaleFormatter id="title.column.income.timeSpent" />,
-    dataIndex: 'spentTime',
-    render: (spentTime) => spentTime,
-  },
-  {
-    title: '',
-    fixed: 'right',
-    width: '5%',
-    render: () => '',
+    dataIndex: 'timeSpent',
+    render: (timeSpent) => dayjs(timeSpent).format('DD/MM/YYYY, HH:mm:ss'),
   },
 ];

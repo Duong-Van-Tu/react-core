@@ -1,7 +1,7 @@
 export const enUS_title = {
   'title.year': 'Year',
   'title.month': 'Month',
-
+  'title.role': 'Role',
   'title.back': 'Go back',
   'title.continue': 'Continue',
   'title.document.sale': 'Sale',
@@ -26,6 +26,7 @@ export const enUS_title = {
   'title.document.incomeByPosition': 'Income by job position',
   'title.document.human-resource': 'Human resource',
   'title.document.income-ticket': 'Income details by ticket',
+  'title.document.saltKitAuth': 'Manage access rights to sale kit',
 
   'title.form.login': 'Sign In',
   'title.form.forgotPassword': 'Forgot password',

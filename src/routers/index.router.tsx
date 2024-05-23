@@ -19,6 +19,7 @@ import ServicePage from '@/modules/category/pages/service';
 import SupplierPage from '@/modules/category/pages/supplier';
 import RelationshipCategoryPage from '@/modules/category/pages/relationship';
 import HumanResourceCategoryPage from '@/modules/category/pages/human-resource';
+import { SaleKitAuth } from '@/modules/sales/pages/sale-kit/sale.kit.auth';
 
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
@@ -313,6 +314,16 @@ const routes: RouteObject[] = [
     element: (
       <WrapperRouteComponent titleId="title.document.updateHistory">
         <UpdateHistoryOpportunity />
+      </WrapperRouteComponent>
+    ),
+  },
+  {
+    path: '/sales/sale-kit/auth',
+    element: (
+      <WrapperRouteComponent titleId="title.document.addOpportunity">
+        <Middleware mode="private">
+          <SaleKitAuth />
+        </Middleware>
       </WrapperRouteComponent>
     ),
   },

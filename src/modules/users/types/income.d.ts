@@ -28,7 +28,7 @@ type DataIncomeType = {
   roles?: RoleType[];
 };
 
-type DataIncomTypeWithRoleAdmin = {
+type DataIncomTypeWithRoleAdminType = {
   applicationUser: ApplicationUserType;
   incomeOther: number;
   totalIncome: number;
@@ -38,7 +38,7 @@ type DataIncomTypeWithRoleAdmin = {
   }[];
 };
 
-type DataIncomTypeWithRoleUser = {
+type DataIncomTypeWithRoleUserType = {
   month: number;
   year: number;
   incomeOther: number;
@@ -47,4 +47,19 @@ type DataIncomTypeWithRoleUser = {
     id: string;
     income: number;
   }[];
+};
+
+type DataIncomeDetailType = {
+  employeeCode: string;
+  userId: string;
+  month: number;
+  year: number;
+  incomeEta: number;
+  incomeReal: number;
+  userName: string;
+  typeCP: string;
+  projectName: string;
+  timeSpent: string;
+  note: string;
+  id: string;
 };

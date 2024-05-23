@@ -1,9 +1,10 @@
 import { TableProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { LocaleFormatter } from '@/components/locale-formatter';
+import ViewDetail from '../components/view.detail';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const locationIncomeColumnsUser: ColumnsType<DataIncomTypeWithRoleUser> = [
+export const locationIncomeColumnsUser: ColumnsType<DataIncomTypeWithRoleUserType> = [
   {
     title: <LocaleFormatter id="title.month" />,
     dataIndex: 'month',
@@ -56,21 +57,11 @@ export const locationIncomeColumnsUser: ColumnsType<DataIncomTypeWithRoleUser> =
     dataIndex: 'detailsView',
     fixed: 'right',
     width: '10%',
-    render: () => (
-      <Link
-        style={{
-          textAlign: 'center',
-          display: 'block',
-        }}
-        to="/personnel/infor-income/details-view"
-      >
-        <LocaleFormatter id="title.document.detailsView" />
-      </Link>
-    ),
+    render: (_, record) => <ViewDetail recordUser={record} />,
   },
 ];
 
-export const locationIncomeColumnsAdmin: ColumnsType<DataIncomTypeWithRoleAdmin> = [
+export const locationIncomeColumnsAdmin: ColumnsType<DataIncomTypeWithRoleAdminType> = [
   {
     title: <LocaleFormatter id="title.column.income.humanResourceCode" />,
     dataIndex: ['applicationUser', 'id'],
@@ -127,16 +118,6 @@ export const locationIncomeColumnsAdmin: ColumnsType<DataIncomTypeWithRoleAdmin>
     dataIndex: 'detailsView',
     fixed: 'right',
     width: '10%',
-    render: () => (
-      <Link
-        style={{
-          textAlign: 'center',
-          display: 'block',
-        }}
-        to="/personnel/infor-income/details-view"
-      >
-        <LocaleFormatter id="title.document.detailsView" />
-      </Link>
-    ),
+    render: (_, record) => <ViewDetail recordAdmin={record} />,
   },
 ];

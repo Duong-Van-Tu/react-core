@@ -9,3 +9,22 @@ type DataSaleKitType = {
   filePath: string;
   id: string;
 };
+
+type DataSaleKitRoleType = {
+  access: boolean;
+  applicationRoleId: string;
+  fileName: string;
+  id: string;
+  saleKitId: string;
+};
+
+type DataSaleKitUpdateType = {
+  data: {
+    id: string;
+    applicationRoleId: string;
+    saleKitId: string;
+    fileName: string;
+    access: boolean;
+  }[];
+  lastModifiedApplicationUserId: string;
+};
