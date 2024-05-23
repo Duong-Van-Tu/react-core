@@ -9,22 +9,23 @@ import { CustomIcon } from '@/components/icons';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
-import { useModalSupplier } from '../../components/modals/supplier';
-import { supplierColumns } from './column/supplier.column';
 import { useRootSelector } from '@/hooks/selector.hook';
-import { useSupplier } from '../../services/supplier.service';
 
-export default function TableSupplier() {
-  const [supplierIds, setSupplierIds] = useState<string[]>();
-  const { openModal } = useModalSupplier();
-  const { getAllSupplier } = useSupplier();
-  const [loading] = useWatchLoading(['get-supplier', true]);
-  const { data, pagination } = useRootSelector((state) => state.category.supplier);
+import { serviceColumns } from './column/service.column';
+import { useModalService } from '../../components/modals/service-category';
+import { useService } from '../../services/service-category.service';
+
+export default function TableService() {
+  const [serviceIds, setServiceIds] = useState<string[]>();
+  const { openModal } = useModalService();
+  const { getAllService } = useService();
+  const [loading] = useWatchLoading(['get-service', true]);
+  const { data, pagination } = useRootSelector((state) => state.category.sevice);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
   const handleSearch = ({ textSearch, time }: SearchParams) => {
-    getAllSupplier({
+    getAllService({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       textSearch,
@@ -34,7 +35,7 @@ export default function TableSupplier() {
   };
 
   const handleTableChange = (page: number) => {
-    getAllSupplier({
+    getAllService({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
@@ -42,47 +43,47 @@ export default function TableSupplier() {
   };
 
   const rowSelection = {
-    onChange: (_selectedRowKeys: Key[], selectedRows: DataSupplierType[]) => {
-      setSupplierIds(selectedRows.map((row) => row.id!));
+    onChange: (_selectedRowKeys: Key[], selectedRows: DataServiceCategoryType[]) => {
+      setServiceIds(selectedRows.map((row) => row.id!));
     },
   };
 
   const handleDeleteSupplier = () => {
-    openModal('Delete Supplier', undefined, supplierIds);
+    openModal('Delete Service', undefined, serviceIds);
   };
 
   useEffect(() => {
-    getAllSupplier({
+    getAllService({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
     });
-  }, [getAllSupplier, tab]);
+  }, [getAllService, tab]);
 
   return (
     <div css={rootStyle}>
       <Button
-        onClick={() => openModal('Add Supplier')}
+        onClick={() => openModal('Add Service')}
         type="primary"
         css={addKCustomerStyle}
         iconPosition="start"
         size="large"
       >
         <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-        <span>Thêm nhà cung cấp</span>
+        <span>Thêm mảng dịch vụ</span>
       </Button>
 
       <div css={searchContainer}>
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!supplierIds} onClick={() => handleDeleteSupplier()} size="large" danger>
+        <Button disabled={!serviceIds} onClick={() => handleDeleteSupplier()} size="large" danger>
           Xoá mục tiêu đã chọn
         </Button>
       </div>
       <TableCustom
         rowSelection={rowSelection}
-        columns={supplierColumns}
+        columns={serviceColumns}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}

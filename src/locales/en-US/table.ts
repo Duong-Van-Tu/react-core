@@ -72,4 +72,7 @@ export const enUS_table = {
   'table.column.supplierFullName': 'Supplier full name',
   'table.column.supplierDesc': 'Description',
   'table.column.supplierReview': 'Review',
+  'table.column.serviceCode': 'Service code',
+  'table.column.serviceName': 'Service name',
+  'table.column.serviceShortName': 'Short name',
 };

@@ -3,10 +3,10 @@ import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useDispatch } from 'react-redux';
-import { ModalSupplierProvider } from '../../components/modals/supplier';
+import { ModalServiceProvider } from '../../components/modals/service-category';
 import { CustomIcon } from '@/components/icons';
-import TableSupplier from './table-supplier';
-export default function SupplierPage() {
+import TableService from './table-service';
+export default function ServicePage() {
   const dispatch = useDispatch();
   useEffect(() => {
     const breadCrumbItems = [
@@ -18,24 +18,24 @@ export default function SupplierPage() {
       },
       {
         title: {
-          vi_VN: 'Nhà cung cấp',
-          en_US: 'Supplier',
+          vi_VN: 'Mảng dịch vụ',
+          en_US: 'Service category',
         },
       },
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
   }, [dispatch]);
   return (
-    <ModalSupplierProvider>
-      <h3 css={titleStyle}>Nhà cung cấp</h3>
+    <ModalServiceProvider>
+      <h3 css={titleStyle}>Mảng dịch vụ</h3>
       <div css={subTitleStyle}>
         <CustomIcon width={8} height={8} type="dot" />
         <span>
-          <span css={subTitleStyle}>10 nhà cung cấp</span>
+          <span css={subTitleStyle}>10 mảng dịch vụ</span>
         </span>
       </div>
-      <TableSupplier />
-    </ModalSupplierProvider>
+      <TableService />
+    </ModalServiceProvider>
   );
 }
 

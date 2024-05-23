@@ -1,34 +1,31 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { Button, Form, FormProps, Input, Row, Space } from 'antd';
-import { useCustomer } from '@/modules/category/services/customer.service';
 import { useWatchLoading } from '@/hooks/loading.hook';
+import { useService } from '@/modules/category/services/service-category.service';
 
 type FieldType = {
-  id?: string;
   code: string;
-  fullname: string;
+  name: string;
+  shortName: string;
 };
 
-type UptdaeCustomerProps = {
+type AddServiceProps = {
   closeModal: () => void;
-  data: DataCustomerType;
 };
 
-export const UpdateCustomer = ({ closeModal, data }: UptdaeCustomerProps) => {
+export const AddService = ({ closeModal }: AddServiceProps) => {
   const [form] = Form.useForm();
-  const { updateCustomer } = useCustomer();
-  const [loading] = useWatchLoading(['edit-customer', false]);
+  const { addKService } = useService();
+  const [loading] = useWatchLoading(['add-service', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const dataUpdateCustomer = {
+    const dataAddCustomer = {
       ...values,
-      id: data.id,
     };
-
-    const edit = await updateCustomer(dataUpdateCustomer);
-    if (edit) {
+    const add = await addKService(dataAddCustomer);
+    if (add) {
       form.resetFields();
       closeModal();
     }
@@ -38,34 +35,38 @@ export const UpdateCustomer = ({ closeModal, data }: UptdaeCustomerProps) => {
     closeModal();
   };
 
-  useEffect(() => {
-    form.setFieldsValue(data);
-  }, [data]);
-
   return (
     <Fragment>
-      <h3 css={formTitleStyle}>Chỉnh sửa khách hàng</h3>
+      <h3 css={formTitleStyle}>Thêm mảng dịch vụ</h3>
       <Form
         form={form}
-        css={formUpdateCustomertyle}
-        name="add-kpi"
+        css={formAddServicetyle}
+        name="add-service"
         onFinish={onFinish}
         layout="vertical"
       >
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Mã KH</span>}
+          label={<span css={labelFormItem}>Mã mảng DV</span>}
           name="code"
-          rules={[{ required: true, message: 'Vui lòng nhập mã KH!' }]}
+          rules={[{ required: true, message: 'Vui lòng nhập mảng DV!' }]}
         >
-          <Input placeholder="Nhập mã KH" />
+          <Input placeholder="Nhập mã mảng DV" />
         </Form.Item>
 
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Tên khách hàng</span>}
-          name="fullname"
-          rules={[{ required: true, message: 'Vui lòng nhập tên khách hàng!' }]}
+          label={<span css={labelFormItem}>Tên mảng DV</span>}
+          name="name"
+          rules={[{ required: true, message: 'Vui lòng nhập tên mảng DV!' }]}
         >
-          <Input placeholder="Nhập tên khách hàng" />
+          <Input placeholder="Nhập tên mảng DV" />
+        </Form.Item>
+
+        <Form.Item<FieldType>
+          label={<span css={labelFormItem}>Tên viết tắt</span>}
+          name="shortName"
+          rules={[{ required: true, message: 'Vui lòng nhập tên viết tắt!' }]}
+        >
+          <Input placeholder="Nhập tên viết tắt" />
         </Form.Item>
 
         <Row justify="end">
@@ -88,7 +89,7 @@ const formTitleStyle = css`
   margin-top: 2rem;
 `;
 
-const formUpdateCustomertyle = css`
+const formAddServicetyle = css`
   .ant-form-item-required::before {
     display: none !important;
   }

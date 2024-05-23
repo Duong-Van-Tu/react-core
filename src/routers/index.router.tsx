@@ -11,15 +11,6 @@ import { ReportOpportunity } from '@/modules/sales/components/modals/opportunity
 import { UpdateHistoryOpportunity } from '@/modules/sales/components/modals/opportunity/update-history-opportunity';
 import { EditOpportuity } from '@/modules/sales/components/forms/opportuity/edit-opportuity';
 import { TicketIncomeDetails } from '@/modules/users/pages/income/details-view';
-import CustomerPage from '@/modules/category/pages/customer';
-import HumanResourcePage from '@/modules/category/pages/human-resource';
-import QuestionrPage from '@/modules/category/pages/questions';
-import SaleKitCategoryPage from '@/modules/category/pages/sale-kit';
-import ServicePage from '@/modules/category/pages/service';
-import SupplierPage from '@/modules/category/pages/supplier';
-import RelationshipCategoryPage from '@/modules/category/pages/relationship';
-import HumanResourceCategoryPage from '@/modules/category/pages/human-resource';
-
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
   () => import(/* webpackChunkName: "privileges"*/ '@/modules/sales/pages/privileges'),
@@ -55,6 +46,44 @@ const InforPesonnelPage = lazy(
 );
 const InforIncomePage = lazy(
   () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/income'),
+);
+
+// module category
+
+const CustomerPage = lazy(
+  () => import(/* webpackChunkName: "Customer"*/ '@/modules/category/pages/customer'),
+);
+
+const HumanResourceCategoryPage = lazy(
+  () => import(/* webpackChunkName: "Human-resource"*/ '@/modules/category/pages/human-resource'),
+);
+
+const SupplierPage = lazy(
+  () => import(/* webpackChunkName: "Supplier"*/ '@/modules/category/pages/supplier'),
+);
+
+const ServicePage = lazy(
+  () =>
+    import(/* webpackChunkName: "Service-category"*/ '@/modules/category/pages/service-category'),
+);
+
+const RelationshipCategoryPage = lazy(
+  () =>
+    import(/* webpackChunkName: "relationship-category"*/ '@/modules/category/pages/relationship'),
+);
+
+const QuestionrPage = lazy(
+  () => import(/* webpackChunkName: "Question"*/ '@/modules/category/pages/questions'),
+);
+const ContractPage = lazy(
+  () => import(/* webpackChunkName: "Question"*/ '@/modules/category/pages/contract'),
+);
+const ProjectPage = lazy(
+  () => import(/* webpackChunkName: "Question"*/ '@/modules/category/pages/project'),
+);
+
+const SaleKitCategoryPage = lazy(
+  () => import(/* webpackChunkName: "SaleKit-category"*/ '@/modules/category/pages/sale-kit'),
 );
 
 const routes: RouteObject[] = [
@@ -218,7 +247,7 @@ const routes: RouteObject[] = [
           {
             path: 'relationship',
             element: (
-              <WrapperRouteComponent titleId="title.document.relationship">
+              <WrapperRouteComponent titleId="title.document.relationshipLevel">
                 <RelationshipCategoryPage />
               </WrapperRouteComponent>
             ),
@@ -228,6 +257,22 @@ const routes: RouteObject[] = [
             element: (
               <WrapperRouteComponent titleId="title.document.questions">
                 <QuestionrPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'contract',
+            element: (
+              <WrapperRouteComponent titleId="title.document.contract">
+                <ContractPage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'project',
+            element: (
+              <WrapperRouteComponent titleId="title.document.project">
+                <ProjectPage />
               </WrapperRouteComponent>
             ),
           },

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useDispatch } from 'react-redux';
-export default function ServicePage() {
+export default function ContractPage() {
   const dispatch = useDispatch();
   useEffect(() => {
     const breadCrumbItems = [
@@ -13,12 +13,12 @@ export default function ServicePage() {
       },
       {
         title: {
-          vi_VN: 'Mảng dịch vụ',
-          en_US: 'Service category',
+          vi_VN: 'Hợp đồng',
+          en_US: 'Contract',
         },
       },
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
   }, [dispatch]);
-  return <div>ServicePage</div>;
+  return <div>ContractPage</div>;
 }

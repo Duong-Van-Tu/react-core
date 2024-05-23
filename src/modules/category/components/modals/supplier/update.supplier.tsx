@@ -48,7 +48,7 @@ export const UpdateSupplier = ({ closeModal, data }: UpdateSupplierProps) => {
       <h3 css={formTitleStyle}>Chỉnh sửa nhà cung cấp</h3>
       <Form
         form={form}
-        css={formAddCustomertyle}
+        css={formUpdateSuppliertyle}
         name="add-supplier"
         onFinish={onFinish}
         layout="vertical"
@@ -110,7 +110,7 @@ const formTitleStyle = css`
   margin-top: 2rem;
 `;
 
-const formAddCustomertyle = css`
+const formUpdateSuppliertyle = css`
   .ant-form-item-required::before {
     display: none !important;
   }
