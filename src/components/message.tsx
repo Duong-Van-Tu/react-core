@@ -12,7 +12,7 @@ export const Message = ({ type, children, hasBackground }: MessageProps) => {
 };
 
 const messageStyle = (type: string, hasBackground: boolean) => css`
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 400;
   ${hasBackground &&
   `background: ${
@@ -24,7 +24,7 @@ const messageStyle = (type: string, hasBackground: boolean) => css`
           ? '#fff7e6'
           : '#fff0cc'
   };
-  padding: 4px;
+  padding: 4px 8px;
   display: flex;
   justify-content: center;
   border-radius: 4px;

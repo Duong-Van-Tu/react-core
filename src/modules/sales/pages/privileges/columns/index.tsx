@@ -1,40 +1,81 @@
 import { TableProps } from 'antd';
-import { DataPrivilegesType } from '../type.privileges';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { PrivilegesDropdown } from '@/modules/sales/components/dropdown/privileges.dropdown';
+import { StatusBenefit } from '@/modules/sales/enum/status.enum';
+import { Message } from '@/components/message';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const myPrivilegesColumns: ColumnsType<DataPrivilegesType> = [
+export const columnsEmployee: ColumnsType<DataBenefitType> = [
   {
     title: <LocaleFormatter id="table.column.privileges.beneficiaryName" />,
-    dataIndex: 'beneficiaryName',
-    render: (beneficiaryName) => beneficiaryName,
+    dataIndex: ['applicationUser', 'fullName'],
+  },
+  {
+    title: 'Tổng quyền lợi hiện tại',
+    dataIndex: 'totalBenefit',
   },
   {
     title: <LocaleFormatter id="table.column.privileges.fixedMonthlySalary" />,
-    dataIndex: 'fixedMonthlySalary',
-    render: (fixedMonthlySalary) => fixedMonthlySalary,
+    dataIndex: 'monthlySalary',
   },
   {
     title: <LocaleFormatter id="table.column.privileges.totalTargetVariableSalary" />,
-    dataIndex: 'totalTargetVariableSalary',
-    render: (totalTargetVariableSalary) => totalTargetVariableSalary,
+    dataIndex: 'targetSalary',
   },
   {
-    title: <LocaleFormatter id="table.column.privileges.actualVariableSalary" />,
-    dataIndex: 'actualVariableSalary',
-    render: (actualVariableSalary) => actualVariableSalary,
+    title: <LocaleFormatter id="table.column.privileges.totalSalary" />,
+    dataIndex: 'totalSalary',
   },
   {
     title: <LocaleFormatter id="table.column.status" />,
-    dataIndex: 'status',
-    render: (status) => status,
+    dataIndex: ['benefitStatus', 'name'],
+    align: 'center',
+    render: (__, record) => {
+      let messageType: MessageType;
+      switch (record.benefitStatus?.code) {
+        case StatusBenefit.Updated:
+          messageType = 'success';
+          break;
+        case StatusBenefit.Request:
+        case StatusBenefit.Confirm:
+          messageType = 'info';
+          break;
+        default:
+          messageType = 'warning';
+      }
+      return record.benefitStatus ? (
+        <Message hasBackground type={messageType}>
+          {record.benefitStatus.name!}
+        </Message>
+      ) : (
+        ''
+      );
+    },
   },
   {
     title: '',
     dataIndex: 'calculationMethod',
     fixed: 'right',
     width: '6%',
-    render: () => <PrivilegesDropdown />,
+    render: (__, record) => <PrivilegesDropdown data={record} />,
+  },
+];
+
+export const columnsManager: ColumnsType<DataBenefitType> = [
+  {
+    title: 'Tổng quyền lợi hiện tại',
+    dataIndex: 'totalBenefit',
+  },
+  {
+    title: 'Tổng mức lương mục tiêu',
+    dataIndex: 'targetSalary',
+  },
+  {
+    title: 'Mức lương cố định hàng tháng',
+    dataIndex: 'monthlySalary',
+  },
+  {
+    title: <LocaleFormatter id="table.column.privileges.totalSalary" />,
+    dataIndex: 'totalSalary',
   },
 ];

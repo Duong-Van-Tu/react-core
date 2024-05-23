@@ -18,7 +18,7 @@ export const viVN_table = {
   'table.column.privileges.beneficiaryName': 'Tên người hưởng quyền lợi',
   'table.column.privileges.fixedMonthlySalary': 'Mức lương cố định hàng tháng',
   'table.column.privileges.totalTargetVariableSalary': 'Tổng mức lương biến động mục tiêu',
-  'table.column.privileges.actualVariableSalary': 'Mức lương biến động thực tế',
+  'table.column.privileges.totalSalary': 'Tổng mức lương biến động',
   'table.column.relationship.jobPosition': 'Vị trí làm việc',
   'table.column.relationship.targetLevel': 'Mức độ quan hệ mục tiêu',
   'table.column.relationship.upgrade': 'Lý do cần phải nâng cấp quan hệ',

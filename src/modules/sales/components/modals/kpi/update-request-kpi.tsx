@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { Status } from '@/modules/sales/enum/status.enum';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
@@ -17,7 +16,7 @@ type UpdateRequestProps = {
 };
 
 export const UpdateRequest = ({ closeModal, data }: UpdateRequestProps) => {
-  const { updateStatusKPI } = useKPI();
+  const { updateKPI } = useKPI();
   const [form] = Form.useForm();
   const [loading] = useWatchLoading(['edit-status', false]);
 
@@ -27,11 +26,10 @@ export const UpdateRequest = ({ closeModal, data }: UpdateRequestProps) => {
       id: data.id,
       actualKPI: actualKPI.toString(),
       actualPoint: actualPoint.toString(),
-      status: Status.Updated,
     } as DataKPIType;
 
-    const editStatus = await updateStatusKPI(dataUpdateKPI);
-    if (editStatus) {
+    const update = await updateKPI(dataUpdateKPI);
+    if (update) {
       form.resetFields();
       closeModal();
     }

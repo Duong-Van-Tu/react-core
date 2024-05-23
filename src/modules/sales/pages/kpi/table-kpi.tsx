@@ -13,8 +13,9 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
 import { Key } from 'antd/es/table/interface';
 import { usePermission } from '@/hooks/permission.hook';
-import { useLocation } from 'react-router-dom';
 import { RoleType } from '@/enum/role.enum';
+import { ModalKPIType } from '../../enum/kpi.enum';
+import { useQuery } from '@/hooks/query.hook';
 
 export default function TableKPI() {
   const { openModal } = useModalKPI();
@@ -24,9 +25,7 @@ export default function TableKPI() {
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
   const { isSaleDirector, isSale } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const { tab, textSearch, time, statusId } = useQuery();
 
   const columnTable = useMemo(() => {
     if (isSaleDirector && tab === RoleType.MySelf) {
@@ -57,6 +56,9 @@ export default function TableKPI() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
+      time,
+      statusId,
     });
   };
 
@@ -74,7 +76,7 @@ export default function TableKPI() {
     <div css={rootStyle}>
       {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
         <Button
-          onClick={() => openModal('Add KPI')}
+          onClick={() => openModal(ModalKPIType.AddKPI)}
           type="primary"
           css={addKPIBtnStyle}
           iconPosition="start"
@@ -92,7 +94,7 @@ export default function TableKPI() {
         <Col>
           <Button
             disabled={!goalIds}
-            onClick={() => openModal('Delete KPI', undefined, goalIds)}
+            onClick={() => openModal(ModalKPIType.DeleteKPI, undefined, goalIds)}
             size="large"
             danger
           >
@@ -107,12 +109,12 @@ export default function TableKPI() {
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
         pagination={{
           current: pagination?.pageIndex,
           pageSize: Pagination.PAGESIZE,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
-          onChange: (page) => handleTableChange(page),
         }}
         scroll={{ x: 1450 }}
       />

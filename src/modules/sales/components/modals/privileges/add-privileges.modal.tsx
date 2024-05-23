@@ -1,42 +1,80 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { useBenefit } from '@/modules/sales/services/benefit.service';
 import { css } from '@emotion/react';
-import { Button, Form, FormProps, Input, Row, Space } from 'antd';
-import { Fragment } from 'react';
+import { Button, Form, FormProps, InputNumber, Row, Select, Space } from 'antd';
+import { Fragment, useEffect, useMemo } from 'react';
 
 type FieldType = {
-  beneficiaryName: string;
-  baseSalary: string;
-  totalSalaryVariation: string;
-  variesActualSalary: string;
+  applicationUserId: string;
+  monthlySalary: string;
+  targetSalary: string;
+  totalSalary: string;
 };
 
 type AddPrivilegesProps = {
-  closeModal?: () => void;
+  closeModal: () => void;
 };
 
 export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
   const { formatMessage } = useLocale();
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal?.();
+  const { getUsersBenefit, addBenefit } = useBenefit();
+  const [loading] = useWatchLoading(['add-benefit', false]);
+  const [form] = Form.useForm();
+  const users = useRootSelector((state) => state.sale.benefit.users);
+
+  const userOptions =
+    useMemo(
+      () =>
+        users?.map((user) => ({
+          value: user.id,
+          label: user.fullName,
+        })),
+      [users],
+    ) ?? [];
+
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const { monthlySalary, targetSalary, totalSalary } = values;
+    const dataAddBenefit = {
+      ...values,
+      monthlySalary: monthlySalary.toString(),
+      targetSalary: targetSalary.toString(),
+      totalSalary: totalSalary.toString(),
+    };
+    const add = await addBenefit(dataAddBenefit);
+    if (add) {
+      form.resetFields();
+      closeModal();
+    }
   };
 
   const oncancel = () => {
-    closeModal?.();
+    closeModal();
   };
+
+  useEffect(() => {
+    getUsersBenefit();
+  }, []);
 
   return (
     <Fragment>
       <h3 css={formTitleStyle}>Thêm đề xuất quyền lợi</h3>
-      <Form css={formAddPrivilegeStyle} name="add-privileges" onFinish={onFinish} layout="vertical">
+      <Form
+        form={form}
+        css={formAddPrivilegeStyle}
+        name="add-privileges"
+        onFinish={onFinish}
+        layout="vertical"
+      >
         <Form.Item<FieldType>
           label={
             <span css={labelFormItem}>
               {formatMessage({ id: 'form.input.addPrivileges.beneficiaryName' })}
             </span>
           }
-          name="beneficiaryName"
+          name="applicationUserId"
           rules={[
             {
               required: true,
@@ -44,13 +82,7 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
             },
           ]}
         >
-          <Input
-            size="middle"
-            placeholder={formatMessage({
-              id: 'form.input.addPrivileges.placeholder.beneficiaryName',
-            })}
-            css={formInputItemStyle}
-          />
+          <Select size="large" placeholder="Người hưởng quyền lợi" options={userOptions} />
         </Form.Item>
 
         <Form.Item<FieldType>
@@ -59,7 +91,7 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
               {formatMessage({ id: 'form.input.addPrivileges.baseSalary' })}
             </span>
           }
-          name="baseSalary"
+          name="monthlySalary"
           rules={[
             {
               required: true,
@@ -67,10 +99,10 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
             },
           ]}
         >
-          <Input
-            size="middle"
+          <InputNumber
+            css={inputStyle}
+            size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
-            css={formInputItemStyle}
           />
         </Form.Item>
 
@@ -80,7 +112,7 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
               {formatMessage({ id: 'form.input.addPrivileges.totalSalaryVariation' })}
             </span>
           }
-          name="totalSalaryVariation"
+          name="targetSalary"
           rules={[
             {
               required: true,
@@ -90,10 +122,10 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
             },
           ]}
         >
-          <Input
-            size="middle"
+          <InputNumber
+            css={inputStyle}
+            size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
-            css={formInputItemStyle}
           />
         </Form.Item>
 
@@ -103,7 +135,7 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
               {formatMessage({ id: 'form.input.addPrivileges.variesActualSalary' })}
             </span>
           }
-          name="variesActualSalary"
+          name="totalSalary"
           rules={[
             {
               required: true,
@@ -113,17 +145,17 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
             },
           ]}
         >
-          <Input
-            size="middle"
+          <InputNumber
+            css={inputStyle}
+            size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
-            css={formInputItemStyle}
           />
         </Form.Item>
 
         <Row justify="end">
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>
@@ -155,14 +187,6 @@ const labelFormItem = css`
   color: #101828;
 `;
 
-const formInputItemStyle = css`
-  height: 4.5rem;
-  color: #101828;
-  font-size: 1.4rem;
-  font-weight: 500;
-  &::placeholder {
-    color: #d0d5dd;
-    font-size: 1.4rem;
-    font-weight: 500;
-  }
+const inputStyle = css`
+  width: 100%;
 `;

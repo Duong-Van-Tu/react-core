@@ -6,11 +6,13 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import dayjs from 'dayjs';
 import {
+  addHistoryOpportunityAction,
   addOpportunityAction,
   deleteOpportunityAction,
   setDataOpportunityDetailAction,
   setDataSaleAndSupplierAction,
   setDataStatusAction,
+  setListHistoryOpportunityAction,
   setListOpportunityAction,
   updateOpportunityAction,
 } from '../reducers/slicers/opportunity.slice';
@@ -175,6 +177,26 @@ export const useOpportunity = () => {
     [api, caller],
   );
 
+  const updateStatusOpportunityById = useCallback(
+    async (values: DataOpportunityType) => {
+      const dataUpdateStatusOpportunity = convertToUppercaseFirstLetter(values);
+
+      const { data, succeeded } = await caller(
+        () =>
+          api.put(`/Opportunity/update-status-by-id?tenant=${tenant}`, dataUpdateStatusOpportunity),
+        { loadingKey: 'edit-statusOpportunityById' },
+      );
+
+      if (succeeded) {
+        dispatch(updateOpportunityAction(data));
+        return succeeded;
+      }
+      return false;
+    },
+
+    [api, caller],
+  );
+
   const getAllStatusOpportunity = useCallback(async () => {
     const { data, succeeded } = await caller(
       () => api.get(`/OpportunityStatus/get-all?tenant=${tenant}`),
@@ -223,6 +245,75 @@ export const useOpportunity = () => {
     [api, caller],
   );
 
+  const getAllHistoryOpportunity = useCallback(
+    async ({
+      pageIndex = Pagination.PAGEINDEX,
+      pageSize = Pagination.PAGESIZE,
+      textSearch,
+      statusId,
+      time = dayjs().year().toString(),
+    }: FilterPrivilegesType) => {
+      const queryParams: { [key: string]: string | undefined } = {
+        PageIndex: pageIndex.toString(),
+        PageSize: pageSize.toString(),
+        UserId: user?.id,
+        RoleId: user?.applicationRoles[0].id,
+        StatusId: statusId,
+        Time: `1-1-${time}`, // value is first day Of year
+        TextSearch: textSearch,
+        tenant: tenant,
+      };
+
+      const urlParams = generateUrlParams(queryParams);
+
+      const { data, succeeded } = await caller(
+        () => api.post(`/OpportunityHistory/get-list-with-pagination?${urlParams}`),
+        {
+          loadingKey: 'get-historyOpportunity',
+        },
+      );
+      if (succeeded) {
+        const { items, totalRecords, pageIndex, totalPages, totalExtend } = data;
+        dispatch(
+          setListHistoryOpportunityAction({
+            data: items,
+            pagination: {
+              pageIndex,
+              totalRecords,
+              totalPages,
+            },
+            totalExtend,
+          }),
+        );
+      }
+    },
+    [caller, api],
+  );
+
+  const addHistoryOpportunity = useCallback(
+    async (values: HistoryOpportunityType) => {
+      const dataAddOpportunity = convertToUppercaseFirstLetter({
+        ...values,
+      });
+
+      const { data, succeeded } = await caller(
+        () =>
+          api.post(`/OpportunityHistory/add-or-update?tenant=${tenant}`, [
+            { data: dataAddOpportunity },
+          ]),
+        { loadingKey: 'add-historyOpportunity', messageKey: 'addHistoryOpportunity-message' },
+      );
+
+      if (succeeded) {
+        dispatch(addHistoryOpportunityAction(data[0]));
+        return succeeded;
+      }
+      return false;
+    },
+
+    [api, caller],
+  );
+
   return {
     getAllOpportunity,
     addOpportunity,
@@ -233,5 +324,8 @@ export const useOpportunity = () => {
     getOpportunityById,
     getAllSaleAndSupplier,
     assignSaleAndSupplier,
+    updateStatusOpportunityById,
+    getAllHistoryOpportunity,
+    addHistoryOpportunity,
   };
 };

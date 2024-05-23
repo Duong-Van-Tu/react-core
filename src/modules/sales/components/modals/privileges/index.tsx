@@ -1,15 +1,19 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalPrivilegesType } from '../../../enum/privileges.enum';
-import { AddPrivileges } from './add.modal';
-import { EmployeeReportPrivileges } from './employee-report-privileges';
-import { EmployeeSuggestedEditPrivileges } from './employee-suggestedEdit-privileges';
+import { AddPrivileges } from './add-privileges.modal';
+import { ReportPrivileges } from './report-privileges';
+import { SuggestEditPrivileges } from './suggestedEdit-privileges';
+import { EditPrivileges } from './edit-privileges.modal';
+import { DeletePrivileges } from './delete-privileges.modal';
+import { UpdateTotalPrivileges } from './update-totalPrivileges.modal';
+import { FinalizePrivileges } from './finalize-privileges.modal';
 
-type ModalContexttype = {
-  openModal: (modalName: string) => void;
+type ModalContextType = {
+  openModal: (modalName: string, data?: DataBenefitType, benefitIds?: string[]) => void;
   closeModal: () => void;
 };
-const ModalContext = createContext<ModalContexttype | undefined>(undefined);
+const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const useModalPrivileges = () => {
   const context = useContext(ModalContext);
@@ -23,11 +27,13 @@ type ModalProviderProps = {
   children?: ReactNode;
 };
 export const ModalPrivilegesProvider = ({ children }: ModalProviderProps) => {
-  const [currentModal, setCurrentModal] = useState<string>();
+  const [currentModal, setCurrentModal] = useState<
+    { modalName: string; data?: DataBenefitType; benefitIds?: string[] } | undefined
+  >();
   const [open, setOpen] = useState<boolean>(false);
 
-  const openModal = (modalName: string) => {
-    setCurrentModal(modalName);
+  const openModal = (modalName: string, data?: DataBenefitType, benefitIds?: string[]) => {
+    setCurrentModal({ modalName, data, benefitIds });
     setOpen(true);
   };
 
@@ -39,18 +45,43 @@ export const ModalPrivilegesProvider = ({ children }: ModalProviderProps) => {
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
-      <Modal open={open} onCancel={closeModal} footer={null}>
-        {currentModal === ModalPrivilegesType.RequestEdit && <div>Request Edit Modal</div>}
-        {currentModal === ModalPrivilegesType.Delete && <div>Delete Modal</div>}
-        {currentModal === ModalPrivilegesType.SuggestedEdit && (
-          <EmployeeSuggestedEditPrivileges closeModal={closeModal} />
+      <Modal
+        width={
+          currentModal?.modalName === ModalPrivilegesType.Delete ||
+          currentModal?.modalName === ModalPrivilegesType.FinalizePrivileges
+            ? '38rem'
+            : currentModal?.modalName === ModalPrivilegesType.Report
+              ? '45rem'
+              : '54rem'
+        }
+        open={open}
+        onCancel={closeModal}
+        footer={null}
+      >
+        {currentModal?.modalName === ModalPrivilegesType.Delete && (
+          <DeletePrivileges
+            closeModal={closeModal}
+            data={currentModal.data!}
+            benefitIds={currentModal.benefitIds!}
+          />
         )}
-        {currentModal === ModalPrivilegesType.Report && (
-          <EmployeeReportPrivileges closeModal={closeModal} />
+        {currentModal?.modalName === ModalPrivilegesType.SuggestedEdit && (
+          <SuggestEditPrivileges closeModal={closeModal} data={currentModal.data!} />
         )}
-        {currentModal === ModalPrivilegesType.RefuseEdit && <div>RefuseEdit Modal</div>}
-        {currentModal === ModalPrivilegesType.AddPrivileges && (
+        {currentModal?.modalName === ModalPrivilegesType.Report && (
+          <ReportPrivileges closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalPrivilegesType.AddPrivileges && (
           <AddPrivileges closeModal={closeModal} />
+        )}
+        {currentModal?.modalName === ModalPrivilegesType.EditPrivileges && (
+          <EditPrivileges closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalPrivilegesType.TotalPrivileges && (
+          <UpdateTotalPrivileges closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalPrivilegesType.FinalizePrivileges && (
+          <FinalizePrivileges closeModal={closeModal} data={currentModal.data!} />
         )}
       </Modal>
     </ModalContext.Provider>

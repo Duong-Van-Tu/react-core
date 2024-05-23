@@ -99,11 +99,11 @@ export const useKPI = () => {
 
   const updateKPI = useCallback(
     async (values: DataKPIType) => {
-      const dataAddKPI = convertToUppercaseFirstLetter({ ...values, userSuggestId: user?.id });
+      const { id, ...rest } = values;
+      const dataAddKPI = convertToUppercaseFirstLetter({ ...rest, userSuggestId: user?.id });
 
       const { data, succeeded } = await caller(
-        () =>
-          api.post(`/Goal/add-or-update?tenant=${tenant}`, [{ id: values.id, data: dataAddKPI }]),
+        () => api.post(`/Goal/add-or-update?tenant=${tenant}`, [{ id, data: dataAddKPI }]),
         { loadingKey: 'edit-kpi' },
       );
 

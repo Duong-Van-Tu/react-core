@@ -20,21 +20,14 @@ type DataOpportunityType = {
   applicationUser?: ApplicationUser;
   opportunityStatus?: OpportunityStatus;
   saleAndSupplierId?: string;
-};
-
-type ApplicationUser = {
-  id?: string;
-  firstName?: string;
-  lastName?: string;
-  fullName?: string;
-  email?: string;
-  phone?: string;
+  status?: string;
+  applicationUserId?: string;
 };
 
 type OpportunityStatus = {
-  id?: string;
-  code?: string;
-  name?: string;
+  id: string;
+  code: string;
+  name: string;
 };
 
 type ApplicationRole = {
@@ -63,4 +56,15 @@ type SaleAndSupplier = {
   sms: boolean;
   notes: string | null;
   applicationRoles: ApplicationRole[];
+};
+
+type HistoryOpportunityType = {
+  id: string;
+  activity: string;
+  applicationUser: string;
+  goal: string;
+  opportunityId: string;
+  result: string;
+  time: string;
+  applicationUserId?: string;
 };

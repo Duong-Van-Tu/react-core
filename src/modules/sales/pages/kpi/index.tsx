@@ -19,7 +19,7 @@ export default function KPIPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const { isSale, isAdmin, isSaleDirector } = usePermission();
+  const { isAdmin, isSaleDirector } = usePermission();
   const tenant = getTenant();
   const totalRecords = useRootSelector((state) => state.sale.kpi.pagination?.totalRecords);
   const { tab: activeKey } = useQuery();
@@ -80,7 +80,7 @@ export default function KPIPage() {
       {(isAdmin || isSaleDirector) && (
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
       )}
-      {isSale && <TableKPI />}
+      {!(isAdmin || isSaleDirector) && <TableKPI />}
     </ModalProvider>
   );
 }

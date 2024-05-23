@@ -7,12 +7,12 @@ import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
 import { useLocation } from 'react-router-dom';
 
-type FinalizeKPIProps = {
+type DeleteKPIProps = {
   closeModal: () => void;
   goalIds: string[];
   data?: DataKPIType;
 };
-export const DeleteKPI = ({ closeModal, goalIds, data }: FinalizeKPIProps) => {
+export const DeleteKPI = ({ closeModal, goalIds }: DeleteKPIProps) => {
   const { deleteKPI, getAllKPI } = useKPI();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-kpi', false]);
@@ -20,7 +20,7 @@ export const DeleteKPI = ({ closeModal, goalIds, data }: FinalizeKPIProps) => {
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
 
-  const handleFinalizeKPI = async () => {
+  const handleDeleteKPI = async () => {
     const deleteGoal = await deleteKPI(goalIds);
     if (deleteGoal) {
       if (goalIds.length === Pagination.PAGESIZE) {
@@ -35,7 +35,7 @@ export const DeleteKPI = ({ closeModal, goalIds, data }: FinalizeKPIProps) => {
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>
-          <Button loading={loading} type="primary" danger onClick={handleFinalizeKPI}>
+          <Button loading={loading} type="primary" danger onClick={handleDeleteKPI}>
             Xoá
           </Button>
         </Space>

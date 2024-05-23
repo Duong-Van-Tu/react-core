@@ -1,20 +1,20 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalKPIType } from '../../../enum/kpi.enum';
-import { EditKPI } from './edit.modal';
-import { FinalizeKPI } from './finalize.modal';
-import { RequestEdit } from './request-edit.modal';
-import { Report } from './report.modal';
-import { ModifyKPI } from './modify.modal';
-import { AddKPI } from './add.modal';
-import { DeleteKPI } from './delete.kpi';
-import { UpdateRequest } from './update-request';
+import { EditKPI } from './edit-kpi.modal';
+import { FinalizeKPI } from './finalize-kpi.modal';
+import { RequestEdit } from './request-edit-kpi.modal';
+import { Report } from './report-kpi.modal';
+import { ModifyKPI } from './modify-kpi.modal';
+import { AddKPI } from './add-kpi.modal';
+import { DeleteKPI } from './delete-kpi.modal';
+import { UpdateRequest } from './update-request-kpi';
 
-type ModalContexttype = {
+type ModalContextType = {
   openModal: (modalName: string, data?: DataKPIType, goalIds?: string[]) => void;
   closeModal: () => void;
 };
-const ModalContext = createContext<ModalContexttype | undefined>(undefined);
+const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const useModalKPI = () => {
   const context = useContext(ModalContext);

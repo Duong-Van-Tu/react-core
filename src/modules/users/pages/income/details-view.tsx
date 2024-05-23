@@ -7,7 +7,7 @@ import { ticketIncomeDetailsColumns } from './column/ticket-income-details.colum
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
 
-export const TicketIncomeDetails = () => {
+export default function TicketIncomeDetails() {
   const { formatMessage } = useLocale();
 
   const { dataDetailIncome, pagination } = useRootSelector((state) => state.user.income);
@@ -37,19 +37,13 @@ export const TicketIncomeDetails = () => {
             pageSize: Pagination.PAGESIZE,
             total: pagination?.totalRecords,
             position: ['bottomCenter'],
-            // onChange: (page) => {
-            //   getListIncome({
-            //     pageIndex: page,
-            //     pageSize: Pagination.PAGESIZE,
-            //   });
-            // },
           }}
           scroll={{ x: 1000 }}
         />
       </div>
     </div>
   );
-};
+}
 
 const containerStyle = css`
   width: 100%;

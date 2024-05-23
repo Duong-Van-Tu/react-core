@@ -5,12 +5,11 @@ import type { GetProp, TableProps } from 'antd';
 import { css } from '@emotion/react';
 import { CustomIcon } from './icons';
 import { useLocale } from '@/hooks/locale.hook';
-// import { useRootSelector } from '@/hooks/selector.hook';
 
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>;
 
 type TableCustom = TableProps & {
-  onTableChange?: () => void;
+  onTableChange?: (page: number) => void;
 };
 
 type TableParams = {
@@ -20,7 +19,8 @@ type TableParams = {
   filters?: Parameters<GetProp<TableProps, 'onChange'>>[1];
 };
 
-const antIcon = <CustomIcon type="loading" color="#3498db" />;
+const icon = <CustomIcon type="loading" color="#3498db" />;
+
 export function TableCustom(props: TableCustom) {
   // const locale = useRootSelector((state) => state.locale.language);
 
@@ -57,7 +57,7 @@ export function TableCustom(props: TableCustom) {
   });
 
   const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
-    onTableChange?.();
+    onTableChange?.(pagination.current!);
     setTableParams((prevParams) => ({
       pagination: {
         ...prevParams.pagination,
@@ -70,26 +70,27 @@ export function TableCustom(props: TableCustom) {
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
     }
   };
+
   useEffect(() => {
     if (pagination) {
       setTableParams((prevParams) => ({
         ...prevParams,
         pagination: {
           ...prevParams.pagination,
-          total: (pagination as TablePaginationConfig)?.total,
+          total: (pagination as TablePaginationConfig).total,
         },
       }));
     } else {
       setTableParams({ pagination: undefined });
     }
-  }, [(pagination as TablePaginationConfig)?.total]);
+  }, [(pagination as TablePaginationConfig).total]);
 
   return (
     <Table
       {...props}
       css={tableStyle}
       pagination={tableParams.pagination ?? false}
-      loading={{ indicator: antIcon, spinning: !!loading }}
+      loading={{ indicator: icon, spinning: !!loading }}
       onChange={handleTableChange}
     />
   );
