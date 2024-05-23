@@ -2,9 +2,8 @@ import { useApi, useCaller } from '@/hooks/api.hook';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { setListHumanResourcesAction } from '../reducers/slicers/human.resources.slice';
-// import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
-import { generateUrlParams, getTenant } from '@/utils/common';
+import { generateUrlParams } from '@/utils/common';
 import dayjs from 'dayjs';
 
 type FilterHumanResourcesType = {
@@ -27,8 +26,6 @@ export const useHumanResources = () => {
   const api = useApi('');
   const caller = useCaller();
   const dispatch = useDispatch();
-  // const tenant = getTenant();
-  // const user = useRootSelector((state) => state.auth.user);
 
   const getListUsers = useCallback(
     async ({

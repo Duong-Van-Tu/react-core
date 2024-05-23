@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { TableCustom } from '@/components/table';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
@@ -26,8 +26,6 @@ export default function HumanResourcesPage() {
   const { isAdmin } = usePermission();
   const dispatch = useDispatch();
 
-  const [humanResourceId, setHumanResourceId] = useState<string[]>();
-
   useEffect(() => {
     const breadCrumbItems = [
       {
@@ -48,7 +46,7 @@ export default function HumanResourcesPage() {
 
   const rowSelection = {
     onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
-      setHumanResourceId(selectedRows.map((row) => row.id!));
+      console.log(selectedRows);
     },
   };
 

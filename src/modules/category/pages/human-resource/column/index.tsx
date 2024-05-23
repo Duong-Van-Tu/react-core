@@ -53,6 +53,6 @@ export const usersColumns: ColumnsType<DataUserType> = [
     title: '',
     fixed: 'right',
     width: '6%',
-    render: (__, record) => <>Action</>,
+    render: () => <>Action</>,
   },
 ];

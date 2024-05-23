@@ -24,9 +24,7 @@ export const ProposedReportMyRelationships = ({ ...props }: ProposedReportMyRela
       <div css={contentMyRelationshipsReportStyle}>
         <Row justify="space-between" css={rowStyle}>
           <Col span={12}>
-            <p css={titleContentStyle}>
-              {formatMessage({ id: 'title.myRelationships.proposedReport.fullName' })}
-            </p>
+            <p css={titleContentStyle}>Test</p>
           </Col>
           <Col span={12}>
             <p css={titleValuetyle}>Bùi Công Quân</p>
@@ -35,9 +33,7 @@ export const ProposedReportMyRelationships = ({ ...props }: ProposedReportMyRela
 
         <Row justify="space-between" css={rowStyle}>
           <Col>
-            <p css={titleContentStyle}>
-              {formatMessage({ id: 'title.myRelationships.proposedReport.jobPosition' })}
-            </p>
+            <p css={titleContentStyle}>Test</p>
           </Col>
           <Col>
             <p css={titleValuetyle}>PP CNTT</p>
