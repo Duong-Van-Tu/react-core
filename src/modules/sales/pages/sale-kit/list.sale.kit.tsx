@@ -70,15 +70,18 @@ const ListSaleKit = ({ data, downLoadDocument }: Props) => {
     return taBytes;
   };
 
-  const handleDownloadFile = async (id: string) => {
+  const handleDownloadFile = async (id: string, name: string) => {
     const base64Data = await downLoadDocument({ id });
-
     const binaryData = base64DecToArr(base64Data.split(',')[1], 0);
-
     const blob = new Blob([binaryData], { type: 'application/octet-stream' });
     const url = URL.createObjectURL(blob);
 
-    window.open(url, '_blank');
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = name; // Set the file name
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -120,7 +123,7 @@ const ListSaleKit = ({ data, downLoadDocument }: Props) => {
                 textDecoration: 'underline',
               }}
               href={'#'}
-              onClick={() => handleDownloadFile(option.value)}
+              onClick={() => handleDownloadFile(option.value, option.label)}
             >
               <DownloadOutlined />
               {option.label}
