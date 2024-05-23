@@ -74,13 +74,13 @@ export function TableCustom(props: TableCustom) {
         ...prevParams,
         pagination: {
           ...prevParams.pagination,
-          total: (pagination as TablePaginationConfig).total,
+          total: (pagination as TablePaginationConfig)?.total,
         },
       }));
     } else {
       setTableParams({ pagination: undefined });
     }
-  }, [(pagination as TablePaginationConfig).total]);
+  }, [(pagination as TablePaginationConfig)?.total]);
 
   return (
     <Table
