@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
 import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { css } from '@emotion/react';
 import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
+import dayjs from 'dayjs';
 import { Fragment } from 'react';
 
 type FieldType = {
@@ -13,20 +15,29 @@ type FieldType = {
   result: string;
 };
 
-type CreateUpdateOpportunityProps = {
+type CreateHistoryOpportunityProps = {
   closeModal: () => void;
+  data: DataOpportunityType;
 };
 
-export const CreateUpdateOpportunity = ({ closeModal }: CreateUpdateOpportunityProps) => {
-  const { addOpportunity } = useOpportunity();
+export const CreateHistoryOpportunity = ({ closeModal, data }: CreateHistoryOpportunityProps) => {
+  const { addHistoryOpportunity } = useOpportunity();
   const { formatMessage } = useLocale();
   const [form] = Form.useForm();
+  const user = useRootSelector((state) => state.auth.user);
   const [loading] = useWatchLoading(['add-Opportunity', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const { goal } = values;
-    const dataAddOpportunity = {} as any;
-    const add = await addOpportunity(dataAddOpportunity);
+    const { goal, time } = values;
+    const dataAddHistoryOpportunity = {
+      ...values,
+      time: dayjs(time).format('DD/MM/YYYY'),
+      goal: goal.toString(),
+      opportunityId: data.id,
+      applicationUserId: user?.id,
+    } as HistoryOpportunityType;
+
+    const add = await addHistoryOpportunity(dataAddHistoryOpportunity);
     if (add) {
       form.resetFields();
       closeModal();
@@ -43,7 +54,7 @@ export const CreateUpdateOpportunity = ({ closeModal }: CreateUpdateOpportunityP
       <Form
         form={form}
         css={formEditOpportunityStyle}
-        name="add-Opportunity"
+        name="add-historyOpportunity"
         onFinish={onFinish}
         layout="vertical"
       >

@@ -1,41 +1,57 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
-import { updateOpportunityColumns } from '@/modules/sales/pages/opportunity/columns/update-opportunity.column';
 import { CustomIcon } from '@/components/icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Space } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { getTenant } from '@/utils/common';
 import { useModalOpportunity } from '@/modules/sales/components/modals/opportunity';
 import { ModalOpportunityType } from '@/modules/sales/enum/opportunity.enum';
+import { useEffect } from 'react';
+import { Pagination } from '@/constants/pagination';
+import { useOpportunity } from '@/modules/sales/services/opportunity.service';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { historyOpportunityColumns } from '../columns/history-opportunity.column';
 
-export function TableUpdateOpportunity() {
+export function TableHistoryOpportunity() {
   const navigate = useNavigate();
   const tenant = getTenant();
   const { openModal } = useModalOpportunity();
+  const { getAllHistoryOpportunity, getOpportunityById } = useOpportunity();
+  const { pagination, history, detail } = useRootSelector((state) => state.sale.opportunity);
+  const [loading] = useWatchLoading(['get-historyOpportunity', true]);
+  const { id: opportunityId } = useParams();
+
+  const handleTableChange = (page: number) => {
+    getAllHistoryOpportunity({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+    });
+  };
+
+  console.log({ history });
+
+  useEffect(() => {
+    getAllHistoryOpportunity({
+      pageIndex: Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+    });
+    getOpportunityById(opportunityId!);
+  }, [getAllHistoryOpportunity, getOpportunityById, opportunityId]);
 
   return (
     <div css={rootStyle}>
       <div css={containerStyle}>
         <h3 css={titleStyle}>Cập nhật cơ hội</h3>
-        <div css={subTitleStyle}>
-          <span>Lần cập nhật gần nhất:</span>
-          <span> 11:00 - 20/04/2024</span>
-          <span css={dotIconStyle}>
-            <CustomIcon color="rgba(84, 104, 129, 1)" width={10} height={10} type="dot" />
-          </span>
-          <Link css={historyLinkStyle} to="/sales/opportunity/update-opportunity/update-history">
-            Xem lịch sử
-          </Link>
-        </div>
         <Space direction="vertical">
           <Button css={closeStyle} onClick={() => navigate(`/sales/opportunity?tenant=${tenant}`)}>
             <CustomIcon color="rgba(0, 0, 0, 1)" width={16} height={16} type="close" />
             <LocaleFormatter id="title.exit" />
           </Button>
           <Button
-            onClick={() => openModal(ModalOpportunityType.CreateUpdateOpportunity)}
+            onClick={() => openModal(ModalOpportunityType.CreateHistoryOpportunity, detail)}
             type="primary"
             css={addBtnStyle}
             iconPosition="start"
@@ -47,12 +63,18 @@ export function TableUpdateOpportunity() {
         </Space>
         <TableCustom
           css={tableStyle}
-          columns={updateOpportunityColumns}
-          dataSource={[]}
-          loading={false}
-          rowKey={(record) => record.key}
-          pagination={{ current: 1, pageSize: 5 }}
-          scroll={{ x: 1000 }}
+          columns={historyOpportunityColumns}
+          dataSource={history}
+          loading={loading}
+          rowKey={(record) => record.id}
+          onTableChange={(page) => handleTableChange(page)}
+          pagination={{
+            current: pagination?.pageIndex,
+            pageSize: Pagination.PAGESIZE,
+            total: pagination?.totalRecords,
+            position: ['bottomCenter'],
+          }}
+          scroll={{ x: 1200 }}
         />
       </div>
     </div>
@@ -76,32 +98,14 @@ const titleStyle = css`
   font-weight: 500;
 `;
 
-const subTitleStyle = css`
-  margin-top: 1rem;
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  font-weight: 300;
-`;
-
 const tableStyle = css`
-  margin-top: 2.6rem;
-`;
-
-const dotIconStyle = css`
-  margin: 0 8px;
-`;
-
-const historyLinkStyle = css`
-  &:hover {
-    text-decoration: underline;
-    color: #2f88ed;
-  }
+  margin-top: 6rem;
 `;
 
 const addBtnStyle = css`
   position: absolute;
   right: 0;
-  top: 4.8rem;
+  top: 5.4rem;
   background: #0070b8;
   display: flex;
   align-items: center;

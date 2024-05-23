@@ -4,7 +4,7 @@ import { ModalOpportunityType } from '../../../enum/opportunity.enum';
 import { AssignOpportunity } from './assign-opportunity';
 import { CloseOpportunity } from './close-opportunity';
 import { DeleteOpportunity } from './delete-opportunity';
-import { CreateUpdateOpportunity } from './create-updateOpportunity';
+import { CreateHistoryOpportunity } from './create-HistoryOpportunity';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => void;
@@ -55,8 +55,8 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
             opportunityIds={currentModal.opportunityIds!}
           />
         )}
-        {currentModal?.modalName === ModalOpportunityType.CreateUpdateOpportunity && (
-          <CreateUpdateOpportunity closeModal={closeModal} />
+        {currentModal?.modalName === ModalOpportunityType.CreateHistoryOpportunity && (
+          <CreateHistoryOpportunity closeModal={closeModal} data={currentModal.data!} />
         )}
       </Modal>
     </ModalContext.Provider>

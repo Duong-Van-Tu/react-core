@@ -1,10 +1,10 @@
 import { ModalOpportunityProvider } from '@/modules/sales/components/modals/opportunity';
-import { TableUpdateOpportunity } from './table-updateOpportunity';
+import { TableHistoryOpportunity } from './table-historyOpportunity';
 
-export default function ListUpdateOpportunityPage() {
+export default function HistoryOpportunityPage() {
   return (
     <ModalOpportunityProvider>
-      <TableUpdateOpportunity />
+      <TableHistoryOpportunity />
     </ModalOpportunityProvider>
   );
 }

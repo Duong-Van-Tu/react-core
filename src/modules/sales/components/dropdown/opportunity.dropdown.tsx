@@ -13,7 +13,7 @@ enum MenuItem {
   AssignOpportunity = 1,
   CloseOpportunity,
   Delete,
-  CreateUpdateOpportunity,
+  CreateHistoryOpportunity,
 }
 
 type OpportunityDropdownProps = {
@@ -36,8 +36,8 @@ export function OpportunityDropdown({ data }: OpportunityDropdownProps) {
       case MenuItem.Delete:
         openModal(ModalOpportunityType.Delete, data);
         break;
-      case MenuItem.CreateUpdateOpportunity:
-        openModal(ModalOpportunityType.CreateUpdateOpportunity, data);
+      case MenuItem.CreateHistoryOpportunity:
+        openModal(ModalOpportunityType.CreateHistoryOpportunity);
         break;
       default:
         break;
@@ -57,7 +57,7 @@ export function OpportunityDropdown({ data }: OpportunityDropdownProps) {
     {
       key: '3',
       label: <span>{formatMessage({ id: 'title.dropdown.opportunity.updateOpportunity' })}</span>,
-      onClick: () => navigate(`/sales/opportunity/update-opportunity?tenant=${tenant}`),
+      onClick: () => navigate(`/sales/opportunity/history-opportunity/${data.id}?tenant=${tenant}`),
     },
     {
       key: '4',
@@ -67,7 +67,7 @@ export function OpportunityDropdown({ data }: OpportunityDropdownProps) {
     {
       key: '5',
       label: <span>{formatMessage({ id: 'title.dropdown.opportunity.resultReport' })}</span>,
-      onClick: () => navigate(`/sales/opportunity/report-opportunity?tenant=${tenant}`),
+      onClick: () => navigate(`/sales/opportunity/report-opportunity/${data.id}?tenant=${tenant}`),
     },
     {
       key: '6',

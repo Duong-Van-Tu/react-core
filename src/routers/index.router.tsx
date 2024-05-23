@@ -44,16 +44,10 @@ const InforPesonnelPage = lazy(
 const InforIncomePage = lazy(
   () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/income'),
 );
-const ListUpdateOpportunityPage = lazy(
+const HistoryOpportunityPage = lazy(
   () =>
     import(
-      /* webpackChunkName: "ListUpdateOpportunityPage"*/ '@/modules/sales/pages/opportunity/list-updateOpportunity'
-    ),
-);
-const UpdateHistoryOpportunityPage = lazy(
-  () =>
-    import(
-      /* webpackChunkName: "UpdateHistoryOpportunityPage"*/ '@/modules/sales/components/modals/opportunity/update-history-opportunity'
+      /* webpackChunkName: "ListUpdateOpportunityPage"*/ '@/modules/sales/pages/opportunity/history-opportunity'
     ),
 );
 const TicketIncomeDetailsPage = lazy(
@@ -66,7 +60,7 @@ const TicketIncomeDetailsPage = lazy(
 const ReportOpportunityPage = lazy(
   () =>
     import(
-      /* webpackChunkName: "ReportOpportunityPage"*/ '@/modules/sales/components/modals/opportunity/report-opportunity'
+      /* webpackChunkName: "ReportOpportunityPage"*/ '@/modules/sales/pages/opportunity/report-opportunity'
     ),
 );
 const AddOpportunityPage = lazy(
@@ -254,10 +248,10 @@ const routes: RouteObject[] = [
         ),
       },
       {
-        path: '/sales/opportunity/update-opportunity',
+        path: '/sales/opportunity/history-opportunity/:id',
         element: (
           <WrapperRouteComponent titleId="title.document.updateOpportunity">
-            <ListUpdateOpportunityPage />
+            <HistoryOpportunityPage />
           </WrapperRouteComponent>
         ),
       },
@@ -270,26 +264,10 @@ const routes: RouteObject[] = [
         ),
       },
       {
-        path: '/sales/opportunity/report-opportunity',
+        path: '/sales/opportunity/report-opportunity/:id',
         element: (
           <WrapperRouteComponent titleId="title.document.reportOpportunity">
             <ReportOpportunityPage />
-          </WrapperRouteComponent>
-        ),
-      },
-      {
-        path: '/sales/opportunity/report-opportunity',
-        element: (
-          <WrapperRouteComponent titleId="title.document.reportOpportunity">
-            <ReportOpportunityPage />
-          </WrapperRouteComponent>
-        ),
-      },
-      {
-        path: '/sales/opportunity/update-opportunity/update-history',
-        element: (
-          <WrapperRouteComponent titleId="title.document.updateHistory">
-            <UpdateHistoryOpportunityPage />
           </WrapperRouteComponent>
         ),
       },
