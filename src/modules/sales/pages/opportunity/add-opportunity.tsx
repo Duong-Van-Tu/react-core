@@ -41,7 +41,7 @@ type FieldType = {
   winningOppotunity: string;
 };
 
-export const AddOpportunityPage = () => {
+export default function AddOpportunityPage() {
   const { formatMessage } = useLocale();
   const { addOpportunity } = useOpportunity();
   const [loading] = useWatchLoading(['add-opportunity', false]);
@@ -446,7 +446,7 @@ export const AddOpportunityPage = () => {
       </Form>
     </div>
   );
-};
+}
 
 const containerStyle = css`
   width: 100%;

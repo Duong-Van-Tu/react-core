@@ -32,7 +32,7 @@ const data: any = [
     target: 'Duy trì HĐ năm 2023 và tăng giá trị hợp đồng năm 2024',
   },
 ];
-export const UpdateHistoryOpportunity = () => {
+export default function UpdateHistoryOpportunity() {
   const { formatMessage } = useLocale();
   return (
     <div css={containerStyle}>
@@ -55,7 +55,7 @@ export const UpdateHistoryOpportunity = () => {
       </div>
     </div>
   );
-};
+}
 
 const containerStyle = css`
   width: 100%;

@@ -6,39 +6,7 @@ import { useLocale } from '@/hooks/locale.hook';
 import { TableCustom } from '@/components/table';
 import { ticketIncomeDetailsColumns } from './column/ticket-income-details.column';
 
-const data: any = [
-  {
-    key: 1,
-    content: '[VRB_SLW] Tạo reel',
-    expectedAmount: '0',
-    actualAmount: '136.000 VND',
-    object: 'huynq',
-    CPType: 'CP.Sanxuat',
-    projectName: 'VRB.2023-2.trabdt.Dbcare',
-    spentTime: '31/01/2024',
-  },
-  {
-    key: 2,
-    content: '[VRB_SLW] Tạo reel',
-    expectedAmount: '0',
-    actualAmount: '136.000 VND',
-    object: 'huynq',
-    CPType: 'CP.Sanxuat',
-    projectName: 'VRB.2023-2.trabdt.Dbcare',
-    spentTime: '31/01/2024',
-  },
-  {
-    key: 3,
-    content: '[VRB_SLW] Tạo reel',
-    expectedAmount: '0',
-    actualAmount: '136.000 VND',
-    object: 'huynq',
-    CPType: 'CP.Sanxuat',
-    projectName: 'VRB.2023-2.trabdt.Dbcare',
-    spentTime: '31/01/2024',
-  },
-];
-export const TicketIncomeDetails = () => {
+export default function TicketIncomeDetails() {
   const { formatMessage } = useLocale();
   return (
     <div css={containerStyle}>
@@ -52,7 +20,7 @@ export const TicketIncomeDetails = () => {
       <div css={tableCustomStyle}>
         <TableCustom
           columns={ticketIncomeDetailsColumns}
-          dataSource={data}
+          dataSource={[]}
           loading={false}
           rowKey={(record) => record.key}
           pagination={{ current: 1, pageSize: 3 }}
@@ -61,7 +29,7 @@ export const TicketIncomeDetails = () => {
       </div>
     </div>
   );
-};
+}
 
 const containerStyle = css`
   width: 100%;

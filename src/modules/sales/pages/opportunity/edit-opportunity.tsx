@@ -44,7 +44,7 @@ type FieldType = {
   winningOpportunity: string;
 };
 
-export const EditOpportunityPage = () => {
+export default function EditOpportunityPage() {
   const { formatMessage } = useLocale();
   const { updateOpportunity, getOpportunityById } = useOpportunity();
   const { id: opportunityId } = useParams();
@@ -483,7 +483,7 @@ export const EditOpportunityPage = () => {
       </div>
     </Spin>
   );
-};
+}
 
 const containerStyle = css`
   width: 100%;

@@ -5,7 +5,7 @@ import { Col, Row } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 
-export const ReportOpportunity = () => {
+export default function ReportOpportunity() {
   const { formatMessage } = useLocale();
 
   return (
@@ -173,7 +173,7 @@ export const ReportOpportunity = () => {
       </div>
     </div>
   );
-};
+}
 
 const containerStyle = css`
   width: 100%;

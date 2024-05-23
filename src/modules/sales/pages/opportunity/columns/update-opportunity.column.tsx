@@ -22,10 +22,4 @@ export const updateOpportunityColumns: ColumnsType<any> = [
     dataIndex: 'result',
     render: (result) => result,
   },
-  {
-    title: '',
-    fixed: 'right',
-    width: '1%',
-    render: () => '',
-  },
 ];
