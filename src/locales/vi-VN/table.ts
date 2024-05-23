@@ -65,4 +65,6 @@ export const viVN_table = {
 
   'table.pagination.button.prev': 'Trang trước',
   'table.pagination.button.next': 'Trang kế',
+
+  'table.column.saleKit.selectAll': 'Chọn tất cả',
 };

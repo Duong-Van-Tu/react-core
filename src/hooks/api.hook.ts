@@ -73,9 +73,11 @@ export function useCaller() {
         setLoading(loadingKey, true);
 
         const [res]: any = await Promise.all([func(), delay != null ? tick(delay) : undefined]);
+
         if (
           res === undefined ||
           (res &&
+            typeof res?.data !== 'string' &&
             (!res.data?.succeeded ||
               res.exception === 'Error' ||
               res.status >= 400 ||
@@ -94,6 +96,7 @@ export function useCaller() {
           setTimeout(() => setLoading(loadingKey, false), 0);
           return null;
         }
+
         if (successMessage !== '') {
           if (messageKey) {
             setMessage(messageKey, {
@@ -103,6 +106,7 @@ export function useCaller() {
           }
         }
         setTimeout(() => setLoading(loadingKey, false), 0);
+
         return res?.data;
       } catch (error: any) {
         console.warn('Response', error?.response || error);
