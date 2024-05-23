@@ -3,6 +3,7 @@ import kpi, { kpiInitialState } from './slicers/kpi.slice';
 import opportunity, { opportunityInitialState } from './slicers/opportunity.slice';
 import saleKit, { saleKitInitialState } from './slicers/sale.kit.slice';
 import benefit, { benefitInitialState } from './slicers/benefit.slice';
+import relationship, { relationshipInitialState } from './slicers/relationship.slice';
 
 export type RawRootState = typeof saleState;
 export const salesInitialStates = {
@@ -10,12 +11,14 @@ export const salesInitialStates = {
   opportunityInitialState,
   saleKitInitialState,
   benefitInitialState,
+  relationshipInitialState,
 };
 export const saleState = {
   kpi,
   opportunity,
   saleKit,
   benefit,
+  relationship,
 };
 
 const saleReducer = combineReducers(saleState);
