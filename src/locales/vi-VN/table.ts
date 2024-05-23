@@ -76,4 +76,6 @@ export const viVN_table = {
   'table.column.serviceShortName': 'Tên viết tắt',
   'table.column.relationshipLvCode': 'Mức',
   'table.column.relationshipLvDesc': 'Định nghĩa',
+  'table.column.questionGainsSerialNumber': 'Stt',
+  'table.column.questionGainsQuestion': 'Câu hỏi',
 };

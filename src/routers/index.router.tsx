@@ -75,7 +75,7 @@ const RelationshipLvPage = lazy(
 );
 
 const QuestionrPage = lazy(
-  () => import(/* webpackChunkName: "Question"*/ '@/modules/category/pages/questions'),
+  () => import(/* webpackChunkName: "Question"*/ '@/modules/category/pages/questions-gains'),
 );
 const ContractPage = lazy(
   () => import(/* webpackChunkName: "Question"*/ '@/modules/category/pages/contract'),

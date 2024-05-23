@@ -1,0 +1,54 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
+import { Button, Dropdown } from 'antd';
+import type { MenuProps } from 'antd';
+import { CustomIcon } from '@/components/icons';
+import { useLocale } from '@/hooks/locale.hook';
+import { ModalQuestionGainsType } from '../../enum/question-gains.enum';
+import { useModalQuestionGains } from '../modals/question-gains';
+
+enum MenuItem {
+  EditQuestion = 1,
+}
+
+type QuestionGainsDropdownProps = {
+  data?: DataQuestionGainsType;
+  questionIds?: string[];
+};
+
+export function QuestionGainsDropdown({ data }: QuestionGainsDropdownProps) {
+  const { openModal } = useModalQuestionGains();
+  const { formatMessage } = useLocale();
+
+  const handleItemClick = (key: number) => {
+    switch (key) {
+      case MenuItem.EditQuestion:
+        openModal(ModalQuestionGainsType.EditQuestion, data);
+        break;
+      default:
+        break;
+    }
+  };
+  const items: MenuProps['items'] = [
+    {
+      key: '1',
+      label: <span>{formatMessage({ id: 'dropdown.edit' })}</span>,
+      onClick: () => handleItemClick(MenuItem.EditQuestion),
+    },
+  ];
+
+  return (
+    <Dropdown menu={{ items }} placement="bottomRight">
+      <Button css={actionIconBtn}>
+        <CustomIcon type="three-dot" width={16} height={18} />
+      </Button>
+    </Dropdown>
+  );
+}
+
+const actionIconBtn = css`
+  background: none;
+  border: none;
+  box-shadow: unset;
+  padding: 0;
+`;

@@ -10,22 +10,23 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
-import { relationshipLvColumns } from './column/relationship-lv.column';
-import { useModalRelationshipLv } from '../../components/modals/relationship-level';
-import { useRelationshipLv } from '../../services/relationshipLv.service';
 
-export default function TableRelationshipLv() {
-  const [relationshipLvIds, setRelationshipLvIds] = useState<string[]>();
-  const { openModal } = useModalRelationshipLv();
-  const { getAllRelationshipLv } = useRelationshipLv();
-  const [loading] = useWatchLoading(['get-relationshipLv', true]);
-  const { data, pagination } = useRootSelector((state) => state.category.relationshipLv);
+import { questionGainsColumns } from './column/question-gains.column';
+import { useModalQuestionGains } from '../../components/modals/question-gains';
+import { useQuestionGain } from '../../services/question-gain.service';
+
+export default function TableQuestionGains() {
+  const [questionIds, setQuestionIds] = useState<string[]>();
+  const { openModal } = useModalQuestionGains();
+  const { getAllQuestionGain } = useQuestionGain();
+  const [loading] = useWatchLoading(['get-questionGain', true]);
+  const { data, pagination } = useRootSelector((state) => state.category.questionGain);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
-    getAllRelationshipLv({
+    getAllQuestionGain({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       textSearch,
@@ -35,7 +36,7 @@ export default function TableRelationshipLv() {
   };
 
   const handleTableChange = (page: number) => {
-    getAllRelationshipLv({
+    getAllQuestionGain({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
@@ -44,60 +45,55 @@ export default function TableRelationshipLv() {
 
   const rowSelection = {
     onChange: (_selectedRowKeys: Key[], selectedRows: DataReationshipLevelType[]) => {
-      setRelationshipLvIds(selectedRows.map((row) => row.id!));
+      setQuestionIds(selectedRows.map((row) => row.id!));
     },
   };
 
   const handleDeleteSupplier = () => {
-    openModal('Delete RelationLevel', undefined, relationshipLvIds);
+    openModal('Delete Question', undefined, questionIds);
   };
 
   useEffect(() => {
-    getAllRelationshipLv({
+    getAllQuestionGain({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
     });
-  }, [getAllRelationshipLv, tab]);
+  }, [getAllQuestionGain, tab]);
 
   return (
     <div css={rootStyle}>
       <Button
-        onClick={() => openModal('Add RelationLevel')}
+        onClick={() => openModal('Add Question')}
         type="primary"
         css={addRelationshipLvStyle}
         iconPosition="start"
         size="large"
       >
         <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-        <span>Thêm mức độ quan hệ</span>
+        <span>Thêm câu hỏi</span>
       </Button>
 
       <div css={searchContainer}>
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button
-          disabled={!relationshipLvIds}
-          onClick={() => handleDeleteSupplier()}
-          size="large"
-          danger
-        >
+        <Button disabled={!questionIds} onClick={() => handleDeleteSupplier()} size="large" danger>
           Xoá mục tiêu đã chọn
         </Button>
       </div>
       <TableCustom
         rowSelection={rowSelection}
-        columns={relationshipLvColumns}
+        columns={questionGainsColumns}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
         pagination={{
           current: pagination?.pageIndex,
           pageSize: Pagination.PAGESIZE,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
-          onChange: (page) => handleTableChange(page),
         }}
         scroll={{ x: 1450 }}
       />
