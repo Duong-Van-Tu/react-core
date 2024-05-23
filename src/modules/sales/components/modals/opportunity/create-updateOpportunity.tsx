@@ -1,48 +1,63 @@
 /** @jsxImportSource @emotion/react */
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
+import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
+import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
 import { Fragment } from 'react';
 
-type AddUpdateOpportunityProps = {
-  closeModal: () => void;
-};
 type FieldType = {
-  target: string;
+  goal: string;
   activity: string;
   time: string;
   result: string;
 };
 
-export const CreateUpdateOpportunity = ({ ...props }: AddUpdateOpportunityProps) => {
-  const { closeModal } = props;
-  const { formatMessage } = useLocale();
+type CreateUpdateOpportunityProps = {
+  closeModal: () => void;
+};
 
-  const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-    console.log('Success:', values);
-    closeModal();
+export const CreateUpdateOpportunity = ({ closeModal }: CreateUpdateOpportunityProps) => {
+  const { addOpportunity } = useOpportunity();
+  const { formatMessage } = useLocale();
+  const [form] = Form.useForm();
+  const [loading] = useWatchLoading(['add-Opportunity', false]);
+
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
+    const { goal } = values;
+    const dataAddOpportunity = {} as any;
+    const add = await addOpportunity(dataAddOpportunity);
+    if (add) {
+      form.resetFields();
+      closeModal();
+    }
   };
 
   const oncancel = () => {
     closeModal();
   };
+
   return (
     <Fragment>
-      <h3 css={formTitleStyle}>Thêm cập nhật cơ hội</h3>
+      <h3 css={formStyle}>Thêm cập nhật cơ hội</h3>
       <Form
-        css={formUpdateOpportunityStyle}
-        name="update-opportunity"
+        form={form}
+        css={formEditOpportunityStyle}
+        name="add-Opportunity"
         onFinish={onFinish}
         layout="vertical"
       >
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.target' })}</span>}
-          name="target"
+          name="goal"
           rules={[{ required: true, message: formatMessage({ id: 'form.input.require.target' }) }]}
         >
-          <Input placeholder={formatMessage({ id: 'form.input.target' })} css={inputFormItem} />
+          <InputNumber
+            css={inputStyle}
+            size="large"
+            placeholder={formatMessage({ id: 'form.input.target' })}
+          />
         </Form.Item>
-
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.activity' })}</span>}
           name="activity"
@@ -50,11 +65,7 @@ export const CreateUpdateOpportunity = ({ ...props }: AddUpdateOpportunityProps)
             { required: true, message: formatMessage({ id: 'form.input.require.activity' }) },
           ]}
         >
-          <Input.TextArea
-            placeholder={formatMessage({ id: 'form.input.activity' })}
-            style={{ resize: 'none' }}
-            css={textAreaStyle}
-          />
+          <Input.TextArea placeholder={formatMessage({ id: 'form.input.activity' })} allowClear />
         </Form.Item>
 
         <Row gutter={[20, 0]}>
@@ -66,10 +77,11 @@ export const CreateUpdateOpportunity = ({ ...props }: AddUpdateOpportunityProps)
                 { required: true, message: formatMessage({ id: 'form.input.require.time' }) },
               ]}
             >
-              <Input
-                size="middle"
-                placeholder={formatMessage({ id: 'form.input.target' })}
-                css={inputFormItem}
+              <DatePicker
+                size="large"
+                css={inputStyle}
+                format={['DD/MM/YYYY']}
+                placeholder="Nhập thời điểm"
               />
             </Form.Item>
           </Col>
@@ -81,19 +93,15 @@ export const CreateUpdateOpportunity = ({ ...props }: AddUpdateOpportunityProps)
                 { required: true, message: formatMessage({ id: 'form.input.require.result' }) },
               ]}
             >
-              <Input
-                size="middle"
-                placeholder={formatMessage({ id: 'form.input.realityKPI' })}
-                css={inputFormItem}
-              />
+              <Input css={inputStyle} size="large" placeholder="Nhập kết quả" />
             </Form.Item>
           </Col>
         </Row>
 
-        <Row justify="end">
+        <Row justify="end" css={formFooterStyle}>
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
-            <Button type="primary" htmlType="submit">
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>
@@ -103,44 +111,31 @@ export const CreateUpdateOpportunity = ({ ...props }: AddUpdateOpportunityProps)
   );
 };
 
-const formUpdateOpportunityStyle = css`
+const formEditOpportunityStyle = css`
   .ant-form-item-required::before {
     display: none !important;
   }
   margin-top: 2rem;
-  padding: 1rem 0;
+  padding: 1rem;
 `;
 
-const formTitleStyle = css`
-  font-weight: 700;
-  font-size: 2.1rem;
-  line-height: 2.6rem;
-  margin-top: 3rem;
-  color: rgba(21, 41, 75, 1);
+const formStyle = css`
+  font-weight: 500;
+  font-size: 2rem;
+  line-height: 2.2rem;
+  margin-top: 2rem;
 `;
 
 const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
-  font-weight: 600;
-  color: rgba(16, 24, 40, 1);
+  font-weight: 500;
 `;
 
-const inputFormItem = css`
-  height: 4.5rem;
-  padding: 0.8rem 1.4rem;
-  &::placeholder {
-    color: rgba(208, 213, 221, 1);
-    font-size: 1.4rem;
-    font-weight: 500;
-  }
+const inputStyle = css`
+  width: 100%;
 `;
 
-const textAreaStyle = css`
-  padding: 0.8rem 1.4rem;
-  &::placeholder {
-    color: rgba(208, 213, 221, 1);
-    font-size: 1.4rem;
-    font-weight: 500;
-  }
+const formFooterStyle = css`
+  margin-top: 1rem;
 `;

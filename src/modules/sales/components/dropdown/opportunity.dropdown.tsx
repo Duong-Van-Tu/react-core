@@ -13,6 +13,7 @@ enum MenuItem {
   AssignOpportunity = 1,
   CloseOpportunity,
   Delete,
+  CreateUpdateOpportunity,
 }
 
 type OpportunityDropdownProps = {
@@ -34,6 +35,9 @@ export function OpportunityDropdown({ data }: OpportunityDropdownProps) {
         break;
       case MenuItem.Delete:
         openModal(ModalOpportunityType.Delete, data);
+        break;
+      case MenuItem.CreateUpdateOpportunity:
+        openModal(ModalOpportunityType.CreateUpdateOpportunity, data);
         break;
       default:
         break;

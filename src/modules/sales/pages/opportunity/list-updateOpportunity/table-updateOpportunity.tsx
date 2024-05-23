@@ -7,10 +7,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, Space } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { getTenant } from '@/utils/common';
+import { useModalOpportunity } from '@/modules/sales/components/modals/opportunity';
+import { ModalOpportunityType } from '@/modules/sales/enum/opportunity.enum';
 
-export default function TableUpdateOpportunity() {
+export function TableUpdateOpportunity() {
   const navigate = useNavigate();
   const tenant = getTenant();
+  const { openModal } = useModalOpportunity();
 
   return (
     <div css={rootStyle}>
@@ -31,7 +34,13 @@ export default function TableUpdateOpportunity() {
             <CustomIcon color="rgba(0, 0, 0, 1)" width={16} height={16} type="close" />
             <LocaleFormatter id="title.exit" />
           </Button>
-          <Button type="primary" css={addBtnStyle} iconPosition="start" size="large">
+          <Button
+            onClick={() => openModal(ModalOpportunityType.CreateUpdateOpportunity)}
+            type="primary"
+            css={addBtnStyle}
+            iconPosition="start"
+            size="large"
+          >
             <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />{' '}
             <span>Thêm cập nhật</span>
           </Button>

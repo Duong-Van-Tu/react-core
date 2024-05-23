@@ -47,7 +47,7 @@ const InforIncomePage = lazy(
 const ListUpdateOpportunityPage = lazy(
   () =>
     import(
-      /* webpackChunkName: "ListUpdateOpportunityPage"*/ '@/modules/sales/pages/opportunity/list-updateOpportunity/table-updateOpportunity'
+      /* webpackChunkName: "ListUpdateOpportunityPage"*/ '@/modules/sales/pages/opportunity/list-updateOpportunity'
     ),
 );
 const UpdateHistoryOpportunityPage = lazy(

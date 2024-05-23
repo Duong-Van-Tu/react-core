@@ -1,7 +1,7 @@
 import { ModalOpportunityProvider } from '@/modules/sales/components/modals/opportunity';
-import TableUpdateOpportunity from './table-updateOpportunity';
+import { TableUpdateOpportunity } from './table-updateOpportunity';
 
-export function ListUpdateOpportunityPage() {
+export default function ListUpdateOpportunityPage() {
   return (
     <ModalOpportunityProvider>
       <TableUpdateOpportunity />

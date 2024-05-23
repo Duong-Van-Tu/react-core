@@ -1,15 +1,16 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalOpportunityType } from '../../../enum/opportunity.enum';
-import { AssignOpportunity } from './assign-opportuity';
-import { CloseOpportunity } from './close-opportuity';
-import { DeleteOpportunity } from './delete-opportuity';
+import { AssignOpportunity } from './assign-opportunity';
+import { CloseOpportunity } from './close-opportunity';
+import { DeleteOpportunity } from './delete-opportunity';
+import { CreateUpdateOpportunity } from './create-updateOpportunity';
 
-type ModalContexttype = {
+type ModalContextType = {
   openModal: (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => void;
   closeModal: () => void;
 };
-const ModalContext = createContext<ModalContexttype | undefined>(undefined);
+const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const useModalOpportunity = () => {
   const context = useContext(ModalContext);
@@ -53,6 +54,9 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
             data={currentModal.data!}
             opportunityIds={currentModal.opportunityIds!}
           />
+        )}
+        {currentModal?.modalName === ModalOpportunityType.CreateUpdateOpportunity && (
+          <CreateUpdateOpportunity closeModal={closeModal} />
         )}
       </Modal>
     </ModalContext.Provider>
