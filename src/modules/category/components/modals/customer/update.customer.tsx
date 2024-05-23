@@ -25,8 +25,6 @@ export const UpdateCustomer = ({ closeModal, data }: UptdaeCustomerProps) => {
     const dataUpdateCustomer = {
       ...values,
       id: data.id,
-      code: values.code.toString(),
-      fullname: values.fullname.toString(),
     };
 
     const edit = await updateCustomer(dataUpdateCustomer);

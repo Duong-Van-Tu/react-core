@@ -23,6 +23,7 @@ export const enUS_title = {
   'title.document.inforOther': 'Other information',
   'title.document.detailsView': 'Details view',
   'title.document.customer': 'Customer',
+  'title.document.supplier': 'Supplier',
   'title.document.incomeDuringTheYear': 'Income during the year',
   'title.document.incomeByPosition': 'Income by job position',
   'title.document.human-resource': 'Human resource',

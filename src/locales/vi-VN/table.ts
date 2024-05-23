@@ -67,4 +67,8 @@ export const viVN_table = {
   'table.pagination.button.next': 'Trang kế',
   'table.column.customersID': 'Mã KH',
   'table.column.customersName': 'Tên khách hàng',
+  'table.column.supplierCode': 'Mã NCC',
+  'table.column.supplierFullName': 'Tên NCC',
+  'table.column.supplierDesc': 'Mô tả',
+  'table.column.supplierReview': 'Đánh giá',
 };

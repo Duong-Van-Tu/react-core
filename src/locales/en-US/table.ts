@@ -67,4 +67,9 @@ export const enUS_table = {
   'table.pagination.button.next': 'Next',
   'table.column.customersID': 'Customers ID',
   'table.column.customersName': 'Customers Name',
+
+  'table.column.supplierCode': 'Supplier code',
+  'table.column.supplierFullName': 'Supplier full name',
+  'table.column.supplierDesc': 'Description',
+  'table.column.supplierReview': 'Review',
 };

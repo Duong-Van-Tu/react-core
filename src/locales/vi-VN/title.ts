@@ -24,6 +24,7 @@ export const viVN_title = {
   'title.document.inforOther': 'Thông tin khác',
   'title.document.detailsView': 'Xem chi tiết',
   'title.document.customer': 'Khách hàng',
+  'title.document.supplier': 'Nhà cung cấp',
   'title.document.incomeDuringTheYear': 'Thu nhập trong năm',
   'title.document.incomeByPosition': 'Thu nhập theo vị trí',
   'title.document.human-resource': 'Nhân sự',

@@ -1,12 +1,13 @@
 import { useApi, useCaller } from '@/hooks/api.hook';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+
 import {
-  setListCustomerAction,
-  addCustomerAction,
-  deleteCustomerAction,
-  updateCustomerAction,
-} from '../reducers/slicers/customer.slice';
+  setListSupplierAction,
+  deleteSupplierAction,
+  addSupplierAction,
+  updateSupplierAction,
+} from '../reducers/slicers/supplier.slice';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
@@ -22,14 +23,14 @@ type FilterKPIType = {
   roleType: string;
 };
 
-export const useCustomer = () => {
+export const useSupplier = () => {
   const api = useApi('');
   const caller = useCaller();
   const dispatch = useDispatch();
   const tenant = getTenant();
   const user = useRootSelector((state) => state.auth.user);
 
-  const getAllCustomer = useCallback(
+  const getAllSupplier = useCallback(
     async ({
       pageIndex = Pagination.PAGEINDEX,
       pageSize = Pagination.PAGESIZE,
@@ -53,15 +54,15 @@ export const useCustomer = () => {
       const urlParams = generateUrlParams(queryParams);
 
       const { data, succeeded } = await caller(
-        () => api.post(`/Customer/get-list-with-pagination?${urlParams}`),
+        () => api.post(`/Supplier/get-list-with-pagination?${urlParams}`),
         {
-          loadingKey: 'get-customer',
+          loadingKey: 'get-supplier',
         },
       );
       if (succeeded) {
         const { items, totalRecords, pageIndex, totalPages, totalExtend } = data;
         dispatch(
-          setListCustomerAction({
+          setListSupplierAction({
             data: items,
             pagination: {
               pageIndex,
@@ -76,17 +77,19 @@ export const useCustomer = () => {
     [caller, api],
   );
 
-  const addKCustomer = useCallback(
-    async (values: DataCustomerType) => {
-      const dataAddCustomer = convertToUppercaseFirstLetter({ ...values });
+  const addKSupplier = useCallback(
+    async (values: DataSupplierType) => {
+      const dataAddSupplier = convertToUppercaseFirstLetter({ ...values });
+
+      console.log('Payload for API: ', [{ data: dataAddSupplier }]);
 
       const { data, succeeded } = await caller(
-        () => api.post(`/Customer/add-or-update?tenant=${tenant}`, [{ data: dataAddCustomer }]),
-        { loadingKey: 'add-customer' },
+        () => api.post(`/Supplier/add-or-update?tenant=${tenant}`, [{ data: dataAddSupplier }]),
+        { loadingKey: 'add-supplier' },
       );
 
       if (succeeded) {
-        dispatch(addCustomerAction(data[0]));
+        dispatch(addSupplierAction(data[0]));
         return succeeded;
       }
       return false;
@@ -95,17 +98,17 @@ export const useCustomer = () => {
     [api, caller],
   );
 
-  const deleteCustomer = useCallback(
-    async (customerIds: string[]) => {
-      const ids = customerIds.join(',');
+  const deleteSupplier = useCallback(
+    async (supplierIds: string[]) => {
+      const ids = supplierIds.join(',');
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
-        () => api.del(`/Customer/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-customer' },
+        () => api.del(`/Supplier/delete-by-ids/${ids}/${ApplicationUserId}`),
+        { loadingKey: 'delete-supplier' },
       );
 
       if (succeeded !== null && succeeded) {
-        dispatch(deleteCustomerAction(customerIds));
+        dispatch(deleteSupplierAction(supplierIds));
         return true;
       }
       return false;
@@ -114,20 +117,20 @@ export const useCustomer = () => {
     [api, caller],
   );
 
-  const updateCustomer = useCallback(
-    async (values: DataCustomerType) => {
-      const dataUpdateCustomer = convertToUppercaseFirstLetter({ ...values });
+  const updateSupplier = useCallback(
+    async (values: DataSupplierType) => {
+      const dataUpdateSupplier = convertToUppercaseFirstLetter({ ...values });
 
       const { data, succeeded } = await caller(
         () =>
-          api.post(`/Customer/add-or-update?tenant=${tenant}`, [
-            { id: values.id, data: dataUpdateCustomer },
+          api.post(`/Supplier/add-or-update?tenant=${tenant}`, [
+            { id: values.id, data: dataUpdateSupplier },
           ]),
-        { loadingKey: 'edit-customer' },
+        { loadingKey: 'edit-supplier' },
       );
 
       if (succeeded) {
-        dispatch(updateCustomerAction(data[0]));
+        dispatch(updateSupplierAction(data[0]));
         return succeeded;
       }
       return false;
@@ -136,5 +139,5 @@ export const useCustomer = () => {
     [api, caller],
   );
 
-  return { getAllCustomer, addKCustomer, deleteCustomer, updateCustomer };
+  return { getAllSupplier, deleteSupplier, addKSupplier, updateSupplier };
 };

@@ -42,7 +42,7 @@ export const AddCustomer = ({ closeModal }: AddCustomerProps) => {
       <Form
         form={form}
         css={formAddCustomertyle}
-        name="add-kpi"
+        name="add-customer"
         onFinish={onFinish}
         layout="vertical"
       >
@@ -94,8 +94,4 @@ const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
   font-weight: 500;
-`;
-
-const inputStyle = css`
-  width: 100%;
 `;
