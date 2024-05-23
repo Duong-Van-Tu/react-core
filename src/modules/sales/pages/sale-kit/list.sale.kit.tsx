@@ -46,7 +46,7 @@ const ListSaleKit = ({ data, downLoadDocument }: Props) => {
   };
 
   const onCheckAllChange: CheckboxProps['onChange'] = (e) => {
-    setCheckedList(e.target.checked ? plainOptions : []);
+    setCheckedList(e.target.checked ? options.map((option) => option.value) : []);
   };
 
   const base64DecToArr = (strBase64: string, nBlockSize: number) => {
