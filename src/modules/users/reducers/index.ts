@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import humanResources, { humanResourcesInitialState } from './slicers/human.resources.slice';
+import humanResources, { humanResourcesInitialState } from './slicers/human-resources.slice';
 import income, { incomeInitialState } from './slicers/income.slice';
 
 export type RawRootState = typeof userState;

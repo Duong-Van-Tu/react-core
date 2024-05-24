@@ -12,7 +12,7 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { Key } from 'antd/es/table/interface';
-import { useHumanResources } from '../../services/human.resources.service';
+import { useHumanResources } from '../../services/human-resources.service';
 import { Search, SearchParams } from '@/components/search';
 
 export default function HumanResourcesPage() {
@@ -72,6 +72,13 @@ export default function HumanResourcesPage() {
     });
   };
 
+  const handleTableChange = (page: number) => {
+    getListUsers({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+    });
+  };
+
   return (
     <div>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.human-resource' })}</h3>
@@ -86,6 +93,7 @@ export default function HumanResourcesPage() {
         dataSource={isAdmin ? data : [user]}
         loading={loadingAdmin}
         rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
         pagination={
           isAdmin
             ? {
@@ -93,12 +101,6 @@ export default function HumanResourcesPage() {
                 pageSize: Pagination.PAGESIZE,
                 total: pagination?.totalRecords,
                 position: ['bottomCenter'],
-                onChange: (page) => {
-                  getListUsers({
-                    pageIndex: page,
-                    pageSize: Pagination.PAGESIZE,
-                  });
-                },
               }
             : undefined
         }

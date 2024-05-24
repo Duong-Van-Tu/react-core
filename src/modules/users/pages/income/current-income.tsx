@@ -18,12 +18,20 @@ export default function CurrentIncomeTable({
   pagination,
   getListIncome,
 }: Props) {
+  const handleTableChange = (page: number) => {
+    getListIncome({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+    });
+  };
+
   return (
     <TableCustom
       columns={isAdmin ? adminCurrentIncomeColumns : currentIncomeColumns}
       dataSource={data}
       loading={loading}
       rowKey={(record) => record.key}
+      onTableChange={(page) => handleTableChange(page)}
       pagination={
         isAdmin
           ? {
@@ -31,12 +39,6 @@ export default function CurrentIncomeTable({
               pageSize: Pagination.PAGESIZE,
               total: pagination?.totalRecords,
               position: ['bottomCenter'],
-              onChange: (page) => {
-                getListIncome({
-                  pageIndex: page,
-                  pageSize: Pagination.PAGESIZE,
-                });
-              },
             }
           : undefined
       }

@@ -1,7 +1,7 @@
 import { useApi, useCaller } from '@/hooks/api.hook';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { setListHumanResourcesAction } from '../reducers/slicers/human.resources.slice';
+import { setListHumanResourcesAction } from '../reducers/slicers/human-resources.slice';
 import { Pagination } from '@/constants/pagination';
 import { generateUrlParams } from '@/utils/common';
 import dayjs from 'dayjs';

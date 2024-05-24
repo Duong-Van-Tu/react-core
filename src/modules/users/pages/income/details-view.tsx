@@ -6,24 +6,69 @@ import { TableCustom } from '@/components/table';
 import { ticketIncomeDetailsColumns } from './column/ticket-income-details.column';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
+import { Link } from 'react-router-dom';
+import { useQuery } from '@/hooks/query.hook';
+import { useIncome } from '../../services/income.service';
+import { usePermission } from '@/hooks/permission.hook';
+import { useEffect } from 'react';
 
 export default function TicketIncomeDetails() {
   const { formatMessage } = useLocale();
 
+  const { getListIncomeDetail } = useIncome();
+  const { isAdmin } = usePermission();
+
   const { dataDetailIncome, pagination } = useRootSelector((state) => state.user.income);
+
+  const query = useQuery();
+
+  useEffect(() => {
+    handleViewDetail();
+  }, []);
+
+  const handleViewDetail = () => {
+    if (isAdmin) {
+      getListIncomeDetail({
+        userId: query.userId,
+        pageIndex: Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+      });
+    } else {
+      getListIncomeDetail({
+        userId: query.userId,
+        month: query.month,
+        year: query.year,
+        pageIndex: Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  };
+
+  const handleTableChange = (page: number) => {
+    if (isAdmin) {
+      getListIncomeDetail({
+        userId: query.userId,
+        pageIndex: page,
+        pageSize: Pagination.PAGESIZE,
+      });
+    } else {
+      getListIncomeDetail({
+        userId: query.userId,
+        month: query.month,
+        year: query.year,
+        pageIndex: page,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  };
 
   return (
     <div css={containerStyle}>
       <div css={closeStyle}>
         <CustomIcon width={12} height={14} type="prev" />
-        <span
-          css={goBackLinkStyle}
-          onClick={() => {
-            window.history.back();
-          }}
-        >
+        <Link to={'/users/income'} css={goBackLinkStyle}>
           {formatMessage({ id: 'title.back' })}
-        </span>
+        </Link>
       </div>
       <h1 css={titleStyle}>{formatMessage({ id: 'title.document.income-ticket' })}</h1>
       <div css={tableCustomStyle}>
@@ -32,6 +77,7 @@ export default function TicketIncomeDetails() {
           dataSource={dataDetailIncome}
           loading={false}
           rowKey={(record) => record.key}
+          onTableChange={(page) => handleTableChange(page)}
           pagination={{
             current: pagination?.pageIndex,
             pageSize: Pagination.PAGESIZE,

@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import kpi, { kpiInitialState } from './slicers/kpi.slice';
 import opportunity, { opportunityInitialState } from './slicers/opportunity.slice';
-import saleKit, { saleKitInitialState } from './slicers/sale.kit.slice';
+import saleKit, { saleKitInitialState } from './slicers/sale-kit.slice';
 import benefit, { benefitInitialState } from './slicers/benefit.slice';
 import relationship, { relationshipInitialState } from './slicers/relationship.slice';
 

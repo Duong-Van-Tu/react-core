@@ -1,7 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import humanResources, {
   humanResourcesCategoryInitialState,
-} from './slicers/human.resources.slice';
+} from './slicers/human-resources.slice';
 
 export type RawRootState = typeof userState;
 export const usersInitialStates = {

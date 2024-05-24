@@ -1,25 +1,29 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { CustomIcon } from '@/components/icons';
-import { userSaleKit } from '../../services/sale.kit.service';
+import { userSaleKit } from '../../services/sale-kit.service';
 import { useRootSelector } from '@/hooks/selector.hook';
-import ListSaleKit from './list.sale.kit';
-import { Search } from '@/components/search';
-import { Button, Col, Row } from 'antd';
+import ListSaleKit from './list-sale-kit';
+import { Search, SearchParams } from '@/components/search';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { PlusCircleOutlined } from '@ant-design/icons';
 import { usePermission } from '@/hooks/permission.hook';
-import { Link } from 'react-router-dom';
+import { Spinner } from '@/components/spinner';
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { ModalProvider } from '../../components/modals/sale-kit';
+import SaleKitHeader from './sale-kit.header';
 
 export default function SaleKitPage() {
   const { getAllSaleKit, downLoadDocument } = userSaleKit();
   const { isAdmin } = usePermission();
 
+  const [loading] = useWatchLoading(['get-sale-kit', true]);
+
   const { data } = useRootSelector((state) => state.sale.saleKit);
+
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
 
   const dispatch = useDispatch();
@@ -47,40 +51,20 @@ export default function SaleKitPage() {
     getAllSaleKit({});
   }, []);
 
+  const handleSearch = ({ textSearch, time }: SearchParams) => {
+    getAllSaleKit({
+      textSearch,
+      time,
+    });
+  };
+
   return (
-    <Fragment>
+    <ModalProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.saleKit' })}</h3>
       <div css={searchContainer}>
-        <Search onSearch={() => {}} />
+        <Search onSearch={handleSearch} />
       </div>
-      {isAdmin && (
-        <Row css={rowHeaderStyle} justify="space-between" align="bottom">
-          <Col>
-            <Button disabled={checkedList.length === 0} onClick={() => {}} size="large" danger>
-              Xoá mục tiêu đã chọn
-            </Button>
-          </Col>
-          <Col>
-            <Row gutter={[10, 10]} justify="space-between" align="bottom">
-              <Col>
-                <Button size="large">
-                  <Link to="/sales/sale-kit/auth">Quản lý quyền truy cập</Link>
-                </Button>
-              </Col>
-              <Col>
-                <Button
-                  icon={<PlusCircleOutlined />}
-                  onClick={() => {}}
-                  size="large"
-                  type="primary"
-                >
-                  Thêm tài liệu
-                </Button>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      )}
+      {isAdmin && <SaleKitHeader checkedList={checkedList} />}
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.saleKit' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
@@ -88,14 +72,26 @@ export default function SaleKitPage() {
           {data?.length} {formatMessage({ id: 'title.document.saleKit' })}
         </span>
       </div>
-      <ListSaleKit
-        isAdmin={isAdmin}
-        setCheckedList={setCheckedList}
-        checkedList={checkedList}
-        data={data}
-        downLoadDocument={downLoadDocument}
-      />
-    </Fragment>
+      {!loading ? (
+        <ListSaleKit
+          isAdmin={isAdmin}
+          setCheckedList={setCheckedList}
+          checkedList={checkedList}
+          data={data}
+          downLoadDocument={downLoadDocument}
+        />
+      ) : (
+        <Spinner
+          width={50}
+          height={50}
+          styles={{
+            marginTop: '20px',
+            width: '50px',
+            height: '50px',
+          }}
+        />
+      )}
+    </ModalProvider>
   );
 }
 
@@ -113,7 +109,4 @@ const titleStyle = css`
 `;
 const searchContainer = css`
   margin: 2.6rem 0;
-`;
-const rowHeaderStyle = css`
-  margin: 2.4rem 0 1.4rem 0;
 `;
