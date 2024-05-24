@@ -4,11 +4,11 @@ import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
-import { ModalOpportunityType } from '../../enum/opportunity.enum';
 import { useModalOpportunity } from '../modals/opportunity';
 import { useNavigate } from 'react-router-dom';
 import { getTenant } from '@/utils/common';
 import { usePermission } from '@/hooks/permission.hook';
+import { ModalOpportunityType } from '../../enum/modal.enum';
 
 enum MenuItem {
   AssignOpportunity = 1,

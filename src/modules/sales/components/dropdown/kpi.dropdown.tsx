@@ -5,12 +5,12 @@ import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { useModalKPI } from '../modals/kpi';
-import { ModalKPIType } from '../../enum/kpi.enum';
 import { usePermission } from '@/hooks/permission.hook';
 import { useQuery } from '@/hooks/query.hook';
 import { RoleType } from '@/enum/role.enum';
 import { useMemo } from 'react';
 import { Status } from '../../enum/status.enum';
+import { ModalKPIType } from '../../enum/modal.enum';
 
 enum MenuItem {
   EditKPI = 1,

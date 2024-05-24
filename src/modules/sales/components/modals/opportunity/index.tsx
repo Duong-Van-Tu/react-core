@@ -2,11 +2,11 @@
 import { css } from '@emotion/react';
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { ModalOpportunityType } from '../../../enum/opportunity.enum';
 import { AssignOpportunity } from './assign-opportunity';
 import { CloseOpportunity } from './close-opportunity';
 import { DeleteOpportunity } from './delete-opportunity';
 import { CreateHistoryOpportunity } from './create-HistoryOpportunity';
+import { ModalOpportunityType } from '@/modules/sales/enum/modal.enum';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => void;

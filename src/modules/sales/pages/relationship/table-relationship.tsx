@@ -90,8 +90,8 @@ export default function TableRelationship() {
       </div>
       <Row css={rowHeaderStyle} justify="space-between" align="bottom">
         <Col>
-          <Button disabled={!relationshipIds} size="large" danger>
-            Xoá mục tiêu đã chọn
+          <Button disabled={!relationshipIds} size="middle" danger>
+            Xoá mối quan hệ đã chọn
           </Button>
         </Col>
         <Col>Tổng điểm đạt được: {totalExtend ?? 0}</Col>

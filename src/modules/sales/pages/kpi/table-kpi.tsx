@@ -14,8 +14,8 @@ import { Pagination } from '@/constants/pagination';
 import { Key } from 'antd/es/table/interface';
 import { usePermission } from '@/hooks/permission.hook';
 import { RoleType } from '@/enum/role.enum';
-import { ModalKPIType } from '../../enum/kpi.enum';
 import { useQuery } from '@/hooks/query.hook';
+import { ModalKPIType } from '../../enum/modal.enum';
 
 export default function TableKPI() {
   const { openModal } = useModalKPI();
@@ -95,7 +95,7 @@ export default function TableKPI() {
           <Button
             disabled={!goalIds}
             onClick={() => openModal(ModalKPIType.DeleteKPI, undefined, goalIds)}
-            size="large"
+            size="middle"
             danger
           >
             Xoá mục tiêu đã chọn
