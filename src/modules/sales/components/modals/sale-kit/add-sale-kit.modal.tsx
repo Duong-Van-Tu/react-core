@@ -20,13 +20,15 @@ export const AddSaleKit = ({ closeModal }: AddSaleKitProps) => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const handleAddSaleKit = () => {
-    const formData = new FormData();
+    if (fileList.length > 0) {
+      const formData = new FormData();
 
-    for (let i = 0; i < fileList.length; i++) {
-      formData.append('files', fileList[i] as any);
+      for (let i = 0; i < fileList.length; i++) {
+        formData.append('files', fileList[i] as any);
+      }
+
+      addSaleKit({ files: formData });
     }
-
-    addSaleKit({ files: formData });
 
     setFileList([]);
     closeModal();
