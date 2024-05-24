@@ -12,7 +12,7 @@ type DeleteSaleKitsProps = {
 export const DeleteSaleKits = ({ closeModal, data }: DeleteSaleKitsProps) => {
   const { deleteSaleKit } = userSaleKit();
 
-  const [loading] = useWatchLoading(['delete-benefit', false]);
+  const [loading] = useWatchLoading(['delete-sale-kit', false]);
 
   const handleDeleteSaleKits = () => {
     deleteSaleKit(data!);

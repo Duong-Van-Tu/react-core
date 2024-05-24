@@ -18,6 +18,7 @@ export type FilterSaleKitType = {
   dataUpdate?: DataSaleKitUpdateType;
   time?: string;
   applicationUserId?: string;
+  files?: FormData;
 };
 export const userSaleKit = () => {
   const api = useApi('');
@@ -79,6 +80,26 @@ export const userSaleKit = () => {
       }
     },
     [caller, api],
+  );
+
+  const addSaleKit = useCallback(
+    async ({ tenant, files }: FilterSaleKitType) => {
+      const queryParams: { [key: string]: string | undefined } = {
+        tenant: tenant,
+      };
+
+      const urlParams = generateUrlParams(queryParams);
+
+      const response = await caller(() => api.post(`/SaleKit/add-document?${urlParams}`, files), {
+        loadingKey: 'add-sale-kit',
+      });
+
+      if (response) {
+        getAllSaleKit({});
+      }
+    },
+
+    [api, caller],
   );
 
   const deleteSaleKit = useCallback(
@@ -171,5 +192,6 @@ export const userSaleKit = () => {
     getAllSaleKitRole,
     updateSaleKitWithRole,
     deleteSaleKit,
+    addSaleKit,
   };
 };

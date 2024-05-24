@@ -3,6 +3,7 @@ import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalSaleKitType } from '../../../enum/sale-kit.enum';
 import { DeleteSaleKits } from './delete-sale-kit.modal';
 import { FilterSaleKitType } from '@/modules/sales/services/sale-kit.service';
+import { AddSaleKit } from './add-sale-kit.modal';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: FilterSaleKitType) => void;
@@ -49,6 +50,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       >
         {currentModal?.modalName === ModalSaleKitType.Delete && (
           <DeleteSaleKits closeModal={closeModal} data={currentModal.data!} />
+        )}
+        {currentModal?.modalName === ModalSaleKitType.AddSaleKit && (
+          <AddSaleKit closeModal={closeModal} />
         )}
       </Modal>
     </ModalContext.Provider>
