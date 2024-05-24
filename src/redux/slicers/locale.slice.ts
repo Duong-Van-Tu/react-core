@@ -5,7 +5,7 @@ export type LocaleState = {
 };
 
 export const localeInitialState: LocaleState = {
-  language: (localStorage.getItem('locale')! || 'en_US') as Locale,
+  language: (localStorage.getItem('locale')! || 'vi_VN') as Locale,
 };
 
 const slice = createSlice({
