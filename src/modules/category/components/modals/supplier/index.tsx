@@ -50,7 +50,7 @@ export const ModalSupplierProvider = ({ children }: ModalSupplierProviderProps) 
           <DeleteSupplier
             closeModal={closeModal}
             data={currentModal.data!}
-            customerIds={currentModal.supplierIds!}
+            supplierIds={currentModal.supplierIds!}
           />
         )}
         {currentModal?.modalName === ModalSupplierType.AddSupplier && (

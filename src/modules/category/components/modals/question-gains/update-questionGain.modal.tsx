@@ -20,7 +20,7 @@ type UpdateQuestionGainProps = {
 export const UpdateQuestionGain = ({ closeModal, data }: UpdateQuestionGainProps) => {
   const [form] = Form.useForm();
   const { updateQuestionGain } = useQuestionGain();
-  const [loading] = useWatchLoading(['add-questionGain', false]);
+  const [loading] = useWatchLoading(['edit-questionGain', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataUpdateQuestionGain = {

@@ -5,24 +5,23 @@ import { Pagination } from '@/constants/pagination';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
 import { useLocation } from 'react-router-dom';
-import { useQuestionGain } from '@/modules/category/services/question-gain.service';
-type DeleteQuestionGainProps = {
+import { useContract } from '@/modules/category/services/contract.service';
+type DeleteContractProps = {
   closeModal: () => void;
-  data?: DataQuestionGainsType;
-  questionIds: string[];
+  data?: DataContractType;
+  contractIds: string[];
 };
-export const DeleteQuestionGain = ({ closeModal, questionIds }: DeleteQuestionGainProps) => {
-  const { deleteQuestionGain, getAllQuestionGain } = useQuestionGain();
-  const pageIndex =
-    useRootSelector((state) => state.category.questionGain.pagination?.pageIndex) ?? 0;
-  const [loading] = useWatchLoading(['delete-questionGain', false]);
+export const DeleteContract = ({ closeModal, contractIds }: DeleteContractProps) => {
+  const { deleteContract, getAllContract } = useContract();
+  const pageIndex = useRootSelector((state) => state.category.customer.pagination?.pageIndex) ?? 0;
+  const [loading] = useWatchLoading(['delete-contract', false]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
-  const handledeleteQuestionGain = async () => {
-    const deleteclient = await deleteQuestionGain(questionIds);
+  const handleDeleteContract = async () => {
+    const deleteclient = await deleteContract(contractIds);
     if (deleteclient) {
-      getAllQuestionGain({
+      getAllContract({
         pageIndex: pageIndex || 1,
         pageSize: Pagination.PAGESIZE,
         roleType: tab!,
@@ -30,7 +29,7 @@ export const DeleteQuestionGain = ({ closeModal, questionIds }: DeleteQuestionGa
 
       closeModal();
     } else {
-      console.error('Failed to delete question');
+      console.error('Failed to delete contract');
     }
   };
   return (
@@ -39,7 +38,7 @@ export const DeleteQuestionGain = ({ closeModal, questionIds }: DeleteQuestionGa
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>
-          <Button loading={loading} type="primary" danger onClick={handledeleteQuestionGain}>
+          <Button loading={loading} type="primary" danger onClick={handleDeleteContract}>
             Xoá
           </Button>
         </Space>

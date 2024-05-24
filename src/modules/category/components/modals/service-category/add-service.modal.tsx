@@ -21,10 +21,10 @@ export const AddService = ({ closeModal }: AddServiceProps) => {
   const [loading] = useWatchLoading(['add-service', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const dataAddCustomer = {
+    const dataAddService = {
       ...values,
     };
-    const add = await addKService(dataAddCustomer);
+    const add = await addKService(dataAddService);
     if (add) {
       form.resetFields();
       closeModal();
@@ -33,6 +33,7 @@ export const AddService = ({ closeModal }: AddServiceProps) => {
 
   const oncancel = () => {
     closeModal();
+    form.resetFields();
   };
 
   return (

@@ -22,8 +22,6 @@ export const AddCustomer = ({ closeModal }: AddCustomerProps) => {
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddCustomer = {
       ...values,
-      code: values.code.toString(),
-      fullname: values.fullname.toString(),
     };
     const add = await addKCustomer(dataAddCustomer);
     if (add) {
@@ -34,6 +32,7 @@ export const AddCustomer = ({ closeModal }: AddCustomerProps) => {
 
   const oncancel = () => {
     closeModal();
+    form.resetFields();
   };
 
   return (

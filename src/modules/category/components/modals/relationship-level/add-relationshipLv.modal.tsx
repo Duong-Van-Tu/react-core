@@ -12,22 +12,22 @@ type FieldType = {
   pointTo: number;
 };
 
-type AddReltionshipLvProps = {
+type AddRelationshipLvProps = {
   closeModal: () => void;
 };
 
-export const AddReltionshipLv = ({ closeModal }: AddReltionshipLvProps) => {
+export const AddRelationshipLv = ({ closeModal }: AddRelationshipLvProps) => {
   const [form] = Form.useForm();
   const { addKRelationshipLv } = useRelationshipLv();
-  const [loading] = useWatchLoading(['add-customer', false]);
+  const [loading] = useWatchLoading(['add-relationshipLv', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const dataAddCustomer = {
+    const dataAddRelationshipLv = {
       ...values,
       pointFrom: values.pointFrom.toString(),
       pointTo: values.pointTo.toString(),
     };
-    const add = await addKRelationshipLv(dataAddCustomer);
+    const add = await addKRelationshipLv(dataAddRelationshipLv);
     if (add) {
       form.resetFields();
       closeModal();
@@ -36,6 +36,7 @@ export const AddReltionshipLv = ({ closeModal }: AddReltionshipLvProps) => {
 
   const oncancel = () => {
     closeModal();
+    form.resetFields();
   };
 
   return (

@@ -78,6 +78,13 @@ export const viVN_table = {
   'table.column.relationshipLvDesc': 'Định nghĩa',
   'table.column.questionGainsCode': 'Stt',
   'table.column.questionGainsQuestion': 'Câu hỏi',
+  'table.column.contractID': 'Mã HD',
+  'table.column.contractNumber': 'Số HD',
+  'table.column.contractName': 'Tên HD',
+  'table.column.contractStartDate': 'Ngày bắt đầu',
+  'table.column.contractEndDate': 'Ngày kết thúc',
+  'table.column.contractCustomerID': 'Mã KH',
+  'table.column.contractStatus': 'Trạng thái',
 
   'table.column.saleKit.selectAll': 'Chọn tất cả',
 };

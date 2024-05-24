@@ -9,18 +9,18 @@ import { useLocation } from 'react-router-dom';
 import { useSupplier } from '@/modules/category/services/supplier.service';
 type DeleteSupplierProps = {
   closeModal: () => void;
-  data?: DataCustomerType;
-  customerIds: string[];
+  data?: DataSupplierType;
+  supplierIds: string[];
 };
-export const DeleteSupplier = ({ closeModal, customerIds }: DeleteSupplierProps) => {
+export const DeleteSupplier = ({ closeModal, supplierIds }: DeleteSupplierProps) => {
   const { deleteSupplier, getAllSupplier } = useSupplier();
-  const pageIndex = useRootSelector((state) => state.category.customer.pagination?.pageIndex) ?? 0;
+  const pageIndex = useRootSelector((state) => state.category.supplier.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-supplier', false]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
-  const handleDeleteCustomer = async () => {
-    const deleteclient = await deleteSupplier(customerIds);
+  const handleDeleteSupplier = async () => {
+    const deleteclient = await deleteSupplier(supplierIds);
     if (deleteclient) {
       getAllSupplier({
         pageIndex: pageIndex || 1,
@@ -30,7 +30,7 @@ export const DeleteSupplier = ({ closeModal, customerIds }: DeleteSupplierProps)
 
       closeModal();
     } else {
-      console.error('Failed to delete customer');
+      console.error('Failed to delete supplier');
     }
   };
   return (
@@ -39,7 +39,7 @@ export const DeleteSupplier = ({ closeModal, customerIds }: DeleteSupplierProps)
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>
-          <Button loading={loading} type="primary" danger onClick={handleDeleteCustomer}>
+          <Button loading={loading} type="primary" danger onClick={handleDeleteSupplier}>
             Xoá
           </Button>
         </Space>

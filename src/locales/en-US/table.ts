@@ -80,5 +80,13 @@ export const enUS_table = {
   'table.column.questionGainsCode': 'Code',
   'table.column.questionGainsQuestion': 'Question',
 
+  'table.column.contractID': 'Contract ID',
+  'table.column.contractNumber': 'Contract number',
+  'table.column.contractName': 'Contract name',
+  'table.column.contractStartDate': 'Start date',
+  'table.column.contractEndDate': 'End date',
+  'table.column.contractCustomerID': 'Customer ID',
+  'table.column.contractStatus': 'Status',
+
   'table.column.saleKit.selectAll': 'Select all',
 };

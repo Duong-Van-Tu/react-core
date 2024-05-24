@@ -1,7 +1,7 @@
 import { ModalRelationshipLevelType } from '@/modules/category/enum/relationship-level.enum';
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { AddReltionshipLv } from './add-relationshipLv.modal';
+import { AddRelationshipLv } from './add-relationshipLv.modal';
 import { DeleteRelationshipLv } from './delete-relationshipLv.modal';
 import { UpdateReltionshipLv } from './update-relationshipLv.modal';
 
@@ -62,7 +62,7 @@ export const ModalRelationshipLvProvider = ({ children }: ModalRelationshipLvPro
           />
         )}
         {currentModal?.modalName === ModalRelationshipLevelType.AddRelationLevel && (
-          <AddReltionshipLv closeModal={closeModal} />
+          <AddRelationshipLv closeModal={closeModal} />
         )}
       </Modal>
     </ModalContext.Provider>

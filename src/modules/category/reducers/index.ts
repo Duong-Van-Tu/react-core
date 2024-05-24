@@ -7,6 +7,7 @@ import supplier, { supplierInitialState } from './slicers/supplier.slice';
 import sevice, { serviceInitialState } from './slicers/service.slice';
 import relationshipLv, { relationshipLvInitialState } from './slicers/relationshipLv.slice';
 import questionGain, { questionGainInitialState } from './slicers/question-gain.slice';
+import contract, { contractInitialState } from './slicers/contract.slice';
 
 export type RawRootState = typeof categoryState;
 
@@ -17,6 +18,7 @@ export const categoryInitialStates = {
   serviceInitialState,
   relationshipLvInitialState,
   questionGainInitialState,
+  contractInitialState,
 };
 export const categoryState = {
   customer,
@@ -25,6 +27,7 @@ export const categoryState = {
   sevice,
   relationshipLv,
   questionGain,
+  contract,
 };
 const categoryReducer = combineReducers(categoryState);
 export type CategoryState = ReturnType<typeof categoryReducer>;

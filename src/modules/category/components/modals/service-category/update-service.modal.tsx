@@ -23,12 +23,12 @@ export const UpdateService = ({ closeModal, data }: UpdateServiceProps) => {
   const [loading] = useWatchLoading(['edit-service', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const dataUpdateCustomer = {
+    const dataUpdateService = {
       ...values,
       id: data.id,
     };
-    const add = await updateService(dataUpdateCustomer);
-    if (add) {
+    const edit = await updateService(dataUpdateService);
+    if (edit) {
       form.resetFields();
       closeModal();
     }
