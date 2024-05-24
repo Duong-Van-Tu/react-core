@@ -4,15 +4,17 @@ import { useDispatch } from 'react-redux';
 import {
   addRelationshipAction,
   deleteRelationshipAction,
-  setDataReportAction,
+  setDataCustomerAction,
+  setDataLevelAction,
+  setDataGainsRelationshipDetailAction,
   setDataStatusAction,
   setListRelationshipAction,
   updateRelationshipAction,
+  setDataRelationshipGainsQuestionAction,
 } from '../reducers/slicers/relationship.slice';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
-import { Status } from '../enum/status.enum';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
 
@@ -78,11 +80,46 @@ export const useRelationship = () => {
     [caller, api],
   );
 
+  const getGainsRelationshipById = useCallback(
+    async (id: string) => {
+      const { data, succeeded } = await caller(
+        () => api.get(`/Gains/get-by-relationship-id/${id}`),
+        {
+          loadingKey: 'gainsDetail-loading',
+          messageKey: 'gainsDetail-message',
+        },
+      );
+      if (succeeded) {
+        dispatch(setDataGainsRelationshipDetailAction(data));
+      }
+    },
+    [caller, api],
+  );
+
+  const updateGainsRelationship = useCallback(
+    async (values: GainsRelationshipType) => {
+      const { id, ...rest } = values;
+      const dataUpdateGainsRelationship = convertToUppercaseFirstLetter({
+        ...rest,
+      });
+
+      const { succeeded } = await caller(
+        () => api.post('/Gains/add-or-update', [{ id, data: dataUpdateGainsRelationship }]),
+        {
+          loadingKey: 'updateGainsDetail-loading',
+          messageKey: 'updateGainsDetail-message',
+        },
+      );
+
+      return !!succeeded;
+    },
+    [caller, api],
+  );
+
   const addRelationship = useCallback(
-    async (values: DataRelationshipType) => {
+    async (values: DataAddRelationship) => {
       const dataAddRelationship = convertToUppercaseFirstLetter({
         ...values,
-        userSuggestId: user?.id,
       });
 
       const { data, succeeded } = await caller(
@@ -172,51 +209,6 @@ export const useRelationship = () => {
     [api, caller],
   );
 
-  const refuseEditRelationship = useCallback(
-    async (values: DataRelationshipType) => {
-      const dataUpdateStatusRelationship = convertToUppercaseFirstLetter({
-        id: values.id,
-        status: Status.Updated,
-      });
-
-      const { data, succeeded } = await caller(
-        () =>
-          api.put(
-            `/Relationship/update-status-by-id?tenant=${tenant}`,
-            dataUpdateStatusRelationship,
-          ),
-        { loadingKey: 'refuse-edit' },
-      );
-
-      if (succeeded) {
-        dispatch(updateRelationshipAction(data));
-        return succeeded;
-      }
-      return false;
-    },
-
-    [api, caller],
-  );
-
-  const showReport = useCallback(
-    async (values: DataRelationshipType) => {
-      const { data, succeeded } = await caller(
-        () => api.get(`/Relationship/get-by-id/${values.id}?tenant=${tenant}`),
-        {
-          loadingKey: 'report-relationship',
-        },
-      );
-
-      if (succeeded) {
-        dispatch(setDataReportAction(data));
-        return succeeded;
-      }
-      return false;
-    },
-
-    [api, caller],
-  );
-
   const getAllStatusRelationship = useCallback(async () => {
     const { data, succeeded } = await caller(
       () => api.get(`/RelationshipStatus/get-all?tenant=${tenant}`),
@@ -230,14 +222,56 @@ export const useRelationship = () => {
     }
   }, [api, caller]);
 
+  const getListCustomer = useCallback(async () => {
+    const { data, succeeded } = await caller(() => api.get(`/Customer/get-all?tenant=${tenant}`), {
+      loadingKey: 'relationship-customer',
+    });
+
+    if (succeeded) {
+      dispatch(setDataCustomerAction(data));
+    }
+  }, [api, caller]);
+
+  const getAllLevel = useCallback(async () => {
+    const { data, succeeded } = await caller(
+      () => api.get(`/RelationshipLevel/get-all?tenant=${tenant}`),
+      {
+        loadingKey: 'relationship-level',
+      },
+    );
+
+    if (succeeded) {
+      dispatch(setDataLevelAction(data));
+    }
+  }, [api, caller]);
+
+  const getRelationshipGainsQuestion = useCallback(
+    async (id: string) => {
+      const { data, succeeded } = await caller(
+        () => api.get(`/RelationshipGainsQuestion/get-by-relationship-id/${id}?tenant=${tenant}`),
+        {
+          loadingKey: 'relationship-gainsQuestion',
+        },
+      );
+
+      if (succeeded) {
+        dispatch(setDataRelationshipGainsQuestionAction(data));
+      }
+    },
+    [api, caller],
+  );
+
   return {
     getAllRelationship,
     addRelationship,
     deleteRelationship,
     updateRelationship,
     updateStatusRelationship,
-    refuseEditRelationship,
-    showReport,
     getAllStatusRelationship,
+    getListCustomer,
+    getAllLevel,
+    getGainsRelationshipById,
+    updateGainsRelationship,
+    getRelationshipGainsQuestion,
   };
 };

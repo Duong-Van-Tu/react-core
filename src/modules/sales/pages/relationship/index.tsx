@@ -13,6 +13,7 @@ import { useQuery } from '@/hooks/query.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { getTenant } from '@/utils/common';
 import { RoleType } from '@/enum/role.enum';
+import { ModalRelationshipProvider } from '../../components/modals/relationship';
 
 export default function RelationshipPage() {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ export default function RelationshipPage() {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <ModalRelationshipProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.relationship' })}</h3>
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.relationship' })}</span>
@@ -81,7 +82,7 @@ export default function RelationshipPage() {
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
       )}
       {!(isAdmin || isSaleDirector) && <TableRelationship />}
-    </Fragment>
+    </ModalRelationshipProvider>
   );
 }
 

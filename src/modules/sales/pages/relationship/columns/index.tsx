@@ -1,7 +1,6 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { RelationshipDropdown } from '@/modules/sales/components/dropdown/relationship.dropdown';
-import { DataRelationshipType } from '../type.relationship';
 
 type ColumnsType<T> = TableProps<T>['columns'];
 const columns: ColumnsType<DataRelationshipType> = [
@@ -37,7 +36,7 @@ const columns: ColumnsType<DataRelationshipType> = [
     dataIndex: 'calculationMethod',
     fixed: 'right',
     width: '6%',
-    render: () => <RelationshipDropdown />,
+    render: (__, record) => <RelationshipDropdown data={record} />,
   },
 ];
 

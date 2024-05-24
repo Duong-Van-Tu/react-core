@@ -8,6 +8,8 @@ export const enUS_title = {
   'title.document.kpi': 'KPI',
   'title.document.privileges': 'Privileges',
   'title.document.relationship': 'Relationship',
+  'title.document.updateRelationship': 'Update relationship',
+  'title.document.relationshipEvaluation': 'Relationship Evaluation',
   'title.document.opportunity': 'Opportunity',
   'title.document.reportOpportunity': 'View Results Report',
   'title.document.updateHistory': 'Update history',

@@ -9,6 +9,8 @@ export const viVN_title = {
   'title.document.kpi': 'Mục tiêu',
   'title.document.privileges': 'Quyền lợi',
   'title.document.relationship': 'Mối quan hệ',
+  'title.document.updateRelationship': 'Cập nhật mối quan hệ',
+  'title.document.relationshipEvaluation': 'Đánh giá mối quan hệ',
   'title.document.opportunity': 'Cơ hội',
   'title.document.addOpportunity': 'Thêm cơ hội',
   'title.document.editOpportunity': 'Chỉnh sửa cơ hội',

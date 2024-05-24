@@ -29,4 +29,6 @@ export enum ModalPrivilegesType {
 
 export enum ModalRelationshipType {
   DeleteRelationship = 'Delete Relationship',
+  AddRelationship = 'Add Relationship',
+  ReportRelationship = 'Report Relationship',
 }
