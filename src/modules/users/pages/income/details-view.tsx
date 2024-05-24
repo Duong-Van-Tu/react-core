@@ -11,11 +11,14 @@ import { useQuery } from '@/hooks/query.hook';
 import { useIncome } from '../../services/income.service';
 import { usePermission } from '@/hooks/permission.hook';
 import { useEffect } from 'react';
+import { useWatchLoading } from '@/hooks/loading.hook';
 
 export default function TicketIncomeDetails() {
   const { formatMessage } = useLocale();
 
   const { getListIncomeDetail } = useIncome();
+  const [loading] = useWatchLoading(['get-list-income-detail', true]);
+
   const { isAdmin } = usePermission();
 
   const { dataDetailIncome, pagination } = useRootSelector((state) => state.user.income);
@@ -75,7 +78,7 @@ export default function TicketIncomeDetails() {
         <TableCustom
           columns={ticketIncomeDetailsColumns}
           dataSource={dataDetailIncome}
-          loading={false}
+          loading={loading}
           rowKey={(record) => record.key}
           onTableChange={(page) => handleTableChange(page)}
           pagination={{

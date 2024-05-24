@@ -202,7 +202,6 @@ export const useIncome = () => {
     [caller, api],
   );
 
-  // EmployeeSalaryDetail/get-list-with-pagination
   return {
     getListIncomeDetail,
     getListIncome,
