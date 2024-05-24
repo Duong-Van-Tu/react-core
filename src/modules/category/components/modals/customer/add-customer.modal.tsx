@@ -41,7 +41,7 @@ export const AddCustomer = ({ closeModal }: AddCustomerProps) => {
       <h3 css={formTitleStyle}>Thêm khách hàng</h3>
       <Form
         form={form}
-        css={formAddCustomertyle}
+        css={formAddCustomerStyle}
         name="add-customer"
         onFinish={onFinish}
         layout="vertical"
@@ -82,7 +82,7 @@ const formTitleStyle = css`
   margin-top: 2rem;
 `;
 
-const formAddCustomertyle = css`
+const formAddCustomerStyle = css`
   .ant-form-item-required::before {
     display: none !important;
   }

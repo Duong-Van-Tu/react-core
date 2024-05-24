@@ -5,9 +5,9 @@ import { QuestionGainsDropdown } from '@/modules/category/components/dropdown/qu
 type ColumnsType<T> = TableProps<T>['columns'];
 export const questionGainsColumns: ColumnsType<DataQuestionGainsType> = [
   {
-    title: <LocaleFormatter id="table.column.questionGainsSerialNumber" />,
-    dataIndex: 'serialNumber',
-    render: (_, __, index) => index + 1,
+    title: <LocaleFormatter id="table.column.questionGainsCode" />,
+    dataIndex: 'code',
+    render: (code) => code,
   },
 
   {

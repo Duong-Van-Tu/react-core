@@ -1,9 +1,9 @@
 import { ModalSupplierType } from '@/modules/category/enum/supplier.enum';
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { AddSupplier } from './add.modal';
-import { DeleteSupplier } from './delete.supplier';
-import { UpdateSupplier } from './update.supplier';
+import { AddSupplier } from './add-supplier.modal';
+import { DeleteSupplier } from './delete-supplier.modal';
+import { UpdateSupplier } from './update-supplier.modal';
 
 type ModalContexttype = {
   openModal: (modalName: string, data?: DataSupplierType, supplierIds?: string[]) => void;

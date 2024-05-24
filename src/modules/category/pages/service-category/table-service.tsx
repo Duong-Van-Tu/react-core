@@ -87,12 +87,12 @@ export default function TableService() {
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
         pagination={{
           current: pagination?.pageIndex,
           pageSize: Pagination.PAGESIZE,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
-          onChange: (page) => handleTableChange(page),
         }}
         scroll={{ x: 1450 }}
       />

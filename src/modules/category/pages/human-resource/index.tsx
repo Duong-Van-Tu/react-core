@@ -65,6 +65,13 @@ export default function HumanResourcesPage() {
     });
   };
 
+  const handleTableChange = (page: number) => {
+    getListUsers({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+    });
+  };
+
   return (
     <ModalUserCategoryProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.human-resource' })}</h3>
@@ -76,17 +83,12 @@ export default function HumanResourcesPage() {
         dataSource={isAdmin ? data : [user]}
         loading={loadingAdmin}
         rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
         pagination={{
           current: pagination?.pageIndex,
           pageSize: Pagination.PAGESIZE,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
-          onChange: (page) => {
-            getListUsers({
-              pageIndex: page,
-              pageSize: Pagination.PAGESIZE,
-            });
-          },
         }}
         scroll={{ x: 1450 }}
       />

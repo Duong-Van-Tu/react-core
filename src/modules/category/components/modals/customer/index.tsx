@@ -1,9 +1,9 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
 import { ModalCustomerType } from '../../../enum/customer.enum';
-import { AddCustomer } from './add.modal';
-import { DeleteCustomer } from './delete.customer';
-import { UpdateCustomer } from './update.customer';
+import { AddCustomer } from './add-customer.modal';
+import { DeleteCustomer } from './delete.customer.modal';
+import { UpdateCustomer } from './update.customer.modal';
 
 type ModalContexttype = {
   openModal: (modalName: string, data?: DataCustomerType, customerIds?: string[]) => void;

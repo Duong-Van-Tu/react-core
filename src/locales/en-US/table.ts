@@ -77,7 +77,7 @@ export const enUS_table = {
   'table.column.serviceShortName': 'Short name',
   'table.column.relationshipLvCode': 'Level',
   'table.column.relationshipLvDesc': 'Description',
-  'table.column.questionGainsSerialNumber': 'Serial number',
+  'table.column.questionGainsCode': 'Code',
   'table.column.questionGainsQuestion': 'Question',
 
   'table.column.saleKit.selectAll': 'Select all',

@@ -1,9 +1,9 @@
 import { ModalServiceType } from '@/modules/category/enum/service-category.enum';
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { AddService } from './add.modal';
-import { DeleteService } from './delete.service';
-import { UpdateService } from './update.service';
+import { AddService } from './add-service.modal';
+import { DeleteService } from './delete-service.modal';
+import { UpdateService } from './update-service.modal';
 
 type ModalContexttype = {
   openModal: (modalName: string, data?: DataServiceCategoryType, serviceIds?: string[]) => void;

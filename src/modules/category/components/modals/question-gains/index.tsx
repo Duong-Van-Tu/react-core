@@ -1,6 +1,9 @@
 import { ModalQuestionGainsType } from '@/modules/category/enum/question-gains.enum';
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
+import { AddQuestionGain } from './add-questionGain.modal';
+import { DeleteQuestionGain } from './delete-questionGain.modal';
+import { UpdateQuestionGain } from './update-questionGain.modal';
 
 type ModalContexttype = {
   openModal: (modalName: string, data?: DataQuestionGainsType, questionIds?: string[]) => void;
@@ -40,11 +43,19 @@ export const ModalQuestionGainsProvider = ({ children }: ModalQuestionGainsProvi
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
       <Modal open={open} onCancel={closeModal} footer={null}>
-        {currentModal?.modalName === ModalQuestionGainsType.EditQuestion && <div>EditQuestion</div>}
-        {currentModal?.modalName === ModalQuestionGainsType.DeleteQuestion && (
-          <div>DeleteQuestion</div>
+        {currentModal?.modalName === ModalQuestionGainsType.EditQuestion && (
+          <UpdateQuestionGain closeModal={closeModal} data={currentModal.data!} />
         )}
-        {currentModal?.modalName === ModalQuestionGainsType.AddQuestion && <div>AddQuestion</div>}
+        {currentModal?.modalName === ModalQuestionGainsType.DeleteQuestion && (
+          <DeleteQuestionGain
+            closeModal={closeModal}
+            data={currentModal.data!}
+            questionIds={currentModal.questionIds!}
+          />
+        )}
+        {currentModal?.modalName === ModalQuestionGainsType.AddQuestion && (
+          <AddQuestionGain closeModal={closeModal} />
+        )}
       </Modal>
     </ModalContext.Provider>
   );
