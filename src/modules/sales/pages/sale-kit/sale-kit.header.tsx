@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
 import { css } from '@emotion/react';
-import { Button, Col, Row, Upload } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
-import { PlusCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { ModalSaleKitType } from '../../enum/sale-kit.enum';
 import { useModalSaleKit } from '../../components/modals/sale-kit';
@@ -18,9 +17,6 @@ const SaleKitHeader = ({ checkedList }: Props) => {
 
   const { openModal } = useModalSaleKit();
 
-  const [uploading, setUploading] = useState(false);
-  const [fileList, setFileList] = useState([]);
-
   const handleDeleteSaleKit = () => {
     openModal(ModalSaleKitType.Delete, {
       ids: checkedList.toString(),
@@ -34,17 +30,6 @@ const SaleKitHeader = ({ checkedList }: Props) => {
       applicationUserId: user?.id,
     });
   };
-
-  // const props = {
-  //   onRemove: () => {
-  //     setFileList([]);
-  //   },
-  //   beforeUpload: (file: File) => {
-  //     setFileList([file]);
-  //     return false;
-  //   },
-  //   fileList,
-  // };
 
   return (
     <Row css={rowHeaderStyle} justify="space-between" align="bottom">
@@ -82,17 +67,6 @@ const SaleKitHeader = ({ checkedList }: Props) => {
             >
               Thêm tài liệu
             </Button>
-            {/* <Upload maxCount={1} {...props} disabled={uploading}>
-              <Button
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                icon={<UploadOutlined />}
-              >
-                Tải lên
-              </Button>
-            </Upload> */}
           </Col>
         </Row>
       </Col>
