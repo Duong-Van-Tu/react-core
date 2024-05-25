@@ -6,10 +6,11 @@ import { CustomIcon } from './icons';
 type SpinnerProps = {
   width?: number;
   height?: number;
+  styles?: React.CSSProperties;
 };
-export function Spinner({ width, height }: SpinnerProps) {
+export function Spinner({ width, height, styles }: SpinnerProps) {
   return (
-    <div css={spinnerStyle}>
+    <div css={spinnerStyle} style={styles}>
       <CustomIcon type="loading" width={width} height={height} color="#3498db" />
     </div>
   );

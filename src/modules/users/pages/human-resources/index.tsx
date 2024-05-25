@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { TableCustom } from '@/components/table';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { usersColumns } from './column';
-import { useHumanResources } from '../../services/human.resources.service';
+import { useHumanResources } from '../../services/human-resources.service';
 import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
@@ -64,6 +64,13 @@ export default function HumanResourcesPage() {
     });
   };
 
+  const handleTableChange = (page: number) => {
+    getListUsers({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+    });
+  };
+
   return (
     <div>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.inforPersonnel' })}</h3>
@@ -77,21 +84,14 @@ export default function HumanResourcesPage() {
         dataSource={isAdmin ? data : [user]}
         loading={isAdmin && loadingAdmin}
         rowKey={(record) => record.id}
+        onTableChange={(page) => handleTableChange(page)}
         pagination={
-          isAdmin
-            ? {
-                current: pagination?.pageIndex,
-                pageSize: Pagination.PAGESIZE,
-                total: pagination?.totalRecords,
-                position: ['bottomCenter'],
-                onChange: (page) => {
-                  getListUsers({
-                    pageIndex: page,
-                    pageSize: Pagination.PAGESIZE,
-                  });
-                },
-              }
-            : undefined
+          isAdmin && {
+            current: pagination?.pageIndex,
+            pageSize: Pagination.PAGESIZE,
+            total: pagination?.totalRecords,
+            position: ['bottomCenter'],
+          }
         }
         scroll={{ x: 1450 }}
       />

@@ -3,7 +3,7 @@ import { Checkbox } from 'antd';
 import type { CheckboxProps, GetProp } from 'antd';
 import { useLocale } from '@/hooks/locale.hook';
 import { DownloadOutlined } from '@ant-design/icons';
-import { FilterSaleKitType, userSaleKit } from '../../services/sale.kit.service';
+import { FilterSaleKitType, userSaleKit } from '../../services/sale-kit.service';
 import { useRootSelector } from '@/hooks/selector.hook';
 
 type CheckboxValueType = GetProp<typeof Checkbox.Group, 'value'>[number];

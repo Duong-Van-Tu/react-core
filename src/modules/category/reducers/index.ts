@@ -2,7 +2,8 @@ import { combineReducers } from '@reduxjs/toolkit';
 import customer, { customerInitialState } from './slicers/customer.slice';
 import humanResources, {
   humanResourcesCategoryInitialState,
-} from './slicers/human.resources.slice';
+} from './slicers/human-resources.slice';
+
 import supplier, { supplierInitialState } from './slicers/supplier.slice';
 import sevice, { serviceInitialState } from './slicers/service.slice';
 import relationshipLv, { relationshipLvInitialState } from './slicers/relationshipLv.slice';

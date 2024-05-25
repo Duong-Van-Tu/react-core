@@ -10,9 +10,9 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
-import { useHumanResources } from '../../services/human.resources.service';
 import { Search, SearchParams } from '@/components/search';
 import { ModalUserCategoryProvider } from '../../components/modals/human-resource';
+import { useHumanResources } from '../../services/human-resources.service';
 
 export default function HumanResourcesPage() {
   const { formatMessage } = useLocale();
@@ -84,12 +84,16 @@ export default function HumanResourcesPage() {
         loading={loadingAdmin}
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
-        pagination={{
-          current: pagination?.pageIndex,
-          pageSize: Pagination.PAGESIZE,
-          total: pagination?.totalRecords,
-          position: ['bottomCenter'],
-        }}
+        pagination={
+          isAdmin
+            ? {
+                current: pagination?.pageIndex,
+                pageSize: Pagination.PAGESIZE,
+                total: pagination?.totalRecords,
+                position: ['bottomCenter'],
+              }
+            : undefined
+        }
         scroll={{ x: 1450 }}
       />
     </ModalUserCategoryProvider>

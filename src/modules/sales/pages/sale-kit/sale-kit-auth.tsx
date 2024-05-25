@@ -2,19 +2,23 @@
 import { css } from '@emotion/react';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
-import ListSaleKit from './list.sale.kit';
+import ListSaleKit from './list-sale-kit';
 import { usePermission } from '@/hooks/permission.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useEffect, useState } from 'react';
-import { userSaleKit } from '../../services/sale.kit.service';
+import { userSaleKit } from '../../services/sale-kit.service';
 import { Select } from 'antd';
 import { Link } from 'react-router-dom';
+import { useWatchLoading } from '@/hooks/loading.hook';
+import { Spinner } from '@/components/spinner';
 
-export const SaleKitAuth = () => {
+const SaleKitAuth = () => {
   const { formatMessage } = useLocale();
   const { isAdmin } = usePermission();
   const { getAllSaleKitRole, downLoadDocument, getAllRoleInSaleKit } = userSaleKit();
+
+  const [loading] = useWatchLoading(['get-sale-kit-role', true]);
 
   const { dataSaleKitRole, dataRole } = useRootSelector((state) => state.sale.saleKit);
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
@@ -80,16 +84,30 @@ export const SaleKitAuth = () => {
           onChange={handleSelect}
         />
       </div>
-      <ListSaleKit
-        isAdmin={isAdmin}
-        setCheckedList={setCheckedList}
-        checkedList={checkedList}
-        dataWithRole={dataSaleKitRole}
-        downLoadDocument={downLoadDocument}
-      />
+      {!loading ? (
+        <ListSaleKit
+          isAdmin={isAdmin}
+          setCheckedList={setCheckedList}
+          checkedList={checkedList}
+          dataWithRole={dataSaleKitRole}
+          downLoadDocument={downLoadDocument}
+        />
+      ) : (
+        <Spinner
+          width={50}
+          height={50}
+          styles={{
+            marginTop: '20px',
+            width: '50px',
+            height: '50px',
+          }}
+        />
+      )}
     </div>
   );
 };
+
+export default SaleKitAuth;
 
 const containerStyle = css`
   width: 100%;

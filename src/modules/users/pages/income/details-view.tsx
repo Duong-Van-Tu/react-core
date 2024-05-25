@@ -6,6 +6,11 @@ import { TableCustom } from '@/components/table';
 import { ticketIncomeDetailsColumns } from './column/ticket-income-details.column';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
+import { useQuery } from '@/hooks/query.hook';
+import { useIncome } from '../../services/income.service';
+import { usePermission } from '@/hooks/permission.hook';
+import { useEffect } from 'react';
+import { useWatchLoading } from '@/hooks/loading.hook';
 import { Button } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { useNavigate } from 'react-router-dom';
@@ -14,12 +19,60 @@ import { getTenant } from '@/utils/common';
 export default function TicketIncomeDetails() {
   const navigate = useNavigate();
   const { formatMessage } = useLocale();
+  const tenant = getTenant();
+
+  const { getListIncomeDetail } = useIncome();
+  const [loading] = useWatchLoading(['get-list-income-detail', true]);
+
+  const { isAdmin } = usePermission();
 
   const { dataDetailIncome, pagination } = useRootSelector((state) => state.user.income);
 
+  const query = useQuery();
+
+  useEffect(() => {
+    handleViewDetail();
+  }, []);
+
+  const handleViewDetail = () => {
+    if (isAdmin) {
+      getListIncomeDetail({
+        userId: query.userId,
+        pageIndex: Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+      });
+    } else {
+      getListIncomeDetail({
+        userId: query.userId,
+        month: query.month,
+        year: query.year,
+        pageIndex: Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  };
+
+  const handleTableChange = (page: number) => {
+    if (isAdmin) {
+      getListIncomeDetail({
+        userId: query.userId,
+        pageIndex: page,
+        pageSize: Pagination.PAGESIZE,
+      });
+    } else {
+      getListIncomeDetail({
+        userId: query.userId,
+        month: query.month,
+        year: query.year,
+        pageIndex: page,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  };
+
   return (
     <div css={containerStyle}>
-      <Button css={closeStyle} onClick={() => navigate(`/users/income?tenant=${getTenant()}`)}>
+      <Button css={closeStyle} onClick={() => navigate(`/users/income?tenant=${tenant}`)}>
         <CustomIcon type="close" width={18} height={18} />
         <LocaleFormatter id="title.exit" />
       </Button>
@@ -28,8 +81,9 @@ export default function TicketIncomeDetails() {
         <TableCustom
           columns={ticketIncomeDetailsColumns}
           dataSource={dataDetailIncome}
-          loading={false}
+          loading={loading}
           rowKey={(record) => record.key}
+          onTableChange={(page) => handleTableChange(page)}
           pagination={{
             current: pagination?.pageIndex,
             pageSize: Pagination.PAGESIZE,

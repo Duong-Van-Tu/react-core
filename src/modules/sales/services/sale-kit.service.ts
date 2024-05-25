@@ -5,16 +5,20 @@ import {
   setListSaleKitAction,
   setListSaleKitActionRole,
   setListSaleKitRoleAction,
-} from '../reducers/slicers/sale.kit.slice';
+} from '../reducers/slicers/sale-kit.slice';
 import { generateUrlParams } from '@/utils/common';
 
 export type FilterSaleKitType = {
   id?: string;
+  ids?: string;
   textSearch?: string;
   roleType?: string;
   roleId?: string;
   tenant?: string;
   dataUpdate?: DataSaleKitUpdateType;
+  time?: string;
+  applicationUserId?: string;
+  files?: FormData;
 };
 export const userSaleKit = () => {
   const api = useApi('');
@@ -22,11 +26,12 @@ export const userSaleKit = () => {
   const dispatch = useDispatch();
 
   const getAllSaleKit = useCallback(
-    async ({ textSearch, tenant, roleType, roleId }: FilterSaleKitType) => {
+    async ({ textSearch, tenant, roleType, roleId, time }: FilterSaleKitType) => {
       const queryParams: { [key: string]: string | undefined } = {
         TextSearch: textSearch,
         RoleType: roleType,
         RoleId: roleId,
+        Time: `1-1-${time}`,
         tenant: tenant,
       };
 
@@ -77,6 +82,47 @@ export const userSaleKit = () => {
     [caller, api],
   );
 
+  const addSaleKit = useCallback(
+    async ({ tenant, files }: FilterSaleKitType) => {
+      const queryParams: { [key: string]: string | undefined } = {
+        tenant: tenant,
+      };
+
+      const urlParams = generateUrlParams(queryParams);
+
+      const response = await caller(() => api.post(`/SaleKit/add-document?${urlParams}`, files), {
+        loadingKey: 'add-sale-kit',
+      });
+
+      if (response) {
+        getAllSaleKit({});
+      }
+    },
+
+    [api, caller],
+  );
+
+  const deleteSaleKit = useCallback(
+    async ({ tenant, ids, applicationUserId }: FilterSaleKitType) => {
+      const queryParams: { [key: string]: string | undefined } = {
+        tenant: tenant,
+      };
+
+      const urlParams = generateUrlParams(queryParams);
+
+      const response = await caller(
+        () => api.del(`/SaleKit/delete-by-ids/${ids}/${applicationUserId}?${urlParams}`),
+        { loadingKey: 'delete-sale-kit' },
+      );
+
+      if (response) {
+        getAllSaleKit({});
+      }
+    },
+
+    [api, caller],
+  );
+
   const updateSaleKitWithRole = useCallback(
     async ({ tenant, dataUpdate }: FilterSaleKitType) => {
       const queryParams: { [key: string]: string | undefined } = {
@@ -85,12 +131,9 @@ export const userSaleKit = () => {
 
       const urlParams = generateUrlParams(queryParams);
 
-      const response = await caller(
-        () => api.put(`ApplicationRoleSaleKit/update?${urlParams}`, dataUpdate),
-        { loadingKey: 'update-sale-kit-with-role' },
-      );
-
-      console.log(response);
+      await caller(() => api.put(`/ApplicationRoleSaleKit/update?${urlParams}`, dataUpdate), {
+        loadingKey: 'update-sale-kit-with-role',
+      });
     },
 
     [api, caller],
@@ -148,5 +191,7 @@ export const userSaleKit = () => {
     getAllRoleInSaleKit,
     getAllSaleKitRole,
     updateSaleKitWithRole,
+    deleteSaleKit,
+    addSaleKit,
   };
 };

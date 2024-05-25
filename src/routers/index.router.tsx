@@ -2,11 +2,13 @@ import { lazy } from 'react';
 import { Navigate, RouteObject, createBrowserRouter } from 'react-router-dom';
 import Middleware from '@/middleware';
 import MainLayout from '@/layouts/main.layout';
-
 import WrapperRouteComponent from './config';
 import AuthLayout from '@/layouts/auth.layout';
-
 import BaseLayout from '@/layouts/base.layout';
+
+const SaleKitAuth = lazy(
+  () => import(/* webpackChunkName: "sale-kit"*/ '@/modules/sales/pages/sale-kit/sale-kit-auth'),
+);
 const KPIPage = lazy(() => import(/* webpackChunkName: "kpi"*/ '@/modules/sales/pages/kpi'));
 const PrivilegesPage = lazy(
   () => import(/* webpackChunkName: "privileges"*/ '@/modules/sales/pages/privileges'),
@@ -399,6 +401,14 @@ const routes: RouteObject[] = [
         element: (
           <WrapperRouteComponent titleId="title.document.reportOpportunity">
             <ReportOpportunityPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/sales/sale-kit/auth',
+        element: (
+          <WrapperRouteComponent titleId="title.document.reportOpportunity">
+            <SaleKitAuth />
           </WrapperRouteComponent>
         ),
       },

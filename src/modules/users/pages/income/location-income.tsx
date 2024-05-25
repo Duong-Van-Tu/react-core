@@ -23,30 +23,32 @@ export default function LocationIncomeTable({
   getListIncomeWithRoleAdmin,
   getListIncomeWithRoleUser,
 }: Props) {
+  const handleTableChange = (page: number) => {
+    if (isAdmin) {
+      getListIncomeWithRoleAdmin({
+        pageIndex: page,
+        pageSize: Pagination.PAGESIZE,
+      });
+    } else {
+      getListIncomeWithRoleUser({
+        pageIndex: page,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  };
+
   return (
     <TableCustom
       columns={isAdmin ? locationIncomeColumnsAdmin : locationIncomeColumnsUser}
       dataSource={data}
       loading={loading}
       rowKey={(record) => record.key}
+      onTableChange={(page) => handleTableChange(page)}
       pagination={{
         current: pagination?.pageIndex,
         pageSize: Pagination.PAGESIZE,
         total: pagination?.totalRecords,
         position: ['bottomCenter'],
-        onChange: (page) => {
-          if (isAdmin) {
-            getListIncomeWithRoleAdmin({
-              pageIndex: page,
-              pageSize: Pagination.PAGESIZE,
-            });
-          } else {
-            getListIncomeWithRoleUser({
-              pageIndex: page,
-              pageSize: Pagination.PAGESIZE,
-            });
-          }
-        },
       }}
       scroll={{ x: 1450 }}
     />
