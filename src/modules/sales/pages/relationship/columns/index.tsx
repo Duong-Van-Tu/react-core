@@ -1,39 +1,34 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { RelationshipDropdown } from '@/modules/sales/components/dropdown/relationship.dropdown';
-import { DataRelationshipType } from '../type.relationship';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const employeeRelationshipColumns: ColumnsType<DataRelationshipType> = [
+const columns: ColumnsType<DataRelationshipType> = [
   {
     title: <LocaleFormatter id="table.column.relationship.jobPosition" />,
-    dataIndex: 'jobPosition',
-    render: (jobPosition) => jobPosition,
+    dataIndex: 'position',
   },
   {
     title: <LocaleFormatter id="table.column.relationship.targetLevel" />,
-    dataIndex: 'targetLevel',
-    render: (targetLevel) => targetLevel,
+    dataIndex: 'targetRelationshipLevel',
   },
   {
     title: <LocaleFormatter id="table.column.relationship.upgrade" />,
-    dataIndex: 'upgrade',
-    render: (upgrade) => upgrade,
+    dataIndex: 'reason',
   },
   {
     title: <LocaleFormatter id="table.column.relationship.responsiblePerson" />,
-    dataIndex: 'responsiblePerson',
-    render: (responsiblePerson) => responsiblePerson,
+    dataIndex: ['applicationUser', 'firstName'],
   },
 
   {
     title: <LocaleFormatter id="table.column.targetPoint" />,
-    dataIndex: 'targetPoint',
+    dataIndex: 'point',
     render: (targetPoint) => targetPoint,
   },
   {
     title: <LocaleFormatter id="table.column.status" />,
-    dataIndex: 'status',
+    dataIndex: ['relationshipStatus', 'name'],
     render: (status) => status,
   },
   {
@@ -41,6 +36,8 @@ export const employeeRelationshipColumns: ColumnsType<DataRelationshipType> = [
     dataIndex: 'calculationMethod',
     fixed: 'right',
     width: '6%',
-    render: () => <RelationshipDropdown />,
+    render: (__, record) => <RelationshipDropdown data={record} />,
   },
 ];
+
+export default columns;

@@ -116,6 +116,20 @@ const SaleKitCategoryPage = lazy(
   () => import(/* webpackChunkName: "SaleKit-category"*/ '@/modules/category/pages/sale-kit'),
 );
 
+const UpdateGainsRelationshipPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "EditOpportunityPage"*/ '@/modules/sales/pages/relationship/update-relationship'
+    ),
+);
+
+const GainsQuestionRelationshipPage = lazy(
+  () =>
+    import(
+      /* webpackChunkName: "EditOpportunityPage"*/ '@/modules/sales/pages/relationship/gains-question-relationship'
+    ),
+);
+
 const routes: RouteObject[] = [
   {
     path: '/auth',
@@ -385,6 +399,22 @@ const routes: RouteObject[] = [
         element: (
           <WrapperRouteComponent titleId="title.document.reportOpportunity">
             <ReportOpportunityPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/sales/relationship/gains/:id',
+        element: (
+          <WrapperRouteComponent titleId="title.document.updateRelationship">
+            <UpdateGainsRelationshipPage />
+          </WrapperRouteComponent>
+        ),
+      },
+      {
+        path: '/sales/relationship/relationshipGainsQuestion/:id',
+        element: (
+          <WrapperRouteComponent titleId="title.document.relationshipEvaluation">
+            <GainsQuestionRelationshipPage />
           </WrapperRouteComponent>
         ),
       },

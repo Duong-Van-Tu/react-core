@@ -1,6 +1,5 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { ModalPrivilegesType } from '../../../enum/privileges.enum';
 import { AddPrivileges } from './add-privileges.modal';
 import { ReportPrivileges } from './report-privileges';
 import { SuggestEditPrivileges } from './suggestedEdit-privileges';
@@ -8,6 +7,7 @@ import { EditPrivileges } from './edit-privileges.modal';
 import { DeletePrivileges } from './delete-privileges.modal';
 import { UpdateTotalPrivileges } from './update-totalPrivileges.modal';
 import { FinalizePrivileges } from './finalize-privileges.modal';
+import { ModalPrivilegesType } from '@/modules/sales/enum/modal.enum';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataBenefitType, benefitIds?: string[]) => void;

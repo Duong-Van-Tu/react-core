@@ -7,13 +7,13 @@ import { Button, Space } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { getTenant } from '@/utils/common';
 import { useModalOpportunity } from '@/modules/sales/components/modals/opportunity';
-import { ModalOpportunityType } from '@/modules/sales/enum/opportunity.enum';
 import { useEffect } from 'react';
 import { Pagination } from '@/constants/pagination';
 import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { historyOpportunityColumns } from '../columns/history-opportunity.column';
+import { ModalOpportunityType } from '@/modules/sales/enum/modal.enum';
 
 export function TableHistoryOpportunity() {
   const navigate = useNavigate();
@@ -30,8 +30,6 @@ export function TableHistoryOpportunity() {
       pageSize: Pagination.PAGESIZE,
     });
   };
-
-  console.log({ history });
 
   useEffect(() => {
     getAllHistoryOpportunity({

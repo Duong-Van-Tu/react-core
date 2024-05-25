@@ -15,8 +15,8 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { getTenant } from '@/utils/common';
 import { Key } from 'antd/es/table/interface';
-import { ModalOpportunityType } from '../../enum/opportunity.enum';
 import { useQuery } from '@/hooks/query.hook';
+import { ModalOpportunityType } from '../../enum/modal.enum';
 
 export default function TableOpportunity() {
   const { openModal } = useModalOpportunity();
@@ -93,10 +93,10 @@ export default function TableOpportunity() {
       <Button
         disabled={!opportunityIds}
         onClick={() => openModal(ModalOpportunityType.Delete, undefined, opportunityIds)}
-        size="large"
+        size="middle"
         danger
       >
-        Xoá mục tiêu đã chọn
+        Xoá cơ hội đã chọn
       </Button>
       <TableCustom
         css={tableStyle}

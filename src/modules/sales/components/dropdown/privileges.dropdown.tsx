@@ -4,13 +4,13 @@ import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useModalPrivileges } from '../modals/privileges';
-import { ModalPrivilegesType } from '../../enum/privileges.enum';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { usePermission } from '@/hooks/permission.hook';
 import { useMemo } from 'react';
 import { useQuery } from '@/hooks/query.hook';
 import { RoleType } from '@/enum/role.enum';
 import { StatusBenefit } from '../../enum/status.enum';
+import { ModalPrivilegesType } from '../../enum/modal.enum';
 
 enum MenuItem {
   EditPrivileges = 1,

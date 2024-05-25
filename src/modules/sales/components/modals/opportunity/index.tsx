@@ -1,10 +1,12 @@
+/** @jsxImportSource @emotion/react */
+import { css } from '@emotion/react';
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { ModalOpportunityType } from '../../../enum/opportunity.enum';
 import { AssignOpportunity } from './assign-opportunity';
 import { CloseOpportunity } from './close-opportunity';
 import { DeleteOpportunity } from './delete-opportunity';
 import { CreateHistoryOpportunity } from './create-HistoryOpportunity';
+import { ModalOpportunityType } from '@/modules/sales/enum/modal.enum';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataOpportunityType, opportunityIds?: string[]) => void;
@@ -41,7 +43,12 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
   return (
     <ModalContext.Provider value={{ openModal, closeModal }}>
       {children}
-      <Modal open={open} onCancel={closeModal} footer={null}>
+      <Modal
+        css={modalStyle(currentModal?.modalName!)}
+        open={open}
+        onCancel={closeModal}
+        footer={null}
+      >
         {currentModal?.modalName === ModalOpportunityType.AssignOpportunity && (
           <AssignOpportunity closeModal={closeModal} data={currentModal.data!} />
         )}
@@ -62,3 +69,7 @@ export const ModalOpportunityProvider = ({ children }: ModalProviderProps) => {
     </ModalContext.Provider>
   );
 };
+
+const modalStyle = (modalName: string) => css`
+  width: ${modalName === ModalOpportunityType.Delete ? '40rem' : '52rem'} !important;
+`;
