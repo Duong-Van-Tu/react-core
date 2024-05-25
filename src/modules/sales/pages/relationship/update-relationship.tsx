@@ -45,7 +45,7 @@ export default function UpdateGainsRelationship() {
   }, [getGainsRelationshipById, relationshipId]);
 
   useEffect(() => {
-    form.setFieldsValue({ ...gains, dayOfBirth: dayjs(gains?.dayOfBirth) });
+    form.setFieldsValue({ ...gains, dayOfBirth: gains?.dayOfBirth ? dayjs(gains.dayOfBirth) : '' });
   }, [gains]);
 
   return (

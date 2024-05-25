@@ -4,6 +4,8 @@ import { ReactNode, createContext, useContext, useState } from 'react';
 import { DeleteRelationship } from './delete-relationship.modal';
 import { AddRelationship } from './add-relationship.modal';
 import { ReportRelationship } from './report-relationship';
+import { FinalizeRelationShip } from './finalize-relationship.modal';
+import { UpdatePoint } from './update-point.modal';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataRelationshipType, relationshipIds?: string[]) => void;
@@ -47,8 +49,9 @@ export const ModalRelationshipProvider = ({ children }: ModalProviderProps) => {
       {children}
       <Modal
         width={
-          currentModal?.modalName === ModalRelationshipType.DeleteRelationship
-            ? '38rem'
+          currentModal?.modalName === ModalRelationshipType.DeleteRelationship ||
+          currentModal?.modalName === ModalRelationshipType.FinalizeRelationship
+            ? '40rem'
             : currentModal?.modalName === ModalRelationshipType.ReportRelationship
               ? '50rem'
               : '54rem'
@@ -71,6 +74,14 @@ export const ModalRelationshipProvider = ({ children }: ModalProviderProps) => {
 
         {currentModal?.modalName === ModalRelationshipType.ReportRelationship && (
           <ReportRelationship closeModal={closeModal} data={currentModal.data!} />
+        )}
+
+        {currentModal?.modalName === ModalRelationshipType.FinalizeRelationship && (
+          <FinalizeRelationShip closeModal={closeModal} data={currentModal.data!} />
+        )}
+
+        {currentModal?.modalName === ModalRelationshipType.UpdatePoint && (
+          <UpdatePoint closeModal={closeModal} data={currentModal.data!} />
         )}
       </Modal>
     </ModalContext.Provider>

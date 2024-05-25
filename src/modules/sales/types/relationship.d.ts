@@ -9,6 +9,7 @@ type DataRelationshipType = {
   position: string;
   reason: string;
   point: number;
+  actualPoint: number;
   customer: string;
   currentRelationshipLevel: string;
   targetRelationshipLevel: string;
@@ -26,6 +27,29 @@ type DataAddRelationship = {
   reason: string;
   point: string;
   applicationUserId: string;
+};
+
+type DataAddRelationship = {
+  customerId: string;
+  customerName: string;
+  position: string;
+  currentRelationshipId: string;
+  targetRelationshipId: string;
+  reason: string;
+  point: string;
+  applicationUserId: string;
+};
+
+type DataFinalizeRelationship = {
+  id: data.id;
+  applicationUserId: data.applicationUser.id;
+  status: StatusRelationship.Processing;
+};
+
+type DataUpdatePointRelationship = {
+  id: string;
+  actualPoint: string;
+  currentRelationshipLevelId: string;
 };
 
 type RelationshipCustomer = {

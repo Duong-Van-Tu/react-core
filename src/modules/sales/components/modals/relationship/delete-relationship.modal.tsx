@@ -40,7 +40,7 @@ export const DeleteRelationship = ({
 
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá quyền lợi đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá mối quan hệ đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>

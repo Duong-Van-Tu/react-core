@@ -12,6 +12,7 @@ import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Messages } from '@/constants/message';
 import { useWatchMessage } from '@/hooks/message.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
+import { usePermission } from '@/hooks/permission.hook';
 
 export default function GainsQuestionRelationshipPage() {
   const { getRelationshipGainsQuestion, updateRelationshipGainsQuestion } = useRelationship();
@@ -26,6 +27,7 @@ export default function GainsQuestionRelationshipPage() {
   const navigate = useNavigate();
   const tenant = getTenant();
   const { errors } = useWatchMessage('relationship-updateGainsQuestion');
+  const { isSaleDirector } = usePermission();
 
   const onFinish: FormProps['onFinish'] = async (values) => {
     const updatedGainsQuestion = gainsQuestion?.map((question) => {
@@ -85,11 +87,13 @@ export default function GainsQuestionRelationshipPage() {
                 </Radio.Group>
               </Form.Item>
             ))}
-          <Row justify="end">
-            <Button loading={updateLoading} size="middle" type="primary" htmlType="submit">
-              Xác nhận
-            </Button>
-          </Row>
+          {isSaleDirector && (
+            <Row justify="end">
+              <Button loading={updateLoading} size="middle" type="primary" htmlType="submit">
+                Xác nhận
+              </Button>
+            </Row>
+          )}
         </Form>
       </div>
     </Spin>

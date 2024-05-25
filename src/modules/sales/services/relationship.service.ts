@@ -185,7 +185,7 @@ export const useRelationship = () => {
 
   // status
   const updateStatusRelationship = useCallback(
-    async (values: DataRelationshipType) => {
+    async (values: DataFinalizeRelationship) => {
       const dataUpdateStatusRelationship = convertToUppercaseFirstLetter({
         ...values,
       });
@@ -196,7 +196,7 @@ export const useRelationship = () => {
             `/Relationship/update-status-by-id?tenant=${tenant}`,
             dataUpdateStatusRelationship,
           ),
-        { loadingKey: 'edit-status' },
+        { loadingKey: 'edit-relationshipStatus' },
       );
 
       if (succeeded) {
@@ -279,6 +279,26 @@ export const useRelationship = () => {
     [api, caller],
   );
 
+  const UpdatePoint = useCallback(
+    async (values: DataUpdatePointRelationship) => {
+      const { id, ...rest } = values;
+      const dataUpdatePoint = convertToUppercaseFirstLetter(rest);
+      const { data, succeeded } = await caller(
+        () =>
+          api.put(`Relationship/update-result?tenant=${tenant}`, [{ id, data: dataUpdatePoint }]),
+        {
+          loadingKey: 'relationship-updatePoint',
+        },
+      );
+
+      if (succeeded) {
+        dispatch(setListRelationshipAction(data));
+        return succeeded;
+      }
+      return false;
+    },
+    [api, caller],
+  );
   return {
     getAllRelationship,
     addRelationship,
@@ -292,5 +312,6 @@ export const useRelationship = () => {
     updateGainsRelationship,
     getRelationshipGainsQuestion,
     updateRelationshipGainsQuestion,
+    UpdatePoint,
   };
 };

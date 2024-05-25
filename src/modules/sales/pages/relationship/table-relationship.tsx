@@ -33,9 +33,9 @@ export default function TableRelationship() {
   const { tab, textSearch, time, statusId } = useQuery();
 
   const columnTable = useMemo(() => {
-    if (isSaleDirector && tab === RoleType.MySelf) {
-      return columns?.slice(1);
-    }
+    // if (isSaleDirector && tab === RoleType.MySelf) {
+    //   return columns?.slice(1);
+    // }
     return columns;
   }, [tab, isSaleDirector]);
 
