@@ -14,8 +14,8 @@ import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { RoleType } from '@/enum/role.enum';
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { ModalPrivilegesType } from '../../enum/privileges.enum';
 import { useQuery } from '@/hooks/query.hook';
+import { ModalPrivilegesType } from '../../enum/modal.enum';
 
 export default function TablePrivileges() {
   const { openModal } = useModalPrivileges();
@@ -100,7 +100,7 @@ export default function TablePrivileges() {
           <Button
             css={deleteBtnStyle}
             onClick={() => openModal(ModalPrivilegesType.Delete, undefined, benefitIds)}
-            size="large"
+            size="middle"
             danger
             disabled={!benefitIds}
           >

@@ -14,9 +14,12 @@ import { usePermission } from '@/hooks/permission.hook';
 import { RoleType } from '@/enum/role.enum';
 import { useQuery } from '@/hooks/query.hook';
 import { useRelationship } from '../../services/relationship.service';
+import { useModalRelationship } from '../../components/modals/relationship';
+import { ModalRelationshipType } from '../../enum/modal.enum';
 
 export default function TableRelationship() {
   const { getAllRelationship, getAllStatusRelationship } = useRelationship();
+  const { openModal } = useModalRelationship();
   const [loading, loadingStatus] = useWatchLoading(
     ['get-relationship', true],
     ['status-relationship', true],
@@ -79,9 +82,15 @@ export default function TableRelationship() {
   return (
     <div css={rootStyle}>
       {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
-        <Button type="primary" css={addRelationshipBtnStyle} iconPosition="start" size="large">
+        <Button
+          onClick={() => openModal(ModalRelationshipType.AddRelationship)}
+          type="primary"
+          css={addRelationshipBtnStyle}
+          iconPosition="start"
+          size="large"
+        >
           <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-          <span>Thêm mục tiêu</span>
+          <span>Thêm mối quan hệ</span>
         </Button>
       )}
 
@@ -90,8 +99,15 @@ export default function TableRelationship() {
       </div>
       <Row css={rowHeaderStyle} justify="space-between" align="bottom">
         <Col>
-          <Button disabled={!relationshipIds} size="large" danger>
-            Xoá mục tiêu đã chọn
+          <Button
+            onClick={() =>
+              openModal(ModalRelationshipType.DeleteRelationship, undefined, relationshipIds)
+            }
+            disabled={!relationshipIds}
+            size="middle"
+            danger
+          >
+            Xoá mối quan hệ đã chọn
           </Button>
         </Col>
         <Col>Tổng điểm đạt được: {totalExtend ?? 0}</Col>

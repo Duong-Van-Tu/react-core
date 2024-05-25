@@ -21,3 +21,10 @@ export enum StatusBenefit {
   Request = 'REQUEST',
   Confirm = 'CONFIRMED',
 }
+
+export enum StatusRelationship {
+  Pending = 'PENDING',
+  Completed = 'COMPLETED',
+  Processing = 'PROCESSING',
+  Confirm = 'CONFIRMED',
+}

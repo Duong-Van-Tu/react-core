@@ -5,22 +5,21 @@ import { useDispatch } from 'react-redux';
 import { TableCustom } from '@/components/table';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { usersColumns } from './column';
-// import { useHumanResources } from '../../services/human.resources.service';
 import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { useLocale } from '@/hooks/locale.hook';
-import { Key } from 'antd/es/table/interface';
-import { useHumanResources } from '../../services/human-resources.service';
 import { Search, SearchParams } from '@/components/search';
+import { ModalUserCategoryProvider } from '../../components/modals/human-resource';
+import { useHumanResources } from '../../services/human-resources.service';
 
 export default function HumanResourcesPage() {
   const { formatMessage } = useLocale();
   const { getListUsers } = useHumanResources();
   const [loadingAdmin] = useWatchLoading(['get-list-user', true]);
 
-  const { data, pagination } = useRootSelector((state) => state.user.humanResources);
+  const { data, pagination } = useRootSelector((state) => state.category.humanResources);
   const user = useRootSelector((state) => state.auth.user);
 
   const { isAdmin } = usePermission();
@@ -43,12 +42,6 @@ export default function HumanResourcesPage() {
     ];
     dispatch(setBreadcrumbItemsAction(breadCrumbItems));
   }, [dispatch]);
-
-  const rowSelection = {
-    onChange: (_selectedRowKeys: Key[], selectedRows: DataKPIType[]) => {
-      console.log(selectedRows);
-    },
-  };
 
   useEffect(() => {
     handleGetInfo();
@@ -80,15 +73,12 @@ export default function HumanResourcesPage() {
   };
 
   return (
-    <div>
+    <ModalUserCategoryProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.human-resource' })}</h3>
-      {isAdmin && (
-        <div css={searchContainer}>
-          <Search onSearch={handleSearch} />
-        </div>
-      )}
+      <div css={searchContainer}>
+        <Search onSearch={handleSearch} />
+      </div>
       <TableCustom
-        rowSelection={rowSelection}
         columns={usersColumns}
         dataSource={isAdmin ? data : [user]}
         loading={loadingAdmin}
@@ -106,7 +96,7 @@ export default function HumanResourcesPage() {
         }
         scroll={{ x: 1450 }}
       />
-    </div>
+    </ModalUserCategoryProvider>
   );
 }
 
