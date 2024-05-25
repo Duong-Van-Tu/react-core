@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { TableCustom } from '@/components/table';
 import columns from './columns';
 import { Search, SearchParams } from '@/components/search';
-import { Button, Col, Row } from 'antd';
+import { Button } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
@@ -25,9 +25,7 @@ export default function TableRelationship() {
     ['status-relationship', true],
   );
 
-  const { data, pagination, status, totalExtend } = useRootSelector(
-    (state) => state.sale.relationship,
-  );
+  const { data, pagination, status } = useRootSelector((state) => state.sale.relationship);
   const { isSaleDirector, isSale, isSupplier } = usePermission();
   const [relationshipIds, setRelationshipIds] = useState<string[]>();
   const { tab, textSearch, time, statusId } = useQuery();
