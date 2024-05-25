@@ -261,6 +261,24 @@ export const useRelationship = () => {
     [api, caller],
   );
 
+  const updateRelationshipGainsQuestion = useCallback(
+    async (values: RelationshipGainsQuestion[]) => {
+      const { data, succeeded } = await caller(
+        () => api.post(`/RelationshipGainsQuestion/add-or-update?tenant=${tenant}`, values),
+        {
+          loadingKey: 'relationship-updateGainsQuestion',
+        },
+      );
+
+      if (succeeded) {
+        dispatch(setDataRelationshipGainsQuestionAction(data));
+        return succeeded;
+      }
+      return false;
+    },
+    [api, caller],
+  );
+
   return {
     getAllRelationship,
     addRelationship,
@@ -273,5 +291,6 @@ export const useRelationship = () => {
     getGainsRelationshipById,
     updateGainsRelationship,
     getRelationshipGainsQuestion,
+    updateRelationshipGainsQuestion,
   };
 };

@@ -79,5 +79,5 @@ type RelationshipGainsQuestion = {
   relationshipId: string;
   gainsQuestionId: string;
   question: string;
-  answer: string;
+  answer: boolean;
 };

@@ -31,8 +31,8 @@ export default function UpdateGainsRelationship() {
       ...values,
       dayOfBirth: dayjs(values.dayOfBirth).format('DD/MM/YYYY'),
     };
-    const add = await updateGainsRelationship(dataUpdateGains);
-    if (add) {
+    const update = await updateGainsRelationship(dataUpdateGains);
+    if (update) {
       form.resetFields();
       messageApi.success(Messages.UPDATE_SUCCESS);
     } else {
