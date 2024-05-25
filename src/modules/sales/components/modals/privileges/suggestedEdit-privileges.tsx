@@ -24,8 +24,8 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
   const { isSale, isSaleDirector, isSupplier } = usePermission();
   const [form] = Form.useForm();
   const [loading, refuseEditLoading] = useWatchLoading(
-    ['edit-statusBenefit', false],
-    ['refuseEdit-benefit', false],
+    ['benefit-updateStatusById', false],
+    ['benefit-refuseEdit', false],
   );
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {

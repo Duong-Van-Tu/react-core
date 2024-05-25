@@ -89,21 +89,17 @@ export default function TableRelationship() {
       <div css={searchContainer}>
         <Search onSearch={handleSearch} status={status as any} loadingStatus={loadingStatus} />
       </div>
-      <Row css={rowHeaderStyle} justify="space-between" align="bottom">
-        <Col>
-          <Button
-            onClick={() =>
-              openModal(ModalRelationshipType.DeleteRelationship, undefined, relationshipIds)
-            }
-            disabled={!relationshipIds}
-            size="middle"
-            danger
-          >
-            Xoá mối quan hệ đã chọn
-          </Button>
-        </Col>
-        <Col>Tổng điểm đạt được: {totalExtend ?? 0}</Col>
-      </Row>
+      <Button
+        onClick={() =>
+          openModal(ModalRelationshipType.DeleteRelationship, undefined, relationshipIds)
+        }
+        disabled={!relationshipIds}
+        css={deleteBtn}
+        size="middle"
+        danger
+      >
+        Xoá mối quan hệ đã chọn
+      </Button>
       <TableCustom
         rowSelection={rowSelection}
         columns={columns}
@@ -146,7 +142,7 @@ const addRelationshipBtnStyleSale = css`
   top: -5rem;
 `;
 
-const rowHeaderStyle = css`
+const deleteBtn = css`
   margin: 2.4rem 0 1.4rem 0;
 `;
 

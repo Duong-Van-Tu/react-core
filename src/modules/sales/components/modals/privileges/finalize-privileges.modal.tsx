@@ -11,7 +11,7 @@ type FinalizePrivilegesProps = {
 };
 export const FinalizePrivileges = ({ closeModal, data }: FinalizePrivilegesProps) => {
   const { updateStatusById } = useBenefit();
-  const [loading] = useWatchLoading(['edit-statusBenefit', false]);
+  const [loading] = useWatchLoading(['benefit-updateStatusById', false]);
 
   const handleFinalizePrivileges = async () => {
     const editStatus = await updateStatusById({
