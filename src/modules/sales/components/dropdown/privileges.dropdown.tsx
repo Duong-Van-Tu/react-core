@@ -27,7 +27,7 @@ type PrivilegesDropdownProps = {
 
 export function PrivilegesDropdown({ data }: PrivilegesDropdownProps) {
   const { openModal } = useModalPrivileges();
-  const { isAdmin, isSale } = usePermission();
+  const { isAdmin, isSale, isSupplier } = usePermission();
   const { tab } = useQuery();
 
   const handleItemClick = (key: number) => {
@@ -140,7 +140,7 @@ export function PrivilegesDropdown({ data }: PrivilegesDropdownProps) {
 
   return (
     <Dropdown
-      menu={{ items: isAdmin ? adminItems : isSale ? saleItems : items }}
+      menu={{ items: isAdmin ? adminItems : isSale || isSupplier ? saleItems : items }}
       placement="bottomRight"
     >
       <Button css={actionIconBtn}>

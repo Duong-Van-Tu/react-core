@@ -53,7 +53,7 @@ export const EditKPI = ({ closeModal, data }: EditKPIProps) => {
           name="criteria"
           rules={[{ required: true, message: 'Vui lòng nhập tiêu chí!' }]}
         >
-          <Input.TextArea placeholder="Nhập tiêu chí" />
+          <Input.TextArea size="large" placeholder="Nhập tiêu chí" />
         </Form.Item>
         <Row gutter={[20, 0]}>
           <Col span={12}>

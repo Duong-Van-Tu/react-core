@@ -61,7 +61,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
               name="targetKPI"
               rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
-              <InputNumber css={inputStyle} size="middle" placeholder="Nhập mục tiêu" />
+              <InputNumber css={inputStyle} size="large" placeholder="Nhập mục tiêu" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -70,7 +70,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
               name="targetPoint"
               rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu!' }]}
             >
-              <InputNumber css={inputStyle} size="middle" placeholder="Nhập điểm mục tiêu" />
+              <InputNumber css={inputStyle} size="large" placeholder="Nhập điểm mục tiêu" />
             </Form.Item>
           </Col>
         </Row>
@@ -83,6 +83,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
             >
               <DatePicker
                 css={inputStyle}
+                size="large"
                 format={['DD/MM/YYYY']}
                 placeholder="Nhập ngày bắt đầu mục tiêu"
               />
@@ -96,6 +97,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
             >
               <DatePicker
                 css={inputStyle}
+                size="large"
                 format={['DD/MM/YYYY']}
                 placeholder="Nhập thời gian kết thúc"
               />
@@ -108,7 +110,7 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
           name="calculate"
           rules={[{ required: true, message: 'Vui lòng nhập cách tính!' }]}
         >
-          <Input.TextArea placeholder="Nhập cách tính" allowClear />
+          <Input.TextArea size="large" placeholder="Nhập cách tính" allowClear />
         </Form.Item>
 
         <Row justify="end">

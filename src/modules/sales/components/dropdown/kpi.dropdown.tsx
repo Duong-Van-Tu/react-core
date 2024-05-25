@@ -20,6 +20,7 @@ enum MenuItem {
   ReviewEdit,
   Report,
   UpdateRequest,
+  Delete,
 }
 type KPIDropdownProps = {
   data?: DataKPIType;
@@ -28,7 +29,8 @@ type KPIDropdownProps = {
 export function KPIDropdown({ data }: KPIDropdownProps) {
   const { openModal } = useModalKPI();
   const { formatMessage } = useLocale();
-  const { isSale, isAdmin, isSaleDirector } = usePermission();
+  const { isSale, isAdmin, isSaleDirector, isSupplier } = usePermission();
+
   const { tab } = useQuery();
 
   const handleItemClick = (key: number) => {
@@ -47,6 +49,9 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
         break;
       case MenuItem.ModifyKPI:
         openModal(ModalKPIType.ModifyKPI, data);
+        break;
+      case MenuItem.Delete:
+        openModal(ModalKPIType.DeleteKPI, data);
         break;
       default:
       case MenuItem.UpdateRequest:
@@ -68,6 +73,11 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
               key: MenuItem.Report,
               label: formatMessage({ id: 'title.dropdown.kpi.report' }),
               onClick: () => handleItemClick(MenuItem.Report),
+            },
+            {
+              key: MenuItem.Delete,
+              label: formatMessage({ id: 'dropdown.delete' }),
+              onClick: () => handleItemClick(MenuItem.Delete),
             },
           ]
         : data?.goalStatus?.code === Status.Pending
@@ -94,6 +104,11 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
                 label: formatMessage({ id: 'title.dropdown.kpi.report' }),
                 onClick: () => handleItemClick(MenuItem.Report),
               },
+              {
+                key: MenuItem.Delete,
+                label: formatMessage({ id: 'dropdown.delete' }),
+                onClick: () => handleItemClick(MenuItem.Delete),
+              },
             ]
           : data?.goalStatus?.code === Status.Request
             ? [
@@ -114,6 +129,11 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
                   label: formatMessage({ id: 'title.dropdown.kpi.report' }),
                   onClick: () => handleItemClick(MenuItem.Report),
                 },
+                {
+                  key: MenuItem.Delete,
+                  label: formatMessage({ id: 'dropdown.delete' }),
+                  onClick: () => handleItemClick(MenuItem.Delete),
+                },
               ]
             : [
                 {
@@ -126,10 +146,15 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
                   label: formatMessage({ id: 'title.dropdown.kpi.report' }),
                   onClick: () => handleItemClick(MenuItem.Report),
                 },
+                {
+                  key: MenuItem.Delete,
+                  label: formatMessage({ id: 'dropdown.delete' }),
+                  onClick: () => handleItemClick(MenuItem.Delete),
+                },
               ];
     }
 
-    if (isSale) {
+    if (isSale || isSupplier) {
       return data?.goalStatus?.code === Status.Updated
         ? [
             {
@@ -146,6 +171,11 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
               key: MenuItem.Report,
               label: formatMessage({ id: 'title.dropdown.kpi.report' }),
               onClick: () => handleItemClick(MenuItem.Report),
+            },
+            {
+              key: MenuItem.Delete,
+              label: formatMessage({ id: 'dropdown.delete' }),
+              onClick: () => handleItemClick(MenuItem.Delete),
             },
           ]
         : [
@@ -165,6 +195,11 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
               key: MenuItem.Report,
               label: formatMessage({ id: 'title.dropdown.kpi.report' }),
               onClick: () => handleItemClick(MenuItem.Report),
+            },
+            {
+              key: MenuItem.Delete,
+              label: formatMessage({ id: 'dropdown.delete' }),
+              onClick: () => handleItemClick(MenuItem.Delete),
             },
           ];
     }

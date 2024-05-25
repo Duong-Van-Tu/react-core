@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TableCustom } from '@/components/table';
 import columns from './columns';
 import { Search, SearchParams } from '@/components/search';
@@ -28,16 +28,9 @@ export default function TableRelationship() {
   const { data, pagination, status, totalExtend } = useRootSelector(
     (state) => state.sale.relationship,
   );
-  const { isSaleDirector, isSale } = usePermission();
+  const { isSaleDirector, isSale, isSupplier } = usePermission();
   const [relationshipIds, setRelationshipIds] = useState<string[]>();
   const { tab, textSearch, time, statusId } = useQuery();
-
-  const columnTable = useMemo(() => {
-    // if (isSaleDirector && tab === RoleType.MySelf) {
-    //   return columns?.slice(1);
-    // }
-    return columns;
-  }, [tab, isSaleDirector]);
 
   const rowSelection = {
     onChange: (_selectedRowKeys: Key[], selectedRows: DataRelationshipType[]) => {
@@ -76,12 +69,11 @@ export default function TableRelationship() {
     getAllStatusRelationship();
   }, [getAllRelationship, getAllStatusRelationship, tab]);
 
-  const addRelationshipBtnStyle = isSale
-    ? addRelationshipBtnStyleSale
-    : addRelationshipBtnStyleBase;
+  const addRelationshipBtnStyle =
+    isSale || isSupplier ? addRelationshipBtnStyleSale : addRelationshipBtnStyleBase;
   return (
     <div css={rootStyle}>
-      {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
+      {isSaleDirector && tab !== RoleType.Employee && (
         <Button
           onClick={() => openModal(ModalRelationshipType.AddRelationship)}
           type="primary"
@@ -114,7 +106,7 @@ export default function TableRelationship() {
       </Row>
       <TableCustom
         rowSelection={rowSelection}
-        columns={columnTable}
+        columns={columns}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}

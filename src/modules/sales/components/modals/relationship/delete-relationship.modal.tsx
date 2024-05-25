@@ -25,8 +25,8 @@ export const DeleteRelationship = ({
   const tab = searchParams.get('tab');
 
   const handleDeleteRelationship = async () => {
-    const deleteGoal = await deleteRelationship(!!data ? [data.id!] : relationshipIds);
-    if (deleteGoal) {
+    const deleted = await deleteRelationship(!!data ? [data.id!] : relationshipIds);
+    if (deleted) {
       closeModal();
       if (relationshipIds.length === Pagination.PAGESIZE) {
         getAllRelationship({

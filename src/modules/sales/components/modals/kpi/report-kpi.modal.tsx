@@ -5,6 +5,8 @@ import { Button, Col, Row, Space } from 'antd';
 import dayjs from 'dayjs';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useKPI } from '@/modules/sales/services/kpi.service';
+import { Status } from '@/modules/sales/enum/status.enum';
+import { Message } from '@/components/message';
 
 type ReportProps = {
   closeModal: () => void;
@@ -14,6 +16,30 @@ type ReportProps = {
 export const Report = ({ closeModal, data }: ReportProps) => {
   const { showReport } = useKPI();
   const report = useRootSelector((state) => state.sale.kpi.report);
+
+  let messageType: MessageType;
+  switch (data.goalStatus?.code) {
+    case Status.Completed:
+    case Status.Updated:
+      messageType = 'success';
+      break;
+    case Status.Request:
+    case Status.Processing:
+      messageType = 'info';
+      break;
+    case Status.Failed:
+      messageType = 'error';
+      break;
+    default:
+      messageType = 'warning';
+  }
+  // return dat.goalStatus ? (
+  //   <Message hasBackground type={messageType}>
+  //     {record.goalStatus.name!}
+  //   </Message>
+  // ) : (
+  //   ''
+  // );
 
   const oncancel = () => {
     closeModal();
@@ -51,9 +77,13 @@ export const Report = ({ closeModal, data }: ReportProps) => {
           <Col>Điểm thực tế</Col>
           <Col>{report?.actualPoint}</Col>
         </Row>
-        <Row justify="space-between">
+        <Row justify="space-between" align="bottom">
           <Col>Trạng thái</Col>
-          <Col>{report?.goalStatus?.name}</Col>
+          <Col>
+            <Message hasBackground type={messageType}>
+              {data?.goalStatus?.name ?? ''}
+            </Message>
+          </Col>
         </Row>
         <Row justify="end">
           <Space css={reportFooter}>
@@ -80,7 +110,7 @@ const contentStyle = css`
 `;
 
 const reportFooter = css`
-  margin-top: 1rem;
+  margin-top: 1.6rem;
 `;
 
 const titleStyle = css`

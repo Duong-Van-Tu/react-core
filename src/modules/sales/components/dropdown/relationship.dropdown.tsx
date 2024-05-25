@@ -30,7 +30,7 @@ export function RelationshipDropdown({ data }: RelationshipDropdownProps) {
   const { formatMessage } = useLocale();
   const navigate = useNavigate();
   const tenant = getTenant();
-  const { isSaleDirector, isSale } = usePermission();
+  const { isSaleDirector, isSale, isSupplier } = usePermission();
   const { tab } = useQuery();
 
   const handleItemClick = (key: number) => {
@@ -99,7 +99,9 @@ export function RelationshipDropdown({ data }: RelationshipDropdownProps) {
 
   return (
     <Dropdown
-      menu={{ items: isSaleDirector ? directorItems : isSale ? saleItems : adminItems }}
+      menu={{
+        items: isSaleDirector ? directorItems : isSale || isSupplier ? saleItems : adminItems,
+      }}
       placement="bottomRight"
     >
       <Button css={actionIconBtn}>

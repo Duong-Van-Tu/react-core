@@ -23,7 +23,7 @@ export default function TableKPI() {
   const [loading, loadingStatus] = useWatchLoading(['get-kpi', true], ['status-kpi', true]);
 
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
-  const { isSaleDirector, isSale } = usePermission();
+  const { isSaleDirector, isSale, isSupplier } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
   const { tab, textSearch, time, statusId } = useQuery();
 
@@ -71,10 +71,10 @@ export default function TableKPI() {
     getAllStatusKPI();
   }, [getAllKPI, getAllStatusKPI, tab]);
 
-  const addKPIBtnStyle = isSale ? addKPIBtnStyleSale : addKPIBtnStyleBase;
+  const addKPIBtnStyle = isSale || isSupplier ? addKPIBtnStyleSale : addKPIBtnStyleBase;
   return (
     <div css={rootStyle}>
-      {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
+      {isSaleDirector && tab === RoleType.MySelf && (
         <Button
           onClick={() => openModal(ModalKPIType.AddKPI)}
           type="primary"

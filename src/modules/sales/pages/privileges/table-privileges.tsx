@@ -21,7 +21,7 @@ export default function TablePrivileges() {
   const { openModal } = useModalPrivileges();
   const { getAllStatusBenefit, getAllBenefit } = useBenefit();
   const [loading, loadingStatus] = useWatchLoading(['get-benefit', true], ['status-benefit', true]);
-  const { isSaleDirector, isAdmin, isSale } = usePermission();
+  const { isSaleDirector, isAdmin, isSale, isSupplier } = usePermission();
   const { data, pagination, status } = useRootSelector((state) => state.sale.benefit);
   const { tab, textSearch, time, statusId } = useQuery();
 
@@ -110,7 +110,7 @@ export default function TablePrivileges() {
       )}
 
       <TableCustom
-        css={[isSale && tableStyle]}
+        css={[(isSale || isSupplier) && tableStyle]}
         rowSelection={tab === RoleType.Employee || isAdmin ? rowSelection : undefined}
         columns={columnTable}
         dataSource={data}
