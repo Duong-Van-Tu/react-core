@@ -69,6 +69,7 @@ export const useKPI = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),

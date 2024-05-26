@@ -15,6 +15,7 @@ export const kpiInitialState: KPIState = {
     pageIndex: Pagination.PAGEINDEX,
     totalPages: 0,
     totalRecords: 0,
+    pageSize: Pagination.PAGESIZE,
   },
 };
 
@@ -40,8 +41,8 @@ const slice = createSlice({
       state.data = [payload, ...state.data];
       state.pagination = {
         ...state.pagination,
+        pageSize: state.pagination.pageSize + 1,
         totalRecords: state.pagination.totalRecords + 1,
-        totalPages: Math.ceil((state.pagination.totalRecords + 1) / Pagination.PAGESIZE),
       };
     },
     updateKPIAction(state, { payload }: PayloadAction<DataKPIType>) {
