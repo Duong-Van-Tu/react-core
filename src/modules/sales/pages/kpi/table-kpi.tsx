@@ -74,7 +74,7 @@ export default function TableKPI() {
   const addKPIBtnStyle = isSale || isSupplier ? addKPIBtnStyleSale : addKPIBtnStyleBase;
   return (
     <div css={rootStyle}>
-      {isSaleDirector && tab === RoleType.MySelf && (
+      {((isSaleDirector && tab === RoleType.MySelf) || isSale || isSupplier) && (
         <Button
           onClick={() => openModal(ModalKPIType.AddKPI)}
           type="primary"
