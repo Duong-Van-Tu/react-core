@@ -19,6 +19,7 @@ export const relationshipInitialState: RelationshipState = {
     pageIndex: Pagination.PAGEINDEX,
     totalPages: 0,
     totalRecords: 0,
+    pageSize: Pagination.PAGESIZE,
   },
 };
 
@@ -44,8 +45,8 @@ const slice = createSlice({
       state.data = [payload, ...state.data];
       state.pagination = {
         ...state.pagination,
+        pageSize: state.pagination.pageSize ?? Pagination.PAGESIZE + 1,
         totalRecords: state.pagination.totalRecords + 1,
-        totalPages: Math.ceil((state.pagination.totalRecords + 1) / Pagination.PAGESIZE),
       };
     },
     updateRelationshipAction(state, { payload }: PayloadAction<DataRelationshipType>) {

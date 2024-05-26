@@ -1,9 +1,10 @@
+import { Pagination } from '@/constants/pagination';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type OpportunityInitialStateState = {
   data: DataOpportunityType[];
   history?: HistoryOpportunityType[];
-  pagination?: PaginationAPI;
+  pagination: PaginationAPI;
   detail?: DataOpportunityType;
   status?: OpportunityStatus[];
   totalExtend?: number;
@@ -12,6 +13,12 @@ export type OpportunityInitialStateState = {
 
 export const opportunityInitialState: OpportunityInitialStateState = {
   data: [],
+  pagination: {
+    pageIndex: Pagination.PAGEINDEX,
+    totalPages: 0,
+    totalRecords: 0,
+    pageSize: Pagination.PAGESIZE,
+  },
 };
 
 const slice = createSlice({
@@ -34,6 +41,11 @@ const slice = createSlice({
     },
     addOpportunityAction(state, { payload }: PayloadAction<DataOpportunityType>) {
       state.data = [payload, ...state.data];
+      state.pagination = {
+        ...state.pagination,
+        pageSize: state.pagination.pageSize ?? Pagination.PAGESIZE + 1,
+        totalRecords: state.pagination.totalRecords + 1,
+      };
     },
     updateOpportunityAction(state, { payload }: PayloadAction<DataOpportunityType>) {
       state.data = state.data.map((item) => {
@@ -75,6 +87,11 @@ const slice = createSlice({
 
     addHistoryOpportunityAction(state, { payload }: PayloadAction<HistoryOpportunityType>) {
       state.history = state.history ? [payload, ...state.history] : [payload];
+      state.pagination = {
+        ...state.pagination,
+        pageSize: state.pagination.pageSize ?? Pagination.PAGESIZE + 1,
+        totalRecords: state.pagination.totalRecords + 1,
+      };
     },
   },
 });

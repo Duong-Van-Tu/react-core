@@ -1,8 +1,9 @@
+import { Pagination } from '@/constants/pagination';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type BenefitInitialStateState = {
   data: DataBenefitType[];
-  pagination?: PaginationAPI;
+  pagination: PaginationAPI;
   detail?: DataBenefitType;
   status?: BenefitStatus[];
   totalExtend?: number;
@@ -12,6 +13,12 @@ export type BenefitInitialStateState = {
 
 export const benefitInitialState: BenefitInitialStateState = {
   data: [],
+  pagination: {
+    pageIndex: Pagination.PAGEINDEX,
+    totalPages: 0,
+    totalRecords: 0,
+    pageSize: Pagination.PAGESIZE,
+  },
 };
 
 const slice = createSlice({
@@ -34,6 +41,11 @@ const slice = createSlice({
     },
     addBenefitAction(state, { payload }: PayloadAction<DataBenefitType>) {
       state.data = [payload, ...state.data];
+      state.pagination = {
+        ...state.pagination,
+        pageSize: state.pagination.pageSize ?? Pagination.PAGESIZE + 1,
+        totalRecords: state.pagination.totalRecords + 1,
+      };
     },
     updateBenefitAction(state, { payload }: PayloadAction<DataBenefitType>) {
       state.data = state.data.map((item) => {
