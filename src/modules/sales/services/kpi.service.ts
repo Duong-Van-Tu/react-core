@@ -15,6 +15,7 @@ import { Pagination } from '@/constants/pagination';
 import { Status } from '../enum/status.enum';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
+import { Messages } from '@/constants/message';
 
 type FilterKPIType = {
   pageIndex: number;
@@ -85,7 +86,7 @@ export const useKPI = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Goal/add-or-update?tenant=${tenant}`, [{ data: dataAddKPI }]),
-        { loadingKey: 'add-kpi' },
+        { loadingKey: 'add-kpi', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -105,7 +106,7 @@ export const useKPI = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Goal/add-or-update?tenant=${tenant}`, [{ id, data: dataAddKPI }]),
-        { loadingKey: 'edit-kpi' },
+        { loadingKey: 'edit-kpi', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -123,7 +124,7 @@ export const useKPI = () => {
       const deleteIds = goalIds.join(',');
       const { succeeded } = await caller(
         () => api.del(`/Goal/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
-        { loadingKey: 'delete-kpi' },
+        { loadingKey: 'delete-kpi', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded) {
@@ -146,7 +147,7 @@ export const useKPI = () => {
 
       const { data, succeeded } = await caller(
         () => api.put(`/Goal/update-status-by-id?tenant=${tenant}`, dataUpdateStatusKPI),
-        { loadingKey: 'edit-status' },
+        { loadingKey: 'kpi-editStatus', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -169,7 +170,7 @@ export const useKPI = () => {
 
       const { data, succeeded } = await caller(
         () => api.put(`/Goal/update-status-by-id?tenant=${tenant}`, dataUpdateStatusKPI),
-        { loadingKey: 'kpi-refuseEdit' },
+        { loadingKey: 'kpi-refuseEdit', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {

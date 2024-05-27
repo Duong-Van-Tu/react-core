@@ -26,7 +26,7 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
   const { refuseEditKPI, updateStatusKPI } = useKPI();
   const [form] = Form.useForm();
   const [loading, loadingRefuseEdit] = useWatchLoading(
-    ['edit-status', false],
+    ['kpi-editStatus', false],
     ['kpi-refuseEdit', false],
   );
   const { isSaleDirector, isSale, isSupplier } = usePermission();

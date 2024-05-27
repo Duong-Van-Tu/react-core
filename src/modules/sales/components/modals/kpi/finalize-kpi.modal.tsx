@@ -11,7 +11,7 @@ type FinalizeKPIProps = {
 };
 export const FinalizeKPI = ({ closeModal, data }: FinalizeKPIProps) => {
   const { updateStatusKPI } = useKPI();
-  const [loading] = useWatchLoading(['edit-status', false]);
+  const [loading] = useWatchLoading(['kpi-editStatus', false]);
 
   const handleFinalizeKPI = async () => {
     const editStatus = await updateStatusKPI({

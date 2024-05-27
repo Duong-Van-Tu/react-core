@@ -17,6 +17,7 @@ import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
+import { Messages } from '@/constants/message';
 
 type FilterRelationshipType = {
   pageIndex: number;
@@ -170,7 +171,7 @@ export const useRelationship = () => {
       const deleteIds = RelationshipIds.join(',');
       const { succeeded } = await caller(
         () => api.del(`/Relationship/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
-        { loadingKey: 'delete-relationship' },
+        { loadingKey: 'delete-relationship', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded) {
