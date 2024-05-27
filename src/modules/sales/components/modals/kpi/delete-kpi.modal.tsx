@@ -12,7 +12,7 @@ type DeleteKPIProps = {
   goalIds: string[];
   data?: DataKPIType;
 };
-export const DeleteKPI = ({ closeModal, goalIds }: DeleteKPIProps) => {
+export const DeleteKPI = ({ closeModal, goalIds, data }: DeleteKPIProps) => {
   const { deleteKPI, getAllKPI } = useKPI();
   const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-kpi', false]);
@@ -21,8 +21,8 @@ export const DeleteKPI = ({ closeModal, goalIds }: DeleteKPIProps) => {
   const tab = searchParams.get('tab');
 
   const handleDeleteKPI = async () => {
-    const deleteGoal = await deleteKPI(goalIds);
-    if (deleteGoal) {
+    const deleted = await deleteKPI(!!data ? [data.id!] : goalIds);
+    if (deleted) {
       if (goalIds.length === Pagination.PAGESIZE) {
         getAllKPI({ pageIndex: pageIndex - 1 || 1, pageSize: Pagination.PAGESIZE, roleType: tab! });
       }

@@ -3,10 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type RelationshipState = {
   data: DataRelationshipType[];
+  gains?: GainsRelationshipType;
+  customer?: RelationshipCustomer[];
+  level?: RelationshipLevel[];
   pagination: PaginationAPI;
   report?: DataRelationshipType;
   status?: RelationshipStatus[];
   totalExtend?: number;
+  gainsQuestion?: RelationshipGainsQuestion[];
 };
 
 export const relationshipInitialState: RelationshipState = {
@@ -15,6 +19,7 @@ export const relationshipInitialState: RelationshipState = {
     pageIndex: Pagination.PAGEINDEX,
     totalPages: 0,
     totalRecords: 0,
+    pageSize: Pagination.PAGESIZE,
   },
 };
 
@@ -40,8 +45,8 @@ const slice = createSlice({
       state.data = [payload, ...state.data];
       state.pagination = {
         ...state.pagination,
+        pageSize: state.pagination.pageSize ?? Pagination.PAGESIZE + 1,
         totalRecords: state.pagination.totalRecords + 1,
-        totalPages: Math.ceil((state.pagination.totalRecords + 1) / Pagination.PAGESIZE),
       };
     },
     updateRelationshipAction(state, { payload }: PayloadAction<DataRelationshipType>) {
@@ -55,21 +60,40 @@ const slice = createSlice({
     deleteRelationshipAction(state, { payload }: PayloadAction<string[]>) {
       state.data = state.data.filter((item) => !payload.includes(item.id!));
     },
-    setDataReportAction(state, { payload }: PayloadAction<DataRelationshipType>) {
-      state.report = payload;
-    },
+
     setDataStatusAction(state, { payload }: PayloadAction<RelationshipStatus[]>) {
       state.status = payload;
+    },
+
+    setDataCustomerAction(state, { payload }: PayloadAction<RelationshipCustomer[]>) {
+      state.customer = payload;
+    },
+
+    setDataLevelAction(state, { payload }: PayloadAction<RelationshipLevel[]>) {
+      state.level = payload;
+    },
+
+    setDataGainsRelationshipDetailAction(state, { payload }: PayloadAction<GainsRelationshipType>) {
+      state.gains = payload;
+    },
+    setDataRelationshipGainsQuestionAction(
+      state,
+      { payload }: PayloadAction<RelationshipGainsQuestion[]>,
+    ) {
+      state.gainsQuestion = payload;
     },
   },
 });
 
 export const {
-  setListRelationshipAction,
   addRelationshipAction,
-  updateRelationshipAction,
   deleteRelationshipAction,
-  setDataReportAction,
   setDataStatusAction,
+  setListRelationshipAction,
+  updateRelationshipAction,
+  setDataCustomerAction,
+  setDataLevelAction,
+  setDataGainsRelationshipDetailAction,
+  setDataRelationshipGainsQuestionAction,
 } = slice.actions;
 export default slice.reducer;

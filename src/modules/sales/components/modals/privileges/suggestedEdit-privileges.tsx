@@ -21,11 +21,11 @@ type FieldType = {
 export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilegesProps) => {
   const { formatMessage } = useLocale();
   const { updateStatusById, refuseEditBenefit } = useBenefit();
-  const { isSale, isSaleDirector } = usePermission();
+  const { isSale, isSaleDirector, isSupplier } = usePermission();
   const [form] = Form.useForm();
   const [loading, refuseEditLoading] = useWatchLoading(
-    ['edit-statusBenefit', false],
-    ['refuseEdit-benefit', false],
+    ['benefit-updateStatusById', false],
+    ['benefit-refuseEdit', false],
   );
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
@@ -37,7 +37,7 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
       targetSalary: targetSalary.toString(),
       totalSalary: totalSalary.toString(),
       applicationUserId: data.applicationUser?.id,
-      status: isSale ? StatusBenefit.Request : StatusBenefit.Updated,
+      status: isSale || isSupplier ? StatusBenefit.Request : StatusBenefit.Updated,
     };
     const edit = await updateStatusById(dataUpdateBenefit);
     if (edit) {

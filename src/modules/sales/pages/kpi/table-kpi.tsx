@@ -14,8 +14,8 @@ import { Pagination } from '@/constants/pagination';
 import { Key } from 'antd/es/table/interface';
 import { usePermission } from '@/hooks/permission.hook';
 import { RoleType } from '@/enum/role.enum';
-import { ModalKPIType } from '../../enum/kpi.enum';
 import { useQuery } from '@/hooks/query.hook';
+import { ModalKPIType } from '../../enum/modal.enum';
 
 export default function TableKPI() {
   const { openModal } = useModalKPI();
@@ -23,7 +23,7 @@ export default function TableKPI() {
   const [loading, loadingStatus] = useWatchLoading(['get-kpi', true], ['status-kpi', true]);
 
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
-  const { isSaleDirector, isSale } = usePermission();
+  const { isSaleDirector, isSale, isSupplier } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
   const { tab, textSearch, time, statusId } = useQuery();
 
@@ -71,10 +71,10 @@ export default function TableKPI() {
     getAllStatusKPI();
   }, [getAllKPI, getAllStatusKPI, tab]);
 
-  const addKPIBtnStyle = isSale ? addKPIBtnStyleSale : addKPIBtnStyleBase;
+  const addKPIBtnStyle = isSale || isSupplier ? addKPIBtnStyleSale : addKPIBtnStyleBase;
   return (
     <div css={rootStyle}>
-      {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
+      {((isSaleDirector && tab === RoleType.MySelf) || isSale || isSupplier) && (
         <Button
           onClick={() => openModal(ModalKPIType.AddKPI)}
           type="primary"
@@ -95,7 +95,7 @@ export default function TableKPI() {
           <Button
             disabled={!goalIds}
             onClick={() => openModal(ModalKPIType.DeleteKPI, undefined, goalIds)}
-            size="large"
+            size="middle"
             danger
           >
             Xoá mục tiêu đã chọn
@@ -111,9 +111,9 @@ export default function TableKPI() {
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
         pagination={{
-          current: pagination?.pageIndex,
-          pageSize: Pagination.PAGESIZE,
-          total: pagination?.totalRecords,
+          current: pagination.pageIndex,
+          pageSize: pagination.pageSize,
+          total: pagination.totalRecords,
           position: ['bottomCenter'],
         }}
         scroll={{ x: 1450 }}

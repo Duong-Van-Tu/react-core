@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
 import { css } from '@emotion/react';
-import { Button, Col, Row, Upload } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
-import { PlusCircleOutlined, UploadOutlined } from '@ant-design/icons';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { ModalSaleKitType } from '../../enum/sale-kit.enum';
 import { useModalSaleKit } from '../../components/modals/sale-kit';

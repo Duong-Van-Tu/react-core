@@ -5,7 +5,6 @@ function getAxios(baseURL: string) {
   const ins = axios.create({
     baseURL,
   });
-
   ins.interceptors.request.use(function (config) {
     if (!config.headers) {
       config.headers = {};

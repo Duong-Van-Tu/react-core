@@ -1,6 +1,5 @@
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { ModalKPIType } from '../../../enum/kpi.enum';
 import { EditKPI } from './edit-kpi.modal';
 import { FinalizeKPI } from './finalize-kpi.modal';
 import { RequestEdit } from './request-edit-kpi.modal';
@@ -9,6 +8,7 @@ import { ModifyKPI } from './modify-kpi.modal';
 import { AddKPI } from './add-kpi.modal';
 import { DeleteKPI } from './delete-kpi.modal';
 import { UpdateRequest } from './update-request-kpi';
+import { ModalKPIType } from '@/modules/sales/enum/modal.enum';
 
 type ModalContextType = {
   openModal: (modalName: string, data?: DataKPIType, goalIds?: string[]) => void;

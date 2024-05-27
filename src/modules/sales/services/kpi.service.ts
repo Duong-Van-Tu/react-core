@@ -69,6 +69,7 @@ export const useKPI = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),
@@ -168,7 +169,7 @@ export const useKPI = () => {
 
       const { data, succeeded } = await caller(
         () => api.put(`/Goal/update-status-by-id?tenant=${tenant}`, dataUpdateStatusKPI),
-        { loadingKey: 'refuse-edit' },
+        { loadingKey: 'kpi-refuseEdit' },
       );
 
       if (succeeded) {

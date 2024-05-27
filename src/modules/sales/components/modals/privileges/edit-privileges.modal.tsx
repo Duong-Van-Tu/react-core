@@ -11,6 +11,7 @@ type FieldType = {
   monthlySalary: string;
   targetSalary: string;
   totalSalary: string;
+  totalBenefit: string;
 };
 
 type EditPrivilegesProps = {
@@ -25,13 +26,14 @@ export const EditPrivileges = ({ closeModal, data }: EditPrivilegesProps) => {
   const [form] = Form.useForm();
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const { monthlySalary, targetSalary, totalSalary } = values;
+    const { monthlySalary, targetSalary, totalSalary, totalBenefit } = values;
     const dataUpdateBenefit = {
       id: data.id,
       applicationUserId: data.applicationUser?.id,
       monthlySalary: monthlySalary.toString(),
       targetSalary: targetSalary.toString(),
       totalSalary: totalSalary.toString(),
+      totalBenefit: totalBenefit.toString(),
     };
     const edit = await updateBenefit(dataUpdateBenefit);
     if (edit) {
@@ -131,6 +133,18 @@ export const EditPrivileges = ({ closeModal, data }: EditPrivilegesProps) => {
             size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
           />
+        </Form.Item>
+        <Form.Item<FieldType>
+          label={<span css={labelFormItem}>Tổng quyền lợi hiện tại</span>}
+          name="totalBenefit"
+          rules={[
+            {
+              required: true,
+              message: 'Vui lòng nhập tổng quyền lợi hiện tại! ',
+            },
+          ]}
+        >
+          <InputNumber css={inputStyle} size="large" placeholder="Nhập tổng quyền lợi hiện tại" />
         </Form.Item>
 
         <Row justify="end">

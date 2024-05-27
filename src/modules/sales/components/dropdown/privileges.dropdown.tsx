@@ -4,13 +4,13 @@ import { Button, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useModalPrivileges } from '../modals/privileges';
-import { ModalPrivilegesType } from '../../enum/privileges.enum';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { usePermission } from '@/hooks/permission.hook';
 import { useMemo } from 'react';
 import { useQuery } from '@/hooks/query.hook';
 import { RoleType } from '@/enum/role.enum';
 import { StatusBenefit } from '../../enum/status.enum';
+import { ModalPrivilegesType } from '../../enum/modal.enum';
 
 enum MenuItem {
   EditPrivileges = 1,
@@ -27,7 +27,7 @@ type PrivilegesDropdownProps = {
 
 export function PrivilegesDropdown({ data }: PrivilegesDropdownProps) {
   const { openModal } = useModalPrivileges();
-  const { isAdmin, isSale } = usePermission();
+  const { isAdministrator, isSale, isSupplier } = usePermission();
   const { tab } = useQuery();
 
   const handleItemClick = (key: number) => {
@@ -140,7 +140,7 @@ export function PrivilegesDropdown({ data }: PrivilegesDropdownProps) {
 
   return (
     <Dropdown
-      menu={{ items: isAdmin ? adminItems : isSale ? saleItems : items }}
+      menu={{ items: isAdministrator ? adminItems : isSale || isSupplier ? saleItems : items }}
       placement="bottomRight"
     >
       <Button css={actionIconBtn}>

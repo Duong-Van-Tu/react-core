@@ -62,6 +62,24 @@ export const categoryMenus: MenuItem = {
       },
     },
     {
+      code: 'contract',
+      icon: 'dot',
+      path: '/category/contract',
+      label: {
+        vi_VN: 'Hợp đồng',
+        en_US: 'Contract',
+      },
+    },
+    {
+      code: 'project',
+      icon: 'dot',
+      path: '/category/project',
+      label: {
+        vi_VN: 'Dự án',
+        en_US: 'Project',
+      },
+    },
+    {
       code: 'sale-kit',
       icon: 'dot',
       path: '/category/sale-kit',

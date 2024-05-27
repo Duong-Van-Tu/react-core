@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TableCustom } from '@/components/table';
 import columns from './columns';
 import { Search, SearchParams } from '@/components/search';
-import { Button, Col, Row } from 'antd';
+import { Button } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
@@ -14,27 +14,21 @@ import { usePermission } from '@/hooks/permission.hook';
 import { RoleType } from '@/enum/role.enum';
 import { useQuery } from '@/hooks/query.hook';
 import { useRelationship } from '../../services/relationship.service';
+import { useModalRelationship } from '../../components/modals/relationship';
+import { ModalRelationshipType } from '../../enum/modal.enum';
 
 export default function TableRelationship() {
   const { getAllRelationship, getAllStatusRelationship } = useRelationship();
+  const { openModal } = useModalRelationship();
   const [loading, loadingStatus] = useWatchLoading(
     ['get-relationship', true],
     ['status-relationship', true],
   );
 
-  const { data, pagination, status, totalExtend } = useRootSelector(
-    (state) => state.sale.relationship,
-  );
-  const { isSaleDirector, isSale } = usePermission();
+  const { data, pagination, status } = useRootSelector((state) => state.sale.relationship);
+  const { isSaleDirector, isSale, isSupplier } = usePermission();
   const [relationshipIds, setRelationshipIds] = useState<string[]>();
   const { tab, textSearch, time, statusId } = useQuery();
-
-  const columnTable = useMemo(() => {
-    if (isSaleDirector && tab === RoleType.MySelf) {
-      return columns?.slice(1);
-    }
-    return columns;
-  }, [tab, isSaleDirector]);
 
   const rowSelection = {
     onChange: (_selectedRowKeys: Key[], selectedRows: DataRelationshipType[]) => {
@@ -73,32 +67,40 @@ export default function TableRelationship() {
     getAllStatusRelationship();
   }, [getAllRelationship, getAllStatusRelationship, tab]);
 
-  const addRelationshipBtnStyle = isSale
-    ? addRelationshipBtnStyleSale
-    : addRelationshipBtnStyleBase;
+  const addRelationshipBtnStyle =
+    isSale || isSupplier ? addRelationshipBtnStyleSale : addRelationshipBtnStyleBase;
   return (
     <div css={rootStyle}>
-      {(isSaleDirector || isSale) && tab !== RoleType.Employee && (
-        <Button type="primary" css={addRelationshipBtnStyle} iconPosition="start" size="large">
+      {isSaleDirector && tab !== RoleType.Employee && (
+        <Button
+          onClick={() => openModal(ModalRelationshipType.AddRelationship)}
+          type="primary"
+          css={addRelationshipBtnStyle}
+          iconPosition="start"
+          size="large"
+        >
           <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-          <span>Thêm mục tiêu</span>
+          <span>Thêm mối quan hệ</span>
         </Button>
       )}
 
       <div css={searchContainer}>
         <Search onSearch={handleSearch} status={status as any} loadingStatus={loadingStatus} />
       </div>
-      <Row css={rowHeaderStyle} justify="space-between" align="bottom">
-        <Col>
-          <Button disabled={!relationshipIds} size="large" danger>
-            Xoá mục tiêu đã chọn
-          </Button>
-        </Col>
-        <Col>Tổng điểm đạt được: {totalExtend ?? 0}</Col>
-      </Row>
+      <Button
+        onClick={() =>
+          openModal(ModalRelationshipType.DeleteRelationship, undefined, relationshipIds)
+        }
+        disabled={!relationshipIds}
+        css={deleteBtn}
+        size="middle"
+        danger
+      >
+        Xoá mối quan hệ đã chọn
+      </Button>
       <TableCustom
         rowSelection={rowSelection}
-        columns={columnTable}
+        columns={columns}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
@@ -138,7 +140,7 @@ const addRelationshipBtnStyleSale = css`
   top: -5rem;
 `;
 
-const rowHeaderStyle = css`
+const deleteBtn = css`
   margin: 2.4rem 0 1.4rem 0;
 `;
 

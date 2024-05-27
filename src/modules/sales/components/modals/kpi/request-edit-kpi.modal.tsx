@@ -25,8 +25,11 @@ type RequestEditProps = {
 export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
   const { refuseEditKPI, updateStatusKPI } = useKPI();
   const [form] = Form.useForm();
-  const [loading] = useWatchLoading(['edit-status', false]);
-  const { isSaleDirector, isSale } = usePermission();
+  const [loading, loadingRefuseEdit] = useWatchLoading(
+    ['edit-status', false],
+    ['kpi-refuseEdit', false],
+  );
+  const { isSaleDirector, isSale, isSupplier } = usePermission();
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const { suggestEndTime, suggestTargetKPI, suggestTargetPoint } = values;
@@ -36,7 +39,7 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
       suggestTargetKPI: suggestTargetKPI.toString(),
       suggestTargetPoint: suggestTargetPoint.toString(),
       applicationUserId: data.userSuggest?.id,
-      status: isSale ? Status.Request : Status.Updated,
+      status: isSale || isSupplier ? Status.Request : Status.Updated,
     } as DataKPIType;
 
     const editStatus = await updateStatusKPI(dataUpdateKPI);
@@ -99,7 +102,7 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
         </Row>
 
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Thơi gian kết thúc mục tiêu muốn chỉnh sửa</span>}
+          label={<span css={labelFormItem}>Thời gian kết thúc mục tiêu muốn chỉnh sửa</span>}
           name="suggestEndTime"
         >
           <DatePicker size="large" format={['DD/MM/YYYY']} css={inputStyle} />
@@ -138,20 +141,16 @@ export const RequestEdit = ({ closeModal, data }: RequestEditProps) => {
           <Space>
             <Button onClick={oncancel}>Huỷ</Button>
             {isSaleDirector && (
-              <Button ghost type="primary" onClick={handleRefuseEditKPI}>
+              <Button
+                loading={loadingRefuseEdit}
+                ghost
+                type="primary"
+                onClick={handleRefuseEditKPI}
+              >
                 Từ chối chỉnh sửa
               </Button>
             )}
-            <Button
-              disabled={
-                isSaleDirector
-                  ? data.goalStatus?.code !== Status.Request
-                  : data.goalStatus?.code !== Status.Processing
-              }
-              loading={loading}
-              type="primary"
-              htmlType="submit"
-            >
+            <Button loading={loading} type="primary" htmlType="submit">
               Xác nhận
             </Button>
           </Space>

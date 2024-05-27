@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
@@ -13,20 +13,21 @@ import { useQuery } from '@/hooks/query.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { getTenant } from '@/utils/common';
 import { RoleType } from '@/enum/role.enum';
+import { ModalRelationshipProvider } from '../../components/modals/relationship';
 
 export default function RelationshipPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const { isAdmin, isSaleDirector } = usePermission();
+  const { isAdministrator, isSaleDirector } = usePermission();
   const tenant = getTenant();
   const totalRecords = useRootSelector((state) => state.sale.relationship.pagination?.totalRecords);
   const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
-      key: isAdmin ? RoleType.Manager : RoleType.MySelf,
-      label: isAdmin
+      key: isAdministrator ? RoleType.Manager : RoleType.MySelf,
+      label: isAdministrator
         ? 'Mối quan hệ của giám đốc'
         : formatMessage({ id: 'title.tab.relationship.my' }),
       children: <TableRelationship />,
@@ -44,7 +45,7 @@ export default function RelationshipPage() {
 
   useEffect(() => {
     if (!activeKey) {
-      navigate(`?tab=${isAdmin ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
+      navigate(`?tab=${isAdministrator ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
     }
   }, [activeKey]);
 
@@ -68,7 +69,7 @@ export default function RelationshipPage() {
   }, [dispatch]);
 
   return (
-    <Fragment>
+    <ModalRelationshipProvider>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.relationship' })}</h3>
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.relationship' })}</span>
@@ -77,11 +78,11 @@ export default function RelationshipPage() {
           {totalRecords} {formatMessage({ id: 'title.document.relationship' })}
         </span>
       </div>
-      {(isAdmin || isSaleDirector) && (
+      {(isAdministrator || isSaleDirector) && (
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
       )}
-      {!(isAdmin || isSaleDirector) && <TableRelationship />}
-    </Fragment>
+      {!(isAdministrator || isSaleDirector) && <TableRelationship />}
+    </ModalRelationshipProvider>
   );
 }
 

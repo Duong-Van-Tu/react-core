@@ -201,7 +201,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.put(`/Benefit/update-status-by-id?tenant=${tenant}`, dataUpdateStatusBenefit),
-        { loadingKey: 'edit-statusById' },
+        { loadingKey: 'benefit-updateStatusById' },
       );
 
       if (succeeded) {
@@ -224,7 +224,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.put(`/Benefit/update-status-by-id?tenant=${tenant}`, dataUpdateStatusBenefit),
-        { loadingKey: 'refuseEdit-benefit' },
+        { loadingKey: 'benefit-refuseEdit' },
       );
 
       if (succeeded) {
