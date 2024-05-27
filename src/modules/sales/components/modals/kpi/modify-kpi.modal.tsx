@@ -22,7 +22,7 @@ type ModifyKPIProps = {
 export const ModifyKPI = ({ closeModal, data }: ModifyKPIProps) => {
   const { updateStatusKPI } = useKPI();
   const [form] = Form.useForm();
-  const [loading] = useWatchLoading(['edit-status', false]);
+  const [loading] = useWatchLoading(['kpi-editStatus', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const { targetKPI, targetPoint, calculate, criteria } = values;

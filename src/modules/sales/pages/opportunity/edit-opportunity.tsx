@@ -2,18 +2,7 @@
 import { css } from '@emotion/react';
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
-import {
-  Button,
-  Col,
-  DatePicker,
-  Form,
-  FormProps,
-  Input,
-  InputNumber,
-  Row,
-  Spin,
-  message as messageAnt,
-} from 'antd';
+import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Spin } from 'antd';
 import Close from '@/assets/svg/close.svg?react';
 import { useLocale } from '@/hooks/locale.hook';
 import { LocaleFormatter } from '@/components/locale-formatter';
@@ -21,8 +10,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getTenant } from '@/utils/common';
 import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { Messages } from '@/constants/message';
-import { useWatchMessage } from '@/hooks/message.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 
 type FieldType = {
@@ -41,7 +28,7 @@ type FieldType = {
   opponent2Attribute: string;
   strategy: string;
   lastTimeInteract: string;
-  winningOpportunity: string;
+  winningOppotunity: string;
 };
 
 export default function EditOpportunityPage() {
@@ -53,8 +40,6 @@ export default function EditOpportunityPage() {
     ['get-opportunityDetail', true],
   );
   const [form] = Form.useForm();
-  const [messageApi, contextHolder] = messageAnt.useMessage();
-  const { errors } = useWatchMessage('editOpportunity-message');
   const navigate = useNavigate();
   const tenant = getTenant();
   const dataOpportunity = useRootSelector((state) => state.sale.opportunity.detail);
@@ -69,12 +54,7 @@ export default function EditOpportunityPage() {
       estimatedTime: dayjs(values.estimatedTime).format('DD/MM/YYYY'),
       lastTimeInteract: dayjs(values.lastTimeInteract).format('DD/MM/YYYY'),
     };
-    const edit = await updateOpportunity(dataUpdateOpportunity);
-    if (edit) {
-      messageApi.success(Messages.UPDATE_SUCCESS);
-    } else {
-      messageApi.success(errors[0]);
-    }
+    await updateOpportunity(dataUpdateOpportunity);
   };
 
   useEffect(() => {
@@ -97,7 +77,6 @@ export default function EditOpportunityPage() {
   return (
     <Spin spinning={opportunityDetailLoading} size="large">
       <div css={containerStyle}>
-        {contextHolder}
         <Button css={closeStyle} onClick={() => navigate(`/sales/opportunity?tenant=${tenant}`)}>
           <Close width={16} height={16} color="#ccc" />
           <LocaleFormatter id="title.exit" />
@@ -106,7 +85,7 @@ export default function EditOpportunityPage() {
         <Form
           form={form}
           css={formUpdateResultStyle}
-          name="add-opportunity"
+          name="edit-opportunity"
           onFinish={onFinish}
           layout="vertical"
         >
@@ -454,7 +433,7 @@ export default function EditOpportunityPage() {
                     {formatMessage({ id: 'form.input.WinProbabilityEvaluation' })}
                   </span>
                 }
-                name="winningOpportunity"
+                name="winningOppotunity"
                 rules={[
                   {
                     required: true,

@@ -3,20 +3,17 @@ import { CustomIcon } from '@/components/icons';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { getTenant } from '@/utils/common';
 import { css } from '@emotion/react';
-import { Button, Form, FormProps, Radio, Row, Spin, message as messageAnt } from 'antd';
+import { Button, Form, FormProps, Radio, Row, Spin } from 'antd';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRelationship } from '../../services/relationship.service';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
-import { Messages } from '@/constants/message';
-import { useWatchMessage } from '@/hooks/message.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { usePermission } from '@/hooks/permission.hook';
 
 export default function GainsQuestionRelationshipPage() {
   const { getRelationshipGainsQuestion, updateRelationshipGainsQuestion } = useRelationship();
-  const [messageApi, contextHolder] = messageAnt.useMessage();
   const gainsQuestion = useRootSelector((state) => state.sale.relationship.gainsQuestion);
   const [loading, updateLoading] = useWatchLoading(
     ['relationship-gainsQuestion', true],
@@ -26,10 +23,9 @@ export default function GainsQuestionRelationshipPage() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const tenant = getTenant();
-  const { errors } = useWatchMessage('relationship-updateGainsQuestion');
   const { isSaleDirector } = usePermission();
 
-  const onFinish: FormProps['onFinish'] = async (values) => {
+  const onFinish: FormProps['onFinish'] = (values) => {
     const updatedGainsQuestion = gainsQuestion?.map((question) => {
       if (values.hasOwnProperty(question.id)) {
         return {
@@ -42,13 +38,7 @@ export default function GainsQuestionRelationshipPage() {
       return question;
     }) as RelationshipGainsQuestion[];
 
-    const update = await updateRelationshipGainsQuestion(updatedGainsQuestion);
-    if (update) {
-      form.resetFields();
-      messageApi.success(Messages.UPDATE_SUCCESS);
-    } else {
-      messageApi.success(errors[0]);
-    }
+    updateRelationshipGainsQuestion(updatedGainsQuestion);
   };
 
   useEffect(() => {
@@ -58,12 +48,11 @@ export default function GainsQuestionRelationshipPage() {
   return (
     <Spin spinning={loading} size="large">
       <div css={containerStyle}>
-        {contextHolder}
         <Button css={closeStyle} onClick={() => navigate(`/sales/relationship?tenant=${tenant}`)}>
           <CustomIcon type="close" width={16} height={16} color="#ccc" />
           <LocaleFormatter id="title.exit" />
         </Button>
-        <h1 css={titleStyle}>Cập nhật kết quả mối quan hệ</h1>
+        <h1 css={titleStyle}>Đánh giá mối quan hệ</h1>
         <Form
           form={form}
           onFinish={onFinish}

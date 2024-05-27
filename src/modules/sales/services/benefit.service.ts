@@ -17,6 +17,7 @@ import {
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { RoleType } from '@/enum/role.enum';
 import { StatusBenefit } from '../enum/status.enum';
+import { Messages } from '@/constants/message';
 
 type FilterPrivilegesType = {
   pageIndex: number;
@@ -72,6 +73,7 @@ export const useBenefit = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),
@@ -85,7 +87,6 @@ export const useBenefit = () => {
     async (id: string) => {
       const { data, succeeded } = await caller(() => api.get(`/Benefit/get-by-id/${id}`), {
         loadingKey: 'get-benefitDetail',
-        messageKey: 'benefitDetail-message',
       });
       if (succeeded) {
         dispatch(setDataBenefitDetailAction(data));
@@ -102,7 +103,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Benefit/add-or-update?tenant=${tenant}`, [{ data: dataAddBenefit }]),
-        { loadingKey: 'add-benefit', messageKey: 'addBenefit-message' },
+        { loadingKey: 'add-benefit', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -122,7 +123,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Benefit/add-or-update?tenant=${tenant}`, [{ id, data: dataAddBenefit }]),
-        { loadingKey: 'edit-benefit', messageKey: 'editBenefit-message' },
+        { loadingKey: 'edit-benefit', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -143,7 +144,7 @@ export const useBenefit = () => {
       const { data, succeeded } = await caller(
         () =>
           api.put(`/Benefit/update-total-benefit?tenant=${tenant}`, [{ id, data: dataAddBenefit }]),
-        { loadingKey: 'edit-totalBenefit', messageKey: 'editBenefit-message' },
+        { loadingKey: 'edit-totalBenefit', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -161,7 +162,7 @@ export const useBenefit = () => {
       const deleteIds = benefitIds.join(',');
       const { succeeded } = await caller(
         () => api.del(`/Benefit/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
-        { loadingKey: 'delete-benefit' },
+        { loadingKey: 'delete-benefit', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded) {
@@ -182,7 +183,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/BenefitStatus/add-or-update?tenant=${tenant}`, dataUpdateStatusBenefit),
-        { loadingKey: 'edit-statusBenefit' },
+        { loadingKey: 'edit-statusBenefit', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -201,7 +202,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.put(`/Benefit/update-status-by-id?tenant=${tenant}`, dataUpdateStatusBenefit),
-        { loadingKey: 'benefit-updateStatusById' },
+        { loadingKey: 'benefit-updateStatusById', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -224,7 +225,7 @@ export const useBenefit = () => {
 
       const { data, succeeded } = await caller(
         () => api.put(`/Benefit/update-status-by-id?tenant=${tenant}`, dataUpdateStatusBenefit),
-        { loadingKey: 'benefit-refuseEdit' },
+        { loadingKey: 'benefit-refuseEdit', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {

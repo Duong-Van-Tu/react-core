@@ -70,6 +70,7 @@ export const userSaleKit = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),
@@ -118,6 +119,7 @@ export const userSaleKit = () => {
                 pageIndex,
                 totalRecords,
                 totalPages,
+                pageSize,
               },
               totalExtend,
             }),
@@ -138,7 +140,7 @@ export const userSaleKit = () => {
 
       const response = await caller(() => api.post(`/SaleKit/add-document?${urlParams}`, files), {
         loadingKey: 'add-sale-kit',
-        messageKey: Messages.CREATE_SUCCESS,
+        successMessage: Messages.CREATE_SUCCESS,
       });
 
       if (response) {
@@ -162,7 +164,7 @@ export const userSaleKit = () => {
 
       const response = await caller(
         () => api.del(`/SaleKit/delete-by-ids/${ids}/${applicationUserId}?${urlParams}`),
-        { loadingKey: 'delete-sale-kit', messageKey: Messages.DELETE_SUCCESS },
+        { loadingKey: 'delete-sale-kit', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (response) {
@@ -186,7 +188,7 @@ export const userSaleKit = () => {
 
       await caller(() => api.put(`/ApplicationRoleSaleKit/update?${urlParams}`, dataUpdate), {
         loadingKey: 'update-sale-kit-with-role',
-        messageKey: Messages.UPDATE_SUCCESS,
+        successMessage: Messages.UPDATE_SUCCESS,
       });
     },
 

@@ -54,7 +54,9 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
             ? '38rem'
             : currentModal?.modalName === ModalKPIType.RequestEdit
               ? '68rem'
-              : '54rem'
+              : currentModal?.modalName === ModalKPIType.AddKPI
+                ? '60rem'
+                : '56rem'
         }
         open={open}
         onCancel={closeModal}

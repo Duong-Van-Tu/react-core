@@ -5,6 +5,7 @@ import { css } from '@emotion/react';
 import { Button, Row, Space, Upload, UploadFile } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { useLocale } from '@/hooks/locale.hook';
 
 const { Dragger } = Upload;
 
@@ -14,6 +15,7 @@ type AddSaleKitProps = {
 
 export const AddSaleKit = ({ closeModal }: AddSaleKitProps) => {
   const { addSaleKit } = userSaleKit();
+  const { formatMessage } = useLocale();
 
   const [loading] = useWatchLoading(['add-sale-kit', false]);
 
@@ -58,10 +60,15 @@ export const AddSaleKit = ({ closeModal }: AddSaleKitProps) => {
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
-        <p className="ant-upload-text">Click or drag file to this area to upload</p>
+        <p className="ant-upload-text">
+          {formatMessage({
+            id: 'description.uploadFile.title',
+          })}
+        </p>
         <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibited from uploading company data or
-          other banned files.
+          {formatMessage({
+            id: 'description.uploadFile.content',
+          })}
         </p>
       </Dragger>
       <Row
