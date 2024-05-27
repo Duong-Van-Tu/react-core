@@ -8,29 +8,34 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useEffect, useState } from 'react';
 import { userSaleKit } from '../../services/sale-kit.service';
-import { Select, Spin } from 'antd';
+import { Select, Spin, Pagination as PageAnt } from 'antd';
 import { Link } from 'react-router-dom';
 import { useWatchLoading } from '@/hooks/loading.hook';
+import { Pagination } from '@/constants/pagination';
 
 const SaleKitAuth = () => {
   const { formatMessage } = useLocale();
-  const { isAdmin } = usePermission();
+  const { isAdministrator } = usePermission();
   const { getAllSaleKitRole, downLoadDocument, getAllRoleInSaleKit } = userSaleKit();
 
   const [loading] = useWatchLoading(['get-sale-kit-role', true]);
 
-  const { dataSaleKitRole, dataRole } = useRootSelector((state) => state.sale.saleKit);
+  const { dataSaleKitRole, dataRole, pagination } = useRootSelector((state) => state.sale.saleKit);
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
   const [itemSelect, setItemSelect] = useState<string>('');
   const [dataSelect, setDataSelect] = useState<{ value: string; label: string }[]>([]);
 
   useEffect(() => {
-    getAllRoleInSaleKit({});
+    getAllRoleInSaleKit();
   }, []);
 
   useEffect(() => {
     if (itemSelect) {
-      getAllSaleKitRole({ roleId: itemSelect });
+      getAllSaleKitRole({
+        roleId: itemSelect,
+        pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+      });
     }
   }, [itemSelect]);
 
@@ -84,13 +89,32 @@ const SaleKitAuth = () => {
         />
       </div>
       {!loading ? (
-        <ListSaleKit
-          isAdmin={isAdmin}
-          setCheckedList={setCheckedList}
-          checkedList={checkedList}
-          dataWithRole={dataSaleKitRole}
-          downLoadDocument={downLoadDocument}
-        />
+        <>
+          <ListSaleKit
+            isAdministrator={isAdministrator}
+            setCheckedList={setCheckedList}
+            checkedList={checkedList}
+            dataWithRole={dataSaleKitRole}
+            downLoadDocument={downLoadDocument}
+          />
+          <PageAnt
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '20px',
+            }}
+            onChange={(page) =>
+              getAllSaleKitRole({
+                roleId: itemSelect,
+                pageIndex: page,
+                pageSize: Pagination.PAGESIZE,
+              })
+            }
+            current={pagination?.pageIndex}
+            pageSize={Pagination.PAGESIZE}
+            total={pagination?.totalRecords}
+          />
+        </>
       ) : (
         <Spin
           size="large"

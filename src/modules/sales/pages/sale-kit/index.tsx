@@ -14,15 +14,16 @@ import { usePermission } from '@/hooks/permission.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { ModalProvider } from '../../components/modals/sale-kit';
 import SaleKitHeader from './sale-kit.header';
-import { Spin } from 'antd';
+import { Spin, Pagination as PageAnt } from 'antd';
+import { Pagination } from '@/constants/pagination';
 
 export default function SaleKitPage() {
   const { getAllSaleKit, downLoadDocument } = userSaleKit();
-  const { isAdmin } = usePermission();
+  const { isAdministrator } = usePermission();
 
   const [loading] = useWatchLoading(['get-sale-kit', true]);
 
-  const { data } = useRootSelector((state) => state.sale.saleKit);
+  const { data, pagination } = useRootSelector((state) => state.sale.saleKit);
 
   const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
 
@@ -48,11 +49,16 @@ export default function SaleKitPage() {
   }, [dispatch]);
 
   useEffect(() => {
-    getAllSaleKit({});
+    getAllSaleKit({
+      pageIndex: Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
+    });
   }, []);
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllSaleKit({
+      pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
+      pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
     });
@@ -64,22 +70,40 @@ export default function SaleKitPage() {
       <div css={searchContainer}>
         <Search onSearch={handleSearch} />
       </div>
-      {isAdmin && <SaleKitHeader checkedList={checkedList} />}
+      {isAdministrator && <SaleKitHeader checkedList={checkedList} />}
       <div css={subTitleStyle}>
         <span>{formatMessage({ id: 'title.document.saleKit' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
         <span>
-          {data?.length} {formatMessage({ id: 'title.document.saleKit' })}
+          {pagination?.totalRecords} {formatMessage({ id: 'title.document.saleKit' })}
         </span>
       </div>
       {!loading ? (
-        <ListSaleKit
-          isAdmin={isAdmin}
-          setCheckedList={setCheckedList}
-          checkedList={checkedList}
-          data={data}
-          downLoadDocument={downLoadDocument}
-        />
+        <>
+          <ListSaleKit
+            isAdministrator={isAdministrator}
+            setCheckedList={setCheckedList}
+            checkedList={checkedList}
+            data={data}
+            downLoadDocument={downLoadDocument}
+          />
+          <PageAnt
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginTop: '20px',
+            }}
+            onChange={(page) =>
+              getAllSaleKit({
+                pageIndex: page,
+                pageSize: Pagination.PAGESIZE,
+              })
+            }
+            current={pagination?.pageIndex}
+            pageSize={Pagination.PAGESIZE}
+            total={pagination?.totalRecords}
+          />
+        </>
       ) : (
         <Spin
           size="large"

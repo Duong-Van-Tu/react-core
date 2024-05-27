@@ -16,19 +16,26 @@ import { Search, SearchParams } from '@/components/search';
 import { DownloadOutlined } from '@ant-design/icons';
 
 export default function InformationIncomePage() {
-  const { getListIncome, getListIncomeWithRoleUser, getListIncomeWithRoleAdmin } = useIncome();
-  const { isAdmin } = usePermission();
+  const {
+    getListIncome,
+    getListIncomeWithRoleUser,
+    getListIncomeWithRoleAdmin,
+    getListIncomeUser,
+  } = useIncome();
+  const { isAdministrator } = usePermission();
   const { formatMessage } = useLocale();
 
-  const [loadingAdmin, loadingInComeWithRoleAdmin, loadingInComeWithRoleUser] = useWatchLoading(
-    ['get-list-income', true],
-    ['get-list-income-with-role-admin', true],
-    ['get-list-income-with-role-user', true],
-  );
+  const [loadingAdmin, loadingUser, loadingInComeWithRoleAdmin, loadingInComeWithRoleUser] =
+    useWatchLoading(
+      ['get-list-income', true],
+      ['get-list-income-user', true],
+      ['get-list-income-with-role-admin', true],
+      ['get-list-income-with-role-user', true],
+    );
 
   const dispatch = useDispatch();
 
-  const { data, dataRoleAdmin, dataRoleUser, pagination } = useRootSelector(
+  const { data, dataUser, dataRoleAdmin, dataRoleUser, pagination } = useRootSelector(
     (state) => state.user.income,
   );
 
@@ -54,14 +61,18 @@ export default function InformationIncomePage() {
 
   useEffect(() => {
     if (tab === '1') {
-      getListIncome({
-        pageIndex: Pagination.PAGEINDEX,
-        pageSize: Pagination.PAGESIZE,
-      });
+      if (isAdministrator) {
+        getListIncome({
+          pageIndex: Pagination.PAGEINDEX,
+          pageSize: Pagination.PAGESIZE,
+        });
+      } else {
+        getListIncomeUser();
+      }
       return;
     }
     if (tab === '2') {
-      if (isAdmin) {
+      if (isAdministrator) {
         getListIncomeWithRoleAdmin({
           pageIndex: Pagination.PAGEINDEX,
           pageSize: Pagination.PAGESIZE,
@@ -82,9 +93,9 @@ export default function InformationIncomePage() {
       label: formatMessage({ id: 'title.document.incomeDuringTheYear' }),
       children: (
         <CurrentIncomeTable
-          data={data}
-          loading={loadingAdmin}
-          isAdmin={isAdmin}
+          data={isAdministrator ? data : dataUser}
+          loading={isAdministrator ? loadingAdmin : loadingUser}
+          isAdministrator={isAdministrator}
           pagination={pagination}
           getListIncome={getListIncome}
         />
@@ -95,9 +106,9 @@ export default function InformationIncomePage() {
       label: formatMessage({ id: 'title.document.incomeByPosition' }),
       children: (
         <LocationIncomeTable
-          data={isAdmin ? dataRoleAdmin : dataRoleUser}
-          isAdmin={isAdmin}
-          loading={isAdmin ? loadingInComeWithRoleAdmin : loadingInComeWithRoleUser}
+          data={isAdministrator ? dataRoleAdmin : dataRoleUser}
+          isAdministrator={isAdministrator}
+          loading={isAdministrator ? loadingInComeWithRoleAdmin : loadingInComeWithRoleUser}
           pagination={pagination}
           getListIncomeWithRoleAdmin={getListIncomeWithRoleAdmin}
           getListIncomeWithRoleUser={getListIncomeWithRoleUser}
@@ -108,16 +119,20 @@ export default function InformationIncomePage() {
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     if (tab === '1') {
-      getListIncome({
-        pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
-        pageSize: Pagination.PAGESIZE,
-        textSearch,
-        time,
-      });
+      if (isAdministrator) {
+        getListIncome({
+          pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
+          pageSize: Pagination.PAGESIZE,
+          textSearch,
+          time,
+        });
+      } else {
+        getListIncomeUser();
+      }
       return;
     }
     if (tab === '2') {
-      if (isAdmin) {
+      if (isAdministrator) {
         getListIncomeWithRoleAdmin({
           pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
           pageSize: Pagination.PAGESIZE,
@@ -150,13 +165,13 @@ export default function InformationIncomePage() {
         }}
       >
         <h3 css={titleStyle}>{formatMessage({ id: 'title.document.inforIncome' })}</h3>
-        {isAdmin && (
+        {isAdministrator && (
           <Button type="primary" size="large" icon={<DownloadOutlined />}>
             Import Excel
           </Button>
         )}
       </div>
-      {isAdmin && (
+      {isAdministrator && (
         <div css={searchContainer}>
           <Search onSearch={handleSearch} />
         </div>

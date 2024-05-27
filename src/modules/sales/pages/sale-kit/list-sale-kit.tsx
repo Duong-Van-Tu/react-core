@@ -11,7 +11,7 @@ type CheckboxValueType = GetProp<typeof Checkbox.Group, 'value'>[number];
 const CheckboxGroup = Checkbox.Group;
 
 type Props = {
-  isAdmin?: boolean;
+  isAdministrator?: boolean;
   checkedList: CheckboxValueType[];
   setCheckedList: (params: CheckboxValueType[]) => void;
   data?: DataSaleKitType[];
@@ -20,7 +20,7 @@ type Props = {
 };
 
 const ListSaleKit = ({
-  isAdmin,
+  isAdministrator,
   checkedList,
   setCheckedList,
   data,
@@ -135,7 +135,7 @@ const ListSaleKit = ({
         margin: '18px 0',
       }}
     >
-      {isAdmin && (
+      {isAdministrator && (
         <Checkbox
           indeterminate={indeterminate}
           onChange={onCheckAllChange}
@@ -154,7 +154,7 @@ const ListSaleKit = ({
           </p>
         </Checkbox>
       )}
-      {isAdmin ? (
+      {isAdministrator ? (
         <CheckboxGroup
           style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}
           value={checkedList}
