@@ -59,11 +59,13 @@ export default function TableRelationship() {
   };
 
   useEffect(() => {
-    getAllRelationship({
-      pageIndex: Pagination.PAGEINDEX,
-      pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
-    });
+    if (tab) {
+      getAllRelationship({
+        pageIndex: Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+        roleType: tab,
+      });
+    }
     getAllStatusRelationship();
   }, [getAllRelationship, getAllStatusRelationship, tab]);
 

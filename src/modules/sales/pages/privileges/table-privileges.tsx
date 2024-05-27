@@ -68,11 +68,13 @@ export default function TablePrivileges() {
   };
 
   useEffect(() => {
-    getAllBenefit({
-      pageIndex: Pagination.PAGEINDEX,
-      pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
-    });
+    if (tab) {
+      getAllBenefit({
+        pageIndex: Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+        roleType: tab,
+      });
+    }
     getAllStatusBenefit();
   }, [getAllBenefit, getAllStatusBenefit, tab]);
 
