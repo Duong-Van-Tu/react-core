@@ -90,7 +90,7 @@ export default function TableService() {
         onTableChange={(page) => handleTableChange(page)}
         pagination={{
           current: pagination?.pageIndex,
-          pageSize: Pagination.PAGESIZE,
+          pageSize: pagination.pageSize,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
         }}

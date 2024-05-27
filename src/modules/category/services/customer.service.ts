@@ -67,6 +67,7 @@ export const useCustomer = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),

@@ -68,6 +68,7 @@ export const useContract = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),

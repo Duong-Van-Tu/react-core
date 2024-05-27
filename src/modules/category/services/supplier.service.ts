@@ -68,6 +68,7 @@ export const useSupplier = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),

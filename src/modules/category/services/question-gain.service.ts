@@ -67,6 +67,7 @@ export const useQuestionGain = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),
