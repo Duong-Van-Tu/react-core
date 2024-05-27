@@ -23,7 +23,7 @@ export default function TableKPI() {
   const [loading, loadingStatus] = useWatchLoading(['get-kpi', true], ['status-kpi', true]);
 
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
-  const { isSaleDirector, isSale, isSupplier } = usePermission();
+  const { isSaleDirector, isSale, isSupplier, isAdministrator } = usePermission();
   const [goalIds, setGoalIds] = useState<string[]>();
   const { tab, textSearch, time, statusId } = useQuery();
 
@@ -104,7 +104,7 @@ export default function TableKPI() {
         <Col>Tổng điểm đạt được: {totalExtend ?? 0}</Col>
       </Row>
       <TableCustom
-        rowSelection={rowSelection}
+        rowSelection={!isAdministrator ? rowSelection : undefined}
         columns={columnTable}
         dataSource={data}
         loading={loading}

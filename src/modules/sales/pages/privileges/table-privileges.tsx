@@ -119,9 +119,9 @@ export default function TablePrivileges() {
         onTableChange={(page) => handleTableChange(page)}
         pagination={
           ((isSaleDirector && tab === RoleType.Employee) || isAdministrator) && {
-            current: pagination?.pageIndex,
-            pageSize: Pagination.PAGESIZE,
-            total: pagination?.totalRecords,
+            current: pagination.pageIndex,
+            pageSize: pagination.pageSize,
+            total: pagination.totalRecords,
             position: ['bottomCenter'],
           }
         }
