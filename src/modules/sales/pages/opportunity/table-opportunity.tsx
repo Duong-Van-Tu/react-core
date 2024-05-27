@@ -28,9 +28,7 @@ export default function TableOpportunity() {
     ['get-opportunity', true],
     ['status-opportunity', true],
   );
-  const { pagination, status, data, totalExtend } = useRootSelector(
-    (state) => state.sale.opportunity,
-  );
+  const { pagination, status, data } = useRootSelector((state) => state.sale.opportunity);
   const { textSearch, time, statusId } = useQuery();
 
   const rowSelection = {
@@ -74,7 +72,7 @@ export default function TableOpportunity() {
         <span>{formatMessage({ id: 'title.document.opportunity' })}</span>
         <CustomIcon width={8} height={8} type="dot" />
         <span>
-          {totalExtend ?? 0} {formatMessage({ id: 'title.document.opportunity' })}
+          {pagination.totalRecords ?? 0} {formatMessage({ id: 'title.document.opportunity' })}
         </span>
       </div>
       <Button

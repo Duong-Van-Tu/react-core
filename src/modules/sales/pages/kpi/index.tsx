@@ -19,15 +19,15 @@ export default function KPIPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const { isAdmin, isSaleDirector } = usePermission();
+  const { isAdministrator, isSaleDirector } = usePermission();
   const tenant = getTenant();
   const totalRecords = useRootSelector((state) => state.sale.kpi.pagination?.totalRecords);
   const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
-      key: isAdmin ? RoleType.Manager : RoleType.MySelf,
-      label: isAdmin
+      key: isAdministrator ? RoleType.Manager : RoleType.MySelf,
+      label: isAdministrator
         ? formatMessage({ id: 'title.tab.kpi.manager' })
         : formatMessage({ id: 'title.tab.kpi.my' }),
       children: <TableKPI />,
@@ -45,7 +45,7 @@ export default function KPIPage() {
 
   useEffect(() => {
     if (!activeKey) {
-      navigate(`?tab=${isAdmin ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
+      navigate(`?tab=${isAdministrator ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
     }
   }, [activeKey]);
 
@@ -77,10 +77,10 @@ export default function KPIPage() {
           {totalRecords} {formatMessage({ id: 'title.document.kpi' })}
         </span>
       </div>
-      {(isAdmin || isSaleDirector) && (
+      {(isAdministrator || isSaleDirector) && (
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
       )}
-      {!(isAdmin || isSaleDirector) && <TableKPI />}
+      {!(isAdministrator || isSaleDirector) && <TableKPI />}
     </ModalProvider>
   );
 }
