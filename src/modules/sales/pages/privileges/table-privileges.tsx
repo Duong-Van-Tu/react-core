@@ -21,7 +21,7 @@ export default function TablePrivileges() {
   const { openModal } = useModalPrivileges();
   const { getAllStatusBenefit, getAllBenefit } = useBenefit();
   const [loading, loadingStatus] = useWatchLoading(['get-benefit', true], ['status-benefit', true]);
-  const { isSaleDirector, isAdmin, isSale, isSupplier } = usePermission();
+  const { isSaleDirector, isAdministrator, isSale, isSupplier } = usePermission();
   const { data, pagination, status } = useRootSelector((state) => state.sale.benefit);
   const { tab, textSearch, time, statusId } = useQuery();
 
@@ -31,7 +31,7 @@ export default function TablePrivileges() {
     if (isSaleDirector && tab === RoleType.MySelf) {
       return columnsManager;
     }
-    if (isAdmin && tab === RoleType.Manager) {
+    if (isAdministrator && tab === RoleType.Manager) {
       const updatedColumnsEmployee = [...columnsEmployee!];
       updatedColumnsEmployee.splice(5, 1);
       return updatedColumnsEmployee;
@@ -78,7 +78,7 @@ export default function TablePrivileges() {
 
   return (
     <div css={rootStyle}>
-      {((tab === RoleType.Employee && isSaleDirector) || isAdmin) && (
+      {((tab === RoleType.Employee && isSaleDirector) || isAdministrator) && (
         <Fragment>
           <Button
             onClick={() => openModal('Add Privileges')}
@@ -90,7 +90,7 @@ export default function TablePrivileges() {
             <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
             <span>Thêm Quyền lợi</span>
           </Button>
-          <div css={[searchContainer, isAdmin && adminSearchStyle]}>
+          <div css={[searchContainer, isAdministrator && adminSearchStyle]}>
             <Search
               onSearch={handleSearch}
               status={tab === RoleType.Manager ? undefined : (status as any)}
@@ -111,14 +111,14 @@ export default function TablePrivileges() {
 
       <TableCustom
         css={[(isSale || isSupplier) && tableStyle]}
-        rowSelection={tab === RoleType.Employee || isAdmin ? rowSelection : undefined}
+        rowSelection={tab === RoleType.Employee || isAdministrator ? rowSelection : undefined}
         columns={columnTable}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
         pagination={
-          ((isSaleDirector && tab === RoleType.Employee) || isAdmin) && {
+          ((isSaleDirector && tab === RoleType.Employee) || isAdministrator) && {
             current: pagination?.pageIndex,
             pageSize: Pagination.PAGESIZE,
             total: pagination?.totalRecords,

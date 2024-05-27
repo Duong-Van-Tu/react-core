@@ -19,15 +19,15 @@ export default function RelationshipPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { formatMessage } = useLocale();
-  const { isAdmin, isSaleDirector } = usePermission();
+  const { isAdministrator, isSaleDirector } = usePermission();
   const tenant = getTenant();
   const totalRecords = useRootSelector((state) => state.sale.relationship.pagination?.totalRecords);
   const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
-      key: isAdmin ? RoleType.Manager : RoleType.MySelf,
-      label: isAdmin
+      key: isAdministrator ? RoleType.Manager : RoleType.MySelf,
+      label: isAdministrator
         ? 'Mối quan hệ của giám đốc'
         : formatMessage({ id: 'title.tab.relationship.my' }),
       children: <TableRelationship />,
@@ -45,7 +45,7 @@ export default function RelationshipPage() {
 
   useEffect(() => {
     if (!activeKey) {
-      navigate(`?tab=${isAdmin ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
+      navigate(`?tab=${isAdministrator ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
     }
   }, [activeKey]);
 
@@ -78,10 +78,10 @@ export default function RelationshipPage() {
           {totalRecords} {formatMessage({ id: 'title.document.relationship' })}
         </span>
       </div>
-      {(isAdmin || isSaleDirector) && (
+      {(isAdministrator || isSaleDirector) && (
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
       )}
-      {!(isAdmin || isSaleDirector) && <TableRelationship />}
+      {!(isAdministrator || isSaleDirector) && <TableRelationship />}
     </ModalRelationshipProvider>
   );
 }

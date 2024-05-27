@@ -29,7 +29,7 @@ type KPIDropdownProps = {
 export function KPIDropdown({ data }: KPIDropdownProps) {
   const { openModal } = useModalKPI();
   const { formatMessage } = useLocale();
-  const { isSale, isAdmin, isSaleDirector, isSupplier } = usePermission();
+  const { isSale, isAdministrator, isSaleDirector, isSupplier } = usePermission();
 
   const { tab } = useQuery();
 
@@ -203,7 +203,7 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
             },
           ];
     }
-    if (isAdmin) {
+    if (isAdministrator) {
       return [
         {
           key: MenuItem.UpdateRequest,

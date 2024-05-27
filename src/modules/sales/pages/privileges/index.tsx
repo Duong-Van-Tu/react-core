@@ -21,13 +21,15 @@ export default function PrivilegesPage() {
   const navigate = useNavigate();
   const tenant = getTenant();
   const totalRecords = useRootSelector((state) => state.sale.benefit.pagination?.totalRecords);
-  const { isAdmin, isSaleDirector } = usePermission();
+  const { isAdministrator, isSaleDirector } = usePermission();
   const { tab: activeKey } = useQuery();
 
   const items: TabsProps['items'] = [
     {
-      key: isAdmin ? RoleType.Manager : RoleType.MySelf,
-      label: isAdmin ? ' Quyền lợi của giám đốc' : formatMessage({ id: 'title.tab.privileges.my' }),
+      key: isAdministrator ? RoleType.Manager : RoleType.MySelf,
+      label: isAdministrator
+        ? ' Quyền lợi của giám đốc'
+        : formatMessage({ id: 'title.tab.privileges.my' }),
       children: <TablePrivileges />,
     },
     {
@@ -43,7 +45,7 @@ export default function PrivilegesPage() {
 
   useEffect(() => {
     if (!activeKey) {
-      navigate(`?tab=${isAdmin ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
+      navigate(`?tab=${isAdministrator ? RoleType.Manager : RoleType.MySelf}&tenant=${tenant}`);
     }
   }, [activeKey]);
 
@@ -75,10 +77,10 @@ export default function PrivilegesPage() {
           {totalRecords} {formatMessage({ id: 'title.document.privileges' })}
         </span>
       </div>
-      {(isAdmin || isSaleDirector) && (
+      {(isAdministrator || isSaleDirector) && (
         <Tabs activeKey={activeKey} items={items} onChange={onChange} />
       )}
-      {!(isAdmin || isSaleDirector) && <TablePrivileges />}
+      {!(isAdministrator || isSaleDirector) && <TablePrivileges />}
     </ModalPrivilegesProvider>
   );
 }
