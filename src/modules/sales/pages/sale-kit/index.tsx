@@ -11,10 +11,10 @@ import ListSaleKit from './list-sale-kit';
 import { Search, SearchParams } from '@/components/search';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { usePermission } from '@/hooks/permission.hook';
-import { Spinner } from '@/components/spinner';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { ModalProvider } from '../../components/modals/sale-kit';
 import SaleKitHeader from './sale-kit.header';
+import { Spin } from 'antd';
 
 export default function SaleKitPage() {
   const { getAllSaleKit, downLoadDocument } = userSaleKit();
@@ -81,13 +81,12 @@ export default function SaleKitPage() {
           downLoadDocument={downLoadDocument}
         />
       ) : (
-        <Spinner
-          width={50}
-          height={50}
-          styles={{
+        <Spin
+          size="large"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
             marginTop: '20px',
-            width: '50px',
-            height: '50px',
           }}
         />
       )}

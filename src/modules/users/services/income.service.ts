@@ -43,17 +43,17 @@ export const useIncome = () => {
       time = dayjs().year().toString(),
     }: FilterIncomeType) => {
       const queryParams: { [key: string]: string | undefined } = {
-        tenant,
+        // tenant,
         PageIndex: pageIndex.toString(),
         PageSize: pageSize.toString(),
-        TextSearch: textSearch,
-        Time: `1-1-${time}`,
+        // TextSearch: textSearch,
+        // Time: `1-1-${time}`,
       };
 
       const urlParams = generateUrlParams(queryParams);
 
       const { data, succeeded } = await caller(
-        () => api.post(`/EmployeeSalary/get-list-with-pagination?${urlParams}`),
+        () => api.post(`/EmployeeSalary/get-list-all-with-pagination?${urlParams}`),
         {
           loadingKey: 'get-list-income',
         },

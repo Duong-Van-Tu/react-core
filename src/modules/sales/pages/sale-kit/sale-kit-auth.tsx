@@ -8,10 +8,9 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { useEffect, useState } from 'react';
 import { userSaleKit } from '../../services/sale-kit.service';
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { Spinner } from '@/components/spinner';
 
 const SaleKitAuth = () => {
   const { formatMessage } = useLocale();
@@ -93,13 +92,12 @@ const SaleKitAuth = () => {
           downLoadDocument={downLoadDocument}
         />
       ) : (
-        <Spinner
-          width={50}
-          height={50}
-          styles={{
+        <Spin
+          size="large"
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
             marginTop: '20px',
-            width: '50px',
-            height: '50px',
           }}
         />
       )}
