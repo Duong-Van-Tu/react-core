@@ -14,6 +14,7 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { useCustomer } from '../../services/customer.service';
 import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
+import { useQuery } from '@/hooks/query.hook';
 
 export default function TableCustomer() {
   const { openModal } = useModalCustomer();
@@ -22,9 +23,8 @@ export default function TableCustomer() {
 
   const { data, pagination } = useRootSelector((state) => state.category.customer);
   const [loading] = useWatchLoading(['get-customer', true]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+
+  const { tab, textSearch, time } = useQuery();
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllCustomer({
@@ -46,7 +46,9 @@ export default function TableCustomer() {
     getAllCustomer({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
       roleType: tab!,
+      time,
     });
   };
 
