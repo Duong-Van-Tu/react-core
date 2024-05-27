@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { useRootSelector } from '@/hooks/selector.hook';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
@@ -24,8 +23,6 @@ export const AddKPI = ({ closeModal }: AddKPIProps) => {
   const { addKPI } = useKPI();
   const [form] = Form.useForm();
   const [loading] = useWatchLoading(['add-kpi', false]);
-  const pagition = useRootSelector((state) => state.sale.kpi.pagination);
-  console.log({ pagition });
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddKPI = {
