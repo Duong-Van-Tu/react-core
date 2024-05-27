@@ -30,7 +30,6 @@ export default function TableService() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -38,7 +37,6 @@ export default function TableService() {
     getAllService({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -56,7 +54,6 @@ export default function TableService() {
     getAllService({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllService, tab]);
 
@@ -77,8 +74,8 @@ export default function TableService() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!serviceIds} onClick={() => handleDeleteSupplier()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!serviceIds} onClick={() => handleDeleteSupplier()} size="middle" danger>
+          Xoá mảng dịch vụ đã chọn
         </Button>
       </div>
       <TableCustom

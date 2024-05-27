@@ -15,14 +15,14 @@ import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
+import { Messages } from '@/constants/message';
 
-type FilterKPIType = {
+type FilterProjectType = {
   pageIndex: number;
   pageSize: number;
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType: string;
 };
 
 export const useProject = () => {
@@ -39,8 +39,7 @@ export const useProject = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType,
-    }: FilterKPIType) => {
+    }: FilterProjectType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
         PageSize: pageSize.toString(),
@@ -50,7 +49,6 @@ export const useProject = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
-        roleType,
       };
 
       const urlParams = generateUrlParams(queryParams);
@@ -86,7 +84,7 @@ export const useProject = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Project/add-or-update?tenant=${tenant}`, [{ data: dataAddProject }]),
-        { loadingKey: 'add-project' },
+        { loadingKey: 'add-project', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -105,7 +103,7 @@ export const useProject = () => {
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/Project/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-project' },
+        { loadingKey: 'delete-project', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded !== null && succeeded) {
@@ -125,7 +123,7 @@ export const useProject = () => {
       const { data, succeeded } = await caller(
         () =>
           api.put(`/Project/update?tenant=${tenant}`, [{ id: values.id, data: dataEditProject }]),
-        { loadingKey: 'edit-project' },
+        { loadingKey: 'edit-project', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -147,7 +145,7 @@ export const useProject = () => {
           api.put(`/Project/update-result?tenant=${tenant}`, [
             { id: values.id, data: dataUpdateProject },
           ]),
-        { loadingKey: 'update-project' },
+        { loadingKey: 'update-project', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {

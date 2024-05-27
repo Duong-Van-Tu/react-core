@@ -1,41 +1,41 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect } from 'react';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
 import { useCustomer } from '@/modules/category/services/customer.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
-import { useLocation } from 'react-router-dom';
 type DeleteCustomerProps = {
   closeModal: () => void;
   data?: DataCustomerType;
   customerIds: string[];
 };
-export const DeleteCustomer = ({ closeModal, customerIds }: DeleteCustomerProps) => {
+export const DeleteCustomer = ({ closeModal, customerIds, data }: DeleteCustomerProps) => {
   const { deleteCustomer, getAllCustomer } = useCustomer();
   const pageIndex = useRootSelector((state) => state.category.customer.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-customer', false]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const dataCustomer = useRootSelector((state) => state.category.customer.data);
   const handleDeleteCustomer = async () => {
-    const deleteclient = await deleteCustomer(customerIds);
+    const deleteclient = await deleteCustomer(!!data ? [data.id!] : customerIds);
     if (deleteclient) {
-      getAllCustomer({
-        pageIndex: pageIndex || 1,
-        pageSize: Pagination.PAGESIZE,
-        roleType: tab!,
-      });
-
       closeModal();
     } else {
       console.error('Failed to delete customer');
     }
-    // closeModal();
   };
+  useEffect(() => {
+    if (dataCustomer.length === 0) {
+      getAllCustomer({
+        pageIndex: pageIndex === 1 ? 1 : pageIndex - 1,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  }, [dataCustomer]);
+
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá các mục tiêu đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá các khách hàng đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>

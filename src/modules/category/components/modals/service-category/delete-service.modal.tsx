@@ -1,4 +1,5 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect } from 'react';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
@@ -12,30 +13,30 @@ type DeleteServiceProps = {
   data?: DataServiceCategoryType;
   serviceIds: string[];
 };
-export const DeleteService = ({ closeModal, serviceIds }: DeleteServiceProps) => {
+export const DeleteService = ({ closeModal, serviceIds, data }: DeleteServiceProps) => {
   const { deleteService, getAllService } = useService();
   const pageIndex = useRootSelector((state) => state.category.sevice.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-service', false]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const dataServiceCategory = useRootSelector((state) => state.category.sevice.data);
   const handleDeleteService = async () => {
-    const deleteclient = await deleteService(serviceIds);
+    const deleteclient = await deleteService(!!data ? [data.id!] : serviceIds);
     if (deleteclient) {
-      getAllService({
-        pageIndex: pageIndex || 1,
-        pageSize: Pagination.PAGESIZE,
-        roleType: tab!,
-      });
-
       closeModal();
     } else {
       console.error('Failed to delete service');
     }
   };
+  useEffect(() => {
+    if (dataServiceCategory.length === 0) {
+      getAllService({
+        pageIndex: pageIndex === 1 ? 1 : pageIndex - 1,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  }, [dataServiceCategory]);
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá các mục tiêu đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá các mảng dịch vụ đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>

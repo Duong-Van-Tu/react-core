@@ -32,7 +32,6 @@ export default function TableContract() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -46,7 +45,6 @@ export default function TableContract() {
     getAllContract({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -54,7 +52,6 @@ export default function TableContract() {
     getAllContract({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllContract, tab]);
 
@@ -78,8 +75,8 @@ export default function TableContract() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!contractIds} onClick={() => handleDeleteContract()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!contractIds} onClick={() => handleDeleteContract()} size="middle" danger>
+          Xoá hợp đồng đã chọn
         </Button>
       </div>
       <TableCustom

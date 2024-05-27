@@ -30,7 +30,6 @@ export default function TableCustomer() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -45,7 +44,7 @@ export default function TableCustomer() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
-      roleType: tab!,
+
       time,
     });
   };
@@ -54,7 +53,6 @@ export default function TableCustomer() {
     getAllCustomer({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllCustomer, tab]);
 
@@ -78,8 +76,8 @@ export default function TableCustomer() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!customerIds} onClick={() => handleDeleteCustomer()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!customerIds} onClick={() => handleDeleteCustomer()} size="middle" danger>
+          Xoá khách hàng đã chọn
         </Button>
       </div>
       <TableCustom

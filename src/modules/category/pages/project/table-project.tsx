@@ -30,7 +30,6 @@ export default function TableProject() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -45,7 +44,7 @@ export default function TableProject() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
-      roleType: tab!,
+
       time,
     });
   };
@@ -54,7 +53,6 @@ export default function TableProject() {
     getAllProject({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllProject, tab]);
 
@@ -78,8 +76,8 @@ export default function TableProject() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!projectIds} onClick={() => handleDeleteCustomer()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!projectIds} onClick={() => handleDeleteCustomer()} size="middle" danger>
+          Xoá dự án đã chọn
         </Button>
       </div>
       <TableCustom
