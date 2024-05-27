@@ -7,6 +7,8 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useLocale } from '@/hooks/locale.hook';
 import { useOrganize } from '../../services/organize.service';
 import { useRootSelector } from '@/hooks/selector.hook';
+import { TableCustom } from '@/components/table';
+import { organizeColumns } from './column';
 
 export default function InformationOrganizePage() {
   const { getListTabOrganize } = useOrganize();
@@ -43,7 +45,7 @@ export default function InformationOrganizePage() {
     return dataTabs.map((tab, i) => ({
       key: tab.tenantId,
       label: tab.tenantName,
-      children: <div>{i}</div>,
+      children: <TableCustom dataSource={[]} columns={organizeColumns} />,
     }));
   }, [dataTabs]);
 

@@ -88,5 +88,14 @@ export const enUS_table = {
   'table.column.contractCustomerID': 'Customer ID',
   'table.column.contractStatus': 'Status',
 
+  'table.column.organize.empCode': 'Human resource code',
+  'table.column.organize.fullName': 'Full name',
+  'table.column.organize.position': 'Job position',
+  'table.column.organize.positionInformation': 'Position information',
+  'table.column.organize.interests': 'Interests',
+  'table.column.organize.target': 'Target',
+  'table.column.organize.autodidactic': 'Autodidactic',
+  'table.column.organize.manualDocument': 'Manual document',
+
   'table.column.saleKit.selectAll': 'Select all',
 };
