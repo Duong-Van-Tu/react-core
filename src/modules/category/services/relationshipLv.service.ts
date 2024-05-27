@@ -67,6 +67,7 @@ export const useRelationshipLv = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),

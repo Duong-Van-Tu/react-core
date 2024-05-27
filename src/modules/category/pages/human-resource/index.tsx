@@ -84,16 +84,12 @@ export default function HumanResourcesPage() {
         loading={loadingAdmin}
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
-        pagination={
-          isAdmin
-            ? {
-                current: pagination?.pageIndex,
-                pageSize: Pagination.PAGESIZE,
-                total: pagination?.totalRecords,
-                position: ['bottomCenter'],
-              }
-            : undefined
-        }
+        pagination={{
+          current: pagination?.pageIndex,
+          pageSize: pagination?.pageSize,
+          total: pagination?.totalRecords,
+          position: ['bottomCenter'],
+        }}
         scroll={{ x: 1450 }}
       />
     </ModalUserCategoryProvider>

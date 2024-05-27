@@ -91,7 +91,7 @@ export default function TableQuestionGains() {
         onTableChange={(page) => handleTableChange(page)}
         pagination={{
           current: pagination?.pageIndex,
-          pageSize: Pagination.PAGESIZE,
+          pageSize: pagination.pageSize,
           total: pagination?.totalRecords,
           position: ['bottomCenter'],
         }}

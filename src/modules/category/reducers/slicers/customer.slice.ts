@@ -40,7 +40,7 @@ const slice = createSlice({
       state.data = [payload, ...state.data];
       state.pagination = {
         ...state.pagination,
-        pageSize: state.pagination.pageSize ?? Pagination.PAGESIZE + 1,
+        pageSize: state.pagination.pageSize + 1,
         totalRecords: state.pagination.totalRecords + 1,
       };
     },

@@ -23,10 +23,10 @@ export const DeleteKPI = ({ closeModal, goalIds, data }: DeleteKPIProps) => {
   const handleDeleteKPI = async () => {
     const deleted = await deleteKPI(!!data ? [data.id!] : goalIds);
     if (deleted) {
+      closeModal();
       if (goalIds.length === Pagination.PAGESIZE) {
         getAllKPI({ pageIndex: pageIndex - 1 || 1, pageSize: Pagination.PAGESIZE, roleType: tab! });
       }
-      closeModal();
     }
   };
   return (

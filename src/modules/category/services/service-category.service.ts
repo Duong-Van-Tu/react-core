@@ -68,6 +68,7 @@ export const useService = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),
