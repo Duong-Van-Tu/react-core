@@ -5,6 +5,7 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 type DeleteKPIProps = {
@@ -14,7 +15,8 @@ type DeleteKPIProps = {
 };
 export const DeleteKPI = ({ closeModal, goalIds, data }: DeleteKPIProps) => {
   const { deleteKPI, getAllKPI } = useKPI();
-  const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
+  const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex);
+  const dataKPI = useRootSelector((state) => state.sale.kpi.data);
   const [loading] = useWatchLoading(['delete-kpi', false]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -24,11 +26,18 @@ export const DeleteKPI = ({ closeModal, goalIds, data }: DeleteKPIProps) => {
     const deleted = await deleteKPI(!!data ? [data.id!] : goalIds);
     if (deleted) {
       closeModal();
-      if (goalIds.length === Pagination.PAGESIZE) {
-        getAllKPI({ pageIndex: pageIndex - 1 || 1, pageSize: Pagination.PAGESIZE, roleType: tab! });
-      }
     }
   };
+
+  useEffect(() => {
+    if (dataKPI.length === 0) {
+      getAllKPI({
+        pageIndex: pageIndex === 1 ? 1 : pageIndex - 1,
+        pageSize: Pagination.PAGESIZE,
+        roleType: tab!,
+      });
+    }
+  }, [dataKPI]);
   return (
     <div css={rootStyle}>
       <h3 css={titleStyle}>Đồng ý xoá các mục tiêu đã chọn?</h3>
