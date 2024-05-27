@@ -125,7 +125,7 @@ export default function TablePrivileges() {
             position: ['bottomCenter'],
           }
         }
-        scroll={{ x: tab === RoleType.MySelf ? 1200 : 1800 }}
+        scroll={{ x: tab === RoleType.MySelf ? 1200 : 1400 }}
       />
     </div>
   );

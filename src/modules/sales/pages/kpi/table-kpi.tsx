@@ -116,7 +116,7 @@ export default function TableKPI() {
           total: pagination.totalRecords,
           position: ['bottomCenter'],
         }}
-        scroll={{ x: 1450 }}
+        scroll={{ x: 1845 }}
       />
     </div>
   );
