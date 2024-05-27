@@ -17,6 +17,7 @@ import {
   updateOpportunityAction,
 } from '../reducers/slicers/opportunity.slice';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
+import { Messages } from '@/constants/message';
 
 type FilterPrivilegesType = {
   pageIndex: number;
@@ -101,7 +102,7 @@ export const useOpportunity = () => {
       const { data, succeeded } = await caller(
         () =>
           api.post(`/Opportunity/add-or-update?tenant=${tenant}`, [{ data: dataAddOpportunity }]),
-        { loadingKey: 'add-opportunity', messageKey: 'addOpportunity-message' },
+        { loadingKey: 'add-opportunity', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -125,7 +126,7 @@ export const useOpportunity = () => {
           api.post(`/Opportunity/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataAddOpportunity },
           ]),
-        { loadingKey: 'edit-opportunity', messageKey: 'editOpportunity-message' },
+        { loadingKey: 'edit-opportunity', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -143,7 +144,7 @@ export const useOpportunity = () => {
       const deleteIds = opportunityIds.join(',');
       const { succeeded } = await caller(
         () => api.del(`/Opportunity/delete-by-ids/${deleteIds}/${user?.id}?tenant=${tenant}`),
-        { loadingKey: 'delete-opportunity' },
+        { loadingKey: 'delete-opportunity', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded) {
@@ -165,7 +166,7 @@ export const useOpportunity = () => {
       const { data, succeeded } = await caller(
         () =>
           api.put(`/OpportunityStatus/add-or-update?tenant=${tenant}`, dataUpdateStatusOpportunity),
-        { loadingKey: 'edit-statusOpportunity' },
+        { loadingKey: 'edit-statusOpportunity', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -185,7 +186,7 @@ export const useOpportunity = () => {
       const { data, succeeded } = await caller(
         () =>
           api.put(`/Opportunity/update-status-by-id?tenant=${tenant}`, dataUpdateStatusOpportunity),
-        { loadingKey: 'edit-statusOpportunityById' },
+        { loadingKey: 'edit-statusOpportunityById', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -234,6 +235,7 @@ export const useOpportunity = () => {
           }),
         {
           loadingKey: 'assignUser-opportunity',
+          successMessage: Messages.UPDATE_SUCCESS,
         },
       );
 
@@ -303,7 +305,7 @@ export const useOpportunity = () => {
           api.post(`/OpportunityHistory/add-or-update?tenant=${tenant}`, [
             { data: dataAddOpportunity },
           ]),
-        { loadingKey: 'add-historyOpportunity', messageKey: 'addHistoryOpportunity-message' },
+        { loadingKey: 'add-historyOpportunity', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {

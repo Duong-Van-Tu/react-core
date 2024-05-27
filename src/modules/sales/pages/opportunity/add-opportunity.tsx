@@ -1,17 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import dayjs from 'dayjs';
-import {
-  Button,
-  Col,
-  DatePicker,
-  Form,
-  FormProps,
-  Input,
-  InputNumber,
-  Row,
-  message as messageAnt,
-} from 'antd';
+import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row } from 'antd';
 import Close from '@/assets/svg/close.svg?react';
 import { useLocale } from '@/hooks/locale.hook';
 import { LocaleFormatter } from '@/components/locale-formatter';
@@ -19,8 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { getTenant } from '@/utils/common';
 import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { Messages } from '@/constants/message';
-import { useWatchMessage } from '@/hooks/message.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 
 type FieldType = {
@@ -48,8 +36,6 @@ export default function AddOpportunityPage() {
   const [loading] = useWatchLoading(['add-opportunity', false]);
   const [form] = Form.useForm();
   const user = useRootSelector((state) => state.auth.user);
-  const [messageApi, contextHolder] = messageAnt.useMessage();
-  const { errors } = useWatchMessage('addOpportunity-message');
   const navigate = useNavigate();
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddOpportunity = {
@@ -64,15 +50,11 @@ export default function AddOpportunityPage() {
     const add = await addOpportunity(dataAddOpportunity);
     if (add) {
       form.resetFields();
-      messageApi.success(Messages.CREATE_SUCCESS);
-    } else {
-      messageApi.success(errors[0]);
     }
   };
 
   return (
     <div css={containerStyle}>
-      {contextHolder}
       <Button css={closeStyle} onClick={() => navigate(`/sales/opportunity?tenant=${getTenant()}`)}>
         <Close width={16} height={16} color="#ccc" />
         <LocaleFormatter id="title.exit" />

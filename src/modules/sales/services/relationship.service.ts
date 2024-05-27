@@ -88,7 +88,6 @@ export const useRelationship = () => {
         () => api.get(`/Gains/get-by-relationship-id/${id}`),
         {
           loadingKey: 'gainsDetail-loading',
-          messageKey: 'gainsDetail-message',
         },
       );
       if (succeeded) {
@@ -109,7 +108,7 @@ export const useRelationship = () => {
         () => api.post('/Gains/add-or-update', [{ id, data: dataUpdateGainsRelationship }]),
         {
           loadingKey: 'updateGainsDetail-loading',
-          messageKey: 'updateGainsDetail-message',
+          successMessage: Messages.UPDATE_SUCCESS,
         },
       );
 
@@ -127,7 +126,7 @@ export const useRelationship = () => {
       const { data, succeeded } = await caller(
         () =>
           api.post(`/Relationship/add-or-update?tenant=${tenant}`, [{ data: dataAddRelationship }]),
-        { loadingKey: 'add-relationship' },
+        { loadingKey: 'add-relationship', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -153,7 +152,7 @@ export const useRelationship = () => {
           api.post(`/Relationship/add-or-update?tenant=${tenant}`, [
             { id, data: dataAddRelationship },
           ]),
-        { loadingKey: 'edit-relationship' },
+        { loadingKey: 'edit-relationship', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -198,7 +197,7 @@ export const useRelationship = () => {
             `/Relationship/update-status-by-id?tenant=${tenant}`,
             dataUpdateStatusRelationship,
           ),
-        { loadingKey: 'edit-relationshipStatus' },
+        { loadingKey: 'edit-relationshipStatus', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -269,6 +268,7 @@ export const useRelationship = () => {
         () => api.post(`/RelationshipGainsQuestion/add-or-update?tenant=${tenant}`, values),
         {
           loadingKey: 'relationship-updateGainsQuestion',
+          successMessage: Messages.UPDATE_SUCCESS,
         },
       );
 
@@ -290,6 +290,7 @@ export const useRelationship = () => {
           api.put(`Relationship/update-result?tenant=${tenant}`, [{ id, data: dataUpdatePoint }]),
         {
           loadingKey: 'relationship-updatePoint',
+          successMessage: Messages.UPDATE_SUCCESS,
         },
       );
 
