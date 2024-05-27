@@ -1,9 +1,9 @@
 import { ModalRelationshipLevelType } from '@/modules/category/enum/relationship-level.enum';
 import { Modal } from 'antd';
 import { ReactNode, createContext, useContext, useState } from 'react';
-import { AddRelationshipLv } from './add-relationshipLv.modal';
-import { DeleteRelationshipLv } from './delete-relationshipLv.modal';
-import { UpdateReltionshipLv } from './update-relationshipLv.modal';
+import { AddRelationshipLevel } from './add-relationshipLevel.modal';
+import { DeleteRelationshipLevel } from './delete-relationshipLevel.modal';
+import { UpdateReltionshipLevel } from './update-relationshipLevel.modal';
 
 type ModalContexttype = {
   openModal: (
@@ -15,10 +15,10 @@ type ModalContexttype = {
 };
 const ModalContext = createContext<ModalContexttype | undefined>(undefined);
 
-export const useModalRelationshipLv = () => {
+export const useModalRelationshipLevel = () => {
   const context = useContext(ModalContext);
   if (!context) {
-    throw new Error('useModalRelationshipLv must be used within a ModalRelationshipLvProvider');
+    throw new Error('useModalRelationshipLevel must be used within a ModalRelationshipLvProvider');
   }
   return context;
 };
@@ -52,17 +52,17 @@ export const ModalRelationshipLvProvider = ({ children }: ModalRelationshipLvPro
       {children}
       <Modal open={open} onCancel={closeModal} footer={null}>
         {currentModal?.modalName === ModalRelationshipLevelType.EditRelationLevel && (
-          <UpdateReltionshipLv closeModal={closeModal} data={currentModal.data!} />
+          <UpdateReltionshipLevel closeModal={closeModal} data={currentModal.data!} />
         )}
         {currentModal?.modalName === ModalRelationshipLevelType.DeleteRelationLevel && (
-          <DeleteRelationshipLv
+          <DeleteRelationshipLevel
             closeModal={closeModal}
             data={currentModal.data!}
             relationshipLvIds={currentModal.relationshipLvIds!}
           />
         )}
         {currentModal?.modalName === ModalRelationshipLevelType.AddRelationLevel && (
-          <AddRelationshipLv closeModal={closeModal} />
+          <AddRelationshipLevel closeModal={closeModal} />
         )}
       </Modal>
     </ModalContext.Provider>

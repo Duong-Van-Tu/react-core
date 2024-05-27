@@ -6,27 +6,27 @@ import { Pagination } from '@/constants/pagination';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
 import { useLocation } from 'react-router-dom';
-import { useRelationshipLv } from '@/modules/category/services/relationshipLv.service';
-type DeleteRelationshipLvProps = {
+import { useRelationshipLevel } from '@/modules/category/services/relationshipLevel.service';
+type DeleteRelationshipLevelProps = {
   closeModal: () => void;
   data?: DataReationshipLevelType;
   relationshipLvIds: string[];
 };
-export const DeleteRelationshipLv = ({
+export const DeleteRelationshipLevel = ({
   closeModal,
   relationshipLvIds,
-}: DeleteRelationshipLvProps) => {
-  const { deleteRelationshipLv, getAllRelationshipLv } = useRelationshipLv();
+}: DeleteRelationshipLevelProps) => {
+  const { deleteRelationshipLevel, getAllRelationshipLevel } = useRelationshipLevel();
   const pageIndex =
-    useRootSelector((state) => state.category.relationshipLv.pagination?.pageIndex) ?? 0;
-  const [loading] = useWatchLoading(['delete-relationshipLv', false]);
+    useRootSelector((state) => state.category.relationshipLevel.pagination?.pageIndex) ?? 0;
+  const [loading] = useWatchLoading(['delete-relationshipLevel', false]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
-  const handledeleteRelationshipLv = async () => {
-    const deleteclient = await deleteRelationshipLv(relationshipLvIds);
+  const handledeleteRelationshipLevel = async () => {
+    const deleteclient = await deleteRelationshipLevel(relationshipLvIds);
     if (deleteclient) {
-      getAllRelationshipLv({
+      getAllRelationshipLevel({
         pageIndex: pageIndex || 1,
         pageSize: Pagination.PAGESIZE,
         roleType: tab!,
@@ -43,7 +43,7 @@ export const DeleteRelationshipLv = ({
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>
-          <Button loading={loading} type="primary" danger onClick={handledeleteRelationshipLv}>
+          <Button loading={loading} type="primary" danger onClick={handledeleteRelationshipLevel}>
             Xoá
           </Button>
         </Space>

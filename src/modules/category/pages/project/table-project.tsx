@@ -2,30 +2,30 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
+import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
-import { useRootSelector } from '@/hooks/selector.hook';
-import { relationshipLvColumns } from './column/relationship-lv.column';
-import { useModalRelationshipLv } from '../../components/modals/relationship-level';
-import { useRelationshipLv } from '../../services/relationshipLv.service';
+import { useQuery } from '@/hooks/query.hook';
+import { useModalProject } from '../../components/modals/project';
+import { useProject } from '../../services/project.service';
+import { projectColumns } from './column/project.colum';
 
-export default function TableRelationshipLv() {
-  const [relationshipLvIds, setRelationshipLvIds] = useState<string[]>();
-  const { openModal } = useModalRelationshipLv();
-  const { getAllRelationshipLv } = useRelationshipLv();
-  const [loading] = useWatchLoading(['get-relationshipLv', true]);
-  const { data, pagination } = useRootSelector((state) => state.category.relationshipLv);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+export default function TableProject() {
+  const { openModal } = useModalProject();
+  const { getAllProject } = useProject();
+  const [projectIds, setProjectIds] = useState<string[]>();
+
+  const { data, pagination } = useRootSelector((state) => state.category.project);
+  const [loading] = useWatchLoading(['get-project', true]);
+
+  const { tab, textSearch, time } = useQuery();
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
-    getAllRelationshipLv({
+    getAllProject({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       textSearch,
@@ -34,61 +34,57 @@ export default function TableRelationshipLv() {
     });
   };
 
-  const handleTableChange = (page: number) => {
-    getAllRelationshipLv({
-      pageIndex: page,
-      pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
-    });
-  };
-
   const rowSelection = {
-    onChange: (_selectedRowKeys: Key[], selectedRows: DataReationshipLevelType[]) => {
-      setRelationshipLvIds(selectedRows.map((row) => row.id!));
+    onChange: (_selectedRowKeys: Key[], selectedRows: DataCustomerType[]) => {
+      setProjectIds(selectedRows.map((row) => row.id!));
     },
   };
 
-  const handleDeleteSupplier = () => {
-    openModal('Delete RelationLevel', undefined, relationshipLvIds);
+  const handleTableChange = (page: number) => {
+    getAllProject({
+      pageIndex: page,
+      pageSize: Pagination.PAGESIZE,
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
+      roleType: tab!,
+      time,
+    });
   };
 
   useEffect(() => {
-    getAllRelationshipLv({
+    getAllProject({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
     });
-  }, [getAllRelationshipLv, tab]);
+  }, [getAllProject, tab]);
 
+  const handleDeleteCustomer = () => {
+    openModal('Delete Project', undefined, projectIds);
+  };
   return (
     <div css={rootStyle}>
       <Button
-        onClick={() => openModal('Add RelationLevel')}
+        onClick={() => openModal('Add Project')}
         type="primary"
-        css={addRelationshipLvStyle}
+        css={addKProjectStyle}
         iconPosition="start"
         size="large"
       >
         <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-        <span>Thêm mức độ quan hệ</span>
+        <span>Thêm dự án</span>
       </Button>
 
       <div css={searchContainer}>
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button
-          disabled={!relationshipLvIds}
-          onClick={() => handleDeleteSupplier()}
-          size="large"
-          danger
-        >
+        <Button disabled={!projectIds} onClick={() => handleDeleteCustomer()} size="large" danger>
           Xoá mục tiêu đã chọn
         </Button>
       </div>
       <TableCustom
         rowSelection={rowSelection}
-        columns={relationshipLvColumns}
+        columns={projectColumns}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
@@ -109,10 +105,10 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addRelationshipLvStyle = css`
+const addKProjectStyle = css`
   position: absolute;
   right: 0;
-  top: -6.5rem;
+  top: -9rem;
   background: #0070b8;
   display: flex;
   align-items: center;

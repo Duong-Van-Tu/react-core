@@ -2,11 +2,11 @@ import { useApi, useCaller } from '@/hooks/api.hook';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  setListRelationshipLvAction,
-  addRelationshipLvAction,
-  updateRelationshipLvAction,
-  deleteRelationshipLvAction,
-} from '../reducers/slicers/relationshipLv.slice';
+  setListRelationshipLevelAction,
+  addRelationshipLevelAction,
+  updateRelationshipLevelAction,
+  deleteRelationshipLevelAction,
+} from '../reducers/slicers/relationshipLevel.slice';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
@@ -22,14 +22,14 @@ type FilterKPIType = {
   roleType: string;
 };
 
-export const useRelationshipLv = () => {
+export const useRelationshipLevel = () => {
   const api = useApi('');
   const caller = useCaller();
   const dispatch = useDispatch();
   const tenant = getTenant();
   const user = useRootSelector((state) => state.auth.user);
 
-  const getAllRelationshipLv = useCallback(
+  const getAllRelationshipLevel = useCallback(
     async ({
       pageIndex = Pagination.PAGEINDEX,
       pageSize = Pagination.PAGESIZE,
@@ -55,13 +55,13 @@ export const useRelationshipLv = () => {
       const { data, succeeded } = await caller(
         () => api.post(`/RelationshipLevel/get-list-with-pagination?${urlParams}`),
         {
-          loadingKey: 'get-relationshipLv',
+          loadingKey: 'get-relationshipLevel',
         },
       );
       if (succeeded) {
         const { items, totalRecords, pageIndex, totalPages, totalExtend } = data;
         dispatch(
-          setListRelationshipLvAction({
+          setListRelationshipLevelAction({
             data: items,
             pagination: {
               pageIndex,
@@ -77,7 +77,7 @@ export const useRelationshipLv = () => {
     [caller, api],
   );
 
-  const addKRelationshipLv = useCallback(
+  const addKRelationshipLevel = useCallback(
     async (values: DataReationshipLevelType) => {
       const dataAddRelationshipLv = convertToUppercaseFirstLetter({ ...values });
 
@@ -86,11 +86,11 @@ export const useRelationshipLv = () => {
           api.post(`/RelationshipLevel/add-or-update?tenant=${tenant}`, [
             { data: dataAddRelationshipLv },
           ]),
-        { loadingKey: 'add-realtionshipLv' },
+        { loadingKey: 'add-relationshipLevel' },
       );
 
       if (succeeded) {
-        dispatch(addRelationshipLvAction(data[0]));
+        dispatch(addRelationshipLevelAction(data[0]));
         return succeeded;
       }
       return false;
@@ -99,7 +99,7 @@ export const useRelationshipLv = () => {
     [api, caller],
   );
 
-  const updateRelationshipLv = useCallback(
+  const updateRelationshipLevel = useCallback(
     async (values: DataReationshipLevelType) => {
       const dataUpdateRelationshipLv = convertToUppercaseFirstLetter({ ...values });
 
@@ -108,11 +108,11 @@ export const useRelationshipLv = () => {
           api.post(`/RelationshipLevel/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataUpdateRelationshipLv },
           ]),
-        { loadingKey: 'edit-realtionshipLv' },
+        { loadingKey: 'edit-relationshipLevel' },
       );
 
       if (succeeded) {
-        dispatch(updateRelationshipLvAction(data[0]));
+        dispatch(updateRelationshipLevelAction(data[0]));
         return succeeded;
       }
       return false;
@@ -121,17 +121,17 @@ export const useRelationshipLv = () => {
     [api, caller],
   );
 
-  const deleteRelationshipLv = useCallback(
+  const deleteRelationshipLevel = useCallback(
     async (relationshipLvIds: string[]) => {
       const ids = relationshipLvIds.join(',');
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/RelationshipLevel/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-relationshipLv' },
+        { loadingKey: 'delete-relationshipLevel' },
       );
 
       if (succeeded !== null && succeeded) {
-        dispatch(deleteRelationshipLvAction(relationshipLvIds));
+        dispatch(deleteRelationshipLevelAction(relationshipLvIds));
         return true;
       }
       return false;
@@ -140,5 +140,10 @@ export const useRelationshipLv = () => {
     [api, caller],
   );
 
-  return { getAllRelationshipLv, addKRelationshipLv, deleteRelationshipLv, updateRelationshipLv };
+  return {
+    getAllRelationshipLevel,
+    addKRelationshipLevel,
+    updateRelationshipLevel,
+    deleteRelationshipLevel,
+  };
 };

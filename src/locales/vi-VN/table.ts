@@ -85,6 +85,14 @@ export const viVN_table = {
   'table.column.contractEndDate': 'Ngày kết thúc',
   'table.column.contractCustomerID': 'Mã KH',
   'table.column.contractStatus': 'Trạng thái',
+  'table.column.projectID': 'Mã dự án',
+  'table.column.projectName': 'Tên dự án',
+  'table.column.projectResult': 'Kết quả',
+  'table.column.projectType': 'Loại dự án',
+  'table.column.projectPoint': 'Điểm đạt',
+  'table.column.projectNote': 'Ghi chú',
+  'table.column.projectService': 'Mảng kinh doanh',
+  'table.column.projectApplicationUser': 'Phụ trách',
 
   'table.column.saleKit.selectAll': 'Chọn tất cả',
 };

@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Fragment } from 'react';
 import { Button, Form, FormProps, Input, Row, Space } from 'antd';
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { useRelationshipLv } from '@/modules/category/services/relationshipLv.service';
+import { useRelationshipLevel } from '@/modules/category/services/relationshipLevel.service';
 
 type FieldType = {
   code: string;
@@ -12,22 +12,22 @@ type FieldType = {
   pointTo: number;
 };
 
-type AddRelationshipLvProps = {
+type AddRelationshipLevelProps = {
   closeModal: () => void;
 };
 
-export const AddRelationshipLv = ({ closeModal }: AddRelationshipLvProps) => {
+export const AddRelationshipLevel = ({ closeModal }: AddRelationshipLevelProps) => {
   const [form] = Form.useForm();
-  const { addKRelationshipLv } = useRelationshipLv();
-  const [loading] = useWatchLoading(['add-relationshipLv', false]);
+  const { addKRelationshipLevel } = useRelationshipLevel();
+  const [loading] = useWatchLoading(['add-relationshipLevel', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const dataAddRelationshipLv = {
+    const dataAddRelationshipLevel = {
       ...values,
       pointFrom: values.pointFrom.toString(),
       pointTo: values.pointTo.toString(),
     };
-    const add = await addKRelationshipLv(dataAddRelationshipLv);
+    const add = await addKRelationshipLevel(dataAddRelationshipLevel);
     if (add) {
       form.resetFields();
       closeModal();

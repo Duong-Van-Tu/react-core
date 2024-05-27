@@ -87,6 +87,14 @@ export const enUS_table = {
   'table.column.contractEndDate': 'End date',
   'table.column.contractCustomerID': 'Customer ID',
   'table.column.contractStatus': 'Status',
+  'table.column.projectID': 'Pỏject ID',
+  'table.column.projectName': 'Project name',
+  'table.column.projectResult': 'Result',
+  'table.column.projectType': 'Project type',
+  'table.column.projectPoint': 'Point',
+  'table.column.projectNote': 'Note',
+  'table.column.projectService': 'Business division',
+  'table.column.projectApplicationUser': 'Responsible for',
 
   'table.column.saleKit.selectAll': 'Select all',
 };

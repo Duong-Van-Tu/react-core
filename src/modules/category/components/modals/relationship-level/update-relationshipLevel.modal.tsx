@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { Fragment, useEffect } from 'react';
 import { Button, Form, FormProps, Input, Row, Space } from 'antd';
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { useRelationshipLv } from '@/modules/category/services/relationshipLv.service';
+import { useRelationshipLevel } from '@/modules/category/services/relationshipLevel.service';
 
 type FieldType = {
   id?: string;
@@ -13,24 +13,24 @@ type FieldType = {
   pointTo: string;
 };
 
-type UpdateReltionshipLvProps = {
+type UpdateReltionshipLevelProps = {
   closeModal: () => void;
   data: DataReationshipLevelType;
 };
 
-export const UpdateReltionshipLv = ({ closeModal, data }: UpdateReltionshipLvProps) => {
+export const UpdateReltionshipLevel = ({ closeModal, data }: UpdateReltionshipLevelProps) => {
   const [form] = Form.useForm();
-  const { updateRelationshipLv } = useRelationshipLv();
-  const [loading] = useWatchLoading(['edit-realtionshipLv', false]);
+  const { updateRelationshipLevel } = useRelationshipLevel();
+  const [loading] = useWatchLoading(['edit-relationshipLevel', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
-    const dataUpdateRelationshipLv = {
+    const dataUpdateRelationshipLevel = {
       ...values,
       id: data.id,
       pointFrom: values.pointFrom.toString(),
       pointTo: values.pointTo.toString(),
     };
-    const edit = await updateRelationshipLv(dataUpdateRelationshipLv);
+    const edit = await updateRelationshipLevel(dataUpdateRelationshipLevel);
     if (edit) {
       form.resetFields();
       closeModal();

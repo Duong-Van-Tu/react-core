@@ -1,9 +1,9 @@
 import { TableProps } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
-import { RelationshipLvDropdown } from '@/modules/category/components/dropdown/relationship-lv.dropdown';
+import { RelationshipLevelDropdown } from '@/modules/category/components/dropdown/relationship-level.dropdown';
 
 type ColumnsType<T> = TableProps<T>['columns'];
-export const relationshipLvColumns: ColumnsType<DataReationshipLevelType> = [
+export const relationshipLevelColumns: ColumnsType<DataReationshipLevelType> = [
   {
     title: <LocaleFormatter id="table.column.relationshipLvCode" />,
     dataIndex: 'code',
@@ -21,6 +21,6 @@ export const relationshipLvColumns: ColumnsType<DataReationshipLevelType> = [
     dataIndex: 'calculationMethod',
     fixed: 'right',
     width: '6%',
-    render: (__, record) => <RelationshipLvDropdown data={record} />,
+    render: (__, record) => <RelationshipLevelDropdown data={record} />,
   },
 ];

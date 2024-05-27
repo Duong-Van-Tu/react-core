@@ -5,18 +5,18 @@ import type { MenuProps } from 'antd';
 import { CustomIcon } from '@/components/icons';
 import { useLocale } from '@/hooks/locale.hook';
 import { ModalRelationshipLevelType } from '../../enum/relationship-level.enum';
-import { useModalRelationshipLv } from '../modals/relationship-level';
+import { useModalRelationshipLevel } from '../modals/relationship-level';
 
 enum MenuItem {
   EditRelationLevel = 1,
 }
 
-type RelationshipLvDropdownProps = {
+type RelationshipLevelDropdownProps = {
   data?: DataReationshipLevelType;
 };
 
-export function RelationshipLvDropdown({ data }: RelationshipLvDropdownProps) {
-  const { openModal } = useModalRelationshipLv();
+export function RelationshipLevelDropdown({ data }: RelationshipLevelDropdownProps) {
+  const { openModal } = useModalRelationshipLevel();
   const { formatMessage } = useLocale();
 
   const handleItemClick = (key: number) => {

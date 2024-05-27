@@ -1,15 +1,19 @@
 import { Pagination } from '@/constants/pagination';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type RelationshipLvState = {
-  data: DataReationshipLevelType[];
+export type ProjectState = {
+  data: DataProjectType[];
   pagination: PaginationAPI;
-  report?: DataReationshipLevelType;
+  report?: DataProjectType;
   totalExtend?: number;
+  dataApplicationUser: DataProjectApplicationUserType[];
+  dataStatus: ProjectStatus[];
 };
 
-export const relationshipLvInitialState: RelationshipLvState = {
+export const projectInitialState: ProjectState = {
   data: [],
+  dataApplicationUser: [],
+  dataStatus: [],
   pagination: {
     pageIndex: Pagination.PAGEINDEX,
     totalPages: 0,
@@ -19,15 +23,15 @@ export const relationshipLvInitialState: RelationshipLvState = {
 };
 
 const slice = createSlice({
-  name: 'relationshipLv',
-  initialState: relationshipLvInitialState,
+  name: 'project',
+  initialState: projectInitialState,
   reducers: {
-    setListRelationshipLvAction(
+    setListProjectAction(
       state,
       {
         payload,
       }: PayloadAction<{
-        data: DataReationshipLevelType[];
+        data: DataProjectType[];
         pagination: PaginationAPI;
         totalExtend: number;
       }>,
@@ -36,7 +40,7 @@ const slice = createSlice({
       state.pagination = payload.pagination;
       state.totalExtend = payload.totalExtend;
     },
-    addRelationshipLvAction(state, { payload }: PayloadAction<DataReationshipLevelType>) {
+    addProjectAction(state, { payload }: PayloadAction<DataProjectType>) {
       state.data = [payload, ...state.data];
       state.pagination = {
         ...state.pagination,
@@ -45,7 +49,7 @@ const slice = createSlice({
       };
     },
 
-    updateRelationshipLvAction(state, { payload }: PayloadAction<DataReationshipLevelType>) {
+    updateProjectAction(state, { payload }: PayloadAction<DataProjectType>) {
       state.data = state.data.map((item) => {
         if (item.id === payload.id) {
           return payload;
@@ -54,16 +58,28 @@ const slice = createSlice({
       });
     },
 
-    deleteRelationshipLvAction(state, { payload }: PayloadAction<string[]>) {
+    deleteProjectAction(state, { payload }: PayloadAction<string[]>) {
       state.data = state.data.filter((item) => !payload.includes(item.id!));
+    },
+
+    setAllApplicationUserAction(
+      state,
+      { payload }: PayloadAction<{ dataApplicationUser: DataProjectApplicationUserType[] }>,
+    ) {
+      state.dataApplicationUser = payload.dataApplicationUser;
+    },
+    setDataStatusProjectAction(state, { payload }: PayloadAction<{ dataStatus: ProjectStatus[] }>) {
+      state.dataStatus = payload.dataStatus;
     },
   },
 });
 
 export const {
-  setListRelationshipLvAction,
-  addRelationshipLvAction,
-  updateRelationshipLvAction,
-  deleteRelationshipLvAction,
+  setListProjectAction,
+  addProjectAction,
+  deleteProjectAction,
+  updateProjectAction,
+  setAllApplicationUserAction,
+  setDataStatusProjectAction,
 } = slice.actions;
 export default slice.reducer;

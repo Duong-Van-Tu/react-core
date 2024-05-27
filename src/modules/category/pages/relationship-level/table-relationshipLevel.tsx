@@ -2,30 +2,30 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
-import { customerColumns } from './column/customer.column';
 import { CustomIcon } from '@/components/icons';
-import { useModalCustomer } from '../../components/modals/customer';
-import { useRootSelector } from '@/hooks/selector.hook';
 import { useWatchLoading } from '@/hooks/loading.hook';
-import { useCustomer } from '../../services/customer.service';
 import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
-import { useQuery } from '@/hooks/query.hook';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { relationshipLevelColumns } from './column/relationship-level.column';
+import { useModalRelationshipLevel } from '../../components/modals/relationship-level';
+import { useRelationshipLevel } from '../../services/relationshipLevel.service';
 
-export default function TableCustomer() {
-  const { openModal } = useModalCustomer();
-  const { getAllCustomer } = useCustomer();
-  const [customerIds, setCustomerIds] = useState<string[]>();
-
-  const { data, pagination } = useRootSelector((state) => state.category.customer);
-  const [loading] = useWatchLoading(['get-customer', true]);
-
-  const { tab, textSearch, time } = useQuery();
+export default function TableRelationshipLevel() {
+  const [relationshipLvIds, setRelationshipLvIds] = useState<string[]>();
+  const { openModal } = useModalRelationshipLevel();
+  const { getAllRelationshipLevel } = useRelationshipLevel();
+  const [loading] = useWatchLoading(['get-relationshipLevel', true]);
+  const { data, pagination } = useRootSelector((state) => state.category.relationshipLevel);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const tab = searchParams.get('tab');
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
-    getAllCustomer({
+    getAllRelationshipLevel({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       textSearch,
@@ -34,57 +34,61 @@ export default function TableCustomer() {
     });
   };
 
-  const rowSelection = {
-    onChange: (_selectedRowKeys: Key[], selectedRows: DataCustomerType[]) => {
-      setCustomerIds(selectedRows.map((row) => row.id!));
-    },
-  };
-
   const handleTableChange = (page: number) => {
-    getAllCustomer({
+    getAllRelationshipLevel({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
       roleType: tab!,
-      time,
     });
   };
 
+  const rowSelection = {
+    onChange: (_selectedRowKeys: Key[], selectedRows: DataReationshipLevelType[]) => {
+      setRelationshipLvIds(selectedRows.map((row) => row.id!));
+    },
+  };
+
+  const handleDeleteSupplier = () => {
+    openModal('Delete RelationLevel', undefined, relationshipLvIds);
+  };
+
   useEffect(() => {
-    getAllCustomer({
+    getAllRelationshipLevel({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       roleType: tab!,
     });
-  }, [getAllCustomer, tab]);
+  }, [getAllRelationshipLevel, tab]);
 
-  const handleDeleteCustomer = () => {
-    openModal('Delete Customer', undefined, customerIds);
-  };
   return (
     <div css={rootStyle}>
       <Button
-        onClick={() => openModal('Add Customer')}
+        onClick={() => openModal('Add RelationLevel')}
         type="primary"
-        css={addKCustomerStyle}
+        css={addRelationshipLvStyle}
         iconPosition="start"
         size="large"
       >
         <CustomIcon color="#fff" width={16} height={16} type="circle-plus" />
-        <span>Thêm khách hàng</span>
+        <span>Thêm mức độ quan hệ</span>
       </Button>
 
       <div css={searchContainer}>
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!customerIds} onClick={() => handleDeleteCustomer()} size="large" danger>
+        <Button
+          disabled={!relationshipLvIds}
+          onClick={() => handleDeleteSupplier()}
+          size="large"
+          danger
+        >
           Xoá mục tiêu đã chọn
         </Button>
       </div>
       <TableCustom
         rowSelection={rowSelection}
-        columns={customerColumns}
+        columns={relationshipLevelColumns}
         dataSource={data}
         loading={loading}
         rowKey={(record) => record.id}
@@ -105,10 +109,10 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addKCustomerStyle = css`
+const addRelationshipLvStyle = css`
   position: absolute;
   right: 0;
-  top: -9rem;
+  top: -6.5rem;
   background: #0070b8;
   display: flex;
   align-items: center;
