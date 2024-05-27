@@ -28,7 +28,7 @@ export const menuUsers: MenuItem = {
     {
       code: 'organizational ',
       icon: 'dot',
-      path: '/users/organizational',
+      path: '/users/organize',
       label: {
         vi_VN: 'Thông tin tổ chức',
         en_US: 'Organizational information',

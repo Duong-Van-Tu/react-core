@@ -46,6 +46,9 @@ const InforPesonnelPage = lazy(
 const InforIncomePage = lazy(
   () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/income'),
 );
+const InforOrganizePage = lazy(
+  () => import(/* webpackChunkName: "inforPersonnel"*/ '@/modules/users/pages/organize'),
+);
 const HistoryOpportunityPage = lazy(
   () =>
     import(
@@ -249,6 +252,14 @@ const routes: RouteObject[] = [
             element: (
               <WrapperRouteComponent titleId="title.document.inforIncome">
                 <InforIncomePage />
+              </WrapperRouteComponent>
+            ),
+          },
+          {
+            path: 'organize',
+            element: (
+              <WrapperRouteComponent titleId="title.document.inforOrganizational">
+                <InforOrganizePage />
               </WrapperRouteComponent>
             ),
           },

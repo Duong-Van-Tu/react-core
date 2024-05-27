@@ -2,6 +2,7 @@ type UserProfile = {
   id: string;
   fullName: string;
   email: string;
+  userName: string;
   applicationRoles: Role[];
 };
 

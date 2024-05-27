@@ -6,6 +6,7 @@ import {
   setListIncomeActionWithRoleAdmin,
   setListIncomeActionWithRoleUser,
   setListIncomeDetail,
+  setListIncomeUserAction,
 } from '../reducers/slicers/income.slice';
 // import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
@@ -53,7 +54,7 @@ export const useIncome = () => {
       const urlParams = generateUrlParams(queryParams);
 
       const { data, succeeded } = await caller(
-        () => api.post(`/EmployeeSalary/get-list-with-pagination?${urlParams}`),
+        () => api.post(`/EmployeeSalary/get-list-all-with-pagination?${urlParams}`),
         {
           loadingKey: 'get-list-income',
         },
@@ -76,6 +77,28 @@ export const useIncome = () => {
     },
     [caller, api],
   );
+
+  const getListIncomeUser = useCallback(async () => {
+    const queryParams: { [key: string]: string | undefined } = {
+      tenant,
+    };
+
+    const urlParams = generateUrlParams(queryParams);
+
+    const { data, succeeded } = await caller(
+      () => api.get(`/EmployeeSalary/get-list-all-by-user-with-pagination?${urlParams}`),
+      {
+        loadingKey: 'get-list-income-user',
+      },
+    );
+    if (succeeded) {
+      dispatch(
+        setListIncomeUserAction({
+          data,
+        }),
+      );
+    }
+  }, [caller, api]);
 
   const getListIncomeWithRoleUser = useCallback(
     async ({
@@ -211,5 +234,6 @@ export const useIncome = () => {
     getListIncome,
     getListIncomeWithRoleUser,
     getListIncomeWithRoleAdmin,
+    getListIncomeUser,
   };
 };
