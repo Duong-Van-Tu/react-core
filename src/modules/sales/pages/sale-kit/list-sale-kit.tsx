@@ -88,7 +88,21 @@ const ListSaleKit = ({
     setCheckedList(list);
   };
 
-  const onCheckAllChange: CheckboxProps['onChange'] = (e) => {
+  const onCheckAllChange: CheckboxProps['onChange'] = async (e) => {
+    if (dataWithRole && dataWithRole.length > 0) {
+      const newData = dataWithRole.map((item) => {
+        if (e.target.checked && options.map((option) => option.value).includes(item.id)) {
+          return { ...item, access: true };
+        } else {
+          return { ...item, access: false };
+        }
+      });
+
+      await updateSaleKitWithRole({
+        dataUpdate: { data: newData, lastModifiedApplicationUserId: user?.id! },
+      });
+    }
+
     setCheckedList(e.target.checked ? options.map((option) => option.value) : []);
   };
 
