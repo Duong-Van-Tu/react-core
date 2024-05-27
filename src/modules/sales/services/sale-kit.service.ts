@@ -9,6 +9,7 @@ import {
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
 import { Pagination } from '@/constants/pagination';
+import { Messages } from '@/constants/message';
 
 export type FilterSaleKitType = {
   id?: string;
@@ -137,6 +138,7 @@ export const userSaleKit = () => {
 
       const response = await caller(() => api.post(`/SaleKit/add-document?${urlParams}`, files), {
         loadingKey: 'add-sale-kit',
+        messageKey: Messages.CREATE_SUCCESS,
       });
 
       if (response) {
@@ -160,7 +162,7 @@ export const userSaleKit = () => {
 
       const response = await caller(
         () => api.del(`/SaleKit/delete-by-ids/${ids}/${applicationUserId}?${urlParams}`),
-        { loadingKey: 'delete-sale-kit' },
+        { loadingKey: 'delete-sale-kit', messageKey: Messages.DELETE_SUCCESS },
       );
 
       if (response) {
@@ -184,6 +186,7 @@ export const userSaleKit = () => {
 
       await caller(() => api.put(`/ApplicationRoleSaleKit/update?${urlParams}`, dataUpdate), {
         loadingKey: 'update-sale-kit-with-role',
+        messageKey: Messages.UPDATE_SUCCESS,
       });
     },
 
