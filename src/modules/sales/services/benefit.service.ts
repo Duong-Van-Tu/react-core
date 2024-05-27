@@ -72,6 +72,7 @@ export const useBenefit = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),

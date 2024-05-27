@@ -71,6 +71,7 @@ export const useRelationship = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),
