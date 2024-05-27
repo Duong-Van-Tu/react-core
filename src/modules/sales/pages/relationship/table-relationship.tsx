@@ -106,9 +106,9 @@ export default function TableRelationship() {
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
         pagination={{
-          current: pagination?.pageIndex,
-          pageSize: Pagination.PAGESIZE,
-          total: pagination?.totalRecords,
+          current: pagination.pageIndex,
+          pageSize: pagination.pageSize,
+          total: pagination.totalRecords,
           position: ['bottomCenter'],
         }}
         scroll={{ x: 1450 }}

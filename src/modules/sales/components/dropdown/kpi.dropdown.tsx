@@ -29,7 +29,7 @@ type KPIDropdownProps = {
 export function KPIDropdown({ data }: KPIDropdownProps) {
   const { openModal } = useModalKPI();
   const { formatMessage } = useLocale();
-  const { isSale, isAdministrator, isSaleDirector, isSupplier } = usePermission();
+  const { isSale, isSupplier, isSaleDirector } = usePermission();
 
   const { tab } = useQuery();
 
@@ -60,165 +60,120 @@ export function KPIDropdown({ data }: KPIDropdownProps) {
     }
   };
 
-  const items: MenuProps['items'] = useMemo(() => {
-    if (isSaleDirector) {
-      return tab === RoleType.MySelf
-        ? [
-            {
-              key: MenuItem.EditKPI,
-              label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
-              onClick: () => handleItemClick(MenuItem.EditKPI),
-            },
-            {
-              key: MenuItem.Report,
-              label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-              onClick: () => handleItemClick(MenuItem.Report),
-            },
-            {
-              key: MenuItem.Delete,
-              label: formatMessage({ id: 'dropdown.delete' }),
-              onClick: () => handleItemClick(MenuItem.Delete),
-            },
-          ]
-        : data?.goalStatus?.code === Status.Pending
-          ? [
-              {
-                key: MenuItem.FinalizeKPI,
-                label: formatMessage({ id: 'title.dropdown.finalize' }),
-                onClick: () => handleItemClick(MenuItem.FinalizeKPI),
-              },
-              {
-                key: MenuItem.RequestEdit,
-                label: isSaleDirector
-                  ? 'Xem đề xuất chỉnh sửa'
-                  : formatMessage({ id: 'title.dropdown.requestEdit' }),
-                onClick: () => handleItemClick(MenuItem.RequestEdit),
-              },
-              {
-                key: MenuItem.ModifyKPI,
-                label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
-                onClick: () => handleItemClick(MenuItem.ModifyKPI),
-              },
-              {
-                key: MenuItem.Report,
-                label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-                onClick: () => handleItemClick(MenuItem.Report),
-              },
-              {
-                key: MenuItem.Delete,
-                label: formatMessage({ id: 'dropdown.delete' }),
-                onClick: () => handleItemClick(MenuItem.Delete),
-              },
-            ]
-          : data?.goalStatus?.code === Status.Request
-            ? [
-                {
-                  key: MenuItem.RequestEdit,
-                  label: isSaleDirector
-                    ? 'Xem đề xuất chỉnh sửa'
-                    : formatMessage({ id: 'title.dropdown.requestEdit' }),
-                  onClick: () => handleItemClick(MenuItem.RequestEdit),
-                },
-                {
-                  key: MenuItem.ModifyKPI,
-                  label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
-                  onClick: () => handleItemClick(MenuItem.ModifyKPI),
-                },
-                {
-                  key: MenuItem.Report,
-                  label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-                  onClick: () => handleItemClick(MenuItem.Report),
-                },
-                {
-                  key: MenuItem.Delete,
-                  label: formatMessage({ id: 'dropdown.delete' }),
-                  onClick: () => handleItemClick(MenuItem.Delete),
-                },
-              ]
-            : [
-                {
-                  key: MenuItem.ModifyKPI,
-                  label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
-                  onClick: () => handleItemClick(MenuItem.ModifyKPI),
-                },
-                {
-                  key: MenuItem.Report,
-                  label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-                  onClick: () => handleItemClick(MenuItem.Report),
-                },
-                {
-                  key: MenuItem.Delete,
-                  label: formatMessage({ id: 'dropdown.delete' }),
-                  onClick: () => handleItemClick(MenuItem.Delete),
-                },
-              ];
+  const directorItems: MenuProps['items'] = useMemo(() => {
+    const items: MenuProps['items'] = [];
+    if (tab === RoleType.MySelf) {
+      items.push(
+        {
+          key: MenuItem.EditKPI,
+          label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
+          onClick: () => handleItemClick(MenuItem.EditKPI),
+        },
+        {
+          key: MenuItem.Report,
+          label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+          onClick: () => handleItemClick(MenuItem.Report),
+        },
+      );
+      if (data?.goalStatus?.code === Status.Pending) {
+        items.push({
+          key: MenuItem.FinalizeKPI,
+          label: formatMessage({ id: 'title.dropdown.finalize' }),
+          onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+        });
+      }
+    } else {
+      if (data?.goalStatus?.code === Status.Pending) {
+        items.push(
+          {
+            key: MenuItem.FinalizeKPI,
+            label: formatMessage({ id: 'title.dropdown.finalize' }),
+            onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+          },
+          {
+            key: MenuItem.ModifyKPI,
+            label: formatMessage({ id: 'title.dropdown.kpi.modifyKPI' }),
+            onClick: () => handleItemClick(MenuItem.ModifyKPI),
+          },
+
+          {
+            key: MenuItem.Delete,
+            label: formatMessage({ id: 'dropdown.delete' }),
+            onClick: () => handleItemClick(MenuItem.Delete),
+          },
+        );
+      }
+      if (data?.goalStatus?.code === Status.Request) {
+        items.push({
+          key: MenuItem.RequestEdit,
+          label: 'Xem đề xuất chỉnh sửa',
+          onClick: () => handleItemClick(MenuItem.RequestEdit),
+        });
+      }
+      items.push({
+        key: MenuItem.Report,
+        label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+        onClick: () => handleItemClick(MenuItem.Report),
+      });
+    }
+    return items;
+  }, [tab, data]);
+
+  const saleItems: MenuProps['items'] = useMemo(() => {
+    const items = [];
+    if (data?.goalStatus?.code === Status.Pending) {
+      items.push(
+        {
+          key: MenuItem.EditKPI,
+          label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
+          onClick: () => handleItemClick(MenuItem.EditKPI),
+        },
+
+        {
+          key: MenuItem.Delete,
+          label: formatMessage({ id: 'dropdown.delete' }),
+          onClick: () => handleItemClick(MenuItem.Delete),
+        },
+      );
+    }
+    if (data?.goalStatus?.code === Status.Updated) {
+      items.push({
+        key: MenuItem.FinalizeKPI,
+        label: formatMessage({ id: 'title.dropdown.finalize' }),
+        onClick: () => handleItemClick(MenuItem.FinalizeKPI),
+      });
     }
 
-    if (isSale || isSupplier) {
-      return data?.goalStatus?.code === Status.Updated
-        ? [
-            {
-              key: MenuItem.FinalizeKPI,
-              label: formatMessage({ id: 'title.dropdown.finalize' }),
-              onClick: () => handleItemClick(MenuItem.FinalizeKPI),
-            },
-            {
-              key: MenuItem.EditKPI,
-              label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
-              onClick: () => handleItemClick(MenuItem.EditKPI),
-            },
-            {
-              key: MenuItem.Report,
-              label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-              onClick: () => handleItemClick(MenuItem.Report),
-            },
-            {
-              key: MenuItem.Delete,
-              label: formatMessage({ id: 'dropdown.delete' }),
-              onClick: () => handleItemClick(MenuItem.Delete),
-            },
-          ]
-        : [
-            {
-              key: MenuItem.RequestEdit,
-              label: isSaleDirector
-                ? 'Xem đề xuất chỉnh sửa'
-                : formatMessage({ id: 'title.dropdown.requestEdit' }),
-              onClick: () => handleItemClick(MenuItem.RequestEdit),
-            },
-            {
-              key: MenuItem.EditKPI,
-              label: formatMessage({ id: 'title.dropdown.kpi.editKPI' }),
-              onClick: () => handleItemClick(MenuItem.EditKPI),
-            },
-            {
-              key: MenuItem.Report,
-              label: formatMessage({ id: 'title.dropdown.kpi.report' }),
-              onClick: () => handleItemClick(MenuItem.Report),
-            },
-            {
-              key: MenuItem.Delete,
-              label: formatMessage({ id: 'dropdown.delete' }),
-              onClick: () => handleItemClick(MenuItem.Delete),
-            },
-          ];
+    if (data?.goalStatus?.code === Status.Processing) {
+      items.push({
+        key: MenuItem.RequestEdit,
+        label: isSaleDirector
+          ? 'Xem đề xuất chỉnh sửa'
+          : formatMessage({ id: 'title.dropdown.requestEdit' }),
+        onClick: () => handleItemClick(MenuItem.RequestEdit),
+      });
     }
-    if (isAdministrator) {
-      return [
-        {
-          key: MenuItem.UpdateRequest,
-          label: formatMessage({ id: 'title.dropdown.updateResult' }),
-          onClick: () => handleItemClick(MenuItem.UpdateRequest),
-        },
-      ];
-    }
-    return [];
-  }, [isSaleDirector, tab, data, formatMessage]);
+
+    items.push({
+      key: MenuItem.Report,
+      label: formatMessage({ id: 'title.dropdown.kpi.report' }),
+      onClick: () => handleItemClick(MenuItem.Report),
+    });
+    return items;
+  }, [tab, data]);
+
+  const adminItems: MenuProps['items'] = [
+    {
+      key: MenuItem.UpdateRequest,
+      label: formatMessage({ id: 'title.dropdown.updateResult' }),
+      onClick: () => handleItemClick(MenuItem.UpdateRequest),
+    },
+  ];
 
   return (
     <Dropdown
       menu={{
-        items,
+        items: isSaleDirector ? directorItems : isSale || isSupplier ? saleItems : adminItems,
       }}
       placement="bottomRight"
     >

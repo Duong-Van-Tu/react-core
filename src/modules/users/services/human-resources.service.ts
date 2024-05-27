@@ -58,6 +58,7 @@ export const useHumanResources = () => {
               pageIndex,
               totalRecords,
               totalPages,
+              pageSize,
             },
             totalExtend,
           }),

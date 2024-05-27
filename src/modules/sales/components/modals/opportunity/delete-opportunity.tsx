@@ -5,6 +5,7 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
+import { useEffect } from 'react';
 
 type DeleteOpportunityProps = {
   closeModal: () => void;
@@ -13,21 +14,24 @@ type DeleteOpportunityProps = {
 };
 export const DeleteOpportunity = ({ closeModal, opportunityIds, data }: DeleteOpportunityProps) => {
   const { deleteOpportunity, getAllOpportunity } = useOpportunity();
-  const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
+  const pageIndex = useRootSelector((state) => state.sale.opportunity.pagination?.pageIndex);
+  const dataOpportunity = useRootSelector((state) => state.sale.opportunity.data);
   const [loading] = useWatchLoading(['delete-opportunity', false]);
-
   const handleDeleteOpportunity = async () => {
     const isDelete = await deleteOpportunity(!!data ? [data.id!] : opportunityIds);
     if (isDelete) {
       closeModal();
-      if (opportunityIds?.length === Pagination.PAGESIZE) {
-        getAllOpportunity({
-          pageIndex: pageIndex - 1 || 1,
-          pageSize: Pagination.PAGESIZE,
-        });
-      }
     }
   };
+
+  useEffect(() => {
+    if (dataOpportunity.length === 0) {
+      getAllOpportunity({
+        pageIndex: pageIndex === 1 ? 1 : pageIndex - 1,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  }, [dataOpportunity]);
 
   return (
     <div css={rootStyle}>

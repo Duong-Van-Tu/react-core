@@ -5,6 +5,7 @@ import { useRootSelector } from '@/hooks/selector.hook';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 type DeletePrivilegesProps = {
@@ -14,25 +15,29 @@ type DeletePrivilegesProps = {
 };
 export const DeletePrivileges = ({ closeModal, benefitIds, data }: DeletePrivilegesProps) => {
   const { deleteBenefit, getAllBenefit } = useBenefit();
-  const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex) ?? 0;
+  const pageIndex = useRootSelector((state) => state.sale.kpi.pagination?.pageIndex);
   const [loading] = useWatchLoading(['delete-benefit', false]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const tab = searchParams.get('tab');
+  const dataBenefit = useRootSelector((state) => state.sale.benefit.data);
 
   const handleDeletePrivileges = async () => {
     const deleteGoal = await deleteBenefit(!!data ? [data.id!] : benefitIds);
     if (deleteGoal) {
       closeModal();
-      if (benefitIds.length === Pagination.PAGESIZE) {
-        getAllBenefit({
-          pageIndex: pageIndex - 1 || 1,
-          pageSize: Pagination.PAGESIZE,
-          roleType: tab!,
-        });
-      }
     }
   };
+
+  useEffect(() => {
+    if (dataBenefit.length === 0) {
+      getAllBenefit({
+        pageIndex: pageIndex === 1 ? 1 : pageIndex - 1,
+        pageSize: Pagination.PAGESIZE,
+        roleType: tab!,
+      });
+    }
+  }, [dataBenefit]);
 
   return (
     <div css={rootStyle}>
