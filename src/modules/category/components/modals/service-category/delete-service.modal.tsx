@@ -3,10 +3,8 @@ import { useEffect } from 'react';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
-
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
-import { useLocation } from 'react-router-dom';
 import { useService } from '@/modules/category/services/service-category.service';
 type DeleteServiceProps = {
   closeModal: () => void;
