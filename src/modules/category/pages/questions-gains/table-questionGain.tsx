@@ -31,7 +31,6 @@ export default function TableQuestionGains() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -39,7 +38,6 @@ export default function TableQuestionGains() {
     getAllQuestionGain({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -57,7 +55,6 @@ export default function TableQuestionGains() {
     getAllQuestionGain({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllQuestionGain, tab]);
 
@@ -78,8 +75,8 @@ export default function TableQuestionGains() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!questionIds} onClick={() => handleDeleteSupplier()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!questionIds} onClick={() => handleDeleteSupplier()} size="middle" danger>
+          Xoá câu hỏi đã chọn
         </Button>
       </div>
       <TableCustom

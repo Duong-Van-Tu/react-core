@@ -1,41 +1,41 @@
 /** @jsxImportSource @emotion/react */
+import { useEffect } from 'react';
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { Pagination } from '@/constants/pagination';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
-import { useLocation } from 'react-router-dom';
 import { useQuestionGain } from '@/modules/category/services/question-gain.service';
 type DeleteQuestionGainProps = {
   closeModal: () => void;
   data?: DataQuestionGainsType;
   questionIds: string[];
 };
-export const DeleteQuestionGain = ({ closeModal, questionIds }: DeleteQuestionGainProps) => {
+export const DeleteQuestionGain = ({ closeModal, questionIds, data }: DeleteQuestionGainProps) => {
   const { deleteQuestionGain, getAllQuestionGain } = useQuestionGain();
   const pageIndex =
     useRootSelector((state) => state.category.questionGain.pagination?.pageIndex) ?? 0;
   const [loading] = useWatchLoading(['delete-questionGain', false]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const dataQuestionGain = useRootSelector((state) => state.category.questionGain.data);
   const handledeleteQuestionGain = async () => {
-    const deleteclient = await deleteQuestionGain(questionIds);
+    const deleteclient = await deleteQuestionGain(!!data ? [data.id!] : questionIds);
     if (deleteclient) {
-      getAllQuestionGain({
-        pageIndex: pageIndex || 1,
-        pageSize: Pagination.PAGESIZE,
-        roleType: tab!,
-      });
-
       closeModal();
     } else {
-      console.error('Failed to delete question');
+      console.error('Failed to delete question Gain');
     }
   };
+  useEffect(() => {
+    if (dataQuestionGain.length === 0) {
+      getAllQuestionGain({
+        pageIndex: pageIndex === 1 ? 1 : pageIndex - 1,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  }, [dataQuestionGain]);
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá các mục tiêu đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá các câu hỏi đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>

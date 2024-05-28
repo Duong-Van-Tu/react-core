@@ -12,14 +12,14 @@ import {
   updateQuestionGainAction,
   deleteQuestionGainAction,
 } from '../reducers/slicers/question-gain.slice';
+import { Messages } from '@/constants/message';
 
-type FilterKPIType = {
+type FilterQuestionGainType = {
   pageIndex: number;
   pageSize: number;
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType: string;
 };
 
 export const useQuestionGain = () => {
@@ -36,8 +36,7 @@ export const useQuestionGain = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType,
-    }: FilterKPIType) => {
+    }: FilterQuestionGainType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
         PageSize: pageSize.toString(),
@@ -47,7 +46,6 @@ export const useQuestionGain = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
-        roleType,
       };
 
       const urlParams = generateUrlParams(queryParams);
@@ -86,7 +84,7 @@ export const useQuestionGain = () => {
           api.post(`/GainsQuestion/add-or-update?tenant=${tenant}`, [
             { data: dataAddQuestionGain },
           ]),
-        { loadingKey: 'add-questionGain' },
+        { loadingKey: 'add-questionGain', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -105,7 +103,7 @@ export const useQuestionGain = () => {
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/GainsQuestion/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-questionGain' },
+        { loadingKey: 'delete-questionGain', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded !== null && succeeded) {
@@ -127,7 +125,7 @@ export const useQuestionGain = () => {
           api.post(`/GainsQuestion/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataUpdateQuestionGain },
           ]),
-        { loadingKey: 'edit-questionGain' },
+        { loadingKey: 'edit-questionGain', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {

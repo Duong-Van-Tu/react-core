@@ -30,7 +30,6 @@ export default function TableRelationshipLevel() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -38,7 +37,6 @@ export default function TableRelationshipLevel() {
     getAllRelationshipLevel({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -56,7 +54,6 @@ export default function TableRelationshipLevel() {
     getAllRelationshipLevel({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllRelationshipLevel, tab]);
 
@@ -80,10 +77,10 @@ export default function TableRelationshipLevel() {
         <Button
           disabled={!relationshipLvIds}
           onClick={() => handleDeleteSupplier()}
-          size="large"
+          size="middle"
           danger
         >
-          Xoá mục tiêu đã chọn
+          Xoá mối quan hệ đã chọn
         </Button>
       </div>
       <TableCustom

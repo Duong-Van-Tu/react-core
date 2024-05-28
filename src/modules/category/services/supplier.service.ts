@@ -13,14 +13,13 @@ import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
-
-type FilterKPIType = {
+import { Messages } from '@/constants/message';
+type FilterSupplierType = {
   pageIndex: number;
   pageSize: number;
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType: string;
 };
 
 export const useSupplier = () => {
@@ -37,8 +36,7 @@ export const useSupplier = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType,
-    }: FilterKPIType) => {
+    }: FilterSupplierType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
         PageSize: pageSize.toString(),
@@ -48,7 +46,6 @@ export const useSupplier = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
-        roleType,
       };
 
       const urlParams = generateUrlParams(queryParams);
@@ -86,7 +83,7 @@ export const useSupplier = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Supplier/add-or-update?tenant=${tenant}`, [{ data: dataAddSupplier }]),
-        { loadingKey: 'add-supplier' },
+        { loadingKey: 'add-supplier', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -105,7 +102,7 @@ export const useSupplier = () => {
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/Supplier/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-supplier' },
+        { loadingKey: 'delete-supplier', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded !== null && succeeded) {
@@ -127,7 +124,7 @@ export const useSupplier = () => {
           api.post(`/Supplier/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataUpdateSupplier },
           ]),
-        { loadingKey: 'edit-supplier' },
+        { loadingKey: 'edit-supplier', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {

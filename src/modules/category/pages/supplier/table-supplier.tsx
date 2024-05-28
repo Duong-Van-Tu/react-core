@@ -29,7 +29,6 @@ export default function TableSupplier() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -37,7 +36,6 @@ export default function TableSupplier() {
     getAllSupplier({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -55,7 +53,6 @@ export default function TableSupplier() {
     getAllSupplier({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllSupplier, tab]);
 
@@ -76,8 +73,8 @@ export default function TableSupplier() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!supplierIds} onClick={() => handleDeleteSupplier()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!supplierIds} onClick={() => handleDeleteSupplier()} size="middle" danger>
+          Xoá nhà cung cấp đã chọn
         </Button>
       </div>
       <TableCustom
