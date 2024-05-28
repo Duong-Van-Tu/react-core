@@ -8,6 +8,8 @@ import { Button, Row, Space } from 'antd';
 
 import { useSupplier } from '@/modules/category/services/supplier.service';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateTotalRecordsSupplierAction } from '@/modules/category/reducers/slicers/supplier.slice';
 type DeleteSupplierProps = {
   closeModal: () => void;
   data?: DataSupplierType;
@@ -15,12 +17,16 @@ type DeleteSupplierProps = {
 };
 export const DeleteSupplier = ({ closeModal, supplierIds, data }: DeleteSupplierProps) => {
   const { deleteSupplier, getAllSupplier } = useSupplier();
+  const dispatch = useDispatch();
   const pageIndex = useRootSelector((state) => state.category.supplier.pagination?.pageIndex) ?? 0;
+  const totalRecords = useRootSelector((state) => state.category.supplier.pagination?.totalRecords);
   const [loading] = useWatchLoading(['delete-supplier', false]);
   const dataSupplier = useRootSelector((state) => state.category.supplier.data);
   const handleDeleteSupplier = async () => {
     const deleteclient = await deleteSupplier(!!data ? [data.id!] : supplierIds);
     if (deleteclient) {
+      const newTotalRecords = totalRecords - supplierIds.length;
+      dispatch(updateTotalRecordsSupplierAction(newTotalRecords));
       closeModal();
     } else {
       console.error('Failed to delete supplier');
