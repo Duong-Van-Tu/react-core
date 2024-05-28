@@ -1,1 +1,0 @@
-{"version":3,"file":"role.enum-2GZE6esB.js","sources":["../../src/enum/role.enum.ts"],"sourcesContent":["export enum RoleType {\n  MySelf = 'MYSELF',\n  Employee = 'EMPLOYEE',\n  Manager = 'MANAGER',\n}\n"],"names":["RoleType","MySelf","Employee","Manager"],"mappings":"AAAYA,IAAAA,GAAAA,IACVC,EAAAA,OAAS,SACTC,EAAAA,SAAW,WACXC,EAAAA,QAAU,UAHAH,IAAAA,GAAAA,CAAAA,CAAAA"}

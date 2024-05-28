@@ -1,2 +1,0 @@
-import{b as p,g as f,r as t,dd as i}from"./index-D7kYuqtd.js";function g(...o){const c=p(s=>{const e=s.apiMessage.box;return o.map(r=>e[r])}),a=f(),n=t.useMemo(()=>o,[...o]);return t.useEffect(()=>()=>{a(i(n))},[a,n]),t.useMemo(()=>{const s=[],e=[];for(const{type:r,messages:u}of c.filter(Boolean))r==="error"?s.push(...u):e.push(...u);return{errors:s,successes:e}},[...c])}export{g as u};
-//# sourceMappingURL=message.hook-fAQPADwq.js.map

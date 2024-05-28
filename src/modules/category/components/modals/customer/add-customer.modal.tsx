@@ -46,7 +46,7 @@ export const AddCustomer = ({ closeModal }: AddCustomerProps) => {
         layout="vertical"
       >
         <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Mã KH</span>}
+          label={<span css={labelFormItem}>Mã khách hàng</span>}
           name="code"
           rules={[{ required: true, message: 'Vui lòng nhập mã KH!' }]}
         >

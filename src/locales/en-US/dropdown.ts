@@ -1,5 +1,6 @@
 export const enUS_dropdown = {
   'dropdown.edit': 'Edit',
+  'dropdown.update': 'Update',
   'dropdown.report': 'View report',
   'dropdown.delete': 'Delete',
   'title.dropdown.requestEdit': 'Request edit',

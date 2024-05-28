@@ -12,14 +12,14 @@ import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
+import { Messages } from '@/constants/message';
 
-type FilterKPIType = {
+type FilterCustomerType = {
   pageIndex: number;
   pageSize: number;
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType: string;
 };
 
 export const useCustomer = () => {
@@ -36,8 +36,7 @@ export const useCustomer = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType,
-    }: FilterKPIType) => {
+    }: FilterCustomerType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
         PageSize: pageSize.toString(),
@@ -47,7 +46,6 @@ export const useCustomer = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
-        roleType,
       };
 
       const urlParams = generateUrlParams(queryParams);
@@ -83,7 +81,7 @@ export const useCustomer = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Customer/add-or-update?tenant=${tenant}`, [{ data: dataAddCustomer }]),
-        { loadingKey: 'add-customer' },
+        { loadingKey: 'add-customer', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -102,7 +100,7 @@ export const useCustomer = () => {
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/Customer/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-customer' },
+        { loadingKey: 'delete-customer', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded !== null && succeeded) {
@@ -124,7 +122,7 @@ export const useCustomer = () => {
           api.post(`/Customer/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataUpdateCustomer },
           ]),
-        { loadingKey: 'edit-customer' },
+        { loadingKey: 'edit-customer', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {

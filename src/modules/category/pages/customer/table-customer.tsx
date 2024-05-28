@@ -2,9 +2,7 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
-
 import { Search, SearchParams } from '@/components/search';
 import { customerColumns } from './column/customer.column';
 import { CustomIcon } from '@/components/icons';
@@ -14,6 +12,7 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { useCustomer } from '../../services/customer.service';
 import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
+import { useQuery } from '@/hooks/query.hook';
 
 export default function TableCustomer() {
   const { openModal } = useModalCustomer();
@@ -22,9 +21,8 @@ export default function TableCustomer() {
 
   const { data, pagination } = useRootSelector((state) => state.category.customer);
   const [loading] = useWatchLoading(['get-customer', true]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+
+  const { tab, textSearch, time } = useQuery();
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllCustomer({
@@ -32,7 +30,6 @@ export default function TableCustomer() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -46,7 +43,9 @@ export default function TableCustomer() {
     getAllCustomer({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
+      textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
+
+      time,
     });
   };
 
@@ -54,7 +53,6 @@ export default function TableCustomer() {
     getAllCustomer({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   }, [getAllCustomer, tab]);
 
@@ -78,8 +76,8 @@ export default function TableCustomer() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!customerIds} onClick={() => handleDeleteCustomer()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!customerIds} onClick={() => handleDeleteCustomer()} size="middle" danger>
+          Xoá khách hàng đã chọn
         </Button>
       </div>
       <TableCustom

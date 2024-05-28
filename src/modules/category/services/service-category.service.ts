@@ -13,14 +13,14 @@ import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
+import { Messages } from '@/constants/message';
 
-type FilterKPIType = {
+type FilterServiceCategoryType = {
   pageIndex: number;
   pageSize: number;
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType: string;
 };
 
 export const useService = () => {
@@ -37,8 +37,7 @@ export const useService = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType,
-    }: FilterKPIType) => {
+    }: FilterServiceCategoryType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
         PageSize: pageSize.toString(),
@@ -48,7 +47,6 @@ export const useService = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
-        roleType,
       };
 
       const urlParams = generateUrlParams(queryParams);
@@ -86,7 +84,7 @@ export const useService = () => {
 
       const { data, succeeded } = await caller(
         () => api.post(`/Service/add-or-update?tenant=${tenant}`, [{ data: dataAddService }]),
-        { loadingKey: 'add-service' },
+        { loadingKey: 'add-service', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -105,7 +103,7 @@ export const useService = () => {
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/Service/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-service' },
+        { loadingKey: 'delete-service', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded !== null && succeeded) {
@@ -127,7 +125,7 @@ export const useService = () => {
           api.post(`/Service/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataUpdateService },
           ]),
-        { loadingKey: 'edit-service' },
+        { loadingKey: 'edit-service', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {

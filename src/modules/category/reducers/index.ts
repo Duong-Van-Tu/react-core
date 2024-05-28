@@ -6,9 +6,12 @@ import humanResources, {
 
 import supplier, { supplierInitialState } from './slicers/supplier.slice';
 import sevice, { serviceInitialState } from './slicers/service.slice';
-import relationshipLv, { relationshipLvInitialState } from './slicers/relationshipLv.slice';
+import relationshipLevel, {
+  relationshipLevelInitialState,
+} from './slicers/relationshipLevel.slice';
 import questionGain, { questionGainInitialState } from './slicers/question-gain.slice';
 import contract, { contractInitialState } from './slicers/contract.slice';
+import project, { projectInitialState } from './slicers/project.slice';
 
 export type RawRootState = typeof categoryState;
 
@@ -17,18 +20,20 @@ export const categoryInitialStates = {
   humanResourcesCategoryInitialState,
   supplierInitialState,
   serviceInitialState,
-  relationshipLvInitialState,
+  relationshipLevelInitialState,
   questionGainInitialState,
   contractInitialState,
+  projectInitialState,
 };
 export const categoryState = {
   customer,
   humanResources,
   supplier,
   sevice,
-  relationshipLv,
+  relationshipLevel,
   questionGain,
   contract,
+  project,
 };
 const categoryReducer = combineReducers(categoryState);
 export type CategoryState = ReturnType<typeof categoryReducer>;

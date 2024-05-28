@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useDispatch } from 'react-redux';
 import { ModalRelationshipLvProvider } from '../../components/modals/relationship-level';
-import TableRelationshipLv from './table-relationshipLv';
+import TableRelationshipLevel from './table-relationshipLevel';
 
 export default function RelationshipLvPage() {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ export default function RelationshipLvPage() {
   return (
     <ModalRelationshipLvProvider>
       <h3 css={titleStyle}>Mức độ quan hệ</h3>
-      <TableRelationshipLv />
+      <TableRelationshipLevel />
     </ModalRelationshipLvProvider>
   );
 }
