@@ -6,7 +6,11 @@ import { useDispatch } from 'react-redux';
 import { ModalServiceProvider } from '../../components/modals/service-category';
 import { CustomIcon } from '@/components/icons';
 import TableService from './table-service';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { useLocale } from '@/hooks/locale.hook';
 export default function ServicePage() {
+  const totalRecords = useRootSelector((state) => state.category.sevice.pagination?.totalRecords);
+  const { formatMessage } = useLocale();
   const dispatch = useDispatch();
   useEffect(() => {
     const breadCrumbItems = [
@@ -27,11 +31,13 @@ export default function ServicePage() {
   }, [dispatch]);
   return (
     <ModalServiceProvider>
-      <h3 css={titleStyle}>Mảng dịch vụ</h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.service' })}</h3>
       <div css={subTitleStyle}>
         <CustomIcon width={8} height={8} type="dot" />
         <span>
-          <span css={subTitleStyle}>10 mảng dịch vụ</span>
+          <span css={subTitleStyle}>
+            {totalRecords} {formatMessage({ id: 'title.document.service' })}
+          </span>
         </span>
       </div>
       <TableService />

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Tabs, TabsProps } from 'antd';
 import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
@@ -42,7 +42,7 @@ export default function InformationOrganizePage() {
   }, []);
 
   const items: TabsProps['items'] = useMemo(() => {
-    return dataTabs.map((tab, i) => ({
+    return dataTabs.map((tab) => ({
       key: tab.tenantId,
       label: tab.tenantName,
       children: <TableCustom dataSource={[]} columns={organizeColumns} />,

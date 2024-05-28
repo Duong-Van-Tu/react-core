@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
@@ -20,11 +20,7 @@ export default function TableContract() {
   const [contractIds, setContractIds] = useState<string[]>();
 
   const { data, pagination } = useRootSelector((state) => state.category.contract);
-  console.log('data: ', data);
   const [loading] = useWatchLoading(['get-contract', true]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllContract({
@@ -53,7 +49,7 @@ export default function TableContract() {
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
     });
-  }, [getAllContract, tab]);
+  }, [getAllContract]);
 
   const handleDeleteContract = () => {
     openModal('Delete Contract', undefined, contractIds);

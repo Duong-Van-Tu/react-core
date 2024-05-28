@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
@@ -20,9 +19,6 @@ export default function TableRelationshipLevel() {
   const { getAllRelationshipLevel } = useRelationshipLevel();
   const [loading] = useWatchLoading(['get-relationshipLevel', true]);
   const { data, pagination } = useRootSelector((state) => state.category.relationshipLevel);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllRelationshipLevel({
@@ -30,7 +26,6 @@ export default function TableRelationshipLevel() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -38,7 +33,6 @@ export default function TableRelationshipLevel() {
     getAllRelationshipLevel({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -56,9 +50,8 @@ export default function TableRelationshipLevel() {
     getAllRelationshipLevel({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
-  }, [getAllRelationshipLevel, tab]);
+  }, [getAllRelationshipLevel]);
 
   return (
     <div css={rootStyle}>
@@ -80,10 +73,10 @@ export default function TableRelationshipLevel() {
         <Button
           disabled={!relationshipLvIds}
           onClick={() => handleDeleteSupplier()}
-          size="large"
+          size="middle"
           danger
         >
-          Xoá mục tiêu đã chọn
+          Xoá mối quan hệ đã chọn
         </Button>
       </div>
       <TableCustom

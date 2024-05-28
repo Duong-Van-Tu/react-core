@@ -6,7 +6,9 @@ import { useDispatch } from 'react-redux';
 import { ModalProjectProvider } from '../../components/modals/project';
 import { CustomIcon } from '@/components/icons';
 import TableProject from './table-project';
+import { useLocale } from '@/hooks/locale.hook';
 export default function ProjectPage() {
+  const { formatMessage } = useLocale();
   const dispatch = useDispatch();
   useEffect(() => {
     const breadCrumbItems = [
@@ -31,7 +33,7 @@ export default function ProjectPage() {
       <div css={subTitleStyle}>
         <CustomIcon width={8} height={8} type="dot" />
         <span>
-          <span css={subTitleStyle}>10 Dự án</span>
+          <span css={subTitleStyle}>{formatMessage({ id: 'title.document.project' })}</span>
         </span>
       </div>
       <TableProject />

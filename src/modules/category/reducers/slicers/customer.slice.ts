@@ -57,6 +57,9 @@ const slice = createSlice({
     deleteCustomerAction(state, { payload }: PayloadAction<string[]>) {
       state.data = state.data.filter((item) => !payload.includes(item.id!));
     },
+    updateTotalRecordsCustomerAction: (state, action: PayloadAction<number>) => {
+      state.pagination.totalRecords = action.payload;
+    },
   },
 });
 
@@ -65,5 +68,6 @@ export const {
   addCustomerAction,
   deleteCustomerAction,
   updateCustomerAction,
+  updateTotalRecordsCustomerAction,
 } = slice.actions;
 export default slice.reducer;

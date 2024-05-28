@@ -5,8 +5,10 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useDispatch } from 'react-redux';
 import { ModalQuestionGainsProvider } from '../../components/modals/question-gains';
 import TableQuestionGains from './table-questionGain';
+import { useLocale } from '@/hooks/locale.hook';
 export default function QuestionrPage() {
   const dispatch = useDispatch();
+  const { formatMessage } = useLocale();
   useEffect(() => {
     const breadCrumbItems = [
       {
@@ -26,7 +28,7 @@ export default function QuestionrPage() {
   }, [dispatch]);
   return (
     <ModalQuestionGainsProvider>
-      <h3 css={titleStyle}>Câu hỏi bảng GAIN</h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.questions' })}</h3>
       <TableQuestionGains />
     </ModalQuestionGainsProvider>
   );

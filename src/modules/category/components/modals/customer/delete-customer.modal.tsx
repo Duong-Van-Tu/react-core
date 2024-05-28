@@ -6,6 +6,8 @@ import { Pagination } from '@/constants/pagination';
 import { useCustomer } from '@/modules/category/services/customer.service';
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
+import { useDispatch } from 'react-redux';
+import { updateTotalRecordsCustomerAction } from '@/modules/category/reducers/slicers/customer.slice';
 type DeleteCustomerProps = {
   closeModal: () => void;
   data?: DataCustomerType;
@@ -13,12 +15,16 @@ type DeleteCustomerProps = {
 };
 export const DeleteCustomer = ({ closeModal, customerIds, data }: DeleteCustomerProps) => {
   const { deleteCustomer, getAllCustomer } = useCustomer();
+  const dispatch = useDispatch();
   const pageIndex = useRootSelector((state) => state.category.customer.pagination?.pageIndex) ?? 0;
+  const totalRecords = useRootSelector((state) => state.category.customer.pagination?.totalRecords);
   const [loading] = useWatchLoading(['delete-customer', false]);
   const dataCustomer = useRootSelector((state) => state.category.customer.data);
   const handleDeleteCustomer = async () => {
     const deleteclient = await deleteCustomer(!!data ? [data.id!] : customerIds);
     if (deleteclient) {
+      const newTotalRecords = totalRecords - customerIds.length;
+      dispatch(updateTotalRecordsCustomerAction(newTotalRecords));
       closeModal();
     } else {
       console.error('Failed to delete customer');

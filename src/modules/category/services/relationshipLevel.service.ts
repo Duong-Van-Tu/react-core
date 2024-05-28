@@ -12,14 +12,13 @@ import { convertToUppercaseFirstLetter } from '@/utils/get-pathCode';
 import { Pagination } from '@/constants/pagination';
 import { generateUrlParams, getTenant } from '@/utils/common';
 import dayjs from 'dayjs';
-
-type FilterKPIType = {
+import { Messages } from '@/constants/message';
+type FilterRelationshipLevelType = {
   pageIndex: number;
   pageSize: number;
   textSearch?: string;
   statusId?: string;
   time?: string;
-  roleType: string;
 };
 
 export const useRelationshipLevel = () => {
@@ -36,8 +35,7 @@ export const useRelationshipLevel = () => {
       textSearch,
       statusId,
       time = dayjs().year().toString(),
-      roleType,
-    }: FilterKPIType) => {
+    }: FilterRelationshipLevelType) => {
       const queryParams: { [key: string]: string | undefined } = {
         PageIndex: pageIndex.toString(),
         PageSize: pageSize.toString(),
@@ -47,7 +45,6 @@ export const useRelationshipLevel = () => {
         Time: `1-1-${time}`, // value is first day Of year
         TextSearch: textSearch,
         tenant: tenant,
-        roleType,
       };
 
       const urlParams = generateUrlParams(queryParams);
@@ -86,7 +83,7 @@ export const useRelationshipLevel = () => {
           api.post(`/RelationshipLevel/add-or-update?tenant=${tenant}`, [
             { data: dataAddRelationshipLv },
           ]),
-        { loadingKey: 'add-relationshipLevel' },
+        { loadingKey: 'add-relationshipLevel', successMessage: Messages.CREATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -108,7 +105,7 @@ export const useRelationshipLevel = () => {
           api.post(`/RelationshipLevel/add-or-update?tenant=${tenant}`, [
             { id: values.id, data: dataUpdateRelationshipLv },
           ]),
-        { loadingKey: 'edit-relationshipLevel' },
+        { loadingKey: 'edit-relationshipLevel', successMessage: Messages.UPDATE_SUCCESS },
       );
 
       if (succeeded) {
@@ -127,7 +124,7 @@ export const useRelationshipLevel = () => {
       const ApplicationUserId = `${user?.id}?tenant=${tenant}`;
       const { succeeded } = await caller(
         () => api.del(`/RelationshipLevel/delete-by-ids/${ids}/${ApplicationUserId}`),
-        { loadingKey: 'delete-relationshipLevel' },
+        { loadingKey: 'delete-relationshipLevel', successMessage: Messages.DELETE_SUCCESS },
       );
 
       if (succeeded !== null && succeeded) {

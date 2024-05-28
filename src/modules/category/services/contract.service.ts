@@ -127,7 +127,6 @@ export const useContract = () => {
           ]),
         { loadingKey: 'edit-contract', successMessage: Messages.UPDATE_SUCCESS },
       );
-      console.log('data: ', data);
 
       if (succeeded) {
         dispatch(updateContractAction(data[0]));

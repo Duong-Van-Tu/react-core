@@ -6,8 +6,12 @@ import { useDispatch } from 'react-redux';
 import { ModalSupplierProvider } from '../../components/modals/supplier';
 import { CustomIcon } from '@/components/icons';
 import TableSupplier from './table-supplier';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { useLocale } from '@/hooks/locale.hook';
 export default function SupplierPage() {
   const dispatch = useDispatch();
+  const { formatMessage } = useLocale();
+  const totalRecords = useRootSelector((state) => state.category.supplier.pagination?.totalRecords);
   useEffect(() => {
     const breadCrumbItems = [
       {
@@ -27,11 +31,13 @@ export default function SupplierPage() {
   }, [dispatch]);
   return (
     <ModalSupplierProvider>
-      <h3 css={titleStyle}>Nhà cung cấp</h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.supplier' })}</h3>
       <div css={subTitleStyle}>
         <CustomIcon width={8} height={8} type="dot" />
         <span>
-          <span css={subTitleStyle}>10 nhà cung cấp</span>
+          <span css={subTitleStyle}>
+            {totalRecords} {formatMessage({ id: 'title.document.supplier' })}
+          </span>
         </span>
       </div>
       <TableSupplier />

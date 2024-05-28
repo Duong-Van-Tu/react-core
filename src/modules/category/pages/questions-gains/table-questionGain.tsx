@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
@@ -21,9 +20,6 @@ export default function TableQuestionGains() {
   const { getAllQuestionGain } = useQuestionGain();
   const [loading] = useWatchLoading(['get-questionGain', true]);
   const { data, pagination } = useRootSelector((state) => state.category.questionGain);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllQuestionGain({
@@ -31,7 +27,6 @@ export default function TableQuestionGains() {
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -39,7 +34,6 @@ export default function TableQuestionGains() {
     getAllQuestionGain({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -57,16 +51,15 @@ export default function TableQuestionGains() {
     getAllQuestionGain({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
-  }, [getAllQuestionGain, tab]);
+  }, [getAllQuestionGain]);
 
   return (
     <div css={rootStyle}>
       <Button
         onClick={() => openModal('Add Question')}
         type="primary"
-        css={addRelationshipLvStyle}
+        css={addQuestionGainStyle}
         iconPosition="start"
         size="large"
       >
@@ -78,8 +71,8 @@ export default function TableQuestionGains() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!questionIds} onClick={() => handleDeleteSupplier()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!questionIds} onClick={() => handleDeleteSupplier()} size="middle" danger>
+          Xoá câu hỏi đã chọn
         </Button>
       </div>
       <TableCustom
@@ -105,7 +98,7 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addRelationshipLvStyle = css`
+const addQuestionGainStyle = css`
   position: absolute;
   right: 0;
   top: -6.5rem;

@@ -5,37 +5,44 @@ import { Pagination } from '@/constants/pagination';
 
 import { css } from '@emotion/react';
 import { Button, Row, Space } from 'antd';
-import { useLocation } from 'react-router-dom';
+
 import { useSupplier } from '@/modules/category/services/supplier.service';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateTotalRecordsSupplierAction } from '@/modules/category/reducers/slicers/supplier.slice';
 type DeleteSupplierProps = {
   closeModal: () => void;
   data?: DataSupplierType;
   supplierIds: string[];
 };
-export const DeleteSupplier = ({ closeModal, supplierIds }: DeleteSupplierProps) => {
+export const DeleteSupplier = ({ closeModal, supplierIds, data }: DeleteSupplierProps) => {
   const { deleteSupplier, getAllSupplier } = useSupplier();
+  const dispatch = useDispatch();
   const pageIndex = useRootSelector((state) => state.category.supplier.pagination?.pageIndex) ?? 0;
+  const totalRecords = useRootSelector((state) => state.category.supplier.pagination?.totalRecords);
   const [loading] = useWatchLoading(['delete-supplier', false]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
+  const dataSupplier = useRootSelector((state) => state.category.supplier.data);
   const handleDeleteSupplier = async () => {
-    const deleteclient = await deleteSupplier(supplierIds);
+    const deleteclient = await deleteSupplier(!!data ? [data.id!] : supplierIds);
     if (deleteclient) {
-      getAllSupplier({
-        pageIndex: pageIndex || 1,
-        pageSize: Pagination.PAGESIZE,
-        roleType: tab!,
-      });
-
+      const newTotalRecords = totalRecords - supplierIds.length;
+      dispatch(updateTotalRecordsSupplierAction(newTotalRecords));
       closeModal();
     } else {
       console.error('Failed to delete supplier');
     }
   };
+  useEffect(() => {
+    if (dataSupplier.length === 0) {
+      getAllSupplier({
+        pageIndex: pageIndex === 1 ? 1 : pageIndex - 1,
+        pageSize: Pagination.PAGESIZE,
+      });
+    }
+  }, [dataSupplier]);
   return (
     <div css={rootStyle}>
-      <h3 css={titleStyle}>Đồng ý xoá các mục tiêu đã chọn?</h3>
+      <h3 css={titleStyle}>Đồng ý xoá các nhà cung cấp đã chọn?</h3>
       <Row justify="center">
         <Space>
           <Button onClick={() => closeModal()}>Huỷ</Button>

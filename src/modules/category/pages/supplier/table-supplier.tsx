@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
@@ -20,16 +19,12 @@ export default function TableSupplier() {
   const { getAllSupplier } = useSupplier();
   const [loading] = useWatchLoading(['get-supplier', true]);
   const { data, pagination } = useRootSelector((state) => state.category.supplier);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllSupplier({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
       textSearch,
       time,
-      roleType: tab!,
     });
   };
 
@@ -37,7 +32,6 @@ export default function TableSupplier() {
     getAllSupplier({
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
   };
 
@@ -55,16 +49,15 @@ export default function TableSupplier() {
     getAllSupplier({
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
     });
-  }, [getAllSupplier, tab]);
+  }, [getAllSupplier]);
 
   return (
     <div css={rootStyle}>
       <Button
         onClick={() => openModal('Add Supplier')}
         type="primary"
-        css={addKCustomerStyle}
+        css={addSupplierStyle}
         iconPosition="start"
         size="large"
       >
@@ -76,8 +69,8 @@ export default function TableSupplier() {
         <Search onSearch={handleSearch} />
       </div>
       <div css={checkBoxStyle}>
-        <Button disabled={!supplierIds} onClick={() => handleDeleteSupplier()} size="large" danger>
-          Xoá mục tiêu đã chọn
+        <Button disabled={!supplierIds} onClick={() => handleDeleteSupplier()} size="middle" danger>
+          Xoá nhà cung cấp đã chọn
         </Button>
       </div>
       <TableCustom
@@ -103,10 +96,10 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addKCustomerStyle = css`
+const addSupplierStyle = css`
   position: absolute;
   right: 0;
-  top: -9rem;
+  top: -7rem;
   background: #0070b8;
   display: flex;
   align-items: center;
