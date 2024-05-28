@@ -57,7 +57,7 @@ export default function TableSupplier() {
       <Button
         onClick={() => openModal('Add Supplier')}
         type="primary"
-        css={addKCustomerStyle}
+        css={addSupplierStyle}
         iconPosition="start"
         size="large"
       >
@@ -96,10 +96,10 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addKCustomerStyle = css`
+const addSupplierStyle = css`
   position: absolute;
   right: 0;
-  top: -9rem;
+  top: -7rem;
   background: #0070b8;
   display: flex;
   align-items: center;

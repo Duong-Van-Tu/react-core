@@ -57,7 +57,7 @@ export default function TableService() {
       <Button
         onClick={() => openModal('Add Service')}
         type="primary"
-        css={addKCustomerStyle}
+        css={addKServiceStyle}
         iconPosition="start"
         size="large"
       >
@@ -96,10 +96,10 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addKCustomerStyle = css`
+const addKServiceStyle = css`
   position: absolute;
   right: 0;
-  top: -9rem;
+  top: -7.5rem;
   background: #0070b8;
   display: flex;
   align-items: center;

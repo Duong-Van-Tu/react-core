@@ -59,7 +59,7 @@ export default function TableQuestionGains() {
       <Button
         onClick={() => openModal('Add Question')}
         type="primary"
-        css={addRelationshipLvStyle}
+        css={addQuestionGainStyle}
         iconPosition="start"
         size="large"
       >
@@ -98,7 +98,7 @@ const rootStyle = css`
   position: relative;
 `;
 
-const addRelationshipLvStyle = css`
+const addQuestionGainStyle = css`
   position: absolute;
   right: 0;
   top: -6.5rem;

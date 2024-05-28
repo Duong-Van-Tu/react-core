@@ -105,7 +105,7 @@ const rootStyle = css`
 const addKCustomerStyle = css`
   position: absolute;
   right: 0;
-  top: -9rem;
+  top: -7rem;
   background: #0070b8;
   display: flex;
   align-items: center;
