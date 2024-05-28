@@ -6,9 +6,12 @@ import { useDispatch } from 'react-redux';
 import { ModalCustomerProvider } from '../../components/modals/customer';
 import { CustomIcon } from '@/components/icons';
 import TableCustomer from './table-customer';
+import { useRootSelector } from '@/hooks/selector.hook';
+import { useLocale } from '@/hooks/locale.hook';
 
 export default function CustomerPage() {
-  // const { openModal } = useModalCustomer();
+  const totalRecords = useRootSelector((state) => state.category.customer.pagination?.totalRecords);
+  const { formatMessage } = useLocale();
   const dispatch = useDispatch();
   useEffect(() => {
     const breadCrumbItems = [
@@ -30,11 +33,13 @@ export default function CustomerPage() {
 
   return (
     <ModalCustomerProvider>
-      <h3 css={titleStyle}>Khách hàng</h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.customer' })}</h3>
       <div css={subTitleStyle}>
         <CustomIcon width={8} height={8} type="dot" />
         <span>
-          <span css={subTitleStyle}>10 Khách hàng</span>
+          <span css={subTitleStyle}>
+            {totalRecords} {formatMessage({ id: 'title.document.customer' })}
+          </span>
         </span>
       </div>
       <TableCustomer />

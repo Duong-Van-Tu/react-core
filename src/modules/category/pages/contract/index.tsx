@@ -5,7 +5,9 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useDispatch } from 'react-redux';
 import { ModalContractProvider } from '../../components/modals/contract';
 import TableContract from './table-contract';
+import { useLocale } from '@/hooks/locale.hook';
 export default function ContractPage() {
+  const { formatMessage } = useLocale();
   const dispatch = useDispatch();
   useEffect(() => {
     const breadCrumbItems = [
@@ -26,7 +28,7 @@ export default function ContractPage() {
   }, [dispatch]);
   return (
     <ModalContractProvider>
-      <h3 css={titleStyle}>Hợp đồng</h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.contract' })}</h3>
       <TableContract />
     </ModalContractProvider>
   );

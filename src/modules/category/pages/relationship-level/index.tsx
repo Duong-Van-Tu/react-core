@@ -5,9 +5,10 @@ import { setBreadcrumbItemsAction } from '@/redux/slicers/breadcrumb.slice';
 import { useDispatch } from 'react-redux';
 import { ModalRelationshipLvProvider } from '../../components/modals/relationship-level';
 import TableRelationshipLevel from './table-relationshipLevel';
-
+import { useLocale } from '@/hooks/locale.hook';
 export default function RelationshipLvPage() {
   const dispatch = useDispatch();
+  const { formatMessage } = useLocale();
   useEffect(() => {
     const breadCrumbItems = [
       {
@@ -27,7 +28,7 @@ export default function RelationshipLvPage() {
   }, [dispatch]);
   return (
     <ModalRelationshipLvProvider>
-      <h3 css={titleStyle}>Mức độ quan hệ</h3>
+      <h3 css={titleStyle}>{formatMessage({ id: 'title.document.relationshipLevel' })}</h3>
       <TableRelationshipLevel />
     </ModalRelationshipLvProvider>
   );
