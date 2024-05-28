@@ -4,7 +4,7 @@ import { useLocale } from '@/hooks/locale.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useOpportunity } from '@/modules/sales/services/opportunity.service';
 import { css } from '@emotion/react';
-import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
+import { Button, Col, DatePicker, Form, FormProps, Input, Row, Space } from 'antd';
 import dayjs from 'dayjs';
 import { Fragment } from 'react';
 

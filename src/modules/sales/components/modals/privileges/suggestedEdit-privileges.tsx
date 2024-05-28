@@ -6,7 +6,7 @@ import { StatusBenefit } from '@/modules/sales/enum/status.enum';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
 import { currencyFormatter, currencyParser } from '@/utils/formatter';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
+import { Button, Col, Form, FormProps, InputNumber, Row, Space } from 'antd';
 import { Fragment } from 'react';
 
 type SuggestEditPrivilegesProps = {
