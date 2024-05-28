@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
@@ -10,7 +9,6 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { Key } from 'antd/es/table/interface';
 import { Pagination } from '@/constants/pagination';
 import { useRootSelector } from '@/hooks/selector.hook';
-
 import { serviceColumns } from './column/service.column';
 import { useModalService } from '../../components/modals/service-category';
 import { useService } from '../../services/service-category.service';
@@ -21,9 +19,6 @@ export default function TableService() {
   const { getAllService } = useService();
   const [loading] = useWatchLoading(['get-service', true]);
   const { data, pagination } = useRootSelector((state) => state.category.sevice);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllService({
       pageIndex: pagination?.pageIndex ?? Pagination.PAGEINDEX,
@@ -55,7 +50,7 @@ export default function TableService() {
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
     });
-  }, [getAllService, tab]);
+  }, [getAllService]);
 
   return (
     <div css={rootStyle}>

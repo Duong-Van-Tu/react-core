@@ -6,7 +6,6 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { useQuestionGain } from '@/modules/category/services/question-gain.service';
 
 type FieldType = {
-  code: number;
   content: string;
   description: string;
 };
@@ -23,7 +22,6 @@ export const AddQuestionGain = ({ closeModal }: AddQuestionGainProps) => {
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const dataAddQuestionGain = {
       ...values,
-      code: values.code.toString(),
     };
     const add = await addQuestionGain(dataAddQuestionGain);
     if (add) {
@@ -47,14 +45,6 @@ export const AddQuestionGain = ({ closeModal }: AddQuestionGainProps) => {
         onFinish={onFinish}
         layout="vertical"
       >
-        <Form.Item<FieldType>
-          label={<span css={labelFormItem}>Số thứ tự</span>}
-          name="code"
-          rules={[{ required: false, message: 'Vui lòng nhập số thứ tự!' }]}
-        >
-          <Input placeholder="Nhập số thứ tự" />
-        </Form.Item>
-
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Câu hỏi</span>}
           name="content"

@@ -79,9 +79,6 @@ export const useService = () => {
   const addKService = useCallback(
     async (values: DataServiceCategoryType) => {
       const dataAddService = convertToUppercaseFirstLetter({ ...values });
-
-      console.log('Payload for API: ', [{ data: dataAddService }]);
-
       const { data, succeeded } = await caller(
         () => api.post(`/Service/add-or-update?tenant=${tenant}`, [{ data: dataAddService }]),
         { loadingKey: 'add-service', successMessage: Messages.CREATE_SUCCESS },

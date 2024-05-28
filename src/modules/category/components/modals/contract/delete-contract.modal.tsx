@@ -21,7 +21,7 @@ export const DeleteContract = ({ closeModal, contractIds, data }: DeleteContract
     if (deleteclient) {
       closeModal();
     } else {
-      console.error('Failed to delete customer');
+      console.error('Failed to delete contract');
     }
   };
 

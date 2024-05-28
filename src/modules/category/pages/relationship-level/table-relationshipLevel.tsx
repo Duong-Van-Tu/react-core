@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
@@ -20,9 +19,6 @@ export default function TableRelationshipLevel() {
   const { getAllRelationshipLevel } = useRelationshipLevel();
   const [loading] = useWatchLoading(['get-relationshipLevel', true]);
   const { data, pagination } = useRootSelector((state) => state.category.relationshipLevel);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllRelationshipLevel({
@@ -55,7 +51,7 @@ export default function TableRelationshipLevel() {
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
     });
-  }, [getAllRelationshipLevel, tab]);
+  }, [getAllRelationshipLevel]);
 
   return (
     <div css={rootStyle}>

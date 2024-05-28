@@ -78,9 +78,6 @@ export const useSupplier = () => {
   const addKSupplier = useCallback(
     async (values: DataSupplierType) => {
       const dataAddSupplier = convertToUppercaseFirstLetter({ ...values });
-
-      console.log('Payload for API: ', [{ data: dataAddSupplier }]);
-
       const { data, succeeded } = await caller(
         () => api.post(`/Supplier/add-or-update?tenant=${tenant}`, [{ data: dataAddSupplier }]),
         { loadingKey: 'add-supplier', successMessage: Messages.CREATE_SUCCESS },

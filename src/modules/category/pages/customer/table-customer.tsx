@@ -22,7 +22,7 @@ export default function TableCustomer() {
   const { data, pagination } = useRootSelector((state) => state.category.customer);
   const [loading] = useWatchLoading(['get-customer', true]);
 
-  const { tab, textSearch, time } = useQuery();
+  const { textSearch, time } = useQuery();
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllCustomer({
@@ -44,7 +44,6 @@ export default function TableCustomer() {
       pageIndex: page,
       pageSize: Pagination.PAGESIZE,
       textSearch: textSearch ? decodeURI(textSearch).replace(/\+/g, ' ') : undefined,
-
       time,
     });
   };
@@ -54,7 +53,7 @@ export default function TableCustomer() {
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
     });
-  }, [getAllCustomer, tab]);
+  }, [getAllCustomer]);
 
   const handleDeleteCustomer = () => {
     openModal('Delete Customer', undefined, customerIds);

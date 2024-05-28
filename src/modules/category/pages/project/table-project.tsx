@@ -22,7 +22,7 @@ export default function TableProject() {
   const { data, pagination } = useRootSelector((state) => state.category.project);
   const [loading] = useWatchLoading(['get-project', true]);
 
-  const { tab, textSearch, time } = useQuery();
+  const { textSearch, time } = useQuery();
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllProject({
@@ -54,7 +54,7 @@ export default function TableProject() {
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
     });
-  }, [getAllProject, tab]);
+  }, [getAllProject]);
 
   const handleDeleteCustomer = () => {
     openModal('Delete Project', undefined, projectIds);

@@ -2,7 +2,6 @@
 import { css } from '@emotion/react';
 import { TableCustom } from '@/components/table';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import { Button } from 'antd';
 import { Search, SearchParams } from '@/components/search';
 import { CustomIcon } from '@/components/icons';
@@ -21,9 +20,6 @@ export default function TableQuestionGains() {
   const { getAllQuestionGain } = useQuestionGain();
   const [loading] = useWatchLoading(['get-questionGain', true]);
   const { data, pagination } = useRootSelector((state) => state.category.questionGain);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const tab = searchParams.get('tab');
 
   const handleSearch = ({ textSearch, time }: SearchParams) => {
     getAllQuestionGain({
@@ -56,7 +52,7 @@ export default function TableQuestionGains() {
       pageIndex: Pagination.PAGEINDEX,
       pageSize: Pagination.PAGESIZE,
     });
-  }, [getAllQuestionGain, tab]);
+  }, [getAllQuestionGain]);
 
   return (
     <div css={rootStyle}>
