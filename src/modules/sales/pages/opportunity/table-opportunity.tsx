@@ -24,9 +24,10 @@ export default function TableOpportunity() {
   const navigate = useNavigate();
   const { getAllOpportunity, getAllStatusOpportunity } = useOpportunity();
   const [opportunityIds, setOpportunityIds] = useState<string[]>();
-  const [loading, loadingStatus] = useWatchLoading(
+  const [loading, loadingStatus, loadingDelete] = useWatchLoading(
     ['get-opportunity', true],
     ['status-opportunity', true],
+    ['delete-opportunity', false],
   );
   const { pagination, status, data } = useRootSelector((state) => state.sale.opportunity);
   const { textSearch, time, statusId } = useQuery();
@@ -64,6 +65,12 @@ export default function TableOpportunity() {
     });
     getAllStatusOpportunity();
   }, [getAllOpportunity, getAllStatusOpportunity]);
+
+  useEffect(() => {
+    if (loadingDelete) {
+      setOpportunityIds(undefined);
+    }
+  }, [loadingDelete]);
 
   return (
     <div css={rootStyle}>

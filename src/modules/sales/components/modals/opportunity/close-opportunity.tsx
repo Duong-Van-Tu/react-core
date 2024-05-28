@@ -30,6 +30,15 @@ export const CloseOpportunity = ({ ...props }: CloseOpportunityProps) => {
     () => status?.find((item) => item.id === selectedStatusId)?.code === StatusOpportunity.Fail,
     [status, selectedStatusId],
   );
+  const isCancel = useMemo(
+    () => status?.find((item) => item.id === selectedStatusId)?.code === StatusOpportunity.Cancel,
+    [status, selectedStatusId],
+  );
+  const isOnHold = useMemo(
+    () => status?.find((item) => item.id === selectedStatusId)?.code === StatusOpportunity.OnHold,
+    [status, selectedStatusId],
+  );
+
   const statusOptions = useMemo(
     () =>
       status?.map((item) => ({
@@ -90,7 +99,7 @@ export const CloseOpportunity = ({ ...props }: CloseOpportunityProps) => {
             onSelect={(value) => setSelectedStatusId(value)}
           />
         </Form.Item>
-        {isFailure && (
+        {(isFailure || isCancel || isOnHold) && (
           <Form.Item<FieldType>
             label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.reason' })}</span>}
             name="reason"

@@ -2,6 +2,7 @@
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
+import { currencyFormatter, currencyParser } from '@/utils/formatter';
 import { css } from '@emotion/react';
 import { Button, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
 import { Fragment, useEffect } from 'react';
@@ -37,7 +38,6 @@ export const EditPrivileges = ({ closeModal, data }: EditPrivilegesProps) => {
     };
     const edit = await updateBenefit(dataUpdateBenefit);
     if (edit) {
-      form.resetFields();
       closeModal();
     }
   };
@@ -83,6 +83,8 @@ export const EditPrivileges = ({ closeModal, data }: EditPrivilegesProps) => {
           ]}
         >
           <InputNumber
+            formatter={(value) => currencyFormatter(value as number)}
+            parser={(value) => currencyParser(value as unknown as number)}
             css={inputStyle}
             size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
@@ -106,6 +108,8 @@ export const EditPrivileges = ({ closeModal, data }: EditPrivilegesProps) => {
           ]}
         >
           <InputNumber
+            formatter={(value) => currencyFormatter(value as number)}
+            parser={(value) => currencyParser(value as unknown as number)}
             css={inputStyle}
             size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
@@ -129,6 +133,8 @@ export const EditPrivileges = ({ closeModal, data }: EditPrivilegesProps) => {
           ]}
         >
           <InputNumber
+            formatter={(value) => currencyFormatter(value as number)}
+            parser={(value) => currencyParser(value as unknown as number)}
             css={inputStyle}
             size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}

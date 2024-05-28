@@ -20,7 +20,11 @@ import { ModalPrivilegesType } from '../../enum/modal.enum';
 export default function TablePrivileges() {
   const { openModal } = useModalPrivileges();
   const { getAllStatusBenefit, getAllBenefit } = useBenefit();
-  const [loading, loadingStatus] = useWatchLoading(['get-benefit', true], ['status-benefit', true]);
+  const [loading, loadingStatus, loadingDelete] = useWatchLoading(
+    ['get-benefit', true],
+    ['status-benefit', true],
+    ['delete-benefit', false],
+  );
   const { isSaleDirector, isAdministrator, isSale, isSupplier } = usePermission();
   const { data, pagination, status } = useRootSelector((state) => state.sale.benefit);
   const { tab, textSearch, time, statusId } = useQuery();
@@ -77,6 +81,12 @@ export default function TablePrivileges() {
     }
     getAllStatusBenefit();
   }, [getAllBenefit, getAllStatusBenefit, tab]);
+
+  useEffect(() => {
+    if (loadingDelete) {
+      setBenefitIds(undefined);
+    }
+  }, [loadingDelete]);
 
   return (
     <div css={rootStyle}>

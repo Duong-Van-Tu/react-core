@@ -25,7 +25,7 @@ export const CreateHistoryOpportunity = ({ closeModal, data }: CreateHistoryOppo
   const { formatMessage } = useLocale();
   const [form] = Form.useForm();
   const user = useRootSelector((state) => state.auth.user);
-  const [loading] = useWatchLoading(['add-Opportunity', false]);
+  const [loading] = useWatchLoading(['add-historyOpportunity', false]);
 
   const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     const { goal, time } = values;
@@ -63,11 +63,7 @@ export const CreateHistoryOpportunity = ({ closeModal, data }: CreateHistoryOppo
           name="goal"
           rules={[{ required: true, message: formatMessage({ id: 'form.input.require.target' }) }]}
         >
-          <InputNumber
-            css={inputStyle}
-            size="large"
-            placeholder={formatMessage({ id: 'form.input.target' })}
-          />
+          <Input size="large" placeholder={formatMessage({ id: 'form.input.target' })} />
         </Form.Item>
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>{formatMessage({ id: 'title.form.activity' })}</span>}

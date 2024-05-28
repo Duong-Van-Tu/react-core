@@ -4,6 +4,7 @@ import { useLocale } from '@/hooks/locale.hook';
 import { usePermission } from '@/hooks/permission.hook';
 import { StatusBenefit } from '@/modules/sales/enum/status.enum';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
+import { currencyFormatter, currencyParser } from '@/utils/formatter';
 import { css } from '@emotion/react';
 import { Button, Col, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
 import { Fragment } from 'react';
@@ -75,7 +76,12 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
             </span>
           }
         >
-          <Input value={data.monthlySalary} size="large" disabled />
+          <InputNumber
+            value={currencyFormatter(data.monthlySalary as unknown as number)}
+            css={inputStyle}
+            size="large"
+            disabled
+          />
         </Form.Item>
 
         <Row gutter={[20, 0]}>
@@ -87,7 +93,12 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
                 </span>
               }
             >
-              <Input value={data.targetSalary} size="large" disabled />
+              <InputNumber
+                value={currencyFormatter(data.targetSalary as unknown as number)}
+                css={inputStyle}
+                size="large"
+                disabled
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -100,7 +111,12 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
                 </span>
               }
             >
-              <Input value={data.totalSalary} size="large" disabled />
+              <InputNumber
+                css={inputStyle}
+                value={currencyFormatter(data.totalSalary as unknown as number)}
+                size="large"
+                disabled
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -119,7 +135,12 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
             },
           ]}
         >
-          <InputNumber css={inputStyle} size="large" />
+          <InputNumber
+            formatter={(value) => currencyFormatter(value as number)}
+            parser={(value) => currencyParser(value as unknown as number)}
+            css={inputStyle}
+            size="large"
+          />
         </Form.Item>
 
         <Row gutter={[20, 0]}>
@@ -138,7 +159,12 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
                 },
               ]}
             >
-              <InputNumber css={inputStyle} size="large" />
+              <InputNumber
+                formatter={(value) => currencyFormatter(value as unknown as number)}
+                parser={(value) => currencyParser(value as unknown as number)}
+                css={inputStyle}
+                size="large"
+              />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -158,7 +184,12 @@ export const SuggestEditPrivileges = ({ closeModal, data }: SuggestEditPrivilege
                 },
               ]}
             >
-              <InputNumber css={inputStyle} size="large" />
+              <InputNumber
+                formatter={(value) => currencyFormatter(value as unknown as number)}
+                parser={(value) => currencyParser(value as unknown as number)}
+                css={inputStyle}
+                size="large"
+              />
             </Form.Item>
           </Col>
         </Row>

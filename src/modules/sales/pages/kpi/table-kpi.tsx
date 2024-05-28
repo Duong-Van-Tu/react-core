@@ -20,7 +20,11 @@ import { ModalKPIType } from '../../enum/modal.enum';
 export default function TableKPI() {
   const { openModal } = useModalKPI();
   const { getAllKPI, getAllStatusKPI } = useKPI();
-  const [loading, loadingStatus] = useWatchLoading(['get-kpi', true], ['status-kpi', true]);
+  const [loading, loadingStatus, loadingDelete] = useWatchLoading(
+    ['get-kpi', true],
+    ['status-kpi', true],
+    ['delete-kpi', false],
+  );
 
   const { data, pagination, status, totalExtend } = useRootSelector((state) => state.sale.kpi);
   const { isSaleDirector, isSale, isSupplier, isAdministrator } = usePermission();
@@ -72,6 +76,12 @@ export default function TableKPI() {
     }
     getAllStatusKPI();
   }, [getAllKPI, getAllStatusKPI, tab]);
+
+  useEffect(() => {
+    if (loadingDelete) {
+      setGoalIds(undefined);
+    }
+  }, [loadingDelete]);
 
   const addKPIBtnStyle = isSale || isSupplier ? addKPIBtnStyleSale : addKPIBtnStyleBase;
   return (

@@ -195,8 +195,7 @@ export default function ReportOpportunityPage() {
                   {report?.opportunityStatus?.name!}
                 </Message>
                 <br />
-                {report?.opportunityStatus?.code === StatusOpportunity.Fail &&
-                  `Lý do huỷ: ${report.reason}`}
+                {report?.reason && `Lý do huỷ: ${report.reason}`}
               </div>
             </Col>
           </Row>
