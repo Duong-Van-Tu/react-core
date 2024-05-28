@@ -6,7 +6,7 @@ import { FilterIncomeType } from '../../services/income.service';
 type Props = {
   data: DataIncomeType[];
   loading: boolean;
-  isAdmin: boolean | undefined;
+  isAdministrator: boolean | undefined;
   pagination: PaginationAPI | undefined;
   getListIncome: (params: FilterIncomeType) => void;
 };
@@ -14,7 +14,7 @@ type Props = {
 export default function CurrentIncomeTable({
   data,
   loading,
-  isAdmin,
+  isAdministrator,
   pagination,
   getListIncome,
 }: Props) {
@@ -27,13 +27,13 @@ export default function CurrentIncomeTable({
 
   return (
     <TableCustom
-      columns={isAdmin ? adminCurrentIncomeColumns : currentIncomeColumns}
+      columns={isAdministrator ? adminCurrentIncomeColumns : currentIncomeColumns}
       dataSource={data}
       loading={loading}
       rowKey={(record) => record.key}
       onTableChange={(page) => handleTableChange(page)}
       pagination={
-        isAdmin
+        isAdministrator
           ? {
               current: pagination?.pageIndex,
               pageSize: Pagination.PAGESIZE,

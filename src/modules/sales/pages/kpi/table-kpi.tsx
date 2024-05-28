@@ -63,11 +63,13 @@ export default function TableKPI() {
   };
 
   useEffect(() => {
-    getAllKPI({
-      pageIndex: Pagination.PAGEINDEX,
-      pageSize: Pagination.PAGESIZE,
-      roleType: tab!,
-    });
+    if (tab) {
+      getAllKPI({
+        pageIndex: Pagination.PAGEINDEX,
+        pageSize: Pagination.PAGESIZE,
+        roleType: tab,
+      });
+    }
     getAllStatusKPI();
   }, [getAllKPI, getAllStatusKPI, tab]);
 

@@ -21,7 +21,7 @@ export default function HumanResourcesPage() {
   const { data, pagination } = useRootSelector((state) => state.user.humanResources);
   const user = useRootSelector((state) => state.auth.user);
 
-  const { isAdmin } = usePermission();
+  const { isAdministrator } = usePermission();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function HumanResourcesPage() {
   }, []);
 
   const handleGetInfo = () => {
-    if (isAdmin) {
+    if (isAdministrator) {
       getListUsers({
         pageIndex: Pagination.PAGEINDEX,
         pageSize: Pagination.PAGESIZE,
@@ -74,19 +74,19 @@ export default function HumanResourcesPage() {
   return (
     <div>
       <h3 css={titleStyle}>{formatMessage({ id: 'title.document.inforPersonnel' })}</h3>
-      {isAdmin && (
+      {isAdministrator && (
         <div css={searchContainer}>
           <Search onSearch={handleSearch} />
         </div>
       )}
       <TableCustom
         columns={usersColumns}
-        dataSource={isAdmin ? data : [user]}
-        loading={isAdmin && loadingAdmin}
+        dataSource={isAdministrator ? data : [user]}
+        loading={isAdministrator && loadingAdmin}
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
         pagination={
-          isAdmin && {
+          isAdministrator && {
             current: pagination?.pageIndex,
             pageSize: Pagination.PAGESIZE,
             total: pagination?.totalRecords,

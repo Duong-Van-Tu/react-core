@@ -78,6 +78,7 @@ export function useCaller() {
           res === undefined ||
           (res &&
             typeof res?.data !== 'string' &&
+            res?.data?.length === 0 &&
             (!res.data?.succeeded ||
               res.exception === 'Error' ||
               res.status >= 400 ||

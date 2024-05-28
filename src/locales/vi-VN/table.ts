@@ -94,5 +94,14 @@ export const viVN_table = {
   'table.column.projectService': 'Mảng kinh doanh',
   'table.column.projectApplicationUser': 'Phụ trách',
 
+  'table.column.organize.empCode': 'Mã nhân viên',
+  'table.column.organize.fullName': 'Họ và tên',
+  'table.column.organize.position': 'Vị trí',
+  'table.column.organize.positionInformation': 'Thông tin vị trí',
+  'table.column.organize.interests': 'Quyền lợi',
+  'table.column.organize.target': 'Mục tiêu',
+  'table.column.organize.autodidactic': 'Tự học',
+  'table.column.organize.manualDocument': 'Tài liệu hướng dẫn',
+
   'table.column.saleKit.selectAll': 'Chọn tất cả',
 };

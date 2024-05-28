@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type IncomeState = {
   data: DataIncomeType[];
+  dataUser: DataIncomeUserType[];
   dataRoleUser?: DataIncomTypeWithRoleUserType[];
   dataRoleAdmin?: DataIncomTypeWithRoleAdminType[];
   dataDetailIncome: DataIncomeDetailType[];
@@ -11,6 +12,7 @@ export type IncomeState = {
 
 export const incomeInitialState: IncomeState = {
   data: [],
+  dataUser: [],
   dataRoleUser: [],
   dataRoleAdmin: [],
   dataDetailIncome: [],
@@ -33,6 +35,16 @@ const slice = createSlice({
       state.data = payload.data;
       state.pagination = payload.pagination;
       state.totalExtend = payload.totalExtend;
+    },
+    setListIncomeUserAction(
+      state,
+      {
+        payload,
+      }: PayloadAction<{
+        data: DataIncomeUserType[];
+      }>,
+    ) {
+      state.dataUser = payload.data;
     },
     setListIncomeActionWithRoleAdmin(
       state,
@@ -84,5 +96,6 @@ export const {
   setListIncomeActionWithRoleUser,
   setListIncomeActionWithRoleAdmin,
   setListIncomeDetail,
+  setListIncomeUserAction,
 } = slice.actions;
 export default slice.reducer;

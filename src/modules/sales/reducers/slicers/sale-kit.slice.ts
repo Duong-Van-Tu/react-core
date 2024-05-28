@@ -4,6 +4,8 @@ export type SaleKitState = {
   data: DataSaleKitType[];
   dataSaleKitRole: DataSaleKitRoleType[];
   dataRole: RoleType[];
+  pagination?: PaginationAPI;
+  totalExtend?: number;
 };
 
 export const saleKitInitialState: SaleKitState = {
@@ -22,9 +24,13 @@ const slice = createSlice({
         payload,
       }: PayloadAction<{
         data: DataSaleKitType[];
+        pagination: PaginationAPI;
+        totalExtend: number;
       }>,
     ) {
       state.data = payload.data;
+      state.pagination = payload.pagination;
+      state.totalExtend = payload.totalExtend;
     },
     setListSaleKitActionRole(
       state,
@@ -32,9 +38,13 @@ const slice = createSlice({
         payload,
       }: PayloadAction<{
         data: DataSaleKitRoleType[];
+        pagination: PaginationAPI;
+        totalExtend: number;
       }>,
     ) {
       state.dataSaleKitRole = payload.data;
+      state.pagination = payload.pagination;
+      state.totalExtend = payload.totalExtend;
     },
     setListSaleKitRoleAction(
       state,

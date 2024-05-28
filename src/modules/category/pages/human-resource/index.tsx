@@ -22,7 +22,7 @@ export default function HumanResourcesPage() {
   const { data, pagination } = useRootSelector((state) => state.category.humanResources);
   const user = useRootSelector((state) => state.auth.user);
 
-  const { isAdmin } = usePermission();
+  const { isAdministrator } = usePermission();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function HumanResourcesPage() {
   }, []);
 
   const handleGetInfo = () => {
-    if (isAdmin) {
+    if (isAdministrator) {
       getListUsers({
         pageIndex: Pagination.PAGEINDEX,
         pageSize: Pagination.PAGESIZE,
@@ -80,16 +80,20 @@ export default function HumanResourcesPage() {
       </div>
       <TableCustom
         columns={usersColumns}
-        dataSource={isAdmin ? data : [user]}
+        dataSource={isAdministrator ? data : [user]}
         loading={loadingAdmin}
         rowKey={(record) => record.id}
         onTableChange={(page) => handleTableChange(page)}
-        pagination={{
-          current: pagination?.pageIndex,
-          pageSize: pagination?.pageSize,
-          total: pagination?.totalRecords,
-          position: ['bottomCenter'],
-        }}
+        pagination={
+          isAdministrator
+            ? {
+                current: pagination?.pageIndex,
+                pageSize: Pagination.PAGESIZE,
+                total: pagination?.totalRecords,
+                position: ['bottomCenter'],
+              }
+            : undefined
+        }
         scroll={{ x: 1450 }}
       />
     </ModalUserCategoryProvider>

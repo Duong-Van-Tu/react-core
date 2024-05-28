@@ -24,7 +24,7 @@ export default function TicketIncomeDetails() {
   const { getListIncomeDetail } = useIncome();
   const [loading] = useWatchLoading(['get-list-income-detail', true]);
 
-  const { isAdmin } = usePermission();
+  const { isAdministrator } = usePermission();
 
   const { dataDetailIncome, pagination } = useRootSelector((state) => state.user.income);
 
@@ -35,7 +35,7 @@ export default function TicketIncomeDetails() {
   }, []);
 
   const handleViewDetail = () => {
-    if (isAdmin) {
+    if (isAdministrator) {
       getListIncomeDetail({
         userId: query.userId,
         pageIndex: Pagination.PAGEINDEX,
@@ -53,7 +53,7 @@ export default function TicketIncomeDetails() {
   };
 
   const handleTableChange = (page: number) => {
-    if (isAdmin) {
+    if (isAdministrator) {
       getListIncomeDetail({
         userId: query.userId,
         pageIndex: page,

@@ -9,7 +9,7 @@ import { Pagination } from '@/constants/pagination';
 type Props = {
   data: DataIncomTypeWithRoleAdminType[] | DataIncomTypeWithRoleUserType[] | undefined;
   loading: boolean;
-  isAdmin: boolean | undefined;
+  isAdministrator: boolean | undefined;
   pagination: PaginationAPI | undefined;
   getListIncomeWithRoleAdmin: (params: FilterIncomeType) => void;
   getListIncomeWithRoleUser: (params: FilterIncomeType) => void;
@@ -17,14 +17,14 @@ type Props = {
 
 export default function LocationIncomeTable({
   data,
-  isAdmin,
+  isAdministrator,
   loading,
   pagination,
   getListIncomeWithRoleAdmin,
   getListIncomeWithRoleUser,
 }: Props) {
   const handleTableChange = (page: number) => {
-    if (isAdmin) {
+    if (isAdministrator) {
       getListIncomeWithRoleAdmin({
         pageIndex: page,
         pageSize: Pagination.PAGESIZE,
@@ -39,7 +39,7 @@ export default function LocationIncomeTable({
 
   return (
     <TableCustom
-      columns={isAdmin ? locationIncomeColumnsAdmin : locationIncomeColumnsUser}
+      columns={isAdministrator ? locationIncomeColumnsAdmin : locationIncomeColumnsUser}
       dataSource={data}
       loading={loading}
       rowKey={(record) => record.key}

@@ -5,6 +5,7 @@ type ApplicationUserType = {
   fullName: string;
   email: string;
   phone: string;
+  code?: string;
 };
 
 type RoleType = {
@@ -26,6 +27,19 @@ type DataIncomeType = {
   incomeRecevied?: number;
   applicationUser?: ApplicationUserType;
   roles?: RoleType[];
+};
+
+type DataIncomeUserType = {
+  incomeBeforeTax: number;
+  incomeNonTax: number;
+  dependent: number;
+  insurance: number;
+  incomeTax: number;
+  personalIncomeTax: number;
+  incomeRecevied: number;
+  userName: string;
+  tenantNameRoles: null | string;
+  applicationUser: ApplicationUserType;
 };
 
 type DataIncomTypeWithRoleAdminType = {
