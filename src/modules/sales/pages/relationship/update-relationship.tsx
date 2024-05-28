@@ -33,7 +33,6 @@ export default function UpdateGainsRelationship() {
     };
     const update = await updateGainsRelationship(dataUpdateGains);
     if (update) {
-      form.resetFields();
       messageApi.success(Messages.UPDATE_SUCCESS);
     } else {
       messageApi.success(errors[0]);
@@ -45,7 +44,7 @@ export default function UpdateGainsRelationship() {
   }, [getGainsRelationshipById, relationshipId]);
 
   useEffect(() => {
-    form.setFieldsValue({ ...gains, dayOfBirth: gains?.dayOfBirth ? dayjs(gains.dayOfBirth) : '' });
+    form.setFieldsValue({ ...gains, dayOfBirth: dayjs(gains?.dayOfBirth) });
   }, [gains]);
 
   return (
@@ -115,13 +114,7 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Email</span>}
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập email!',
-                },
-                { pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Email không hợp lệ!' },
-              ]}
+              rules={[{ pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Email không hợp lệ!' }]}
             >
               <Input type="email" css={inputStyle} size="middle" placeholder="Nhập email" />
             </Form.Item>
@@ -131,10 +124,6 @@ export default function UpdateGainsRelationship() {
               label={<span css={labelFormItem}>Số điện thoại</span>}
               name="phone"
               rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập số điện thoại!',
-                },
                 {
                   pattern: /^[0-9]+$/,
                   message: 'Số điện thoại không hợp lệ!',
@@ -150,12 +139,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Tên công ty</span>}
               name="company"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập tên công ty!',
-                },
-              ]}
             >
               <Input css={inputStyle} size="middle" placeholder="Nhập tên công ty" />
             </Form.Item>
@@ -164,12 +147,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Các bằng cấp</span>}
               name="degree"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập các bằng cấp!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập các bằng cấp" />
             </Form.Item>
@@ -180,12 +157,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Chức danh trong doanh nghiệp</span>}
               name="position"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập chức danh trong doanh nghiệp!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập chức danh trong doanh nghiệp" />
             </Form.Item>
@@ -194,12 +165,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Thời gian nắm giữ chức danh trên</span>}
               name="positionTerm"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập thời gian nắm giữ chức danh trên!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập thời gian nắm giữ chức danh trên" />
             </Form.Item>
@@ -210,12 +175,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Công việc đã trải qua</span>}
               name="formerJob"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập công việc đã trải qua!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập công việc đã trải qua" />
             </Form.Item>
@@ -224,12 +183,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Địa chỉ nơi ở hiện nay</span>}
               name="address"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập địa chỉ nơi ở hiện nay!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập địa chỉ nơi ở hiện nay" />
             </Form.Item>
@@ -238,12 +191,6 @@ export default function UpdateGainsRelationship() {
         <Form.Item<FieldType>
           label={<span css={labelFormItem}>Thông tin gia đình</span>}
           name="family"
-          rules={[
-            {
-              required: true,
-              message: 'Vui lòng nhập thông tin gia đình!',
-            },
-          ]}
         >
           <Input size="middle" placeholder="Nhập địa thông tin gia đình" />
         </Form.Item>
@@ -252,12 +199,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Chuyên môn chính</span>}
               name="speciality"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập chuyên môn chính!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập chuyên môn chính" />
             </Form.Item>
@@ -266,12 +207,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Thói quen hằng ngày</span>}
               name="habit"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập thói quen hằng ngày!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập thói quen hằng ngày" />
             </Form.Item>
@@ -283,27 +218,12 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Sở trường</span>}
               name="strongPoint"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập sở trường!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập sở trường" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item<FieldType>
-              label={<span css={labelFormItem}>Sở đoạn</span>}
-              name="weakPoint"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập sở đoạn!',
-                },
-              ]}
-            >
+            <Form.Item<FieldType> label={<span css={labelFormItem}>Sở đoạn</span>} name="weakPoint">
               <Input size="middle" placeholder="Nhập sở đoạn" />
             </Form.Item>
           </Col>
@@ -314,12 +234,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Sở thích (món ăn, âm nhạc,...)</span>}
               name="hobby"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập sở thích!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập sở thích" />
             </Form.Item>
@@ -328,12 +242,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điều không thích</span>}
               name="dislike"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập điều không thích!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập điều không thích" />
             </Form.Item>
@@ -345,12 +253,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Những hoạt động yêu thích</span>}
               name="faviroteActivity"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập những hoạt động yêu thích!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập những hoạt động yêu thích" />
             </Form.Item>
@@ -359,12 +261,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Khát vọng cháy bỏng</span>}
               name="aspiration"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập khát vọng cháy bỏng!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập khát vọng cháy bỏng" />
             </Form.Item>
@@ -376,12 +272,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Ngày T7, CN thường làm gì</span>}
               name="weekendActivity"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập ngày T7, CN thường làm gì!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="nhập Ngày T7, CN thường làm gì" />
             </Form.Item>
@@ -390,12 +280,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Mong muốn gì 1-2 năm tới</span>}
               name="longGoal"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập mong muốn gì 1-2 năm tới!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập mong muốn gì 1-2 năm tới" />
             </Form.Item>
@@ -407,12 +291,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Thần tượng Nhân vật ưa thích là ai</span>}
               name="idol"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập thần tượng Nhân vật ưa thích là ai!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="nhập thần tượng Nhân vật ưa thích là ai" />
             </Form.Item>
@@ -421,12 +299,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Điều quan tâm trong 1-2-3 tháng tới</span>}
               name="nearGoal"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập điều quan tâm trong 1-2-3 tháng tới!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="Nhập điều quan tâm trong 1-2-3 tháng tới" />
             </Form.Item>
@@ -438,12 +310,6 @@ export default function UpdateGainsRelationship() {
             <Form.Item<FieldType>
               label={<span css={labelFormItem}>Các CLB, tổ chức tham dự</span>}
               name="clubs"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập các CLB, tổ chức tham dự!',
-                },
-              ]}
             >
               <Input size="middle" placeholder="nhập các CLB, tổ chức tham dự" />
             </Form.Item>
@@ -456,13 +322,6 @@ export default function UpdateGainsRelationship() {
                 </span>
               }
               name="archivement"
-              rules={[
-                {
-                  required: true,
-                  message:
-                    'Vui lòng nhập những thành tựu, tài sản, kinh nghiệm, kiến thức, kỹ năng, bằng cấp…!',
-                },
-              ]}
             >
               <Input
                 size="middle"

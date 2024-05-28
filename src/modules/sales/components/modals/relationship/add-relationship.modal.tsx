@@ -49,8 +49,8 @@ export const AddRelationship = ({ closeModal }: AddRelationshipProps) => {
     const add = await addRelationship(dataAddRelationship);
 
     if (add) {
-      form.resetFields();
       closeModal();
+      form.resetFields();
     }
   };
 

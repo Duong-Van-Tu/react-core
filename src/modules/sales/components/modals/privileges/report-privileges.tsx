@@ -4,6 +4,7 @@ import { Button, Col, Row } from 'antd';
 import { LocaleFormatter } from '@/components/locale-formatter';
 import { StatusBenefit } from '@/modules/sales/enum/status.enum';
 import { Message } from '@/components/message';
+import { currencyFormatter } from '@/utils/formatter';
 
 type ReportPrivilegesProps = {
   closeModal: () => void;
@@ -38,20 +39,20 @@ export const ReportPrivileges = ({ closeModal, data }: ReportPrivilegesProps) =>
           <Col>
             <LocaleFormatter id="title.employee.reportPrivileges.baseSalary" />
           </Col>
-          <Col>{data.monthlySalary}</Col>
+          <Col>{currencyFormatter(data.monthlySalary as unknown as number)}</Col>
         </Row>
         <Row justify="space-between" align="bottom">
           <Col>
             <LocaleFormatter id="title.employee.reportPrivileges.totalChangesTarget" />
           </Col>
-          <Col>{data.targetSalary}</Col>
+          <Col>{currencyFormatter(data.targetSalary as unknown as number)}</Col>
         </Row>
 
         <Row justify="space-between" align="bottom">
           <Col>
             <LocaleFormatter id="title.employee.reportPrivileges.actualSalaryFluctuates" />
           </Col>
-          <Col>{data.totalSalary}</Col>
+          <Col>{currencyFormatter(data.totalSalary as unknown as number)}</Col>
         </Row>
 
         <Row justify="space-between" align="bottom">

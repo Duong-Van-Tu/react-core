@@ -20,9 +20,10 @@ import { ModalRelationshipType } from '../../enum/modal.enum';
 export default function TableRelationship() {
   const { getAllRelationship, getAllStatusRelationship } = useRelationship();
   const { openModal } = useModalRelationship();
-  const [loading, loadingStatus] = useWatchLoading(
+  const [loading, loadingStatus, loadingDelete] = useWatchLoading(
     ['get-relationship', true],
     ['status-relationship', true],
+    ['delete-relationship', false],
   );
 
   const { data, pagination, status } = useRootSelector((state) => state.sale.relationship);
@@ -68,6 +69,12 @@ export default function TableRelationship() {
     }
     getAllStatusRelationship();
   }, [getAllRelationship, getAllStatusRelationship, tab]);
+
+  useEffect(() => {
+    if (loadingDelete) {
+      setRelationshipIds(undefined);
+    }
+  }, [loadingDelete]);
 
   const addRelationshipBtnStyle =
     isSale || isSupplier ? addRelationshipBtnStyleSale : addRelationshipBtnStyleBase;

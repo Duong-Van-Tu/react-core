@@ -3,6 +3,7 @@ import { useWatchLoading } from '@/hooks/loading.hook';
 import { useLocale } from '@/hooks/locale.hook';
 import { useRootSelector } from '@/hooks/selector.hook';
 import { useBenefit } from '@/modules/sales/services/benefit.service';
+import { currencyFormatter, currencyParser } from '@/utils/formatter';
 import { css } from '@emotion/react';
 import { Button, Form, FormProps, InputNumber, Row, Select, Space } from 'antd';
 import { Fragment, useEffect, useMemo } from 'react';
@@ -100,6 +101,8 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
           ]}
         >
           <InputNumber
+            formatter={(value) => currencyFormatter(value as number)}
+            parser={(value) => currencyParser(value as unknown as number)}
             css={inputStyle}
             size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
@@ -123,6 +126,8 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
           ]}
         >
           <InputNumber
+            formatter={(value) => currencyFormatter(value as number)}
+            parser={(value) => currencyParser(value as unknown as number)}
             css={inputStyle}
             size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}
@@ -146,6 +151,8 @@ export const AddPrivileges = ({ closeModal }: AddPrivilegesProps) => {
           ]}
         >
           <InputNumber
+            formatter={(value) => currencyFormatter(value as number)}
+            parser={(value) => currencyParser(value as unknown as number)}
             css={inputStyle}
             size="large"
             placeholder={formatMessage({ id: 'form.input.addPrivileges.placeholder.NETRevenue' })}

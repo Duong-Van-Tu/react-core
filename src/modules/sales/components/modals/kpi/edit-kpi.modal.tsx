@@ -2,7 +2,8 @@
 import { useWatchLoading } from '@/hooks/loading.hook';
 import { useKPI } from '@/modules/sales/services/kpi.service';
 import { css } from '@emotion/react';
-import { Button, Col, Form, FormProps, Input, Row, Space } from 'antd';
+import { Button, Col, DatePicker, Form, FormProps, Input, InputNumber, Row, Space } from 'antd';
+import dayjs from 'dayjs';
 import { Fragment, useEffect } from 'react';
 
 type FieldType = {
@@ -11,6 +12,8 @@ type FieldType = {
   targetKPI: string;
   targetPoint: number;
   calculate: string;
+  startTime?: string;
+  endTime?: string;
 };
 
 type EditKPIProps = {
@@ -28,6 +31,8 @@ export const EditKPI = ({ closeModal, data }: EditKPIProps) => {
       id: data.id,
       targetKPI: values.targetKPI.toString(),
       targetPoint: values.targetPoint.toString(),
+      startTime: dayjs(values.startTime).format('DD/MM/YYYY'),
+      endTime: dayjs(values.endTime).format('DD/MM/YYYY'),
     };
 
     const edit = await updateKPI(dataUpdateKPI);
@@ -41,7 +46,13 @@ export const EditKPI = ({ closeModal, data }: EditKPIProps) => {
     closeModal();
   };
   useEffect(() => {
-    form.setFieldsValue(data);
+    if (data) {
+      form.setFieldsValue({
+        ...data,
+        startTime: dayjs(data.startTime),
+        endTime: dayjs(data.endTime),
+      });
+    }
   }, [data]);
 
   return (
@@ -62,7 +73,7 @@ export const EditKPI = ({ closeModal, data }: EditKPIProps) => {
               name="targetKPI"
               rules={[{ required: true, message: 'Vui lòng nhập mục tiêu!' }]}
             >
-              <Input size="large" placeholder="Nhập mục tiêu" />
+              <InputNumber css={inputStyle} size="large" placeholder="Nhập mục tiêu" />
             </Form.Item>
           </Col>
           <Col span={12}>
@@ -71,7 +82,37 @@ export const EditKPI = ({ closeModal, data }: EditKPIProps) => {
               name="targetPoint"
               rules={[{ required: true, message: 'Vui lòng nhập điểm mục tiêu!' }]}
             >
-              <Input size="large" placeholder="Nhập điểm mục tiêu" />
+              <InputNumber css={inputStyle} size="large" placeholder="Nhập điểm mục tiêu" />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row gutter={[20, 0]}>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={<span css={labelFormItem}>Ngày bắt đầu mục tiêu</span>}
+              name="startTime"
+              rules={[{ required: true, message: 'Vui lòng nhập ngày bắt đầu mục tiêu' }]}
+            >
+              <DatePicker
+                css={inputStyle}
+                format={['DD/MM/YYYY']}
+                size="large"
+                placeholder="Nhập ngày bắt đầu mục tiêu"
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item<FieldType>
+              label={<span css={labelFormItem}>Thời gian kết thúc </span>}
+              name="endTime"
+              rules={[{ required: true, message: 'Vui lòng nhập thời gian kết thúc!' }]}
+            >
+              <DatePicker
+                css={inputStyle}
+                format={['DD/MM/YYYY']}
+                size="large"
+                placeholder="Nhập thời gian kết thúc"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -118,4 +159,8 @@ const labelFormItem = css`
   font-size: 1.4rem;
   line-height: 1.6rem;
   font-weight: 500;
+`;
+
+const inputStyle = css`
+  width: 100%;
 `;
